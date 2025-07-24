@@ -2,14 +2,59 @@
 <html>
 <head>
   <title>My First Webpage</title>
+  <style>
+    body {
+      background-color: #f4f4f4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #222;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #0077cc;
+      font-size: 2.5em;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    a {
+      color: #ff6600;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-section {
+      background-color: #fff;
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
+
   <h1>Hello, world!</h1>
   <p>This is my first webpage live on GitHub!</p>
 
-  <h2>Contact Me</h2>
-  <p>Phone: 229-848-6922</p>
-  <p>Twitter: <a href="https://x.com/niffyoxg?s=21" target="_blank">Follow me on X</a></p>
-  <p>Instagram: <a href="https://www.instagram.com/niffyz8" target="_blank">Follow me on Instagram</a></p>
+  <div class="contact-section">
+    <h2>Contact Me</h2>
+    <p>Phone: <a href="tel:‪+12298486922‬">229-848-6922</a></p>
+    <p>
+      Follow me on:
+      <br>
+      <a href="https://x.com/niffyoxg?s=21" target="_blank">X (Twitter)</a> |
+      <a href="https://www.instagram.com/niffyz8?igsh=NjhvY3JmdGI1aW0z&utm_source=qr" target="_blank">Instagram</a>
+    </p>
+  </div>
+
 </body>
 </html>
