@@ -1,94 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ethan's Website</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EthWebsite - News & Community</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
       color: #333;
     }
+
     header {
-      background-color: #1a1a1a;
-      color: white;
-      padding: 20px 40px;
+      background-color: #111;
+      color: #fff;
+      padding: 20px;
       text-align: center;
     }
+
+    nav {
+      background-color: #333;
+      text-align: center;
+      padding: 10px;
+    }
+
     nav a {
-      margin: 0 15px;
-      text-decoration: none;
       color: white;
+      text-decoration: none;
+      margin: 0 15px;
       font-weight: bold;
     }
-    .hero {
-      padding: 60px 20px;
-      text-align: center;
-      background: linear-gradient(to right, #4a90e2, #9013fe);
-      color: white;
+
+    nav a:hover {
+      color: #f39c12;
     }
-    .hero h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
+
+    .main {
+      padding: 20px;
     }
-    .section {
-      padding: 40px 20px;
-      max-width: 800px;
-      margin: auto;
+
+    .headline {
+      font-size: 24px;
+      color: #222;
+      margin-bottom: 15px;
+      cursor: pointer;
     }
-    .contact {
+
+    .social {
+      margin: 20px 0;
+    }
+
+    .social a {
+      margin-right: 15px;
+      text-decoration: none;
+      color: #444;
+    }
+
+    .social a:hover {
+      color: #f39c12;
+    }
+
+    .form-container {
       background-color: #fff;
       padding: 20px;
+      margin-top: 30px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .contact p {
-      margin: 10px 0;
-    }
-    footer {
+
+    .form-container h2 {
       text-align: center;
-      padding: 20px;
-      background-color: #1a1a1a;
-      color: white;
+      margin-bottom: 20px;
     }
-    a.button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 25px;
-      background-color: #4a90e2;
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    .form-group button {
+      background-color: #111;
       color: white;
-      text-decoration: none;
-      border-radius: 5px;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .form-group button:hover {
+      background-color: #f39c12;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Welcome to Ethan's Official Site</h1>
-    <nav>
-      <a href="#contact">Contact</a>
-      <a href="https://x.com/niffyoxg?s=21" target="_blank">Follow Me</a>
-      <a href="https://www.instagram.com/niffyz8?igsh=NjhvY3JmdGI1aW0z&utm_source=qr" target="_blank">Instagram</a>
-    </nav>
+    <h1>Welcome to EthWebsite - Your Hub for News and Community</h1>
   </header>
 
-  <section class="hero">
-    <h1>Get in Touch. Stay Connected.</h1>
-    <p>Discover what I'm working on and place your orders easily.</p>
-    <a href="#contact" class="button">Contact Me</a>
-  </section>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">News</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
 
-  <section class="section contact" id="contact">
-    <h2>Contact Information</h2>
-    <p><strong>Phone:</strong> <a href="tel:2298486622">229/848/6622</a></p>
-    <p><strong>Email:</strong> <a href="mailto:Ethanmiller198@aol.com">Ethanmiller198@aol.com</a></p>
-  </section>
+  <div class="main">
+    <p class="headline" onclick="window.location.href='https://example.com/special-article';">
+      🚨 Breaking News: Major Update Just Dropped!
+    </p>
 
-  <footer>
-    <p>&copy; 2025 Ethan's Website. All rights reserved.</p>
-  </footer>
+    <div class="social">
+      <h3>Follow Me:</h3>
+      <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
+      <a href="https://x.com/yourhandle" target="_blank">X (Twitter)</a>
+    </div>
+
+    <div class="form-container">
+      <h2>Register Now</h2>
+      <form>
+        <div class="form-group">
+          <label for="fullname">Full Name:</label>
+          <input type="text" id="fullname" name="fullname" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="dob">Date of Birth:</label>
+          <input type="date" id="dob" name="dob" required />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number:</label>
+          <input type="tel" id="phone" name="phone" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <input type="text" id="address" name="address" />
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select id="gender" name="gender">
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="nonbinary">Non-binary</option>
+            <option value="prefer_not">Prefer not to say</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country:</label>
+          <input type="text" id="country" name="country" />
+        </div>
+
+        <div class="form-group">
+          <button type="submit">Submit Registration</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
 </html>
