@@ -2,101 +2,95 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Niffy's Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to My Website</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f4f4f4;
+      color: #333;
       margin: 0;
       padding: 0;
-      color: #333;
     }
 
     header {
-      background-color: #1e1e1e;
-      color: #fff;
+      background-color: #1a1a1a;
+      color: white;
       padding: 20px 0;
       text-align: center;
     }
 
-    main {
-      padding: 30px;
-      max-width: 800px;
-      margin: auto;
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
     }
 
-    section {
+    .content {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .section {
       margin-bottom: 40px;
     }
 
-    h1, h2 {
-      color: #1e1e1e;
+    h2 {
+      color: #1a1a1a;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
     }
 
-    .social-links a {
-      display: inline-block;
-      margin: 10px 10px 0 0;
-      padding: 10px 15px;
-      background-color: #0077cc;
-      color: #fff;
+    a {
+      color: #0077cc;
       text-decoration: none;
-      border-radius: 5px;
-      transition: background 0.3s ease;
     }
 
-    .social-links a:hover {
-      background-color: #005fa3;
+    a:hover {
+      text-decoration: underline;
     }
 
     footer {
-      background-color: #1e1e1e;
-      color: #fff;
+      background-color: #1a1a1a;
+      color: white;
       text-align: center;
-      padding: 15px 0;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        font-size: 16px;
-      }
-
-      .social-links a {
-        display: block;
-        margin-bottom: 10px;
-      }
+      padding: 15px;
+      margin-top: 50px;
     }
   </style>
 </head>
 <body>
+
   <header>
-    <h1>Welcome to Niffy's Website</h1>
+    <h1>Welcome to My Website</h1>
+    <p>Your one-stop spot to connect with me</p>
   </header>
 
-  <main>
-    <section>
-      <p>Hello, this is my official homepage. Follow me, contact me, or place an order right here!</p>
-    </section>
+  <div class="content">
+    <div class="section">
+      <h2>About Me</h2>
+      <p>Hi there! I’m Ethan. I’m currently building this website to share what I do, connect with people, and soon allow you to buy or order my stuff easily!</p>
+    </div>
 
-    <section>
-      <h2>Follow Me</h2>
-      <div class="social-links">
-        <a href="https://x.com/niffyoxg?s=21" target="_blank">Follow on X</a>
-        <a href="https://www.instagram.com/niffyz8?igsh=NjhvY3JmdGI1aW0z&utm_source=qr" target="_blank">Follow on Instagram</a>
-      </div>
-    </section>
-
-    <section>
+    <div class="section">
       <h2>Contact Info</h2>
-      <p>Phone: <a href="tel:2298486922">229-848-6922</a></p>
-    </section>
-  </main>
+      <p><strong>Email:</strong> ethan@example.com</p>
+      <p><strong>Phone:</strong> +234 812 345 6789</p>
+      <p><strong>Location:</strong> Lagos, Nigeria</p>
+    </div>
+
+    <div class="section">
+      <h2>Follow Me</h2>
+      <p>
+        <a href="https://www.instagram.com/yourusername" target="_blank">Instagram</a> |
+        <a href="https://x.com/yourusername" target="_blank">X (Twitter)</a>
+      </p>
+    </div>
+  </div>
 
   <footer>
-    &copy; 2025 Niffy. All rights reserved.
+    &copy; 2025 Ethan's Website. All rights reserved.
   </footer>
+
 </body>
 </html>
