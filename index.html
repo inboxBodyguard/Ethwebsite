@@ -1,60 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My First Webpage</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Niffy's Website</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
       background-color: #f4f4f4;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #222;
-      text-align: center;
-      padding: 50px;
-    }
-
-    h1 {
-      color: #0077cc;
-      font-size: 2.5em;
-    }
-
-    h2 {
+      margin: 0;
+      padding: 0;
       color: #333;
     }
 
-    a {
-      color: #ff6600;
-      text-decoration: none;
-      font-weight: bold;
+    header {
+      background-color: #1e1e1e;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
     }
 
-    a:hover {
-      text-decoration: underline;
+    main {
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
     }
 
-    .contact-section {
-      background-color: #fff;
-      padding: 20px;
-      margin-top: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    section {
+      margin-bottom: 40px;
+    }
+
+    h1, h2 {
+      color: #1e1e1e;
+    }
+
+    .social-links a {
       display: inline-block;
+      margin: 10px 10px 0 0;
+      padding: 10px 15px;
+      background-color: #0077cc;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background-color: #005fa3;
+    }
+
+    footer {
+      background-color: #1e1e1e;
+      color: #fff;
+      text-align: center;
+      padding: 15px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        font-size: 16px;
+      }
+
+      .social-links a {
+        display: block;
+        margin-bottom: 10px;
+      }
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Welcome to Niffy's Website</h1>
+  </header>
 
-  <h1>Hello, world!</h1>
-  <p>This is my first webpage live on GitHub!</p>
+  <main>
+    <section>
+      <p>Hello, this is my official homepage. Follow me, contact me, or place an order right here!</p>
+    </section>
 
-  <div class="contact-section">
-    <h2>Contact Me</h2>
-    <p>Phone: <a href="tel:‪+12298486922‬">229-848-6922</a></p>
-    <p>
-      Follow me on:
-      <br>
-      <a href="https://x.com/niffyoxg?s=21" target="_blank">X (Twitter)</a> |
-      <a href="https://www.instagram.com/niffyz8?igsh=NjhvY3JmdGI1aW0z&utm_source=qr" target="_blank">Instagram</a>
-    </p>
-  </div>
+    <section>
+      <h2>Follow Me</h2>
+      <div class="social-links">
+        <a href="https://x.com/niffyoxg?s=21" target="_blank">Follow on X</a>
+        <a href="https://www.instagram.com/niffyz8?igsh=NjhvY3JmdGI1aW0z&utm_source=qr" target="_blank">Follow on Instagram</a>
+      </div>
+    </section>
 
+    <section>
+      <h2>Contact Info</h2>
+      <p>Phone: <a href="tel:2298486922">229-848-6922</a></p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Niffy. All rights reserved.
+  </footer>
 </body>
 </html>
