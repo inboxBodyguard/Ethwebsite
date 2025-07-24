@@ -2,190 +2,134 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EthWebsite - News & Community</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ETH Website</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f3f3f3;
-      margin: 0;
-      padding: 0;
-      color: #333;
+      margin: 0; padding: 0;
+      background-color: #f4f4f4;
     }
-
     header {
       background-color: #111;
       color: #fff;
       padding: 20px;
       text-align: center;
     }
-
     nav {
+      display: flex;
+      justify-content: center;
       background-color: #333;
-      text-align: center;
-      padding: 10px;
     }
-
     nav a {
       color: white;
+      padding: 14px 20px;
       text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
     }
-
     nav a:hover {
-      color: #f39c12;
+      background-color: #575757;
     }
-
-    .main {
+    section {
       padding: 20px;
     }
-
-    .headline {
+    .logo {
       font-size: 24px;
-      color: #222;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+    .news-item {
       margin-bottom: 15px;
-      cursor: pointer;
     }
-
-    .social {
-      margin: 20px 0;
-    }
-
-    .social a {
-      margin-right: 15px;
+    .news-item a {
       text-decoration: none;
-      color: #444;
+      color: #0066cc;
+      font-weight: bold;
     }
-
-    .social a:hover {
-      color: #f39c12;
+    .socials {
+      margin-top: 20px;
     }
-
-    .form-container {
-      background-color: #fff;
+    .socials img {
+      width: 30px;
+      margin: 0 10px;
+    }
+    .footer {
+      background-color: #222;
+      color: #ccc;
+      text-align: center;
       padding: 20px;
       margin-top: 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
     }
-
-    .form-container h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
+    .subscribe {
+      margin-top: 20px;
       font-weight: bold;
     }
-
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      box-sizing: border-box;
-    }
-
-    .form-group button {
-      background-color: #111;
+    .subscribe a {
+      background-color: #28a745;
       color: white;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .form-group button:hover {
-      background-color: #f39c12;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
+
   <header>
-    <h1>Welcome to EthWebsite - Your Hub for News and Community</h1>
+    <div class="logo">EthanMiller News</div>
+    <p>Your Source for Afrobeat, Culture, and Tech</p>
   </header>
 
   <nav>
-    <a href="#">Home</a>
-    <a href="#">News</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
+    <a href="index.html">Home</a>
+    <a href="#news">News</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="register.html">Register</a>
   </nav>
 
-  <div class="main">
-    <p class="headline" onclick="window.location.href='https://example.com/special-article';">
-      🚨 Breaking News: Major Update Just Dropped!
-    </p>
+  <section id="news">
+    <h2>Latest News</h2>
 
-    <div class="social">
-      <h3>Follow Me:</h3>
-      <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
-      <a href="https://x.com/yourhandle" target="_blank">X (Twitter)</a>
+    <div class="news-item">
+      <a href="news1.html">Afrobeats: A Decade of Global Influence</a>
+      <p>Discover how Afrobeats transformed into a global genre, reshaping world music and culture.</p>
     </div>
 
-    <div class="form-container">
-      <h2>Register Now</h2>
-      <form>
-        <div class="form-group">
-          <label for="fullname">Full Name:</label>
-          <input type="text" id="fullname" name="fullname" required />
-        </div>
-
-        <div class="form-group">
-          <label for="email">Email Address:</label>
-          <input type="email" id="email" name="email" required />
-        </div>
-
-        <div class="form-group">
-          <label for="dob">Date of Birth:</label>
-          <input type="date" id="dob" name="dob" required />
-        </div>
-
-        <div class="form-group">
-          <label for="phone">Phone Number:</label>
-          <input type="tel" id="phone" name="phone" required />
-        </div>
-
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required />
-        </div>
-
-        <div class="form-group">
-          <label for="address">Address:</label>
-          <input type="text" id="address" name="address" />
-        </div>
-
-        <div class="form-group">
-          <label for="gender">Gender:</label>
-          <select id="gender" name="gender">
-            <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="nonbinary">Non-binary</option>
-            <option value="prefer_not">Prefer not to say</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="country">Country:</label>
-          <input type="text" id="country" name="country" />
-        </div>
-
-        <div class="form-group">
-          <button type="submit">Submit Registration</button>
-        </div>
-      </form>
+    <div class="news-item">
+      <a href="news2.html">Africa’s Presence in Global Pop Culture</a>
+      <p>From movies to tech, African voices and ideas are driving the future.</p>
     </div>
+
+    <div class="news-item">
+      <a href="news3.html">AI & Tech Trends Shaping the Future</a>
+      <p>The latest on Artificial Intelligence, blockchain, and innovations out of Africa.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>This platform shares insights, stories, and updates on Afrobeat music, African impact in global spaces, and the power of tech and AI. We also help you build your own professional website tailored to your vision!</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Info</h2>
+    <p><strong>Phone:</strong> 229/848/6622</p>
+    <p><strong>Email:</strong> Ethanmiller198@aol.com</p>
+
+    <div class="socials">
+      <a href="https://www.instagram.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
+      <a href="https://twitter.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670151.png" alt="X"></a>
+    </div>
+  </section>
+
+  <div class="subscribe">
+    <p>Subscribe for early access to content ($15/month)</p>
+    <a href="#">Subscribe Now</a>
   </div>
+
+  <div class="footer">
+    &copy; 2025 EthanMiller. All rights reserved.
+  </div>
+
 </body>
 </html>
