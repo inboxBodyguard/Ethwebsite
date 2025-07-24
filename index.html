@@ -1,96 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to My Website</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethan's Website</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
+      font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
     }
-
     header {
       background-color: #1a1a1a;
       color: white;
-      padding: 20px 0;
+      padding: 20px 40px;
       text-align: center;
     }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-    }
-
-    .content {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    .section {
-      margin-bottom: 40px;
-    }
-
-    h2 {
-      color: #1a1a1a;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 5px;
-    }
-
-    a {
-      color: #0077cc;
+    nav a {
+      margin: 0 15px;
       text-decoration: none;
+      color: white;
+      font-weight: bold;
     }
-
-    a:hover {
-      text-decoration: underline;
+    .hero {
+      padding: 60px 20px;
+      text-align: center;
+      background: linear-gradient(to right, #4a90e2, #9013fe);
+      color: white;
     }
-
+    .hero h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+    .section {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .contact {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .contact p {
+      margin: 10px 0;
+    }
     footer {
+      text-align: center;
+      padding: 20px;
       background-color: #1a1a1a;
       color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 50px;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 25px;
+      background-color: #4a90e2;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
-
   <header>
-    <h1>Welcome to My Website</h1>
-    <p>Your one-stop spot to connect with me</p>
+    <h1>Welcome to Ethan's Official Site</h1>
+    <nav>
+      <a href="#contact">Contact</a>
+      <a href="https://x.com/niffyoxg?s=21" target="_blank">Follow Me</a>
+      <a href="https://www.instagram.com/niffyz8?igsh=NjhvY3JmdGI1aW0z&utm_source=qr" target="_blank">Instagram</a>
+    </nav>
   </header>
 
-  <div class="content">
-    <div class="section">
-      <h2>About Me</h2>
-      <p>Hi there! I’m Ethan. I’m currently building this website to share what I do, connect with people, and soon allow you to buy or order my stuff easily!</p>
-    </div>
+  <section class="hero">
+    <h1>Get in Touch. Stay Connected.</h1>
+    <p>Discover what I'm working on and place your orders easily.</p>
+    <a href="#contact" class="button">Contact Me</a>
+  </section>
 
-    <div class="section">
-      <h2>Contact Info</h2>
-      <p><strong>Email:</strong> ethan@example.com</p>
-      <p><strong>Phone:</strong> +234 812 345 6789</p>
-      <p><strong>Location:</strong> Lagos, Nigeria</p>
-    </div>
-
-    <div class="section">
-      <h2>Follow Me</h2>
-      <p>
-        <a href="https://www.instagram.com/yourusername" target="_blank">Instagram</a> |
-        <a href="https://x.com/yourusername" target="_blank">X (Twitter)</a>
-      </p>
-    </div>
-  </div>
+  <section class="section contact" id="contact">
+    <h2>Contact Information</h2>
+    <p><strong>Phone:</strong> <a href="tel:2298486622">229/848/6622</a></p>
+    <p><strong>Email:</strong> <a href="mailto:Ethanmiller198@aol.com">Ethanmiller198@aol.com</a></p>
+  </section>
 
   <footer>
-    &copy; 2025 Ethan's Website. All rights reserved.
+    <p>&copy; 2025 Ethan's Website. All rights reserved.</p>
   </footer>
-
 </body>
 </html>
