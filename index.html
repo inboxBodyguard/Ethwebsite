@@ -1,46 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>EMZNews</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ethwebsite - Home</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background-color: #fff;
+      color: #333;
+    }
+    header {
+      background-color: #222;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    nav {
+      background-color: #444;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 15px 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 18px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    /* Contact Form styles */
+    form input, form textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    form button {
+      background-color: #222;
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+      width: 100%;
+    }
+    form button:hover {
+      background-color: #555;
+    }
+    /* Social links */
+    .social-links {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .social-links a {
+      margin: 0 10px;
+      color: #222;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .social-links a:hover {
+      text-decoration: underline;
+    }
+    /* Footer */
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 50px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Welcome to EMZNews</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="news.html">News</a>
-      <a href="contact.html">Contact</a>
-      <a href="register.html">Register</a>
-    </nav>
-  </header>
 
-  <main>
-    <section>
-      <h2>Latest News</h2>
-      <ul>
-        <li><a href="news1.html">Afrobeats' Global Impact: The Last Decade</a></li>
-        <li><a href="news2.html">Africa’s Cultural Presence in 2020s Media</a></li>
-        <li><a href="news3.html">AI & Tech: Where is Africa in the Race?</a></li>
-        <li><a href="news4.html">Global Headlines: What’s Changing the World</a></li>
-      </ul>
-    </section>
+  <header>Ethwebsite</header>
 
-    <section>
-      <h2>Subscribe for Early Access ($15/month)</h2>
-      <p>Get exclusive content before everyone else.</p>
-      <button>Subscribe</button>
-    </section>
-  </main>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#news">News</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section id="home">
+    <h2>Welcome to Ethwebsite</h2>
+    <p>This is your homepage. You can add some introduction or featured content here.</p>
+  </section>
+
+  <section id="news">
+    <h2>Latest News</h2>
+    <p>Stay tuned for the latest news updates about Afrobeats artists and global culture impact.</p>
+    <ul>
+      <li><a href="news1.html">Afrobeats Artists’ Global Impact Over the Decade</a></li>
+      <li><a href="news2.html">Africa's Growing Presence in Global Culture</a></li>
+      <li><a href="news3.html">Major Tech and AI Trends in Africa</a></li>
+    </ul>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>Ethwebsite is dedicated to sharing news, culture, and tech stories about Africa and beyond.</p>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" style="background-color: #f0f0f0; border-radius: 8px; padding: 40px; margin-top: 40px;">
+    <h2>Contact Us</h2>
+    <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+
+      <!-- Redirect to thankyou.html after submission -->
+      <input type="hidden" name="_next" value="https://ethan89072.github.io/Ethwebsite/thankyou.html" />
+      <!-- Disable captcha -->
+      <input type="hidden" name="_captcha" value="false" />
+
+      <button type="submit">Send Message</button>
+    </form>
+
+    <div class="social-links">
+      <p>
+        Follow us on 
+        <a href="https://www.instagram.com/niffyz8?igsh=NjhvY3JmdGI1aW0z&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a> and 
+        <a href="https://x.com/niffyoxg?s=21" target="_blank" rel="noopener noreferrer">X</a>
+      </p>
+    </div>
+  </section>
 
   <footer>
-    <p>Connect with us: 
-      <a href="https://instagram.com/" target="_blank">Instagram</a> | 
-      <a href="https://x.com/" target="_blank">X (Twitter)</a>
-    </p>
-    <p>Email: ethanmiller189@aol.com | Phone: 229/848/6622</p>
-    <p>We also help people build their own websites!</p>
+    &copy; 2025 Ethwebsite. All rights reserved.
   </footer>
+
 </body>
 </html>
