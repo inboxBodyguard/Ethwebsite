@@ -1,45 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Contact Us - EMZNews</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 30px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-family: 'Georgia', serif;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    form button {
+      width: 100%;
+      background-color: #333;
+      color: white;
+      padding: 14px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #555;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #555;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>EMZNews</h1>
-    </header>
-
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="news1.html">News</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-    </nav>
-
-    <main>
-        <h2>Contact Us</h2>
-        <p>Have questions, feedback, or want to build your own site? Reach out below!</p>
-
-        <p><strong>Phone:</strong> <a href="tel:+12298486622">229-848-6622</a></p>
-        <p><strong>Email:</strong> <a href="mailto:Ethanmiller198@aol.com">Ethanmiller198@aol.com</a></p>
-
-        <form action="#" method="post">
-            <label for="name">Full Name:</label><br>
-            <input type="text" id="name" name="name" required><br><br>
-
-            <label for="email">Your Email:</label><br>
-            <input type="email" id="email" name="email" required><br><br>
-
-            <label for="message">Your Message:</label><br>
-            <textarea id="message" name="message" rows="5" required></textarea><br><br>
-
-            <button type="submit">Send Message</button>
-        </form>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 EMZNews. All rights reserved.</p>
-    </footer>
+  <div class="container">
+    <h2>Contact Us</h2>
+    <form action="https://formsubmit.co/ethanmiller198@aol.com" method="POST">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="name" placeholder="Your Full Name" required>
+      <input type="email" name="email" placeholder="Your Email Address" required>
+      <textarea name="message" rows="6" placeholder="Type your message here..." required></textarea>
+      <button type="submit">Send</button>
+    </form>
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
 </body>
 </html>
