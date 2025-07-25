@@ -3,33 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact - EMZNews</title>
+  <title>Contact Us - EMZNews</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background-color: #222;
+      background-color: #111;
       color: #fff;
+      margin: 0;
       padding: 20px;
+    }
+
+    h1 {
       text-align: center;
     }
 
-    .container {
+    form {
       max-width: 600px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
+      margin: 0 auto;
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
     }
 
     label {
@@ -37,93 +30,58 @@
       margin-top: 15px;
     }
 
-    input[type="text"],
-    input[type="email"],
-    textarea {
+    input, textarea {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    textarea {
-      resize: vertical;
-      height: 150px;
+      background-color: #333;
+      border: 1px solid #444;
+      color: #fff;
+      border-radius: 5px;
     }
 
     button {
-      background-color: #222;
-      color: white;
-      border: none;
-      padding: 15px 20px;
       margin-top: 20px;
-      cursor: pointer;
+      padding: 12px;
       width: 100%;
+      background-color: #007bff;
+      border: none;
+      color: white;
       font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
     button:hover {
-      background-color: #444;
+      background-color: #0056b3;
     }
 
-    .footer {
-      text-align: center;
-      margin-top: 40px;
-      padding: 20px;
-      background-color: #222;
-      color: #fff;
-    }
-
-    .footer a {
+    a {
       color: #fff;
       text-decoration: none;
     }
 
-    .footer .social-icons img {
-      width: 24px;
-      margin: 0 8px;
-      vertical-align: middle;
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
+  <h1>Contact EMZNews</h1>
+  <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://ethan89072.github.io/Ethwebsite/thanks.html">
 
-  <header>
-    <h1>Contact EMZNews</h1>
-  </header>
+    <label for="name">Full Name</label>
+    <input type="text" name="name" required>
 
-  <div class="container">
-    <form action="https://formsubmit.co/Ethanmiller189@aol.com" method="POST">
-      <!-- Hidden fields to customize behavior -->
-      <input type="hidden" name="_subject" value="New message from EMZNews website!">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
+    <label for="email">Email Address</label>
+    <input type="email" name="email" required>
 
-      <label for="name">Full Name</label>
-      <input type="text" name="name" required>
+    <label for="message">Your Message</label>
+    <textarea name="message" rows="6" required></textarea>
 
-      <label for="email">Email Address</label>
-      <input type="email" name="email" required>
-
-      <label for="message">Your Message</label>
-      <textarea name="message" required></textarea>
-
-      <button type="submit">Send Message</button>
-    </form>
-  </div>
-
-  <div class="footer">
-    <p>📞 <a href="tel:2298486622">229-848-6622</a> | 📧 <a href="mailto:Ethanmiller189@aol.com">Ethanmiller189@aol.com</a></p>
-    <div class="social-icons">
-      <a href="https://www.instagram.com/emzafrica" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
-      </a>
-      <a href="https://x.com/emzafrica" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/X_logo_2023.svg" alt="X">
-      </a>
-    </div>
-  </div>
-
+    <button type="submit">Send Message</button>
+  </form>
 </body>
 </html>
