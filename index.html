@@ -3,92 +3,191 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ethwebsite - Home</title>
+  
+  <!-- Primary SEO -->
+  <title>Ethwebsite – News, Culture & Tech from Africa</title>
+  <meta name="description" content="Stay updated with the latest news, culture, and technology trends about Africa and Afrobeats artists. Ethwebsite brings you rich stories and updates." />
+  <meta name="keywords" content="Afrobeats, Africa news, African culture, African tech, music, AI trends, Ethwebsite" />
+  <meta name="author" content="Ethan Miller" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Ethwebsite – News, Culture & Tech from Africa" />
+  <meta property="og:description" content="Stay updated with the latest news, culture, and technology trends about Africa and Afrobeats artists. Ethwebsite brings you rich stories and updates." />
+  <meta property="og:url" content="https://ethan89072.github.io/Ethwebsite/" />
+  <meta property="og:image" content="https://ethan89072.github.io/Ethwebsite/assets/og-image.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ethwebsite – News, Culture & Tech from Africa" />
+  <meta name="twitter:description" content="Stay updated with the latest news, culture, and technology trends about Africa and Afrobeats artists. Ethwebsite brings you rich stories and updates." />
+  <meta name="twitter:image" content="https://ethan89072.github.io/Ethwebsite/assets/og-image.jpg" />
+
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+
   <style>
+    /* Reset and base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
     body {
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-      background-color: #fff;
-      color: #333;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fafafa;
+      color: #222;
+      line-height: 1.6;
+      font-weight: 300;
     }
     header {
-      background-color: #222;
-      color: white;
-      padding: 20px 0;
+      background-color: #1a1a1a;
+      color: #f5f5f5;
+      padding: 25px 0;
       text-align: center;
-      font-size: 24px;
-      font-weight: bold;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      user-select: none;
     }
     nav {
-      background-color: #444;
+      background-color: #282828;
       display: flex;
       justify-content: center;
-      gap: 30px;
-      padding: 15px 0;
+      gap: 40px;
+      padding: 18px 0;
+      box-shadow: 0 2px 4px rgb(0 0 0 / 0.2);
     }
     nav a {
-      color: white;
+      color: #f0f0f0;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 18px;
+      font-weight: 500;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
     }
-    nav a:hover {
-      text-decoration: underline;
+    nav a:hover,
+    nav a:focus {
+      color: #ff6600;
+      outline: none;
     }
     section {
-      padding: 40px 20px;
-      max-width: 800px;
-      margin: auto;
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 0 20px;
     }
     h2 {
       text-align: center;
-      margin-bottom: 25px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #1a1a1a;
+      font-size: 2rem;
+      letter-spacing: 1px;
     }
-    /* Contact Form styles */
-    form input, form textarea {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      font-size: 16px;
+    p {
+      max-width: 700px;
+      margin: 0 auto 20px auto;
+      font-weight: 300;
+      font-size: 1.05rem;
+      color: #444;
     }
-    form button {
-      background-color: #222;
-      color: white;
-      border: none;
-      padding: 14px 20px;
-      cursor: pointer;
-      font-size: 16px;
-      border-radius: 4px;
-      width: 100%;
+    ul {
+      max-width: 700px;
+      margin: 0 auto 40px auto;
+      padding-left: 20px;
+      font-weight: 400;
+      font-size: 1rem;
+      color: #555;
     }
-    form button:hover {
-      background-color: #555;
+    ul li {
+      margin-bottom: 10px;
     }
-    /* Social links */
-    .social-links {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .social-links a {
-      margin: 0 10px;
-      color: #222;
-      font-weight: 600;
+    ul li a {
+      color: #ff6600;
       text-decoration: none;
+      font-weight: 600;
     }
-    .social-links a:hover {
+    ul li a:hover {
       text-decoration: underline;
     }
+
+    /* Contact Section */
+    #contact {
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 40px 25px;
+      box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+    }
+    form input,
+    form textarea {
+      width: 100%;
+      padding: 14px 15px;
+      margin-bottom: 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 300;
+      transition: border-color 0.3s ease;
+    }
+    form input:focus,
+    form textarea:focus {
+      border-color: #ff6600;
+      outline: none;
+    }
+    form button {
+      background-color: #ff6600;
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 15px 0;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    form button:hover {
+      background-color: #e65c00;
+    }
+    .social-links {
+      text-align: center;
+      margin-top: 25px;
+      font-weight: 500;
+      font-size: 1rem;
+      color: #666;
+    }
+    .social-links a {
+      margin: 0 15px;
+      color: #ff6600;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .social-links a:hover {
+      color: #cc5200;
+      text-decoration: underline;
+    }
+
     /* Footer */
     footer {
-      background-color: #222;
-      color: white;
+      background-color: #1a1a1a;
+      color: #ccc;
       text-align: center;
-      padding: 15px 0;
-      margin-top: 50px;
-      font-size: 14px;
+      padding: 18px 0;
+      font-size: 0.9rem;
+      margin-top: 60px;
+      user-select: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        gap: 20px;
+      }
+      section {
+        margin: 30px 15px;
+      }
     }
   </style>
 </head>
@@ -123,15 +222,14 @@
     <p>Ethwebsite is dedicated to sharing news, culture, and tech stories about Africa and beyond.</p>
   </section>
 
-  <!-- CONTACT SECTION -->
-  <section id="contact" style="background-color: #f0f0f0; border-radius: 8px; padding: 40px; margin-top: 40px;">
+  <section id="contact">
     <h2>Contact Us</h2>
-    <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST">
+    <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST" >
       <input type="text" name="name" placeholder="Your Name" required />
       <input type="email" name="email" placeholder="Your Email" required />
       <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
 
-      <!-- Redirect to thankyou.html after submission -->
+      <!-- Redirect after submit -->
       <input type="hidden" name="_next" value="https://ethan89072.github.io/Ethwebsite/thankyou.html" />
       <!-- Disable captcha -->
       <input type="hidden" name="_captcha" value="false" />
