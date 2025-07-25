@@ -2,190 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>EMZNews - Home</title>
+  <title>EMZNews</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
-
-    body {
-      font-family: 'Oswald', sans-serif;
-      margin: 0;
-      background-color: #f4f4f4;
-      color: #333;
-    }
-
-    header {
-      background-color: #000;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-
-    header h1 {
-      font-size: 2.5em;
-      margin: 0;
-      letter-spacing: 2px;
-    }
-
-    nav {
-      background-color: #111;
-      padding: 15px;
-      text-align: center;
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      padding: 10px 20px;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      background-color: #222;
-    }
-
-    main {
-      padding: 30px;
-    }
-
-    h2 {
-      text-align: center;
-      color: #000;
-      margin-bottom: 30px;
-    }
-
-    .news-container {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .news-card {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 20px;
-      width: 300px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s ease;
-    }
-
-    .news-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .news-card h3 {
-      margin-top: 0;
-      font-size: 20px;
-    }
-
-    .news-card a {
-      display: inline-block;
-      margin-top: 15px;
-      text-decoration: none;
-      color: #007BFF;
-      font-weight: bold;
-    }
-
-    .news-card a:hover {
-      text-decoration: underline;
-    }
-
-    footer {
-      background-color: #000;
-      color: #fff;
-      text-align: center;
-      padding: 15px;
-      margin-top: 40px;
-    }
-  </style>
 </head>
 <body>
-
   <header>
-    <h1>EMZNews</h1>
+    <h1>Welcome to EMZNews</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="news.html">News</a>
+      <a href="contact.html">Contact</a>
+      <a href="register.html">Register</a>
+    </nav>
   </header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="register.html">Register</a>
-    <a href="news1.html">News</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
   <main>
-    <h2>Latest Headlines</h2>
+    <section>
+      <h2>Latest News</h2>
+      <ul>
+        <li><a href="news1.html">Afrobeats' Global Impact: The Last Decade</a></li>
+        <li><a href="news2.html">Africa’s Cultural Presence in 2020s Media</a></li>
+        <li><a href="news3.html">AI & Tech: Where is Africa in the Race?</a></li>
+        <li><a href="news4.html">Global Headlines: What’s Changing the World</a></li>
+      </ul>
+    </section>
 
-    <div class="news-container">
-      <div class="news-card">
-        <h3>Afrobeats: A Decade of Global Influence</h3>
-        <p>How Nigerian artists shaped music and culture worldwide.</p>
-        <a href="news1.html">Read More →</a>
-      </div>
-
-      <div class="news-card">
-        <h3>Africa’s Bold Rise in Global Culture</h3>
-        <p>From cinema to fashion, African influence is booming.</p>
-        <a href="news2.html">Read More →</a>
-      </div>
-
-      <div class="news-card">
-        <h3>Top Tech & AI Shifts in Africa</h3>
-        <p>How Africa is adapting and leading in the tech revolution.</p>
-        <a href="news3.html">Read More →</a>
-      </div>
-    </div>
+    <section>
+      <h2>Subscribe for Early Access ($15/month)</h2>
+      <p>Get exclusive content before everyone else.</p>
+      <button>Subscribe</button>
+    </section>
   </main>
 
   <footer>
-    &copy; 2025 EMZNews. All rights reserved.
+    <p>Connect with us: 
+      <a href="https://instagram.com/" target="_blank">Instagram</a> | 
+      <a href="https://x.com/" target="_blank">X (Twitter)</a>
+    </p>
+    <p>Email: ethanmiller189@aol.com | Phone: 229/848/6622</p>
+    <p>We also help people build their own websites!</p>
   </footer>
-<style>
-  footer {
-    background-color: #222;
-    color: #fff;
-    text-align: center;
-    padding: 20px 0;
-    margin-top: 40px;
-  }
-
-  .social-icons {
-    margin-top: 10px;
-  }
-
-  .social-icons a {
-    margin: 0 10px;
-    display: inline-block;
-  }
-
-  .social-icons img {
-    width: 24px;
-    height: 24px;
-    vertical-align: middle;
-    filter: brightness(0) invert(1); /* make icons white */
-  }
-
-  .contact-info {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #ccc;
-  }
-</style>
-
-<footer>
-  <p>&copy; 2025 EMZNews. All rights reserved.</p>
-  <div class="social-icons">
-    <a href="https://www.instagram.com/emzafrica" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
-    </a>
-    <a href="https://x.com/emzafrica" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/X_logo_2023.svg" alt="X">
-    </a>
-  </div>
-  <div class="contact-info">
-    📞 <a href="tel:2298486622" style="color: #ccc;">229-848-6622</a> | 📧 <a href="mailto:Ethanmiller198@aol.com" style="color: #ccc;">Ethanmiller198@aol.com</a>
-  </div>
-</footer>
 </body>
 </html>
