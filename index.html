@@ -2,253 +2,163 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-  <!-- Primary SEO -->
-  <title>Ethwebsite – News, Culture & Tech from Africa</title>
-  <meta name="description" content="Stay updated with the latest news, culture, and technology trends about Africa and Afrobeats artists. Ethwebsite brings you rich stories and updates." />
-  <meta name="keywords" content="Afrobeats, Africa news, African culture, African tech, music, AI trends, Ethwebsite" />
-  <meta name="author" content="Ethan Miller" />
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Ethwebsite – News, Culture & Tech from Africa" />
-  <meta property="og:description" content="Stay updated with the latest news, culture, and technology trends about Africa and Afrobeats artists. Ethwebsite brings you rich stories and updates." />
-  <meta property="og:url" content="https://ethan89072.github.io/Ethwebsite/" />
-  <meta property="og:image" content="https://ethan89072.github.io/Ethwebsite/assets/og-image.jpg" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Ethwebsite – News, Culture & Tech from Africa" />
-  <meta name="twitter:description" content="Stay updated with the latest news, culture, and technology trends about Africa and Afrobeats artists. Ethwebsite brings you rich stories and updates." />
-  <meta name="twitter:image" content="https://ethan89072.github.io/Ethwebsite/assets/og-image.jpg" />
-
-  <!-- Google Fonts: Poppins -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="EMZNews - Stay updated with Afrobeats, tech trends, and global African culture.">
+  <meta name="keywords" content="Afrobeats, Tech News, African Culture, EMZNews, Music, AI, Global Impact">
+  <meta name="author" content="EMZNews">
+  <title>EMZNews - Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
   <style>
-    /* Reset and base */
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #fafafa;
-      color: #222;
-      line-height: 1.6;
-      font-weight: 300;
+      background: #fff;
+      color: #000;
     }
-    header {
-      background-color: #1a1a1a;
-      color: #f5f5f5;
-      padding: 25px 0;
+    header, footer {
+      background: #000;
+      color: #fff;
       text-align: center;
-      font-size: 2.5rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      user-select: none;
-    }
-    nav {
-      background-color: #282828;
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      padding: 18px 0;
-      box-shadow: 0 2px 4px rgb(0 0 0 / 0.2);
+      padding: 20px 10px;
     }
     nav a {
-      color: #f0f0f0;
+      margin: 0 15px;
+      color: #fff;
       text-decoration: none;
-      font-weight: 500;
-      font-size: 1.1rem;
-      transition: color 0.3s ease;
+      font-weight: bold;
     }
-    nav a:hover,
-    nav a:focus {
-      color: #ff6600;
-      outline: none;
-    }
-    section {
-      max-width: 900px;
-      margin: 50px auto;
-      padding: 0 20px;
-    }
-    h2 {
-      text-align: center;
-      font-weight: 700;
-      margin-bottom: 30px;
-      color: #1a1a1a;
-      font-size: 2rem;
-      letter-spacing: 1px;
-    }
-    p {
-      max-width: 700px;
-      margin: 0 auto 20px auto;
-      font-weight: 300;
-      font-size: 1.05rem;
-      color: #444;
-    }
-    ul {
-      max-width: 700px;
-      margin: 0 auto 40px auto;
-      padding-left: 20px;
-      font-weight: 400;
-      font-size: 1rem;
-      color: #555;
-    }
-    ul li {
-      margin-bottom: 10px;
-    }
-    ul li a {
-      color: #ff6600;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    ul li a:hover {
+    nav a:hover {
       text-decoration: underline;
     }
-
-    /* Contact Section */
-    #contact {
-      background-color: #f9f9f9;
-      border-radius: 10px;
-      padding: 40px 25px;
-      box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+    .section {
+      padding: 50px 20px;
+      max-width: 1000px;
+      margin: auto;
     }
-    form input,
-    form textarea {
+    .news-preview {
+      margin-bottom: 30px;
+      padding: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    .news-preview a {
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .form-field {
       width: 100%;
-      padding: 14px 15px;
-      margin-bottom: 18px;
+      padding: 10px;
+      margin: 10px 0;
       border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: 300;
-      transition: border-color 0.3s ease;
     }
-    form input:focus,
-    form textarea:focus {
-      border-color: #ff6600;
-      outline: none;
-    }
-    form button {
-      background-color: #ff6600;
+    button {
+      background: #000;
+      color: #fff;
       border: none;
-      color: white;
-      font-weight: 700;
-      padding: 15px 0;
-      width: 100%;
-      border-radius: 8px;
-      font-size: 1.2rem;
+      padding: 10px 20px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
-    form button:hover {
-      background-color: #e65c00;
-    }
-    .social-links {
-      text-align: center;
-      margin-top: 25px;
-      font-weight: 500;
-      font-size: 1rem;
-      color: #666;
+    button:hover {
+      background: #444;
     }
     .social-links a {
-      margin: 0 15px;
-      color: #ff6600;
-      font-weight: 600;
-      text-decoration: none;
-      transition: color 0.3s ease;
+      margin: 0 10px;
+      color: #000;
     }
-    .social-links a:hover {
-      color: #cc5200;
-      text-decoration: underline;
-    }
-
-    /* Footer */
-    footer {
-      background-color: #1a1a1a;
-      color: #ccc;
-      text-align: center;
-      padding: 18px 0;
-      font-size: 0.9rem;
-      margin-top: 60px;
-      user-select: none;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-        gap: 20px;
-      }
-      section {
-        margin: 30px 15px;
+    @media (max-width: 768px) {
+      nav a {
+        display: block;
+        margin: 10px 0;
       }
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>EMZNews</h1>
+    <p>Your source for Afrobeats, Tech & Global African Culture</p>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#news">News</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-  <header>Ethwebsite</header>
-
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#news">News</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <section id="home">
-    <h2>Welcome to Ethwebsite</h2>
-    <p>This is your homepage. You can add some introduction or featured content here.</p>
+  <section id="home" class="section">
+    <h2>Welcome to EMZNews</h2>
+    <p>Explore the global impact of Afrobeats, tech breakthroughs, and Africa’s growing influence on the world stage. We bring you real, updated stories with depth.</p>
   </section>
 
-  <section id="news">
-    <h2>Latest News</h2>
-    <p>Stay tuned for the latest news updates about Afrobeats artists and global culture impact.</p>
-    <ul>
-      <li><a href="news1.html">Afrobeats Artists’ Global Impact Over the Decade</a></li>
-      <li><a href="news2.html">Africa's Growing Presence in Global Culture</a></li>
-      <li><a href="news3.html">Major Tech and AI Trends in Africa</a></li>
-    </ul>
-  </section>
+  <section id="news" class="section">
+    <h2>Latest Articles</h2>
 
-  <section id="about">
-    <h2>About Us</h2>
-    <p>Ethwebsite is dedicated to sharing news, culture, and tech stories about Africa and beyond.</p>
-  </section>
+    <div class="news-preview">
+      <h3><a href="news1.html">Afrobeats and Its Decade of Global Dominance</a></h3>
+      <p>A deep dive into how Afrobeats reshaped global music...</p>
+    </div>
 
-  <section id="contact">
-    <h2>Contact Us</h2>
-    <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST" >
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+    <div class="news-preview">
+      <h3><a href="news2.html">Africa's Cultural Expansion in Global Media</a></h3>
+      <p>From Nollywood to Netflix and beyond...</p>
+    </div>
 
-      <!-- Redirect after submit -->
-      <input type="hidden" name="_next" value="https://ethan89072.github.io/Ethwebsite/thankyou.html" />
-      <!-- Disable captcha -->
-      <input type="hidden" name="_captcha" value="false" />
+    <div class="news-preview">
+      <h3><a href="news3.html">How Tech & AI Are Transforming Africa</a></h3>
+      <p>Innovation hubs, young talent, and global attention...</p>
+    </div>
 
-      <button type="submit">Send Message</button>
-    </form>
-
-    <div class="social-links">
-      <p>
-        Follow us on 
-        <a href="https://www.instagram.com/niffyz8?igsh=NjhvY3JmdGI1aW0z&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a> and 
-        <a href="https://x.com/niffyoxg?s=21" target="_blank" rel="noopener noreferrer">X</a>
-      </p>
+    <div class="news-preview">
+      <h3><a href="news4.html">The New Global Shift: Africa’s Creative Power Rising</a></h3>
+      <p>Why the world is now paying attention to African creators...</p>
     </div>
   </section>
 
+  <section id="about" class="section">
+    <h2>About EMZNews</h2>
+    <p>We’re passionate about documenting Africa’s creative, musical, and technological rise. Our platform is built to share real stories, amplify voices, and build a digital hub where culture meets global relevance.</p>
+    <p>We can also help you build your own professional website. Contact us to get started.</p>
+  </section>
+
+  <section id="contact" class="section">
+    <h2>Contact Us</h2>
+    <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required class="form-field">
+      <input type="email" name="email" placeholder="Your Email" required class="form-field">
+      <textarea name="message" placeholder="Your Message" rows="5" required class="form-field"></textarea>
+      <input type="hidden" name="_next" value="thankyou.html">
+      <button type="submit">Send Message</button>
+    </form>
+
+    <div class="social-links" style="margin-top: 20px;">
+      <p>Follow us:</p>
+      <a href="https://www.instagram.com/niffyz8?igsh=NjhvY3JmdGI1aW0z&utm_source=qr" target="_blank">Instagram</a> |
+      <a href="https://x.com/niffyoxg?s=21" target="_blank">X (Twitter)</a>
+    </div>
+  </section>
+
+  <section id="newsletter" class="section" style="background: #f9f9f9;">
+    <h2>Subscribe for Updates</h2>
+    <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST">
+      <input type="email" name="subscriber" placeholder="Enter your email" required class="form-field">
+      <input type="hidden" name="_next" value="thankyou.html">
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+
   <footer>
-    &copy; 2025 Ethwebsite. All rights reserved.
+    <p>&copy; 2025 EMZNews. Built with passion.</p>
   </footer>
 
+  <!-- Google Analytics Placeholder -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
 </body>
 </html>
