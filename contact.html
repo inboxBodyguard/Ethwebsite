@@ -3,78 +3,127 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact Us</title>
+  <title>Contact - EMZNews</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f9f9f9;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
       margin: 0;
       padding: 0;
     }
 
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
     .container {
       max-width: 600px;
-      margin: 60px auto;
+      margin: 40px auto;
+      background: white;
       padding: 30px;
-      background-color: white;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-radius: 8px;
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 30px;
-      font-family: 'Georgia', serif;
+      margin-bottom: 20px;
     }
 
-    form input, form textarea {
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
       width: 100%;
       padding: 12px;
-      margin-bottom: 20px;
+      margin-top: 5px;
       border: 1px solid #ccc;
       border-radius: 4px;
-      font-size: 16px;
     }
 
-    form button {
-      width: 100%;
-      background-color: #333;
+    textarea {
+      resize: vertical;
+      height: 150px;
+    }
+
+    button {
+      background-color: #222;
       color: white;
-      padding: 14px;
-      font-size: 16px;
       border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    form button:hover {
-      background-color: #555;
-    }
-
-    .back-link {
-      display: block;
-      text-align: center;
+      padding: 15px 20px;
       margin-top: 20px;
-      color: #555;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #444;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #222;
+      color: #fff;
+    }
+
+    .footer a {
+      color: #fff;
       text-decoration: none;
     }
 
-    .back-link:hover {
-      text-decoration: underline;
+    .footer .social-icons img {
+      width: 24px;
+      margin: 0 8px;
+      vertical-align: middle;
     }
   </style>
 </head>
 <body>
+
+  <header>
+    <h1>Contact EMZNews</h1>
+  </header>
+
   <div class="container">
-    <h2>Contact Us</h2>
-    <form action="https://formsubmit.co/ethanmiller198@aol.com" method="POST">
+    <form action="https://formsubmit.co/Ethanmiller189@aol.com" method="POST">
+      <!-- Hidden fields to customize behavior -->
+      <input type="hidden" name="_subject" value="New message from EMZNews website!">
+      <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
-      <input type="text" name="name" placeholder="Your Full Name" required>
-      <input type="email" name="email" placeholder="Your Email Address" required>
-      <textarea name="message" rows="6" placeholder="Type your message here..." required></textarea>
-      <button type="submit">Send</button>
+
+      <label for="name">Full Name</label>
+      <input type="text" name="name" required>
+
+      <label for="email">Email Address</label>
+      <input type="email" name="email" required>
+
+      <label for="message">Your Message</label>
+      <textarea name="message" required></textarea>
+
+      <button type="submit">Send Message</button>
     </form>
-    <a href="index.html" class="back-link">← Back to Home</a>
   </div>
+
+  <div class="footer">
+    <p>📞 <a href="tel:2298486622">229-848-6622</a> | 📧 <a href="mailto:Ethanmiller189@aol.com">Ethanmiller189@aol.com</a></p>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/emzafrica" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+      </a>
+      <a href="https://x.com/emzafrica" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/X_logo_2023.svg" alt="X">
+      </a>
+    </div>
+  </div>
+
 </body>
 </html>
