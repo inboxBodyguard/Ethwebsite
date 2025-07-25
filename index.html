@@ -1,135 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ETH Website</title>
+  <meta charset="UTF-8">
+  <title>EMZNews - Home</title>
+  <link rel="stylesheet" href="style.css">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
+      font-family: 'Oswald', sans-serif;
+      margin: 0;
       background-color: #f4f4f4;
+      color: #333;
     }
+
     header {
-      background-color: #111;
+      background-color: #000;
       color: #fff;
       padding: 20px;
       text-align: center;
     }
+
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+      letter-spacing: 2px;
+    }
+
     nav {
+      background-color: #111;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      background-color: #222;
+    }
+
+    main {
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #000;
+      margin-bottom: 30px;
+    }
+
+    .news-container {
       display: flex;
       justify-content: center;
-      background-color: #333;
+      gap: 20px;
+      flex-wrap: wrap;
     }
-    nav a {
-      color: white;
-      padding: 14px 20px;
-      text-decoration: none;
-    }
-    nav a:hover {
-      background-color: #575757;
-    }
-    section {
+
+    .news-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
       padding: 20px;
+      width: 300px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
     }
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #4CAF50;
+
+    .news-card:hover {
+      transform: translateY(-5px);
     }
-    .news-item {
-      margin-bottom: 15px;
+
+    .news-card h3 {
+      margin-top: 0;
+      font-size: 20px;
     }
-    .news-item a {
+
+    .news-card a {
+      display: inline-block;
+      margin-top: 15px;
       text-decoration: none;
-      color: #0066cc;
+      color: #007BFF;
       font-weight: bold;
     }
-    .socials {
-      margin-top: 20px;
+
+    .news-card a:hover {
+      text-decoration: underline;
     }
-    .socials img {
-      width: 30px;
-      margin: 0 10px;
-    }
-    .footer {
-      background-color: #222;
-      color: #ccc;
+
+    footer {
+      background-color: #000;
+      color: #fff;
       text-align: center;
-      padding: 20px;
-      margin-top: 30px;
-    }
-    .subscribe {
-      margin-top: 20px;
-      font-weight: bold;
-    }
-    .subscribe a {
-      background-color: #28a745;
-      color: white;
-      padding: 10px 15px;
-      text-decoration: none;
-      border-radius: 5px;
+      padding: 15px;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">EthanMiller News</div>
-    <p>Your Source for Afrobeat, Culture, and Tech</p>
+    <h1>EMZNews</h1>
   </header>
 
   <nav>
     <a href="index.html">Home</a>
-    <a href="#news">News</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
     <a href="register.html">Register</a>
+    <a href="news1.html">News</a>
+    <a href="#contact">Contact</a>
   </nav>
 
-  <section id="news">
-    <h2>Latest News</h2>
+  <main>
+    <h2>Latest Headlines</h2>
 
-    <div class="news-item">
-      <a href="news1.html">Afrobeats: A Decade of Global Influence</a>
-      <p>Discover how Afrobeats transformed into a global genre, reshaping world music and culture.</p>
+    <div class="news-container">
+      <div class="news-card">
+        <h3>Afrobeats: A Decade of Global Influence</h3>
+        <p>How Nigerian artists shaped music and culture worldwide.</p>
+        <a href="news1.html">Read More →</a>
+      </div>
+
+      <div class="news-card">
+        <h3>Africa’s Bold Rise in Global Culture</h3>
+        <p>From cinema to fashion, African influence is booming.</p>
+        <a href="news2.html">Read More →</a>
+      </div>
+
+      <div class="news-card">
+        <h3>Top Tech & AI Shifts in Africa</h3>
+        <p>How Africa is adapting and leading in the tech revolution.</p>
+        <a href="news3.html">Read More →</a>
+      </div>
     </div>
+  </main>
 
-    <div class="news-item">
-      <a href="news2.html">Africa’s Presence in Global Pop Culture</a>
-      <p>From movies to tech, African voices and ideas are driving the future.</p>
-    </div>
-
-    <div class="news-item">
-      <a href="news3.html">AI & Tech Trends Shaping the Future</a>
-      <p>The latest on Artificial Intelligence, blockchain, and innovations out of Africa.</p>
-    </div>
-  </section>
-
-  <section id="about">
-    <h2>About Us</h2>
-    <p>This platform shares insights, stories, and updates on Afrobeat music, African impact in global spaces, and the power of tech and AI. We also help you build your own professional website tailored to your vision!</p>
-  </section>
-
-  <section id="contact">
-    <h2>Contact Info</h2>
-    <p><strong>Phone:</strong> 229/848/6622</p>
-    <p><strong>Email:</strong> Ethanmiller198@aol.com</p>
-
-    <div class="socials">
-      <a href="https://www.instagram.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
-      <a href="https://twitter.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3670/3670151.png" alt="X"></a>
-    </div>
-  </section>
-
-  <div class="subscribe">
-    <p>Subscribe for early access to content ($15/month)</p>
-    <a href="#">Subscribe Now</a>
-  </div>
-
-  <div class="footer">
-    &copy; 2025 EthanMiller. All rights reserved.
-  </div>
+  <footer>
+    &copy; 2025 EMZNews. All rights reserved.
+  </footer>
 
 </body>
 </html>
