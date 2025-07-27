@@ -6,8 +6,8 @@
   <title>Ethan Miller | Cybersecurity Analyst</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
+      font-family: Arial, sans-serif;
       background-color: #0e0e0e;
       color: #fff;
     }
@@ -24,32 +24,25 @@
       text-decoration: none;
     }
 
-    .banner-image {
-      background-image: url('banner.png');
-      background-size: cover;
-      background-position: center;
-      height: 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .banner-image img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .banner-text {
       text-align: center;
-      color: #fff;
-      position: relative;
+      padding: 30px 20px;
+      background-color: #111;
     }
 
-    .banner-content {
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 30px;
-      border-radius: 10px;
-      max-width: 80%;
+    .banner-text h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
     }
 
-    .banner-content h1 {
-      font-size: 36px;
-      margin-bottom: 15px;
-    }
-
-    .banner-content p {
+    .banner-text p {
       font-size: 18px;
       margin-bottom: 20px;
     }
@@ -65,7 +58,7 @@
     }
 
     .section {
-      padding: 60px 20px;
+      padding: 50px 20px;
       max-width: 1000px;
       margin: auto;
     }
@@ -73,6 +66,28 @@
     .section h2 {
       border-bottom: 2px solid #444;
       padding-bottom: 10px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, textarea {
+      margin: 10px 0;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #1da1f2;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
     footer {
@@ -105,29 +120,34 @@
   </header>
 
   <section id="home" class="banner-image">
-    <div class="banner-content">
+    <img src="banner.png" alt="Cybersecurity Banner">
+    <div class="banner-text">
       <h1>Cybersecurity Analyst</h1>
-      <p>I help individuals and businesses protect, defend, and recover their digital systems with hands-on cybersecurity solutions.</p>
-      <a href="#contact" class="cta-button">Work With Me</a>
+      <p>I defend systems fast and recover them even faster — from everyday breaches to large-scale threats.</p>
+      <a href="#contact" class="cta-button">Get In Touch</a>
     </div>
   </section>
 
   <section id="about" class="section">
     <h2>About Me</h2>
-    <p>I’m Ethan Miller — a hands-on cybersecurity analyst who doesn’t just study security, I actively defend it. My passion is real-time system protection, threat detection, and fast recovery after attacks.</p>
-    <p>I’ve worked in high-pressure environments, including distribution centers like Puma's, where I’ve helped restore compromised systems and lock down critical operations in under an hour. I’m skilled at working across multiple machines at once, tracking threats, identifying weak spots, and deploying instant fixes before damage spreads.</p>
-    <p>If your system is under threat or already breached, I move fast — securing your network, recovering your data, and preventing future attacks.</p>
+    <p>I’m Ethan Miller — a hands-on cybersecurity analyst. I don’t just monitor systems, I step in and stop real threats as they happen.</p>
+    <p>I’ve helped companies including high-volume distribution centers like Puma’s recover from active breaches in real time. I work across multiple machines, analyze threats quickly, patch vulnerabilities, and prevent future attacks. My focus: speed, precision, and results.</p>
   </section>
 
   <section id="portfolio" class="section">
     <h2>Portfolio</h2>
-    <p>Coming soon: Real examples of system recoveries, threat detection cases, and secure configurations I’ve handled. Each project reflects fast thinking, strong tools, and a results-driven approach.</p>
+    <p>Live case examples coming soon: from system lockdowns and rapid recoveries to tools I’ve used for deep threat tracking and endpoint defense.</p>
   </section>
 
   <section id="contact" class="section">
-    <h2>Contact</h2>
-    <p>Phone: 229-848-6622<br>
-    Email: <a href="mailto:ethanmiller189@aol.com">ethanmiller189@aol.com</a></p>
+    <h2>Contact Me</h2>
+    <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email Address" required />
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <input type="hidden" name="_next" value="thankyou.html" />
+      <button type="submit">Send Message</button>
+    </form>
   </section>
 
   <footer>
