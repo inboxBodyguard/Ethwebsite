@@ -3,106 +3,182 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ethan | Cybersecurity Analyst</title>
+  <meta name="description" content="Cybersecurity Specialist | System Defender | EMZCyber Portfolio" />
+  <meta name="keywords" content="cybersecurity, security analyst, EMZCyber, system protection, ethical hacking" />
+  <meta name="author" content="EMZCyber" />
+  <title>EMZCyber | System Defender</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    * {
       margin: 0;
-      background: #0f1115;
-      color: #f1f1f1;
-    }
-    header {
-      background: #1a1d23;
       padding: 0;
-      text-align: center;
+      font-family: 'Roboto', sans-serif;
+      box-sizing: border-box;
     }
-    header img {
+
+    body {
+      background-color: #0e0e0e;
+      color: #fff;
+    }
+
+    header {
+      background-color: #1a1a1a;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0ff;
+    }
+
+    nav a {
+      color: #ccc;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: #0ff;
+    }
+
+    .banner img {
       width: 100%;
-      max-height: 300px;
+      max-height: 350px;
       object-fit: cover;
     }
+
     section {
       padding: 40px 20px;
       max-width: 900px;
       margin: auto;
     }
-    .section-title {
-      color: #00ffe1;
+
+    section h2 {
+      color: #0ff;
       margin-bottom: 10px;
     }
-    .contact-form input, .contact-form textarea {
-      width: 100%;
-      padding: 12px;
-      margin-top: 8px;
-      margin-bottom: 20px;
-      background: #1e2128;
-      border: none;
-      color: white;
+
+    section p {
+      line-height: 1.6;
+      color: #ddd;
     }
-    .contact-form button {
-      background: #00ffe1;
-      border: none;
-      padding: 10px 20px;
+
+    .portfolio-item {
+      margin-top: 15px;
+      padding: 10px;
+      border: 1px solid #444;
+      background-color: #1f1f1f;
+      border-radius: 5px;
+    }
+
+    .socials {
+      margin-top: 20px;
+    }
+
+    .socials a {
+      color: #0ff;
+      margin-right: 15px;
+      text-decoration: none;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #2c2c2c;
+      border: 1px solid #444;
+      color: #fff;
+    }
+
+    form button {
+      background: #0ff;
       color: #000;
+      padding: 10px 15px;
+      border: none;
       cursor: pointer;
       font-weight: bold;
     }
+
     footer {
       text-align: center;
       padding: 20px;
-      background: #1a1d23;
-      font-size: 14px;
-      color: #aaa;
+      background-color: #111;
+      color: #666;
     }
-    footer a {
-      color: #00ffe1;
-      text-decoration: none;
-      margin: 0 10px;
+
+    @media (max-width: 600px) {
+      nav {
+        margin-top: 10px;
+      }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="A_digital_graphic_design_banner_displays_cybersecu.png" alt="System Defender Banner">
+    <div class="logo">EMZCyber</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
 
-  <section>
-    <h2 class="section-title">What I Do</h2>
-    <p>I specialize in system protection, network monitoring, and real-time threat detection. Whether it’s defending against cyberattacks, analyzing suspicious activity, or improving security posture — I’m passionate about protecting digital infrastructure.</p>
+  <div class="banner">
+    <img src="banner.png" alt="System Defender Banner" />
+  </div>
+
+  <section id="home">
+    <h2>Welcome to EMZCyber</h2>
+    <p>I specialize in protecting systems, analyzing threats, and defending networks. If you're looking for someone to secure your infrastructure or assist with cyber defense, you're in the right place.</p>
   </section>
 
-  <section>
-    <h2 class="section-title">Projects & Experience</h2>
-    <ul>
-      <li>🛡️ Built a basic intrusion detection lab using Wireshark & Nmap</li>
-      <li>🔍 Performed simulated phishing analysis & response training</li>
-      <li>💻 Practicing with Linux for system hardening and log analysis</li>
-      <li>🌐 Set up a secure portfolio site (this one!)</li>
-    </ul>
+  <section id="about">
+    <h2>About Me</h2>
+    <p>I'm a passionate cybersecurity expert focused on real-time system protection. Inspired by high-level security professionals who can secure large operations within minutes, I aim to bring that same efficiency to every job. My work ranges from hands-on PC protection to corporate system auditing and ethical hacking.</p>
   </section>
 
-  <section>
-    <h2 class="section-title">Contact Me</h2>
-    <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST" class="contact-form">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-      <input type="hidden" name="_next" value="thankyou.html">
+  <section id="portfolio">
+    <h2>My Work</h2>
+    <div class="portfolio-item">
+      <strong>System Defense for Distribution Center</strong>
+      <p>Defended a large-scale distribution center's system from intrusion and restored operations in under 15 minutes.</p>
+    </div>
+    <div class="portfolio-item">
+      <strong>Real-Time Cyber Threat Response</strong>
+      <p>Monitored and responded to threats using multiple systems simultaneously, ensuring no breach occurred.</p>
+    </div>
+    <div class="portfolio-item">
+      <strong>Ethical Hacking & Network Audits</strong>
+      <p>Performed professional security audits and penetration tests to strengthen infrastructure before launch.</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST">
+      <input type="hidden" name="_next" value="thankyou.html" />
+      <input type="text" name="name" placeholder="Your Full Name" required />
+      <input type="email" name="email" placeholder="Your Email Address" required />
+      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
       <button type="submit">Send Message</button>
     </form>
-    <p>You can also reach me directly: <br>
-      <strong>Email:</strong> <a href="mailto:ethanmiller189@aol.com">ethanmiller189@aol.com</a><br>
-      <strong>Phone:</strong> <a href="tel:2298486622">229/848/6622</a>
-    </p>
+    <div class="socials">
+      <a href="https://instagram.com/yourprofile" target="_blank">Instagram</a>
+      <a href="https://x.com/niffyoxg?s=21" target="_blank">X (Twitter)</a>
+    </div>
   </section>
 
   <footer>
-    <p>Connect with me:</p>
-    <a href="https://x.com/niffyoxg?s=21" target="_blank">X (Twitter)</a> |
-    <a href="https://instagram.com/emznews_" target="_blank">Instagram</a><br>
-    &copy; 2025 Ethan Miller | Cybersecurity Analyst
+    &copy; 2025 EMZCyber. All rights reserved.
   </footer>
-<img src="banner.png" alt="Cybersecurity Banner" style="width:100%;">
+
 </body>
 </html>
