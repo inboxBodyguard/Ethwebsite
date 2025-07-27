@@ -11,40 +11,91 @@
       background-color: #0e0e0e;
       color: #fff;
     }
-    header, footer {
+
+    header {
       background-color: #1a1a1a;
       padding: 20px;
       text-align: center;
     }
+
     nav a {
       color: #fff;
       margin: 0 15px;
       text-decoration: none;
     }
+
+    .banner-image {
+      background-image: url('banner.png');
+      background-size: cover;
+      background-position: center;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      position: relative;
+    }
+
+    .banner-content {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 80%;
+    }
+
+    .banner-content h1 {
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+
+    .banner-content p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #1da1f2;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
     .section {
       padding: 60px 20px;
       max-width: 1000px;
       margin: auto;
     }
+
     .section h2 {
       border-bottom: 2px solid #444;
       padding-bottom: 10px;
     }
+
+    footer {
+      background-color: #1a1a1a;
+      text-align: center;
+      padding: 20px;
+    }
+
     .socials a {
       margin: 0 10px;
       color: #1da1f2;
       text-decoration: none;
     }
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
+
+    a {
+      color: #1da1f2;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">Ethan Miller</div>
+    <div class="logo"><strong>Ethan Miller</strong></div>
     <nav>
       <a href="#home">Home</a>
       <a href="#about">About</a>
@@ -53,46 +104,51 @@
     </nav>
   </header>
 
-  <section id="home" class="section">
-    <h2>Welcome</h2>
-    <p>I help individuals and businesses secure their digital systems with fast, effective cybersecurity solutions.</p>
+  <section id="home" class="banner-image">
+    <div class="banner-content">
+      <h1>Cybersecurity Analyst</h1>
+      <p>I help individuals and businesses protect, defend, and recover their digital systems with hands-on cybersecurity solutions.</p>
+      <a href="#contact" class="cta-button">Work With Me</a>
+    </div>
   </section>
 
   <section id="about" class="section">
     <h2>About Me</h2>
-    <p>I'm a cybersecurity analyst with hands-on experience defending networks, detecting threats, and recovering compromised systems. I'm passionate about digital safety and real-time system protection.</p>
+    <p>I’m Ethan Miller — a hands-on cybersecurity analyst who doesn’t just study security, I actively defend it. My passion is real-time system protection, threat detection, and fast recovery after attacks.</p>
+    <p>I’ve worked in high-pressure environments, including distribution centers like Puma's, where I’ve helped restore compromised systems and lock down critical operations in under an hour. I’m skilled at working across multiple machines at once, tracking threats, identifying weak spots, and deploying instant fixes before damage spreads.</p>
+    <p>If your system is under threat or already breached, I move fast — securing your network, recovering your data, and preventing future attacks.</p>
   </section>
 
   <section id="portfolio" class="section">
     <h2>Portfolio</h2>
-    <p>Check back soon for case studies and examples of past cybersecurity defense projects and system recoveries.</p>
+    <p>Coming soon: Real examples of system recoveries, threat detection cases, and secure configurations I’ve handled. Each project reflects fast thinking, strong tools, and a results-driven approach.</p>
   </section>
 
   <section id="contact" class="section">
     <h2>Contact</h2>
-    <p>Email: <a href="mailto:ethanmiller189@aol.com">ethanmiller189@aol.com</a><br>
-    Phone: 229-848-6622</p>
+    <p>Phone: 229-848-6622<br>
+    Email: <a href="mailto:ethanmiller189@aol.com">ethanmiller189@aol.com</a></p>
   </section>
 
   <footer>
     <div class="socials">
-      <a href="https://www.instagram.com/" target="_blank">Instagram</a>
       <a href="https://x.com/niffyoxg?s=21" target="_blank">X (Twitter)</a>
+      <a href="https://www.instagram.com/" target="_blank">Instagram</a>
     </div>
     <p>&copy; 2025 Ethan Miller. All rights reserved.</p>
   </footer>
 
   <!--Start of Tawk.to Script-->
   <script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-  s1.async=true;
-  s1.src='https://embed.tawk.to/68863d1892f8b9191d30c8c1/1j165tb1h';
-  s1.charset='UTF-8';
-  s1.setAttribute('crossorigin','*');
-  s0.parentNode.insertBefore(s1,s0);
-  })();
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/68863d1892f8b9191d30c8c1/1j165tb1h';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+    })();
   </script>
   <!--End of Tawk.to Script-->
 
