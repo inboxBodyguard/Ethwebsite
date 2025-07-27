@@ -2,172 +2,169 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ethan Miller | Cybersecurity Analyst</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="EzmCyber - Cybersecurity analyst specialized in defending distribution centers and high-value infrastructure."/>
+  <title>EzmCyber | Cybersecurity & Defense</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
       background-color: #0e0e0e;
-      color: #fff;
+      color: #ffffff;
+      line-height: 1.6;
     }
-
     header {
-      background-color: #1a1a1a;
-      padding: 20px;
       text-align: center;
+      background-color: #111;
+      padding: 20px;
     }
-
+    header img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    nav {
+      background-color: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+    }
     nav a {
       color: #fff;
-      margin: 0 15px;
       text-decoration: none;
-    }
-
-    .banner-image img {
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .banner-text {
-      text-align: center;
-      padding: 30px 20px;
-      background-color: #111;
-    }
-
-    .banner-text h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-
-    .banner-text p {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-
-    .cta-button {
-      display: inline-block;
-      padding: 12px 24px;
-      background-color: #1da1f2;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
+      margin: 0 20px;
       font-weight: bold;
+      transition: color 0.3s;
     }
-
+    nav a:hover {
+      color: #1da1f2;
+    }
     .section {
-      padding: 50px 20px;
+      padding: 40px 20px;
       max-width: 1000px;
       margin: auto;
     }
+    .highlight-blue { color: #1da1f2; font-weight: bold; }
+    .highlight-green { color: #00ffae; font-weight: bold; }
+    .highlight-yellow { color: #ffe600; font-weight: bold; }
+    .highlight-red { color: #ff4c4c; font-weight: bold; }
+    h1, h2 {
+      color: #1da1f2;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    p { margin-bottom: 15px; }
 
-    .section h2 {
-      border-bottom: 2px solid #444;
-      padding-bottom: 10px;
+    .socials {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .socials a {
+      margin: 0 10px;
+      color: #fff;
+      font-size: 24px;
+      transition: color 0.3s;
+    }
+    .socials a:hover {
+      color: #1da1f2;
     }
 
-    form {
-      display: flex;
-      flex-direction: column;
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      color: #fff;
     }
-
-    input, textarea {
-      margin: 10px 0;
-      padding: 12px;
-      border: none;
-      border-radius: 5px;
-    }
-
-    button {
+    form button {
       background-color: #1da1f2;
-      color: white;
-      padding: 12px;
+      color: #fff;
+      padding: 10px 20px;
       border: none;
-      border-radius: 5px;
-      font-weight: bold;
       cursor: pointer;
+    }
+    form button:hover {
+      background-color: #0d8ddb;
     }
 
     footer {
-      background-color: #1a1a1a;
       text-align: center;
-      padding: 20px;
-    }
-
-    .socials a {
-      margin: 0 10px;
-      color: #1da1f2;
-      text-decoration: none;
-    }
-
-    a {
-      color: #1da1f2;
+      background-color: #111;
+      padding: 15px;
+      color: #999;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo"><strong>Ethan Miller</strong></div>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <img src="banner.png" alt="EzmCyber Banner" />
   </header>
 
-  <section id="home" class="banner-image">
-    <img src="banner.png" alt="Cybersecurity Banner">
-    <div class="banner-text">
-      <h1>Cybersecurity Analyst</h1>
-      <p>I defend systems fast and recover them even faster — from everyday breaches to large-scale threats.</p>
-      <a href="#contact" class="cta-button">Get In Touch</a>
-    </div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section id="home" class="section">
+    <h1>Welcome to <span class="highlight-blue">EzmCyber</span></h1>
+    <p>I specialize in <span class="highlight-green">hands-on cybersecurity solutions</span> that protect and defend digital environments before damage happens—or reverse it fast when it does.</p>
+    <p>From <span class="highlight-red">live system recovery</span> to <span class="highlight-yellow">vulnerability detection</span>, I work across multiple systems and environments at once, offering the same level of defense trusted by major <span class="highlight-blue">distribution centers</span> and high-value infrastructure operations.</p>
+    <p>If your system’s under attack or your business needs protection—<span class="highlight-red">I'm the one to call</span>.</p>
   </section>
 
   <section id="about" class="section">
     <h2>About Me</h2>
-    <p>I’m Ethan Miller — a hands-on cybersecurity analyst. I don’t just monitor systems, I step in and stop real threats as they happen.</p>
-    <p>I’ve helped companies including high-volume distribution centers like Puma’s recover from active breaches in real time. I work across multiple machines, analyze threats quickly, patch vulnerabilities, and prevent future attacks. My focus: speed, precision, and results.</p>
+    <p>I’m a cybersecurity analyst with real-world experience defending businesses from live threats. I specialize in:</p>
+    <ul>
+      <li>✔️ <span class="highlight-green">Real-time incident response</span></li>
+      <li>✔️ <span class="highlight-yellow">System hardening and protection</span></li>
+      <li>✔️ <span class="highlight-red">Rapid recovery from breaches</span></li>
+    </ul>
+    <p>I’ve helped <span class="highlight-blue">distribution centers and enterprise-level systems</span> maintain uptime and security during critical attacks. I don’t just run scans—I fix and fortify with speed and precision.</p>
   </section>
 
   <section id="portfolio" class="section">
     <h2>Portfolio</h2>
-    <p>Live case examples coming soon: from system lockdowns and rapid recoveries to tools I’ve used for deep threat tracking and endpoint defense.</p>
+    <p>🛡️ <strong>Firewall Deployment</strong>: Configured enterprise firewalls for multi-site logistics networks.</p>
+    <p>🔍 <strong>Threat Hunting</strong>: Identified live intrusion points in vulnerable systems and neutralized them in real time.</p>
+    <p>🔐 <strong>Multi-PC Defense</strong>: Coordinated protection strategies across 5+ machines simultaneously during live incident response.</p>
+    <p>🧰 <strong>Recovery & Resilience</strong>: Helped restore operations after ransomware attacks, with full system cleanup and prevention reconfiguration.</p>
   </section>
 
   <section id="contact" class="section">
     <h2>Contact Me</h2>
     <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST">
-      <input type="text" name="name" placeholder="Full Name" required />
-      <input type="email" name="email" placeholder="Email Address" required />
+      <input type="text" name="name" placeholder="Your Full Name" required>
+      <input type="email" name="email" placeholder="Your Email Address" required>
       <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
       <input type="hidden" name="_next" value="thankyou.html" />
       <button type="submit">Send Message</button>
     </form>
+    <div class="socials">
+      <a href="https://x.com/niffyoxg?s=21" target="_blank"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
   </section>
 
   <footer>
-    <div class="socials">
-      <a href="https://x.com/niffyoxg?s=21" target="_blank">X (Twitter)</a>
-      <a href="https://www.instagram.com/" target="_blank">Instagram</a>
-    </div>
-    <p>&copy; 2025 Ethan Miller. All rights reserved.</p>
+    &copy; 2025 EzmCyber. All rights reserved.
   </footer>
 
   <!--Start of Tawk.to Script-->
   <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
     (function(){
-      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-      s1.async=true;
-      s1.src='https://embed.tawk.to/68863d1892f8b9191d30c8c1/1j165tb1h';
-      s1.charset='UTF-8';
-      s1.setAttribute('crossorigin','*');
-      s0.parentNode.insertBefore(s1,s0);
+      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/68863d1892f8b9191d30c8c1/1j165tb1h';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin', '*');
+      s0.parentNode.insertBefore(s1, s0);
     })();
   </script>
   <!--End of Tawk.to Script-->
