@@ -3,168 +3,199 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="EzmCyber - Cybersecurity analyst specialized in defending distribution centers and high-value infrastructure."/>
-  <title>EzmCyber | Cybersecurity & Defense</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <title>EzmCyber | Cybersecurity Expert</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
-      background-color: #0e0e0e;
-      color: #ffffff;
-      line-height: 1.6;
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
     }
+
     header {
+      background-color: #1e293b;
       text-align: center;
-      background-color: #111;
-      padding: 20px;
+      padding: 20px 10px;
     }
+
     header img {
       max-width: 100%;
       height: auto;
-      border-radius: 8px;
+      max-height: 300px;
     }
+
     nav {
-      background-color: #1a1a1a;
+      background-color: #111827;
       display: flex;
       justify-content: center;
-      padding: 10px 0;
+      gap: 20px;
+      padding: 15px 0;
     }
+
     nav a {
-      color: #fff;
+      color: #38bdf8;
       text-decoration: none;
-      margin: 0 20px;
       font-weight: bold;
-      transition: color 0.3s;
     }
-    nav a:hover {
-      color: #1da1f2;
-    }
-    .section {
+
+    section {
       padding: 40px 20px;
-      max-width: 1000px;
+      max-width: 900px;
       margin: auto;
     }
-    .highlight-blue { color: #1da1f2; font-weight: bold; }
-    .highlight-green { color: #00ffae; font-weight: bold; }
-    .highlight-yellow { color: #ffe600; font-weight: bold; }
-    .highlight-red { color: #ff4c4c; font-weight: bold; }
+
     h1, h2 {
-      color: #1da1f2;
-      text-align: center;
+      color: #38bdf8;
+    }
+
+    .highlight {
+      color: #facc15;
+      font-weight: bold;
+    }
+
+    .portfolio, .testimonials {
+      background-color: #1e293b;
+      margin-top: 40px;
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .testimonial {
+      border-left: 4px solid #38bdf8;
+      padding-left: 15px;
       margin-bottom: 20px;
-    }
-    p { margin-bottom: 15px; }
-
-    .socials {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .socials a {
-      margin: 0 10px;
-      color: #fff;
-      font-size: 24px;
-      transition: color 0.3s;
-    }
-    .socials a:hover {
-      color: #1da1f2;
+      font-style: italic;
     }
 
-    form input, form textarea {
+    .contact-form {
+      background-color: #1e293b;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    input, textarea {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      background-color: #1a1a1a;
-      border: 1px solid #333;
-      color: #fff;
-    }
-    form button {
-      background-color: #1da1f2;
-      color: #fff;
-      padding: 10px 20px;
+      padding: 12px;
+      margin: 10px 0;
       border: none;
-      cursor: pointer;
+      border-radius: 5px;
     }
-    form button:hover {
-      background-color: #0d8ddb;
+
+    input[type="submit"] {
+      background-color: #38bdf8;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
     }
 
     footer {
       text-align: center;
-      background-color: #111;
-      padding: 15px;
-      color: #999;
+      padding: 20px;
+      background-color: #111827;
+      color: #94a3b8;
+    }
+
+    .socials a {
+      color: #38bdf8;
+      margin: 0 10px;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="banner.png" alt="EzmCyber Banner" />
+    <img src="banner.png" alt="EzmCyber Banner">
   </header>
 
   <nav>
     <a href="#home">Home</a>
     <a href="#about">About</a>
     <a href="#portfolio">Portfolio</a>
+    <a href="#testimonials">Testimonials</a>
     <a href="#contact">Contact</a>
   </nav>
 
-  <section id="home" class="section">
-    <h1>Welcome to <span class="highlight-blue">EzmCyber</span></h1>
-    <p>I specialize in <span class="highlight-green">hands-on cybersecurity solutions</span> that protect and defend digital environments before damage happens—or reverse it fast when it does.</p>
-    <p>From <span class="highlight-red">live system recovery</span> to <span class="highlight-yellow">vulnerability detection</span>, I work across multiple systems and environments at once, offering the same level of defense trusted by major <span class="highlight-blue">distribution centers</span> and high-value infrastructure operations.</p>
-    <p>If your system’s under attack or your business needs protection—<span class="highlight-red">I'm the one to call</span>.</p>
+  <section id="home">
+    <h1>Welcome to <span class="highlight">EzmCyber</span></h1>
+    <p>
+      I specialize in <span class="highlight">real-time cybersecurity defense</span>, 
+      <span class="highlight">system recovery</span>, and 
+      <span class="highlight">distribution center protection</span>.
+      Whether you're facing a threat right now or preparing for one, 
+      <strong style="color:#22c55e;">I’m the expert you call when systems are under fire.</strong>
+    </p>
   </section>
 
-  <section id="about" class="section">
-    <h2>About Me</h2>
-    <p>I’m a cybersecurity analyst with real-world experience defending businesses from live threats. I specialize in:</p>
+  <section id="about">
+    <h2>About EzmCyber</h2>
+    <p>
+      With hands-on experience defending high-value infrastructure, I provide 
+      <span class="highlight">immediate response</span> and 
+      <span class="highlight">network hardening</span> solutions for companies at risk. 
+      From securing distribution centers to cleaning compromised environments, 
+      I work fast, smart, and with precision. My work spans multiple systems and 
+      real-world attacks — not just theory.
+    </p>
+  </section>
+
+  <section id="portfolio" class="portfolio">
+    <h2>Portfolio Highlights</h2>
     <ul>
-      <li>✔️ <span class="highlight-green">Real-time incident response</span></li>
-      <li>✔️ <span class="highlight-yellow">System hardening and protection</span></li>
-      <li>✔️ <span class="highlight-red">Rapid recovery from breaches</span></li>
+      <li>🛡️ Live defense of a logistics center under brute-force attack</li>
+      <li>🔍 Threat scanning & patching on multi-device enterprise systems</li>
+      <li>⚙️ Full system recovery after ransomware shutdown</li>
     </ul>
-    <p>I’ve helped <span class="highlight-blue">distribution centers and enterprise-level systems</span> maintain uptime and security during critical attacks. I don’t just run scans—I fix and fortify with speed and precision.</p>
   </section>
 
-  <section id="portfolio" class="section">
-    <h2>Portfolio</h2>
-    <p>🛡️ <strong>Firewall Deployment</strong>: Configured enterprise firewalls for multi-site logistics networks.</p>
-    <p>🔍 <strong>Threat Hunting</strong>: Identified live intrusion points in vulnerable systems and neutralized them in real time.</p>
-    <p>🔐 <strong>Multi-PC Defense</strong>: Coordinated protection strategies across 5+ machines simultaneously during live incident response.</p>
-    <p>🧰 <strong>Recovery & Resilience</strong>: Helped restore operations after ransomware attacks, with full system cleanup and prevention reconfiguration.</p>
+  <section id="testimonials" class="testimonials">
+    <h2>What Clients Say</h2>
+    <div class="testimonial">
+      “EzmCyber helped us stop a live intrusion in less than 10 minutes — absolutely brilliant.”<br>
+      — <strong>Distribution Manager, Atlanta</strong>
+    </div>
+    <div class="testimonial">
+      “Their ability to secure our systems under pressure is unmatched. We trust no one else.”<br>
+      — <strong>Lead Tech, Logistics Firm</strong>
+    </div>
+    <div class="testimonial">
+      “I’ve never seen someone recover a compromised network that fast.”<br>
+      — <strong>Warehouse Supervisor, Midwest</strong>
+    </div>
   </section>
 
-  <section id="contact" class="section">
+  <section id="contact">
     <h2>Contact Me</h2>
-    <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST">
-      <input type="text" name="name" placeholder="Your Full Name" required>
-      <input type="email" name="email" placeholder="Your Email Address" required>
-      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-      <input type="hidden" name="_next" value="thankyou.html" />
-      <button type="submit">Send Message</button>
-    </form>
-    <div class="socials">
-      <a href="https://x.com/niffyoxg?s=21" target="_blank"><i class="fab fa-x-twitter"></i></a>
-      <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+    <div class="contact-form">
+      <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST">
+        <input type="hidden" name="_redirect" value="thankyou.html">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <input type="submit" value="Send Message">
+      </form>
     </div>
   </section>
 
   <footer>
-    &copy; 2025 EzmCyber. All rights reserved.
+    <p>© 2025 EzmCyber</p>
+    <div class="socials">
+      <a href="https://x.com/niffyoxg?s=21" target="_blank">X</a>
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+    </div>
   </footer>
 
   <!--Start of Tawk.to Script-->
   <script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
-      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = 'https://embed.tawk.to/68863d1892f8b9191d30c8c1/1j165tb1h';
-      s1.charset = 'UTF-8';
-      s1.setAttribute('crossorigin', '*');
-      s0.parentNode.insertBefore(s1, s0);
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/68863d1892f8b9191d30c8c1/1j165tb1h';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
     })();
   </script>
   <!--End of Tawk.to Script-->
