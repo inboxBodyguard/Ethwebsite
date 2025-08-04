@@ -2,51 +2,62 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EzmCyber | Cybersecurity Expert</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orbitron&display=swap">
-  <style>.github-btn {
-  background-color: #4b0082; /* deep purple */
-  color: #fff;
-  padding: 10px 15px;
-  margin-top: 10px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.github-btn:hover {
-  background-color: #1e90ff; /* blue hover */
-}
-    body {
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="EzmCyber – Cybersecurity and Security Analysis Services by Ethan Miller. Specializing in threat defense, system protection, and cyber training.">
+  <meta name="keywords" content="Cybersecurity, Threat Analysis, Security Analyst, EzmCyber, Ethan Miller, system defense">
+  <meta name="author" content="Ethan Miller">
+  <title>EzmCyber | Cybersecurity & Threat Defense</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" />
+  <style>
+    * {
       margin: 0;
+      padding: 0;
       font-family: 'Orbitron', sans-serif;
-      background-color: #0d1117;
-      color: #f0f6fc;
+      scroll-behavior: smooth;
+    }
+    body {
+      background-color: #0a0a0a;
+      color: #e0ffe0;
     }
     header {
-      background-color: #161b22;
+      background-color: #111;
       padding: 20px;
       text-align: center;
+      border-bottom: 2px solid #00ffcc;
     }
-    header img {
-      max-width: 100%;
-      height: auto;
+    header h1 {
+      color: #00ffcc;
+      font-size: 2em;
     }
     nav {
-      background: #21262d;
-      padding: 10px;
+      background-color: #000;
       text-align: center;
+      padding: 10px 0;
     }
     nav a {
-      color: #58a6ff;
-      margin: 0 15px;
+      color: #00ffcc;
       text-decoration: none;
+      margin: 0 15px;
       font-weight: bold;
     }
     nav a:hover {
-      color: #1f6feb;
+      color: #ffffff;
+    }
+    .banner {
+      background-image: url('https://images.unsplash.com/photo-1605902711622-cfb43c4437b2');
+      background-size: cover;
+      background-position: center;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-shadow: 1px 1px 4px #000;
+    }
+    .banner h2 {
+      font-size: 2.5em;
+      text-align: center;
+      padding: 0 20px;
     }
     section {
       padding: 40px 20px;
@@ -54,198 +65,97 @@
       margin: auto;
     }
     h2 {
-      color: #58a6ff;
+      color: #00ffcc;
       margin-bottom: 20px;
     }
-    .highlight {
-      color: #1f6feb;
-    }
-    .portfolio-links a {
-      display: block;
-      margin-bottom: 10px;
-      color: #c9d1d9;
-      text-decoration: none;
-      font-size: 18px;
-    }
-    .portfolio-links a:hover {
-      color: #58a6ff;
-    }
-    form input, form textarea {
+    .contact-form input, .contact-form textarea {
       width: 100%;
+      padding: 12px;
       margin: 10px 0;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
+      background-color: #111;
+      color: #fff;
+      border: 1px solid #00ffcc;
     }
-    form button {
-      padding: 10px 20px;
-      background: #238636;
-      color: white;
+    .contact-form button {
+      padding: 12px 25px;
+      background-color: #00ffcc;
+      color: #000;
       border: none;
-      border-radius: 5px;
       cursor: pointer;
+      font-weight: bold;
+    }
+    .contact-form button:hover {
+      background-color: #00ccaa;
     }
     footer {
-      background: #161b22;
+      background-color: #111;
       text-align: center;
       padding: 20px;
-      font-size: 14px;
+      color: #777;
     }
- @media only screen and (max-width: 768px) {
-  header h1 {
-    font-size: 1.8em;
-    padding: 10px;
-  }
-
-  nav ul {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  nav ul li {
-    margin: 10px 0;
-  }
-
-  section {
-    padding: 30px 15px;
-    text-align: center;
-  }
-
-  .portfolio-item {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  form input, form textarea {
-    width: 100%;
-    font-size: 16px;
-  }
-
-  button {
-    width: 100%;
-    font-size: 18px;
-    padding: 10px;
-  }
-
-  .social-icons a {
-    margin: 0 8px;
-  }
-
-  footer {
-    padding: 10px;
-    font-size: 14px;
-  }
-}</style>
+    .social-links a {
+      color: #00ffcc;
+      margin: 0 10px;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
+    .social-links a:hover {
+      color: #ffffff;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <img src="banner.png" alt="EzmCyber Banner">
-</header>
+  <header>
+    <h1>EzmCyber</h1>
+  </header>
 
-<nav>
-  <a href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="#services">Services</a>
-  <a href="#portfolio">Portfolio</a>
-  <a href="testimonials.html">Testimonials</a>
-  <a href="#contact">Contact</a>
-</nav>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-<section id="home">
-  <h2>Welcome to <span class="highlight">EzmCyber</span></h2>
-  <p>I specialize in <span class="highlight">cybersecurity and security analysis</span>—from defending large-scale distribution centers to resolving critical breaches in real-time. If your system needs protection, I'm the one to call.</p>
-</section>
-
-<section id="about">
-  <h2>About</h2>
-  <p>With deep expertise in <span class="highlight">system defense</span>, I help organizations stay secure under pressure. I work hands-on, monitoring multiple systems and responding in real-time. I’ve stopped threats in active environments like major <span class="highlight">distribution centers</span> and corporate infrastructures.</p>
-</section>
-
-<section id="services">
-  <h2>Services</h2>
-  <ul>
-    <li>🛡️ Real-time intrusion detection & threat elimination</li>
-    <li>🔐 Network security architecture & firewall configuration</li>
-    <li>💾 Data breach recovery and forensic analysis</li>
-    <li>🧠 Cybersecurity consultations and system hardening</li>
-  </ul>
-</section>
-
-<section id="portfolio">
-  <h2>Portfolio</h2>
-  <div class="portfolio-links">
-    <a href="project1.html">🔐 Securing a Distribution Center in Real-Time</a>
-    <a href="project2.html">🛡️ Recovering a Compromised Network in Under 1 Hour</a>
+  <div class="banner" id="home">
+    <h2>Defending Systems. Empowering Security. Powered by EzmCyber.</h2>
   </div>
-</section>
-<!-- Services Section -->
-<section id="services" style="padding: 60px 20px; background-color: #0f0f0f; color: #f0f0f0;">
-  <div style="max-width: 1000px; margin: 0 auto;">
-    <h2 style="color: #00ffff; text-align: center; margin-bottom: 30px;">Services</h2>
-    <p style="text-align: center; margin-bottom: 40px;">
-      Whether you’re running a business, a personal server, or a high-impact system, I’ve got the tools and experience to keep it secure. Here’s what I offer:
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      I'm Ethan Miller, a dedicated cybersecurity analyst with hands-on experience in defending high-risk systems, including enterprise networks and distribution centers. My passion lies in protecting digital infrastructure, analyzing threats in real time, and providing clear, actionable solutions for security vulnerabilities.
     </p>
+  </section>
 
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
-      <!-- Service 1 -->
-      <div style="flex: 1 1 45%; background-color: #1c1c1c; padding: 20px; border-left: 4px solid #00ffff; border-radius: 8px;">
-        <h3 style="color: #00ffff;">System Defense & Hardening</h3>
-        <p>I analyze and strengthen your infrastructure to reduce attack surfaces, block intrusions, and reinforce all critical entry points.</p>
-      </div>
+  <section id="portfolio">
+    <h2>Portfolio</h2>
+    <p>Explore real-world cybersecurity case studies, system hardening projects, and threat reports I've worked on.</p>
+    <ul>
+      <li><a href="project1.html" style="color:#00ffcc;">• Distribution Center Firewall Defense</a></li>
+      <li><a href="project2.html" style="color:#00ffcc;">• Ransomware Response Simulation</a></li>
+      <li><a href="project3.html" style="color:#00ffcc;">• Suspicious Link Verification Tool</a></li>
+    </ul>
+  </section>
 
-      <!-- Service 2 -->
-      <div style="flex: 1 1 45%; background-color: #1c1c1c; padding: 20px; border-left: 4px solid #00ffff; border-radius: 8px;">
-        <h3 style="color: #00ffff;">Threat Detection & Response</h3>
-        <p>Real-time monitoring and rapid incident response. I can detect breaches and shut down threats before they escalate.</p>
-      </div>
+  <section id="contact">
+    <h2>Contact</h2>
+    <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST" class="contact-form">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email Address" required />
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <input type="hidden" name="_next" value="https://ethan89072.github.io/Ethwebsite/thankyou.html" />
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
 
-      <!-- Service 3 -->
-      <div style="flex: 1 1 45%; background-color: #1c1c1c; padding: 20px; border-left: 4px solid #00ffff; border-radius: 8px;">
-        <h3 style="color: #00ffff;">Web & App Security Audits</h3>
-        <p>I'll test your site, app, or system for vulnerabilities, misconfigurations, and logic flaws. Full report + fix plan included.</p>
-      </div>
-
-      <!-- Service 4 -->
-      <div style="flex: 1 1 45%; background-color: #1c1c1c; padding: 20px; border-left: 4px solid #00ffff; border-radius: 8px;">
-        <h3 style="color: #00ffff;">Consulting & Custom Strategy</h3>
-        <p>Need tailored advice? I provide consulting to help businesses and individuals plan security infrastructure from scratch or improve what exists.</p>
-      </div>
+  <footer>
+    <div class="social-links">
+      <a href="https://x.com/niffyoxg?s=21" target="_blank">X</a> |
+      <a href="https://instagram.com" target="_blank">Instagram</a>
     </div>
-  </div>
-</section>
-<section id="contact">
-  <h2>Contact Me</h2>
-  <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST">
-    <input type="text" name="name" required placeholder="Full Name">
-    <input type="email" name="email" required placeholder="Email Address">
-    <textarea name="message" rows="5" required placeholder="Your Message"></textarea>
-    <input type="hidden" name="_next" value="thankyou.html">
-    <button type="submit">Send Message</button>
-  </form>
-</section>
+    <p>© 2025 EzmCyber | All rights reserved.</p>
+  </footer>
 
-<footer>
-  &copy; 2025 EzmCyber | Follow on 
-  <a href="https://x.com/niffyoxg?s=21" target="_blank" style="color:#58a6ff;">X</a> & 
-  <a href="#" style="color:#58a6ff;">Instagram</a>
-</footer>
-
-<!-- Start of Tawk.to Script -->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/68863d1892f8b9191d30c8c1/1j165tb1h';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!-- End of Tawk.to Script -->
-<a href="https://github.com/ethan89072/Ethwebsite" target="_blank" class="github-btn">
-  🔎 View Full Code on GitHub
-</a>
 </body>
 </html>
