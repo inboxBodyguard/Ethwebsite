@@ -3,95 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Subscribe to Niffy's Cybersecurity Newsletter for weekly tips, breach alerts, and security tools.">
-  <title>Newsletter Signup | EzmCyber</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" />
+  <title>Subscribe to Our Cybersecurity Newsletter</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet"/>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <style>
     body {
-      margin: 0;
+      background-color: #0a0a0a;
+      color: #e0e0e0;
       font-family: 'Orbitron', sans-serif;
-      background-color: #0b0c10;
-      color: #ffffff;
+    }
+    .container {
+      max-width: 600px;
+      margin-top: 100px;
+      background: #121212;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,255,255,0.2);
+    }
+    h1 {
       text-align: center;
+      color: #00ffff;
+      margin-bottom: 30px;
     }
-    header, footer {
-      background: #1f2833;
-      padding: 20px;
-    }
-    h1, h2 {
-      color: #66fcf1;
-    }
-    form {
-      margin-top: 30px;
-    }
-    input[type="email"] {
-      padding: 10px;
-      width: 300px;
-      border-radius: 5px;
+    .btn-primary {
+      background-color: #00ffff;
+      color: #000;
       border: none;
     }
-    button {
-      padding: 10px 20px;
-      background-color: #45a29e;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+    .btn-primary:hover {
+      background-color: #00cccc;
     }
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #45a29e;
-      padding: 10px;
-    }
-    nav a {
-      margin: 0 15px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
+    .form-control {
+      background-color: #1c1c1c;
+      color: #fff;
+      border: 1px solid #333;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Subscribe to EzmCyber Alerts</h1>
-  <p>Stay updated with the latest in cyber defense, tools & breach reports.</p>
-</header>
-
-<nav>
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="services.html">Services</a>
-  <a href="blog.html">Blog</a>
-  <a href="contact.html">Contact</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">EZM Cyber</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link active" href="newsletter.html">Newsletter</a></li>
+        <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
-<main>
+<div class="container mt-5">
+  <h1>Subscribe to Our Cybersecurity Newsletter</h1>
   <form action="https://formsubmit.co/hook.jes@aol.com" method="POST">
-    <!-- Hidden Fields -->
     <input type="hidden" name="_captcha" value="true">
-    <input type="hidden" name="_subject" value="New Newsletter Signup on EzmCyber!">
     <input type="hidden" name="_next" value="https://ezmcyber.xyz/thank-you.html">
+    <input type="hidden" name="_subject" value="New Newsletter Subscriber!">
 
-    <input type="email" name="email" placeholder="Enter your email" required />
-    <br /><br />
-    
-    <!-- reCAPTCHA -->
-    <div class="g-recaptcha" data-sitekey="6LeUc2MpAAAAAH5f0I5sN3Poxxxxxxxxxxxxxx"></div>
-    <br />
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" name="email" class="form-control" id="email" required>
+    </div>
 
-    <button type="submit">Subscribe</button>
+    <div class="g-recaptcha mb-3" data-sitekey="6LfkP5wrAAAAAAqSbtqcz6JEDByYvCxJ3srN_fn6"></div>
+
+    <button type="submit" class="btn btn-primary w-100">Subscribe</button>
   </form>
-</main>
+</div>
 
-<footer>
-  &copy; 2025 EzmCyber by Niffy. All rights reserved.
-</footer>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
