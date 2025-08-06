@@ -3,68 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Contact EZM Cyber - Get in touch for cybersecurity services, consultations, or inquiries." />
-  <title>Contact Us | EZM Cyber</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Contact Niffy | Cybersecurity Consultant | EzmCyber">
+  <title>Contact | EzmCyber</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0b0c10;
+      color: #ffffff;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #45a29e;
+      padding: 10px;
+    }
+    nav a {
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    section {
+      padding: 40px;
+      text-align: center;
+    }
+    h2 {
+      color: #66fcf1;
+    }
+    .social-icons a {
+      margin: 0 10px;
+      color: white;
+      font-size: 24px;
+    }
+    button {
+      background-color: #45a29e;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">EZM Cyber</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-          <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="projects.html">Projects</a>
+  <a href="contact.html">Contact</a>
+  <a href="blog.html">Blog</a>
+</nav>
 
-  <!-- Banner -->
-  <section class="py-5 text-center text-white" style="background: #1b1f24;">
-    <div class="container">
-      <h1 class="display-5 fw-bold">Secure. Protect. Respond.</h1>
-      <p class="lead">Reach out to us for collaborations, services, or any inquiries.</p>
-    </div>
-  </section>
+<section>
+  <h2>Get In Touch</h2>
+  <p>📞 <strong>229-848-6622</strong></p>
+  <p>📧 <a href="mailto:Niffy189@aol.com" style="color:#66fcf1;">Niffy189@aol.com</a></p>
 
-  <!-- Contact Form -->
-  <section class="py-5 bg-light">
-    <div class="container">
-      <h2 class="text-center mb-4">Get In Touch</h2>
-      <form action="https://formspree.io/f/your-form-id" method="POST" class="row g-3">
-        <div class="col-md-6">
-          <label for="name" class="form-label">Full Name</label>
-          <input type="text" class="form-control" id="name" name="name" required />
-        </div>
-        <div class="col-md-6">
-          <label for="email" class="form-label">Email Address</label>
-          <input type="email" class="form-control" id="email" name="_replyto" required />
-        </div>
-        <div class="col-12">
-          <label for="message" class="form-label">Your Message</label>
-          <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
-        </div>
-        <div class="col-12 text-center">
-          <button type="submit" class="btn btn-dark px-4">Send Message</button>
-        </div>
-      </form>
-    </div>
-  </section>
+  <button onclick="window.location.href='mailto:Niffy189@aol.com'">Send Email</button>
 
-  <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-4">
-    <p class="mb-0">© 2025 EZM Cyber | All rights reserved.</p>
-  </footer>
+  <div class="social-icons" style="margin-top: 30px;">
+    <a href="https://x.com/ezmcyber?s=21" target="_blank">🐦</a>
+    <a href="#" target="_blank">📸</a>
+  </div>
+</section>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
