@@ -6,6 +6,7 @@
   <meta name="description" content="Subscribe to Niffy's Cybersecurity Newsletter for weekly tips, breach alerts, and security tools.">
   <title>Newsletter Signup | EzmCyber</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" />
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <style>
     body {
       margin: 0;
@@ -72,8 +73,18 @@
 
 <main>
   <form action="https://formsubmit.co/hook.jes@aol.com" method="POST">
+    <!-- Hidden Fields -->
+    <input type="hidden" name="_captcha" value="true">
+    <input type="hidden" name="_subject" value="New Newsletter Signup on EzmCyber!">
+    <input type="hidden" name="_next" value="https://ezmcyber.xyz/thank-you.html">
+
     <input type="email" name="email" placeholder="Enter your email" required />
     <br /><br />
+    
+    <!-- reCAPTCHA -->
+    <div class="g-recaptcha" data-sitekey="6LeUc2MpAAAAAH5f0I5sN3Poxxxxxxxxxxxxxx"></div>
+    <br />
+
     <button type="submit">Subscribe</button>
   </form>
 </main>
