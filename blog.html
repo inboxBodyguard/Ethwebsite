@@ -3,47 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cybersecurity Blog | EZM Cyber</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="EzmCyber Blog - Insights, Tutorials, and News on Cybersecurity.">
+  <title>Blog | EzmCyber</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0b0c10;
+      color: #ffffff;
+    }
+
+    header, footer {
+      background: #1f2833;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #45a29e;
+      padding: 10px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    section {
+      padding: 40px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .post {
+      background-color: #1f2833;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .post h3 {
+      color: #66fcf1;
+    }
+
+    .post p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .read-more {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 15px;
+      background-color: #45a29e;
+      color: #fff;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .read-more:hover {
+      background-color: #66fcf1;
+      color: #000;
+    }
+
+    footer {
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <h1>Cybersecurity Blog</h1>
-    <p>Explainers, insights & real-world threats.</p>
-  </header>
+<header>
+  <h1>Cybersecurity Blog</h1>
+  <p>Stay updated with tips, strategies, and real-world insights.</p>
+</header>
 
-  <!-- Blog Articles -->
-  <section class="blog-posts">
-    <div class="blog-card">
-      <h3>How Phishing Works (With Examples)</h3>
-      <p>A quick breakdown of real-world phishing attacks, how they operate, and how to protect yourself.</p>
-      <a href="#">Read More</a>
-    </div>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="projects.html">Portfolio</a>
+  <a href="contact.html">Contact</a>
+</nav>
 
-    <div class="blog-card">
-      <h3>Beginner Hacker Roadmap (2025)</h3>
-      <p>Start your ethical hacking journey with this realistic guide, from zero to advanced certifications.</p>
-      <a href="#">Read More</a>
-    </div>
+<section>
+  <div class="post">
+    <h3>🔐 5 Common Cybersecurity Mistakes Beginners Make</h3>
+    <p>Many new cybersecurity enthusiasts fall into common traps. From weak password habits to ignoring phishing simulations, this guide will expose key errors and show how to avoid them...</p>
+    <a href="post1.html" class="read-more">Read More</a>
+  </div>
 
-    <div class="blog-card">
-      <h3>Common Cybersecurity Mistakes in 2025</h3>
-      <p>From using weak passwords to skipping 2FA — these are still major issues. Here's how to fix them.</p>
-      <a href="#">Read More</a>
-    </div>
-  </section>
+  <div class="post">
+    <h3>💻 How Hackers Exploit Web Apps (And How to Defend)</h3>
+    <p>Web application vulnerabilities are everywhere. Learn how XSS, SQL Injection, and logic flaws are exploited—and the techniques used to stop them in real-time environments...</p>
+    <a href="post2.html" class="read-more">Read More</a>
+  </div>
 
-  <!-- Banner (reuse) -->
-  <section class="banner">
-    <h2>Secure. Protect. Respond.</h2>
-  </section>
+  <div class="post">
+    <h3>📈 Building Your Cybersecurity Portfolio from Scratch</h3>
+    <p>Trying to get hired? Start by building real projects that reflect your skills. In this post, you'll learn how to build a cybersecurity portfolio that gets attention from recruiters and hiring managers...</p>
+    <a href="post3.html" class="read-more">Read More</a>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 EZM Cyber. All rights reserved.</p>
-  </footer>
+<footer>
+  &copy; 2025 EzmCyber by Niffy. All rights reserved.
+</footer>
 
 </body>
 </html>
