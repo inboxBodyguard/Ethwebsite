@@ -4,68 +4,93 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Niffy | Cybersecurity Analyst defending digital systems and securing major infrastructures.">
-  <title>Niffy | EzmCyber</title>
+  <title>Niffy | ExCyber</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" />
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
       background-color: #0b0c10;
       color: #ffffff;
     }
+
     header {
       background: #1f2833;
       padding: 20px;
       text-align: center;
     }
+
     header img {
-      max-width: 100%;
-      height: auto;
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
     }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-top: 15px;
+    }
+
     nav {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       background-color: #45a29e;
       padding: 10px;
     }
+
     nav a {
-      margin: 0 15px;
+      margin: 10px;
       color: white;
       text-decoration: none;
       font-weight: bold;
     }
+
     nav a:hover {
       text-decoration: underline;
     }
+
     section {
-      padding: 40px;
+      padding: 40px 20px;
       text-align: center;
     }
+
     h2 {
       color: #66fcf1;
+      font-size: 1.5rem;
     }
+
     .highlight {
       color: #66fcf1;
     }
+
     .social-icons a {
       margin: 0 10px;
       color: white;
       font-size: 24px;
+      text-decoration: none;
     }
+
     footer {
       background: #1f2833;
       padding: 10px;
       text-align: center;
       font-size: 14px;
     }
+
     input[type="text"] {
       padding: 10px;
-      width: 70%;
+      width: 90%;
       max-width: 400px;
       border: none;
       border-radius: 5px;
       margin-top: 10px;
     }
+
     button {
       padding: 10px 20px;
       margin-top: 10px;
@@ -75,10 +100,28 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    .banner {
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
+
+    #resultMessage {
+      margin-top: 10px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav a {
+        margin: 8px 0;
+      }
+
+      section {
+        padding: 30px 10px;
+      }
     }
   </style>
 </head>
@@ -86,7 +129,7 @@
 
 <header>
   <img src="banner.png" alt="Niffy Cyber Banner" class="banner" />
-  <h1>Welcome to <span class="highlight">EzmCyber</span> — Powered by Niffy</h1>
+  <h1>Welcome to <span class="highlight">Ex Cyber</span> — Home of Real World Coding and Security</h1>
 </header>
 
 <nav>
@@ -108,8 +151,8 @@
     <input type="text" id="urlInput" placeholder="Paste suspicious link here" required />
     <br />
     <button type="submit">Verify</button>
+    <p id="resultMessage"></p>
   </form>
-  <p id="resultMessage"></p>
 </section>
 
 <section id="contact">
@@ -122,20 +165,20 @@
 </section>
 
 <footer>
-  &copy; 2025 EzmCyber by Niffy. All rights reserved.
+  &copy; 2025 ExCyber by Niffy. All rights reserved.
 </footer>
 
 <!-- Tawk.to Live Chat -->
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-  s1.async=true;
-  s1.src='https://embed.tawk.to/68863b0ddb7610192eeac6b0/1j165dcdr';
-  s1.charset='UTF-8';
-  s1.setAttribute('crossorigin','*');
-  s0.parentNode.insertBefore(s1,s0);
-})();
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/68863b0ddb7610192eeac6b0/1j165dcdr';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  })();
 </script>
 
 <!-- Suspicious Link Verifier Script -->
