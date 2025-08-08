@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="EzmCyber - Secure, Protect, and Respond.">
-  <title>EzmCyber - Cybersecurity & Digital Protection</title>
+  <meta name="description" content="Niffy | Cybersecurity Analyst defending digital systems and securing major infrastructures.">
+  <title>Niffy | EzmCyber</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
     body {
       margin: 0;
@@ -19,6 +18,10 @@
       padding: 20px;
       text-align: center;
     }
+    header img {
+      max-width: 100%;
+      height: auto;
+    }
     nav {
       display: flex;
       flex-wrap: wrap;
@@ -27,7 +30,7 @@
       padding: 10px;
     }
     nav a {
-      margin: 10px;
+      margin: 0 15px;
       color: white;
       text-decoration: none;
       font-weight: bold;
@@ -37,46 +40,69 @@
     }
     section {
       padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
+      text-align: center;
     }
-    h1, h2 {
+    h2 {
       color: #66fcf1;
     }
-    .banner {
-      background: #1f2833;
-      text-align: center;
-      padding: 50px 20px;
-      font-size: 28px;
+    .highlight {
+      color: #66fcf1;
     }
-    form input, form button {
-      padding: 10px;
-      margin-top: 10px;
-      width: 100%;
-      max-width: 400px;
-      display: block;
-    }
-    .social-links {
-      margin-top: 30px;
-      text-align: center;
-    }
-    .social-links a {
+    .social-icons a {
       margin: 0 10px;
-      color: #66fcf1;
-      font-size: 20px;
+      color: white;
+      font-size: 24px;
     }
     footer {
       background: #1f2833;
-      padding: 20px;
+      padding: 10px;
       text-align: center;
       font-size: 14px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 70%;
+      max-width: 400px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      background-color: #45a29e;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .banner {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+    }
+    .blog-card {
+      background: #1f2833;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .blog-card p {
+      line-height: 1.6;
+    }
+    .read-more {
+      color: #66fcf1;
+      text-decoration: underline;
+      display: inline-block;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Welcome to EZ Cyber – Home of Real-World Coding & Security</h1>
+  <img src="banner.png" alt="Niffy Cyber Banner" class="banner" />
+  <h1>Welcome to <span class="highlight">EzmCyber</span> — Powered by Niffy</h1>
 </header>
 
 <nav>
@@ -84,94 +110,80 @@
   <a href="about.html">About</a>
   <a href="services.html">Services</a>
   <a href="projects.html">Portfolio</a>
-  <a href="blog.html">Blog</a>
   <a href="contact.html">Contact</a>
   <a href="github.html">GitHub</a>
+  <a href="blog.html">Blog</a>
 </nav>
 
-<div class="banner">
-  <h2>Secure, Protect, and Respond</h2>
-</div>
-
-<section>
-  <h2>Welcome Message</h2>
-  <p>
-    At EZMCyber, our mission is to protect digital spaces while educating the next generation of ethical hackers and coders. Our platform combines hands-on learning, security insights, and real-time support. Whether you're a beginner or an experienced developer, you're in the right place to grow your cyber skills.
-  </p>
+<section id="home">
+  <h2>Cybersecurity is my mission.</h2>
+  <p>I defend critical infrastructure, secure systems from breach, and respond in minutes — not hours. If it’s digital, I can protect it.</p>
 </section>
 
 <section>
-  <h2>Suspicious Link Verifier</h2>
-  <form id="linkForm">
-    <input type="url" id="linkInput" placeholder="Paste a suspicious link here..." required />
-    <button type="submit">Verify Link</button>
-    <p id="linkResult"></p>
+  <h2>🔗 Verify a Suspicious Link</h2>
+  <form onsubmit="event.preventDefault(); checkLink();">
+    <input type="text" id="urlInput" placeholder="Paste suspicious link here" required />
+    <br />
+    <button type="submit">Verify</button>
   </form>
+  <p id="resultMessage"></p>
+</section>
+
+<section id="contact">
+  <h2>Contact Me</h2>
+  <p>📞 229-848-6622</p>
+  <div class="social-icons">
+    <a href="https://x.com/ezmcyber?s=21" target="_blank">🐦</a>
+    <a href="#" target="_blank">📸</a>
+    <a href="https://github.com/ethan89072/Ethwebsite" target="_blank">💻 GitHub</a>
+  </div>
 </section>
 
 <section>
-  <h2>Contact</h2>
-  <p>For inquiries, use the contact page or chat with us live below.</p>
+  <h2>📰 Latest Blog</h2>
+  <div class="blog-card">
+    <h3>How Hackers Target Small Businesses in 2025</h3>
+    <p>Many small businesses think they’re too small to be hacked — until it's too late. In this blog post, I break down common attack vectors in 2025 like phishing-as-a-service, ransomware botnets...</p>
+    <a class="read-more" href="blog.html">Read More →</a>
+  </div>
 </section>
 
-<div class="social-links">
-  <a href="https://twitter.com/yourhandle" target="_blank"><i class="fab fa-twitter"></i></a>
-  <a href="https://github.com/ethan89072" target="_blank"><i class="fab fa-github"></i></a>
-  <a href="https://linkedin.com/in/yourprofile" target="_blank"><i class="fab fa-linkedin"></i></a>
-</div>
+<footer>
+  &copy; 2025 EzmCyber by Niffy. All rights reserved.
+</footer>
 
-<!-- Live chat via Tawk.to -->
+<!-- Tawk.to Live Chat -->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/000000000000000000000/default';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/68863b0ddb7610192eeac6b0/1j165dcdr';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 
-<!-- Link Detection Script -->
+<!-- Suspicious Link Verifier Script -->
 <script>
-  document.getElementById("linkForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-    const link = document.getElementById("linkInput").value;
-    const result = document.getElementById("linkResult");
-    try {
-      const url = new URL(link);
-      const suspicious = ["bit.ly", "tinyurl", "ow.ly", "grabify", "iplogger"];
-      const host = url.hostname.toLowerCase();
-      if (suspicious.some(s => host.includes(s))) {
-        result.textContent = "⚠️ Warning: This link may be suspicious or shortened.";
-        result.style.color = "orange";
-      } else {
-        result.textContent = "✅ This link appears safe.";
-        result.style.color = "lightgreen";
-      }
-    } catch {
-      result.textContent = "❌ Invalid URL format.";
+  function checkLink() {
+    const url = document.getElementById("urlInput").value;
+    const isSuspicious = /free|giveaway|\.ru|\.tk|click|bit\.ly/i.test(url);
+    const result = document.getElementById("resultMessage");
+    if (isSuspicious) {
+      result.textContent = "⚠️ Warning: This link appears suspicious!";
       result.style.color = "red";
+    } else {
+      result.textContent = "✅ Link looks safe.";
+      result.style.color = "lightgreen";
     }
-  });
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 3000);
+  }
 </script>
 
-<footer>
-  &copy; 2025 EZMCyber. All rights reserved.
-</footer>
-<!-- Start of Tawk.to Script -->
-<script type="text/javascript">
-var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-(function(){
-var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-s1.async = true;
-s1.src = 'https://embed.tawk.to/PROPERTY_ID_HERE/default';
-s1.charset = 'UTF-8';
-s1.setAttribute('crossorigin', '*');
-s0.parentNode.insertBefore(s1, s0);
-})();
-</script>
-<!-- End of Tawk.to Script -->
 </body>
 </html>
