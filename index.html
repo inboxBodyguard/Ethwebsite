@@ -3,38 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Niffy | Cybersecurity Analyst defending digital systems and securing major infrastructures.">
-  <title>Niffy | ExCyber</title>
+  <meta name="description" content="EzmCyber - Secure, Protect, and Respond.">
+  <title>EzmCyber - Cybersecurity & Digital Protection</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
       background-color: #0b0c10;
       color: #ffffff;
     }
-
     header {
       background: #1f2833;
       padding: 20px;
       text-align: center;
     }
-
-    header img {
-      width: 100%;
-      max-height: 300px;
-      object-fit: cover;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      margin-top: 15px;
-    }
-
     nav {
       display: flex;
       flex-wrap: wrap;
@@ -42,94 +26,57 @@
       background-color: #45a29e;
       padding: 10px;
     }
-
     nav a {
       margin: 10px;
       color: white;
       text-decoration: none;
       font-weight: bold;
     }
-
     nav a:hover {
       text-decoration: underline;
     }
-
     section {
       padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1, h2 {
+      color: #66fcf1;
+    }
+    .banner {
+      background: #1f2833;
+      text-align: center;
+      padding: 50px 20px;
+      font-size: 28px;
+    }
+    form input, form button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 400px;
+      display: block;
+    }
+    .social-links {
+      margin-top: 30px;
       text-align: center;
     }
-
-    h2 {
-      color: #66fcf1;
-      font-size: 1.5rem;
-    }
-
-    .highlight {
-      color: #66fcf1;
-    }
-
-    .social-icons a {
+    .social-links a {
       margin: 0 10px;
-      color: white;
-      font-size: 24px;
-      text-decoration: none;
+      color: #66fcf1;
+      font-size: 20px;
     }
-
     footer {
       background: #1f2833;
-      padding: 10px;
+      padding: 20px;
       text-align: center;
       font-size: 14px;
-    }
-
-    input[type="text"] {
-      padding: 10px;
-      width: 90%;
-      max-width: 400px;
-      border: none;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-
-    button {
-      padding: 10px 20px;
-      margin-top: 10px;
-      background-color: #45a29e;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #resultMessage {
-      margin-top: 10px;
-    }
-
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.4rem;
-      }
-
-      nav {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      nav a {
-        margin: 8px 0;
-      }
-
-      section {
-        padding: 30px 10px;
-      }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <img src="banner.png" alt="Niffy Cyber Banner" class="banner" />
-  <h1>Welcome to <span class="highlight">Ex Cyber</span> — Home of Real World Coding and Security</h1>
+  <h1>Welcome to EZ Cyber – Home of Real-World Coding & Security</h1>
 </header>
 
 <nav>
@@ -137,68 +84,82 @@
   <a href="about.html">About</a>
   <a href="services.html">Services</a>
   <a href="projects.html">Portfolio</a>
+  <a href="blog.html">Blog</a>
   <a href="contact.html">Contact</a>
+  <a href="github.html">GitHub</a>
 </nav>
 
-<section id="home">
-  <h2>Cybersecurity is my mission.</h2>
-  <p>I defend critical infrastructure, secure systems from breach, and respond in minutes — not hours. If it’s digital, I can protect it.</p>
+<div class="banner">
+  <h2>Secure, Protect, and Respond</h2>
+</div>
+
+<section>
+  <h2>Welcome Message</h2>
+  <p>
+    At EZMCyber, our mission is to protect digital spaces while educating the next generation of ethical hackers and coders. Our platform combines hands-on learning, security insights, and real-time support. Whether you're a beginner or an experienced developer, you're in the right place to grow your cyber skills.
+  </p>
 </section>
 
 <section>
-  <h2>🔗 Verify a Suspicious Link</h2>
-  <form onsubmit="event.preventDefault(); checkLink();">
-    <input type="text" id="urlInput" placeholder="Paste suspicious link here" required />
-    <br />
-    <button type="submit">Verify</button>
-    <p id="resultMessage"></p>
+  <h2>Suspicious Link Verifier</h2>
+  <form id="linkForm">
+    <input type="url" id="linkInput" placeholder="Paste a suspicious link here..." required />
+    <button type="submit">Verify Link</button>
+    <p id="linkResult"></p>
   </form>
 </section>
 
-<section id="contact">
-  <h2>Contact Me</h2>
-  <p>📞 229-848-6622<br/>📧 Niffy189@aol.com</p>
-  <div class="social-icons">
-    <a href="https://x.com/ezmcyber?s=21" target="_blank">🐦</a>
-    <a href="#" target="_blank">📸</a>
-  </div>
+<section>
+  <h2>Contact</h2>
+  <p>For inquiries, use the contact page or chat with us live below.</p>
 </section>
 
-<footer>
-  &copy; 2025 ExCyber by Niffy. All rights reserved.
-</footer>
+<div class="social-links">
+  <a href="https://twitter.com/yourhandle" target="_blank"><i class="fab fa-twitter"></i></a>
+  <a href="https://github.com/ethan89072" target="_blank"><i class="fab fa-github"></i></a>
+  <a href="https://linkedin.com/in/yourprofile" target="_blank"><i class="fab fa-linkedin"></i></a>
+</div>
 
-<!-- Tawk.to Live Chat -->
+<!-- Live chat via Tawk.to -->
 <script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/68863b0ddb7610192eeac6b0/1j165dcdr';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-  })();
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/000000000000000000000/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
 </script>
 
-<!-- Suspicious Link Verifier Script -->
+<!-- Link Detection Script -->
 <script>
-  function checkLink() {
-    const url = document.getElementById("urlInput").value;
-    const isSuspicious = /free|giveaway|\.ru|\.tk|click|bit\.ly/i.test(url);
-    const result = document.getElementById("resultMessage");
-    if (isSuspicious) {
-      result.textContent = "⚠️ Warning: This link appears suspicious!";
+  document.getElementById("linkForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const link = document.getElementById("linkInput").value;
+    const result = document.getElementById("linkResult");
+    try {
+      const url = new URL(link);
+      const suspicious = ["bit.ly", "tinyurl", "ow.ly", "grabify", "iplogger"];
+      const host = url.hostname.toLowerCase();
+      if (suspicious.some(s => host.includes(s))) {
+        result.textContent = "⚠️ Warning: This link may be suspicious or shortened.";
+        result.style.color = "orange";
+      } else {
+        result.textContent = "✅ This link appears safe.";
+        result.style.color = "lightgreen";
+      }
+    } catch {
+      result.textContent = "❌ Invalid URL format.";
       result.style.color = "red";
-    } else {
-      result.textContent = "✅ Link looks safe.";
-      result.style.color = "lightgreen";
     }
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 3000);
-  }
+  });
 </script>
+
+<footer>
+  &copy; 2025 EZMCyber. All rights reserved.
+</footer>
 
 </body>
 </html>
