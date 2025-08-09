@@ -1,189 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Niffy | Cybersecurity Analyst defending digital systems and securing major infrastructures.">
-  <title>Niffy | EzmCyber</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background-color: #0b0c10;
-      color: #ffffff;
-    }
-    header {
-      background: #1f2833;
-      padding: 20px;
-      text-align: center;
-    }
-    header img {
-      max-width: 100%;
-      height: auto;
-    }
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      background-color: #45a29e;
-      padding: 10px;
-    }
-    nav a {
-      margin: 0 15px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    section {
-      padding: 40px 20px;
-      text-align: center;
-    }
-    h2 {
-      color: #66fcf1;
-    }
-    .highlight {
-      color: #66fcf1;
-    }
-    .social-icons a {
-      margin: 0 10px;
-      color: white;
-      font-size: 24px;
-    }
-    footer {
-      background: #1f2833;
-      padding: 10px;
-      text-align: center;
-      font-size: 14px;
-    }
-    input[type="text"] {
-      padding: 10px;
-      width: 70%;
-      max-width: 400px;
-      border: none;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-    button {
-      padding: 10px 20px;
-      margin-top: 10px;
-      background-color: #45a29e;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .banner {
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
-    }
-    .blog-card {
-      background: #1f2833;
-      padding: 20px;
-      border-radius: 8px;
-      margin-top: 20px;
-    }
-    .blog-card p {
-      line-height: 1.6;
-    }
-    .read-more {
-      color: #66fcf1;
-      text-decoration: underline;
-      display: inline-block;
-      margin-top: 10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EZM Cybersecurity</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<header>
-  <img src="banner.png" alt="Niffy Cyber Banner" class="banner" />
-  <h1>Welcome to <span class="highlight">EzmCyber</span> — Powered by Niffy</h1>
-</header>
-
-<nav>
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="services.html">Services</a>
-  <a href="projects.html">Portfolio</a>
-  <a href="contact.html">Contact</a>
-  <a href="github.html">GitHub</a>
-  <a href="blog.html">Blog</a>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">EZM Cyber</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
-<section id="home">
-  <h2>Cybersecurity is my mission.</h2>
-  <p>I defend critical infrastructure, secure systems from breach, and respond in minutes — not hours. If it’s digital, I can protect it.</p>
-</section>
+<!-- Banner -->
+<header class="bg-primary text-white text-center py-5">
+  <div class="container">
+    <h1 class="display-4">Secure, Protect, and Respond</h1>
+    <p class="lead">Your trusted partner in cybersecurity solutions.</p>
+  </div>
+</header>
 
-<section>
-  <h2>🔗 Verify a Suspicious Link</h2>
-  <form onsubmit="event.preventDefault(); checkLink();">
-    <input type="text" id="urlInput" placeholder="Paste suspicious link here" required />
-    <br />
-    <button type="submit">Verify</button>
-  </form>
-  <p id="resultMessage"></p>
-</section>
-
-<section id="contact">
-  <h2>Contact Me</h2>
-  <p>📞 229-848-6622</p>
-  <div class="social-icons">
-    <a href="https://x.com/ezmcyber?s=21" target="_blank">🐦</a>
-    <a href="#" target="_blank">📸</a>
-    <a href="https://github.com/ethan89072/Ethwebsite" target="_blank">💻 GitHub</a>
+<!-- Blog Section -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Latest Blog Posts</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="https://via.placeholder.com/600x400?text=Cybersecurity+Mistakes" class="card-img-top" alt="Cybersecurity Mistakes">
+          <div class="card-body">
+            <h5 class="card-title">Common Cybersecurity Mistakes Beginners Make</h5>
+            <p class="card-text">Discover the most frequent security errors new professionals make and how to avoid them in your journey...</p>
+            <a href="blog-mistakes.html" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="https://via.placeholder.com/600x400?text=Web+App+Security" class="card-img-top" alt="Web App Security">
+          <div class="card-body">
+            <h5 class="card-title">How Hackers Exploit Web Apps and How to Defend</h5>
+            <p class="card-text">An in-depth look at the common vulnerabilities in web applications and proven strategies to defend...</p>
+            <a href="blog-webapps.html" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="https://via.placeholder.com/600x400?text=Cybersecurity+Portfolio" class="card-img-top" alt="Cybersecurity Portfolio">
+          <div class="card-body">
+            <h5 class="card-title">Build Your Cybersecurity Portfolio from Scratch</h5>
+            <p class="card-text">Step-by-step guidance to creating a portfolio that will impress employers and showcase your skills...</p>
+            <a href="blog-portfolio.html" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section>
-  <h2>📰 Latest Blog</h2>
-  <div class="blog-card">
-    <h3>How Hackers Target Small Businesses in 2025</h3>
-    <p>Many small businesses think they’re too small to be hacked — until it's too late. In this blog post, I break down common attack vectors in 2025 like phishing-as-a-service, ransomware botnets...</p>
-    <a class="read-more" href="blog.html">Read More →</a>
-  </div>
-</section>
-
-<footer>
-  &copy; 2025 EzmCyber by Niffy. All rights reserved.
+<footer class="bg-dark text-white text-center py-3">
+  <p>&copy; 2025 EZM Cybersecurity. All Rights Reserved.</p>
 </footer>
 
-<!-- Tawk.to Live Chat -->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-  s1.async=true;
-  s1.src='https://embed.tawk.to/68863b0ddb7610192eeac6b0/1j165dcdr';
-  s1.charset='UTF-8';
-  s1.setAttribute('crossorigin','*');
-  s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-
-<!-- Suspicious Link Verifier Script -->
-<script>
-  function checkLink() {
-    const url = document.getElementById("urlInput").value;
-    const isSuspicious = /free|giveaway|\.ru|\.tk|click|bit\.ly/i.test(url);
-    const result = document.getElementById("resultMessage");
-    if (isSuspicious) {
-      result.textContent = "⚠️ Warning: This link appears suspicious!";
-      result.style.color = "red";
-    } else {
-      result.textContent = "✅ Link looks safe.";
-      result.style.color = "lightgreen";
-    }
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 3000);
-  }
-</script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
