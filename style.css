@@ -25,36 +25,15 @@ nav a:hover {
   text-decoration: underline;
 }
 
-.banner-section {
-  position: relative;
-  min-height: 400px;
-  background-image: url('images/banner.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: white;
-  display: flex;
-  align-items: center;
-}
-
-.banner-section .overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0,0,0,0.5);
-  z-index: 0;
-}
-
-.banner-section .container {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-}
-
-section.py-5 {
+section {
   padding: 40px 20px;
+  text-align: center;
   max-width: 1000px;
   margin: 0 auto;
-  text-align: center;
+}
+
+h2 {
+  color: #66fcf1;
 }
 
 footer {
@@ -64,7 +43,8 @@ footer {
   font-size: 14px;
 }
 
-/* Responsive */
+/* Responsive styles */
+
 @media (max-width: 599px) {
   nav {
     flex-direction: column;
@@ -74,7 +54,7 @@ footer {
     margin: 10px 0;
     font-size: 18px;
   }
-  section.py-5 {
+  section {
     padding: 20px 10px;
   }
 }
@@ -84,7 +64,7 @@ footer {
     margin: 0 12px;
     font-size: 20px;
   }
-  section.py-5 {
+  section {
     padding: 30px 15px;
   }
 }
