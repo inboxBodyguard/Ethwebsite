@@ -5,23 +5,12 @@ body {
   color: #ffffff;
 }
 
-header {
-  background: #1f2833;
-  padding: 20px;
-  text-align: center;
-}
-
-header img {
-  max-width: 100%;
-  height: auto;
-}
-
 nav {
   display: flex;
   justify-content: center;
   background-color: #45a29e;
   padding: 10px;
-  flex-wrap: wrap; /* allow wrapping on small screens */
+  flex-wrap: wrap;
 }
 
 nav a {
@@ -29,32 +18,43 @@ nav a {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  white-space: nowrap; /* keep nav text on one line */
+  white-space: nowrap;
 }
 
 nav a:hover {
   text-decoration: underline;
 }
 
-section {
-  padding: 40px 20px; /* smaller padding on sides */
+.banner-section {
+  position: relative;
+  min-height: 400px;
+  background-image: url('images/banner.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.banner-section .overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 0;
+}
+
+.banner-section .container {
+  position: relative;
+  z-index: 1;
   text-align: center;
+}
+
+section.py-5 {
+  padding: 40px 20px;
   max-width: 1000px;
   margin: 0 auto;
-}
-
-h2 {
-  color: #66fcf1;
-}
-
-.highlight {
-  color: #66fcf1;
-}
-
-.social-icons a {
-  margin: 0 10px;
-  color: white;
-  font-size: 24px;
+  text-align: center;
 }
 
 footer {
@@ -64,35 +64,7 @@ footer {
   font-size: 14px;
 }
 
-input[type="text"] {
-  padding: 10px;
-  width: 70%;
-  max-width: 400px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-  box-sizing: border-box;
-}
-
-button {
-  padding: 10px 20px;
-  margin-top: 10px;
-  background-color: #45a29e;
-  border: none;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.banner {
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-}
-
-/* --- Responsive styles --- */
-
-/* Small devices (phones, less than 600px) */
+/* Responsive */
 @media (max-width: 599px) {
   nav {
     flex-direction: column;
@@ -102,24 +74,17 @@ button {
     margin: 10px 0;
     font-size: 18px;
   }
-  section {
+  section.py-5 {
     padding: 20px 10px;
-  }
-  input[type="text"] {
-    width: 90%;
   }
 }
 
-/* Medium devices (tablets, 600px to 900px) */
 @media (min-width: 600px) and (max-width: 899px) {
   nav a {
     margin: 0 12px;
     font-size: 20px;
   }
-  section {
+  section.py-5 {
     padding: 30px 15px;
-  }
-  input[type="text"] {
-    width: 80%;
   }
 }
