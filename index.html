@@ -37,12 +37,15 @@
     </div>
   </nav>
 
-  <!-- Banner -->
+  <!-- Banner with overlay -->
   <section
-    class="py-5 text-center text-light"
-    style="background-image: url('images/banner.jpg'); background-position: center; background-repeat: no-repeat; background-size: cover; min-height: 300px;"
+    class="py-5 text-light position-relative"
+    style="background: url('images/banner.jpg') center/cover no-repeat; min-height: 300px;"
   >
-    <div class="container">
+    <div
+      style="position: absolute; inset: 0; background-color: rgba(0, 0, 0, 0.6);"
+    ></div>
+    <div class="container position-relative" style="z-index: 1;">
       <h1 class="fw-bold">Secure, Protect, and Respond</h1>
       <p class="lead">Your cybersecurity partner for safety and growth.</p>
     </div>
