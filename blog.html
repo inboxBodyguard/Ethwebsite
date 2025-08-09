@@ -1,123 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="EzmCyber Blog - Insights, Tutorials, and News on Cybersecurity.">
-  <title>Blog | EzmCyber</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background-color: #0b0c10;
-      color: #ffffff;
-    }
-
-    header, footer {
-      background: #1f2833;
-      padding: 20px;
-      text-align: center;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #45a29e;
-      padding: 10px;
-    }
-
-    nav a {
-      margin: 0 15px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    section {
-      padding: 40px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .post {
-      background-color: #1f2833;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-
-    .post h3 {
-      color: #66fcf1;
-    }
-
-    .post p {
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .read-more {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 15px;
-      background-color: #45a29e;
-      color: #fff;
-      border-radius: 5px;
-      text-decoration: none;
-    }
-
-    .read-more:hover {
-      background-color: #66fcf1;
-      color: #000;
-    }
-
-    footer {
-      font-size: 14px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EZM Cyber - Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { padding-top: 70px; }
+        .blog-card img { height: 200px; object-fit: cover; }
+    </style>
 </head>
 <body>
 
-<header>
-  <h1>Cybersecurity Blog</h1>
-  <p>Stay updated with tips, strategies, and real-world insights.</p>
-</header>
-
-<nav>
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="services.html">Services</a>
-  <a href="projects.html">Portfolio</a>
-  <a href="contact.html">Contact</a>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">EZM Cyber</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                <li class="nav-item"><a class="nav-link active" href="blog.html">Blog</a></li>
+                <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
+            </ul>
+        </div>
+    </div>
 </nav>
 
-<section>
-  <div class="post">
-    <h3>🔐 5 Common Cybersecurity Mistakes Beginners Make</h3>
-    <p>Many new cybersecurity enthusiasts fall into common traps. From weak password habits to ignoring phishing simulations, this guide will expose key errors and show how to avoid them...</p>
-    <a href="post1.html" class="read-more">Read More</a>
-  </div>
+<!-- Banner -->
+<div class="bg-primary text-white text-center py-5">
+    <h1>Secure, Protect, and Respond</h1>
+    <p>Your trusted source for cybersecurity insights</p>
+</div>
 
-  <div class="post">
-    <h3>💻 How Hackers Exploit Web Apps (And How to Defend)</h3>
-    <p>Web application vulnerabilities are everywhere. Learn how XSS, SQL Injection, and logic flaws are exploited—and the techniques used to stop them in real-time environments...</p>
-    <a href="post2.html" class="read-more">Read More</a>
-  </div>
+<!-- Blog Section -->
+<div class="container my-5">
+    <div class="row g-4">
 
-  <div class="post">
-    <h3>📈 Building Your Cybersecurity Portfolio from Scratch</h3>
-    <p>Trying to get hired? Start by building real projects that reflect your skills. In this post, you'll learn how to build a cybersecurity portfolio that gets attention from recruiters and hiring managers...</p>
-    <a href="post3.html" class="read-more">Read More</a>
-  </div>
-</section>
+        <!-- Blog 1 -->
+        <div class="col-md-4">
+            <div class="card blog-card shadow-sm">
+                <img src="images/blog-mistake.jpg" class="card-img-top" alt="Cybersecurity Mistakes">
+                <div class="card-body">
+                    <h5 class="card-title">Common Cybersecurity Mistakes Beginners Make</h5>
+                    <p class="card-text">Avoid these pitfalls to keep your systems and data safe from the start...</p>
+                    <a href="blog-mistake.html" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
 
-<footer>
-  &copy; 2025 EzmCyber by Niffy. All rights reserved.
+        <!-- Blog 2 -->
+        <div class="col-md-4">
+            <div class="card blog-card shadow-sm">
+                <img src="images/blog-webapps.jpg" class="card-img-top" alt="Web App Security">
+                <div class="card-body">
+                    <h5 class="card-title">How Hackers Exploit Web Apps and How to Defend</h5>
+                    <p class="card-text">Understand the tactics hackers use and the measures you can take to stop them...</p>
+                    <a href="blog-webapps.html" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog 3 -->
+        <div class="col-md-4">
+            <div class="card blog-card shadow-sm">
+                <img src="images/blog-portfolio.jpg" class="card-img-top" alt="Cybersecurity Portfolio">
+                <div class="card-body">
+                    <h5 class="card-title">Build Your Cybersecurity Portfolio from Scratch</h5>
+                    <p class="card-text">Step-by-step guide to showcase your skills and attract career opportunities...</p>
+                    <a href="blog-portfolio.html" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2025 EZM Cyber. All Rights Reserved.</p>
 </footer>
 
+<!-- Live Chat (Tawk.to) -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/YOUR_TAWK_TO_ID/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
