@@ -1,105 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EZM Cyber - Blog</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { padding-top: 70px; }
-        .blog-card img { height: 200px; object-fit: cover; }
-    </style>
-</head>
-<body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">EZM Cyber</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-                <li class="nav-item"><a class="nav-link active" href="blog.html">Blog</a></li>
-                <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
-                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
-            </ul>
+<section id="blog" class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">Latest Blog Posts</h2>
+    <div class="row">
+      <!-- Blog Post 1 -->
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="images/blog1.PNG" class="card-img-top" alt="Common Cybersecurity Mistakes">
+          <div class="card-body">
+            <h5 class="card-title">Common Cybersecurity Mistakes Beginners Make</h5>
+            <p class="card-text">Learn the most common security mistakes and how to avoid them as a beginner in the cybersecurity field.</p>
+            <a href="blog-post1.html" class="btn btn-primary">Read More</a>
+          </div>
         </div>
+      </div>
+
+      <!-- Blog Post 2 -->
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="images/blog2.PNG" class="card-img-top" alt="How Hackers Exploit Web Apps">
+          <div class="card-body">
+            <h5 class="card-title">How Hackers Exploit Web Apps and How to Defend</h5>
+            <p class="card-text">Understand how attackers target web applications and the steps you can take to protect them.</p>
+            <a href="blog-post2.html" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog Post 3 -->
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="images/blog3.PNG" class="card-img-top" alt="Build Your Cybersecurity Portfolio">
+          <div class="card-body">
+            <h5 class="card-title">Build Your Cybersecurity Portfolio from Scratch</h5>
+            <p class="card-text">A step-by-step guide to creating a strong cybersecurity portfolio to land your first role.</p>
+            <a href="blog-post3.html" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+      </div>
     </div>
-</nav>
-
-<!-- Banner -->
-<div class="bg-primary text-white text-center py-5">
-    <h1>Secure, Protect, and Respond</h1>
-    <p>Your trusted source for cybersecurity insights</p>
-</div>
-
-<!-- Blog Section -->
-<div class="container my-5">
-    <div class="row g-4">
-
-        <!-- Blog 1 -->
-        <div class="col-md-4">
-            <div class="card blog-card shadow-sm">
-                <img src="images/blog-mistake.jpg" class="card-img-top" alt="Cybersecurity Mistakes">
-                <div class="card-body">
-                    <h5 class="card-title">Common Cybersecurity Mistakes Beginners Make</h5>
-                    <p class="card-text">Avoid these pitfalls to keep your systems and data safe from the start...</p>
-                    <a href="blog-mistake.html" class="btn btn-primary">Read More</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Blog 2 -->
-        <div class="col-md-4">
-            <div class="card blog-card shadow-sm">
-                <img src="images/blog-webapps.jpg" class="card-img-top" alt="Web App Security">
-                <div class="card-body">
-                    <h5 class="card-title">How Hackers Exploit Web Apps and How to Defend</h5>
-                    <p class="card-text">Understand the tactics hackers use and the measures you can take to stop them...</p>
-                    <a href="blog-webapps.html" class="btn btn-primary">Read More</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Blog 3 -->
-        <div class="col-md-4">
-            <div class="card blog-card shadow-sm">
-                <img src="images/blog-portfolio.jpg" class="card-img-top" alt="Cybersecurity Portfolio">
-                <div class="card-body">
-                    <h5 class="card-title">Build Your Cybersecurity Portfolio from Scratch</h5>
-                    <p class="card-text">Step-by-step guide to showcase your skills and attract career opportunities...</p>
-                    <a href="blog-portfolio.html" class="btn btn-primary">Read More</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- Footer -->
-<footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2025 EZM Cyber. All Rights Reserved.</p>
-</footer>
-
-<!-- Live Chat (Tawk.to) -->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/YOUR_TAWK_TO_ID/default';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+  </div>
+</section>
