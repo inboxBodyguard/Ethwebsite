@@ -1,49 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GitHub Projects | EZM Cyber</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects - EZM Cyber</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <h1>Open Source Projects</h1>
-    <p>Tools & scripts from EZM Cyber to help secure your systems.</p>
-  </header>
-
-  <!-- Projects Section -->
-  <section class="projects">
-    <div class="project-card">
-      <h3>🔐 PhishDetect</h3>
-      <p>A real-time email phishing detector built with Python and Flask.</p>
-      <a href="https://github.com/your-github/phishdetect" target="_blank">View on GitHub</a>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">EZM Cyber</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link active" href="projects.html">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://github.com/ethan89072" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <div class="project-card">
-      <h3>🛡️ EZM Firewall Config</h3>
-      <p>Custom hardening script for Linux firewalls and intrusion prevention systems.</p>
-      <a href="https://github.com/your-github/firewall-config" target="_blank">View on GitHub</a>
-    </div>
-
-    <div class="project-card">
-      <h3>💻 Ethical Hacking Lab Setup</h3>
-      <p>Guide + automation script for setting up a safe hacking lab with Kali Linux.</p>
-      <a href="https://github.com/your-github/hacking-lab" target="_blank">View on GitHub</a>
+  <!-- Banner -->
+  <section class="py-5 bg-primary text-white text-center">
+    <div class="container">
+      <h1 class="display-4">Our Projects</h1>
+      <p class="lead mb-0">Explore our cybersecurity tools, experiments, and real-world applications.</p>
     </div>
   </section>
 
-  <!-- Banner (keep it) -->
-  <section class="banner">
-    <h2>Secure. Protect. Respond.</h2>
+  <!-- Project List -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-4">
+
+        <!-- Project 1 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Project 1</h5>
+              <p class="card-text">An advanced cybersecurity project designed to detect and mitigate threats in real time.</p>
+              <a href="project1.html" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Project 2</h5>
+              <p class="card-text">A powerful tool for analyzing network traffic and preventing malicious intrusions.</p>
+              <a href="project2.html" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </section>
 
   <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 EZM Cyber. Built for the community.</p>
+  <footer class="bg-dark text-white text-center py-3">
+    <p class="mb-0">&copy; 2025 EZM Cyber. All rights reserved.</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
