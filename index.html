@@ -150,7 +150,38 @@
       s0.parentNode.insertBefore(s1,s0);
     })();
   </script>
+<script>
+const scrollElements = document.querySelectorAll('.scroll-fade'); 
+// Grabs all elements with the class 'scroll-fade' on the page
 
+const elementInView = (el, dividend = 1) => {
+  const elementTop = el.getBoundingClientRect().top; 
+  // Finds the distance from the top of the viewport to the element
+  return (
+    elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+  ); 
+  // Returns true if the element is inside the visible part of the screen
+};
+
+const displayScrollElement = (element) => {
+  element.classList.add('visible'); 
+  // Adds the 'visible' class to trigger CSS animation
+};
+
+const handleScrollAnimation = () => {
+  scrollElements.forEach(el => {
+    if (elementInView(el, 1.25)) { 
+      // If element is in view (slightly before full view), animate it
+      displayScrollElement(el);
+    }
+  });
+};
+
+window.addEventListener('scroll', handleScrollAnimation); 
+// Runs the function every time the user scrolls
+window.addEventListener('load', handleScrollAnimation); 
+// Runs once when page loads in case some elements are already visible
+</script>
   <script>
     document.getElementById("last-updated").textContent = new Date().toLocaleString();
   </script>
