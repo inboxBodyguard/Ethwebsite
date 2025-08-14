@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EZM Cyber - Home</title>
+  <title>EZM Cyber - Secure, Protect, and Respond</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -24,100 +24,105 @@
           <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
           <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
           <li class="nav-item"><a class="nav-link" href="signup.html">Newsletter</a></li>
-          <li class="nav-item"><a class="nav-link" href="videos.html">Videos</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Banner -->
-  <section class="text-center text-light d-flex align-items-center justify-content-center" style="background-image: url('banner.png'); background-size: cover; background-position: center; min-height: 400px;">
-    <div>
-      <h1 class="display-4 fw-bold">Secure, Protect, and Respond</h1>
-      <p class="lead">Your trusted partner in cybersecurity solutions.</p>
-    </div>
+  <!-- Banner Section -->
+  <section class="py-5 position-relative" style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover; min-height: 300px;">
   </section>
 
-  <!-- Welcome Section -->
+  <!-- Main Content -->
   <section class="py-5">
-    <div class="container text-center">
+    <div class="container">
       <h2>Welcome to EZM Cyber</h2>
-      <p>We specialize in ethical hacking, penetration testing, and cybersecurity awareness training to help individuals and organizations safeguard their digital assets.</p>
+      <p>Your trusted source for cybersecurity insights, tools, and guidance.</p>
     </div>
   </section>
 
-  <!-- Featured Videos Section -->
-  <section class="py-5 bg-light">
+  <!-- Newsletter Section -->
+  <section class="py-5" style="background-color: #1e1e1e; color: white;">
+    <div class="container text-center">
+      <h3>Stay Updated</h3>
+      <p>Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
+      <a href="thank-you.html" class="btn btn-primary mt-3">Sign Up Now</a>
+      <form action="thank-you.html" method="get" class="d-flex justify-content-center mt-3 flex-wrap">
+        <input type="email" name="email" class="form-control me-2 mb-2" placeholder="Enter your email" required>
+        <button type="submit" class="btn btn-primary mb-2">Sign Up</button>
+      </form>
+      <small class="text-muted d-block mt-2">We respect your privacy. No spam, ever.</small>
+    </div>
+  </section>
+
+  <!-- Developer Tools Section -->
+  <section id="developer-tools" class="py-5" style="background-color: #1e1e1e; color: #fff;">
     <div class="container">
-      <h2 class="text-center mb-5">Featured Cybersecurity Videos</h2>
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="card h-100">
-            <div class="ratio ratio-16x9">
-              <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Intro to Ethical Hacking" allowfullscreen></iframe>
-            </div>
+      <h2 class="mb-4 text-center">Developer Tools</h2>
+      <div class="row">
+        <!-- GitHub Repo Link -->
+        <div class="col-md-4 mb-3">
+          <div class="card h-100 text-center card-hover scroll-fade">
             <div class="card-body">
-              <h5 class="card-title">Intro to Ethical Hacking</h5>
-              <p class="card-text">Beginner-friendly overview of ethical hacking techniques and tools.</p>
+              <h5 class="card-title">GitHub Repository</h5>
+              <p class="card-text">Access the source code and contribute to EZM Cyber.</p>
+              <a href="https://github.com/ethan89072/Ethwebsite" class="btn btn-primary" target="_blank">View on GitHub</a>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card h-100">
-            <div class="ratio ratio-16x9">
-              <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Understanding Phishing Attacks" allowfullscreen></iframe>
-            </div>
+        <!-- Code Playground -->
+        <div class="col-md-4 mb-3">
+          <div class="card h-100 text-center card-hover scroll-fade">
             <div class="card-body">
-              <h5 class="card-title">Understanding Phishing Attacks</h5>
-              <p class="card-text">Learn how phishing works and how to protect yourself from it.</p>
+              <h5 class="card-title">Code Playground</h5>
+              <p class="card-text">Experiment with HTML, CSS, and JS in real-time.</p>
+              <a href="https://codepen.io/" class="btn btn-success" target="_blank">Try on CodePen</a>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card h-100">
-            <div class="ratio ratio-16x9">
-              <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Cybersecurity Best Practices" allowfullscreen></iframe>
-            </div>
+        <!-- API Docs -->
+        <div class="col-md-4 mb-3">
+          <div class="card h-100 text-center card-hover scroll-fade">
             <div class="card-body">
-              <h5 class="card-title">Cybersecurity Best Practices</h5>
-              <p class="card-text">Essential tips to keep your digital life secure.</p>
+              <h5 class="card-title">API Documentation</h5>
+              <p class="card-text">Check out useful API references for developers.</p>
+              <a href="https://developer.mozilla.org/en-US/" class="btn btn-warning" target="_blank">Visit MDN Docs</a>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Contact Section -->
-  <section class="py-5">
-    <div class="container text-center">
-      <h2>Contact Us</h2>
-      <p>Have questions or need cybersecurity assistance? Reach out to our team today.</p>
-      <a href="contact.html" class="btn btn-primary">Contact Now</a>
+      <!-- Last Updated Timestamp -->
+      <p class="text-center mt-4" style="font-size: 0.9rem; color: #bbb;">
+        Last Updated: <span id="last-updated"></span>
+      </p>
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="bg-dark text-light text-center py-3">
     <div class="container">
-      <p class="mb-0">&copy; 2025 EZM Cyber. Developed by EZM Cyber Team.</p>
+      <p class="mb-0">&copy; 2025 EZM Cyber. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Live Chat Script -->
+  <!-- Scripts -->
   <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
       var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
       s1.async=true;
-      s1.src='https://embed.tawk.to/YOUR_TAWK_TO_ID_HERE/default';
+      s1.src='https://embed.tawk.to/68863b0ddb7610192eeac6b0/1j165dcdr';
       s1.charset='UTF-8';
       s1.setAttribute('crossorigin','*');
       s0.parentNode.insertBefore(s1,s0);
     })();
   </script>
 
+  <script>
+    document.getElementById("last-updated").textContent = new Date().toLocaleString();
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
