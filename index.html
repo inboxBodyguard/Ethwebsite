@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EZM Cyber - Secure, Protect, and Respond</title>
+  <title>EZM Cyber - Home</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -24,6 +24,7 @@
           <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
           <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
           <li class="nav-item"><a class="nav-link" href="signup.html">Newsletter</a></li>
+          <li class="nav-item"><a class="nav-link" href="videos.html">Videos</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
         </ul>
       </div>
@@ -31,72 +32,92 @@
   </nav>
 
   <!-- Banner Section -->
-  <section class="py-5 position-relative" style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover; min-height: 300px;">
+  <section class="py-5 position-relative text-center text-white" style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover; min-height: 300px; display: flex; align-items: center; justify-content: center;">
+    <h1 class="fw-bold" style="background-color: rgba(0,0,0,0.6); padding: 15px 25px; border-radius: 5px;">Secure, Protect, and Respond</h1>
   </section>
 
-  <!-- Main Content -->
+  <!-- Welcome Section -->
+  <section class="py-5">
+    <div class="container text-center">
+      <h2>Welcome to EZM Cyber</h2>
+      <p class="lead">Your trusted partner in cybersecurity — protecting your data, defending your systems, and helping you stay ahead of threats.</p>
+    </div>
+  </section>
+
+  <!-- Link Verifier Section -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h3 class="text-center mb-4">Check a Suspicious Link</h3>
+      <form id="linkVerifierForm" class="row g-3 justify-content-center">
+        <div class="col-md-6">
+          <input type="url" class="form-control" id="linkInput" placeholder="Enter URL to verify" required>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Verify</button>
+        </div>
+      </form>
+      <div id="verificationResult" class="text-center mt-3"></div>
+    </div>
+  </section>
+
+  <!-- Featured Videos Section -->
   <section class="py-5">
     <div class="container">
-      <h2>Welcome to EZM Cyber</h2>
-      <p>Your trusted source for cybersecurity insights, tools, and guidance.</p>
-    </div>
-  </section>
+      <h3 class="text-center mb-5">Featured Cybersecurity Videos</h3>
+      <div class="row g-4">
 
-  <!-- Newsletter Section -->
-  <section class="py-5" style="background-color: #1e1e1e; color: white;">
-    <div class="container text-center">
-      <h3>Stay Updated</h3>
-      <p>Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
-      <a href="thank-you.html" class="btn btn-primary mt-3">Sign Up Now</a>
-      <form action="thank-you.html" method="get" class="d-flex justify-content-center mt-3 flex-wrap">
-        <input type="email" name="email" class="form-control me-2 mb-2" placeholder="Enter your email" required>
-        <button type="submit" class="btn btn-primary mb-2">Sign Up</button>
-      </form>
-      <small class="text-muted d-block mt-2">We respect your privacy. No spam, ever.</small>
-    </div>
-  </section>
+        <!-- Video 1 -->
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="ratio ratio-16x9">
+              <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Video 1" allowfullscreen></iframe>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Intro to Ethical Hacking</h5>
+              <p class="card-text">A beginner-friendly introduction to ethical hacking concepts and tools.</p>
+            </div>
+          </div>
+        </div>
 
-  <!-- Developer Tools Section -->
-  <section id="developer-tools" class="py-5" style="background-color: #1e1e1e; color: #fff;">
-    <div class="container">
-      <h2 class="mb-4 text-center">Developer Tools</h2>
-      <div class="row">
-        <!-- GitHub Repo Link -->
-        <div class="col-md-4 mb-3">
-          <div class="card h-100 text-center card-hover scroll-fade">
+        <!-- Video 2 -->
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="ratio ratio-16x9">
+              <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Video 2" allowfullscreen></iframe>
+            </div>
             <div class="card-body">
-              <h5 class="card-title">GitHub Repository</h5>
-              <p class="card-text">Access the source code and contribute to EZM Cyber.</p>
-              <a href="https://github.com/ethan89072/Ethwebsite" class="btn btn-primary" target="_blank">View on GitHub</a>
+              <h5 class="card-title">Understanding Phishing Attacks</h5>
+              <p class="card-text">Learn the tactics behind phishing and how to avoid falling for them.</p>
             </div>
           </div>
         </div>
-        <!-- Code Playground -->
-        <div class="col-md-4 mb-3">
-          <div class="card h-100 text-center card-hover scroll-fade">
+
+        <!-- Video 3 -->
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="ratio ratio-16x9">
+              <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Video 3" allowfullscreen></iframe>
+            </div>
             <div class="card-body">
-              <h5 class="card-title">Code Playground</h5>
-              <p class="card-text">Experiment with HTML, CSS, and JS in real-time.</p>
-              <a href="https://codepen.io/" class="btn btn-success" target="_blank">Try on CodePen</a>
+              <h5 class="card-title">Cybersecurity Best Practices</h5>
+              <p class="card-text">Essential security habits for individuals and businesses.</p>
             </div>
           </div>
         </div>
-        <!-- API Docs -->
-        <div class="col-md-4 mb-3">
-          <div class="card h-100 text-center card-hover scroll-fade">
-            <div class="card-body">
-              <h5 class="card-title">API Documentation</h5>
-              <p class="card-text">Check out useful API references for developers.</p>
-              <a href="https://developer.mozilla.org/en-US/" class="btn btn-warning" target="_blank">Visit MDN Docs</a>
-            </div>
-          </div>
-        </div>
+
       </div>
+      <div class="text-center mt-4">
+        <a href="videos.html" class="btn btn-primary">View All Videos</a>
+      </div>
+    </div>
+  </section>
 
-      <!-- Last Updated Timestamp -->
-      <p class="text-center mt-4" style="font-size: 0.9rem; color: #bbb;">
-        Last Updated: <span id="last-updated"></span>
-      </p>
+  <!-- Contact Section -->
+  <section class="py-5 bg-light">
+    <div class="container text-center">
+      <h3>Get In Touch</h3>
+      <p>Need expert advice on securing your systems? Contact us today.</p>
+      <a href="contact.html" class="btn btn-outline-dark">Contact Us</a>
     </div>
   </section>
 
@@ -108,20 +129,17 @@
   </footer>
 
   <!-- Scripts -->
-  <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-      s1.async=true;
-      s1.src='https://embed.tawk.to/68863b0ddb7610192eeac6b0/1j165dcdr';
-      s1.charset='UTF-8';
-      s1.setAttribute('crossorigin','*');
-      s0.parentNode.insertBefore(s1,s0);
-    })();
-  </script>
-
   <script>
-    document.getElementById("last-updated").textContent = new Date().toLocaleString();
+    document.getElementById('linkVerifierForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const link = document.getElementById('linkInput').value;
+      const resultDiv = document.getElementById('verificationResult');
+      if (link.includes('phish') || link.includes('scam')) {
+        resultDiv.innerHTML = '<span class="text-danger">Warning: This link may be dangerous!</span>';
+      } else {
+        resultDiv.innerHTML = '<span class="text-success">This link appears safe.</span>';
+      }
+    });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
