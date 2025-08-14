@@ -1,112 +1,63 @@
 /* General Styles */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #121212;
-  color: #fff;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #121212;
+  color: #fff;
 }
 
-/* Banner Section */
+/* Banner Styles */
 .banner-section {
-  background-image: url('banner.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 350px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
   overflow: hidden;
-}
-
-.banner-content {
   text-align: center;
-  animation: fadeInUp 1.5s ease-out;
 }
-
-.banner-title {
-  font-size: 3rem;
-  font-weight: bold;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+.banner-gif {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
-
-.banner-subtitle {
-  font-size: 1.5rem;
-  margin-top: 0.5rem;
-  text-shadow: 1px 1px 6px rgba(0,0,0,0.5);
+.banner-title, .banner-subtitle {
+  position: relative;
+  z-index: 1;
 }
+.banner-title { font-size: 3rem; font-weight: bold; }
+.banner-subtitle { font-size: 1.5rem; }
 
-/* Newsletter Section */
-.newsletter-section {
-  background-color: #1e1e1e;
-  color: #fff;
-}
-
-/* Cards */
+/* Cards Hover Effects */
 .card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: #2c2c2c;
   border: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .card-hover:hover {
-  transform: translateY(-5px) scale(1.03);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
 }
 
-/* Buttons */
-.btn-primary, .btn-success, .btn-warning {
-  transition: all 0.3s ease;
-}
+/* Button Hover Effects */
+.btn-primary:hover { background: linear-gradient(45deg, #007bff, #00d4ff); border-color: #00d4ff; }
+.btn-success:hover { background: linear-gradient(45deg, #28a745, #85ff7f); border-color: #28a745; }
+.btn-warning:hover { background: linear-gradient(45deg, #ffc107, #ffea5c); border-color: #ffc107; }
 
-.btn-primary:hover {
-  background: linear-gradient(90deg, #007bff, #00c6ff);
-  color: #fff;
-}
-
-.btn-success:hover {
-  background: linear-gradient(90deg, #28a745, #00e676);
-  color: #fff;
-}
-
-.btn-warning:hover {
-  background: linear-gradient(90deg, #ffc107, #ff6f00);
-  color: #fff;
-}
-
-/* Fade-in for Sections */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1s forwards;
-  animation-delay: 0.3s;
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .banner-title {
-    font-size: 2rem;
-  }
-  .banner-subtitle {
-    font-size: 1rem;
-  }
-}
+/* Scroll-Fade Animations */
 .scroll-fade {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
-
 .scroll-fade.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .banner-title { font-size: 2rem; }
+  .banner-subtitle { font-size: 1rem; }
 }
