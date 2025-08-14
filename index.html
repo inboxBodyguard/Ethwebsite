@@ -13,7 +13,15 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="index.html">EZM Cyber</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -32,11 +40,13 @@
   </nav>
 
   <!-- Banner Section -->
-  <section class="banner-section py-5 text-light position-relative" style="min-height: 300px;">
-    <img src="banner.gif" alt="Cyber Banner GIF" class="banner-gif">
+  <section
+    class="py-5 text-light position-relative"
+    style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover; min-height: 300px;"
+  >
     <div class="container text-center">
       <h1 class="banner-title">Secure, Protect, and Respond</h1>
-      <p class="banner-subtitle">Your trusted source for cybersecurity insights, tools, and guidance.</p>
+      <p class="banner-subtitle">Your trusted source for cybersecurity insights and guidance.</p>
     </div>
   </section>
 
@@ -48,25 +58,12 @@
     </div>
   </section>
 
-  <!-- Newsletter Section -->
-  <section class="py-5" style="background-color: #1e1e1e; color: white;">
-    <div class="container text-center">
-      <h3>Stay Updated</h3>
-      <p>Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
-      <form action="thank-you.html" method="get" class="d-flex justify-content-center mt-3 flex-wrap">
-        <input type="email" name="email" class="form-control me-2 mb-2" placeholder="Enter your email" required>
-        <button type="submit" class="btn btn-primary mb-2">Sign Up</button>
-      </form>
-      <small class="text-muted d-block mt-2">We respect your privacy. No spam, ever.</small>
-    </div>
-  </section>
-
-  <!-- Developer Tools Section -->
+  <!-- Developer Tools -->
   <section id="developer-tools" class="py-5" style="background-color: #1e1e1e; color: #fff;">
     <div class="container">
       <h2 class="mb-4 text-center">Developer Tools</h2>
       <div class="row">
-        <!-- GitHub Repo -->
+
         <div class="col-md-4">
           <div class="card h-100 text-center card-hover scroll-fade">
             <div class="card-body">
@@ -76,7 +73,7 @@
             </div>
           </div>
         </div>
-        <!-- Code Playground -->
+
         <div class="col-md-4">
           <div class="card h-100 text-center card-hover scroll-fade">
             <div class="card-body">
@@ -86,7 +83,7 @@
             </div>
           </div>
         </div>
-        <!-- API Docs -->
+
         <div class="col-md-4">
           <div class="card h-100 text-center card-hover scroll-fade">
             <div class="card-body">
@@ -96,10 +93,22 @@
             </div>
           </div>
         </div>
+
       </div>
+
       <p class="text-center mt-4" style="font-size: 0.9rem; color: #bbb;">
         Last Updated: <span id="last-updated"></span>
       </p>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="py-5" style="background-color: #1e1e1e; color: white;">
+    <div class="container text-center">
+      <h3>Stay Updated</h3>
+      <p>Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
+      <a href="thank-you.html" class="btn btn-primary mt-3">Sign Up Now</a>
+      <small class="text-muted d-block mt-2">We respect your privacy. No spam, ever.</small>
     </div>
   </section>
 
@@ -110,13 +119,7 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script>
-    document.getElementById("last-updated").textContent = new Date().toLocaleString();
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Tawk.to Live Chat -->
+  <!-- Live Chat -->
   <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
@@ -129,5 +132,10 @@
     })();
   </script>
 
+  <!-- JavaScript -->
+  <script>
+    document.getElementById("last-updated").textContent = new Date().toLocaleString();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
