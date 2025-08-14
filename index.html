@@ -31,116 +31,93 @@
     </div>
   </nav>
 
-  <!-- Banner Section -->
-  <section class="py-5 position-relative text-center text-white" style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover; min-height: 300px; display: flex; align-items: center; justify-content: center;">
-    <h1 class="fw-bold" style="background-color: rgba(0,0,0,0.6); padding: 15px 25px; border-radius: 5px;">Secure, Protect, and Respond</h1>
+  <!-- Banner -->
+  <section class="text-center text-light d-flex align-items-center justify-content-center" style="background-image: url('banner.png'); background-size: cover; background-position: center; min-height: 400px;">
+    <div>
+      <h1 class="display-4 fw-bold">Secure, Protect, and Respond</h1>
+      <p class="lead">Your trusted partner in cybersecurity solutions.</p>
+    </div>
   </section>
 
   <!-- Welcome Section -->
   <section class="py-5">
     <div class="container text-center">
       <h2>Welcome to EZM Cyber</h2>
-      <p class="lead">Your trusted partner in cybersecurity — protecting your data, defending your systems, and helping you stay ahead of threats.</p>
-    </div>
-  </section>
-
-  <!-- Link Verifier Section -->
-  <section class="py-5 bg-light">
-    <div class="container">
-      <h3 class="text-center mb-4">Check a Suspicious Link</h3>
-      <form id="linkVerifierForm" class="row g-3 justify-content-center">
-        <div class="col-md-6">
-          <input type="url" class="form-control" id="linkInput" placeholder="Enter URL to verify" required>
-        </div>
-        <div class="col-auto">
-          <button type="submit" class="btn btn-primary">Verify</button>
-        </div>
-      </form>
-      <div id="verificationResult" class="text-center mt-3"></div>
+      <p>We specialize in ethical hacking, penetration testing, and cybersecurity awareness training to help individuals and organizations safeguard their digital assets.</p>
     </div>
   </section>
 
   <!-- Featured Videos Section -->
-  <section class="py-5">
+  <section class="py-5 bg-light">
     <div class="container">
-      <h3 class="text-center mb-5">Featured Cybersecurity Videos</h3>
+      <h2 class="text-center mb-5">Featured Cybersecurity Videos</h2>
       <div class="row g-4">
-
-        <!-- Video 1 -->
         <div class="col-md-4">
           <div class="card h-100">
             <div class="ratio ratio-16x9">
-              <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Video 1" allowfullscreen></iframe>
+              <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Intro to Ethical Hacking" allowfullscreen></iframe>
             </div>
             <div class="card-body">
               <h5 class="card-title">Intro to Ethical Hacking</h5>
-              <p class="card-text">A beginner-friendly introduction to ethical hacking concepts and tools.</p>
+              <p class="card-text">Beginner-friendly overview of ethical hacking techniques and tools.</p>
             </div>
           </div>
         </div>
-
-        <!-- Video 2 -->
         <div class="col-md-4">
           <div class="card h-100">
             <div class="ratio ratio-16x9">
-              <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Video 2" allowfullscreen></iframe>
+              <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Understanding Phishing Attacks" allowfullscreen></iframe>
             </div>
             <div class="card-body">
               <h5 class="card-title">Understanding Phishing Attacks</h5>
-              <p class="card-text">Learn the tactics behind phishing and how to avoid falling for them.</p>
+              <p class="card-text">Learn how phishing works and how to protect yourself from it.</p>
             </div>
           </div>
         </div>
-
-        <!-- Video 3 -->
         <div class="col-md-4">
           <div class="card h-100">
             <div class="ratio ratio-16x9">
-              <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Video 3" allowfullscreen></iframe>
+              <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Cybersecurity Best Practices" allowfullscreen></iframe>
             </div>
             <div class="card-body">
               <h5 class="card-title">Cybersecurity Best Practices</h5>
-              <p class="card-text">Essential security habits for individuals and businesses.</p>
+              <p class="card-text">Essential tips to keep your digital life secure.</p>
             </div>
           </div>
         </div>
-
-      </div>
-      <div class="text-center mt-4">
-        <a href="videos.html" class="btn btn-primary">View All Videos</a>
       </div>
     </div>
   </section>
 
   <!-- Contact Section -->
-  <section class="py-5 bg-light">
+  <section class="py-5">
     <div class="container text-center">
-      <h3>Get In Touch</h3>
-      <p>Need expert advice on securing your systems? Contact us today.</p>
-      <a href="contact.html" class="btn btn-outline-dark">Contact Us</a>
+      <h2>Contact Us</h2>
+      <p>Have questions or need cybersecurity assistance? Reach out to our team today.</p>
+      <a href="contact.html" class="btn btn-primary">Contact Now</a>
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="bg-dark text-light text-center py-3">
     <div class="container">
-      <p class="mb-0">&copy; 2025 EZM Cyber. All rights reserved.</p>
+      <p class="mb-0">&copy; 2025 EZM Cyber. Developed by EZM Cyber Team.</p>
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script>
-    document.getElementById('linkVerifierForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const link = document.getElementById('linkInput').value;
-      const resultDiv = document.getElementById('verificationResult');
-      if (link.includes('phish') || link.includes('scam')) {
-        resultDiv.innerHTML = '<span class="text-danger">Warning: This link may be dangerous!</span>';
-      } else {
-        resultDiv.innerHTML = '<span class="text-success">This link appears safe.</span>';
-      }
-    });
+  <!-- Live Chat Script -->
+  <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/YOUR_TAWK_TO_ID_HERE/default';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+    })();
   </script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
