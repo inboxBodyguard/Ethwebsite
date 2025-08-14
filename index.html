@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -23,7 +22,6 @@
           <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
           <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-          <li class="nav-item"><a class="nav-link" href="videos.html">Videos</a></li>
           <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
           <li class="nav-item"><a class="nav-link" href="signup.html">Newsletter</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
@@ -33,11 +31,7 @@
   </nav>
 
   <!-- Banner Section -->
-  <section class="py-5 text-light position-relative" style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover; min-height: 300px;">
-    <div class="container text-center">
-      <h1 class="banner-title">EZM Cyber</h1>
-      <p class="banner-subtitle">Your trusted source for cybersecurity insights and guidance.</p>
-    </div>
+  <section class="py-5 position-relative" style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover; min-height: 300px;">
   </section>
 
   <!-- Main Content -->
@@ -54,13 +48,11 @@
       <h3>Stay Updated</h3>
       <p>Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
       <a href="thank-you.html" class="btn btn-primary mt-3">Sign Up Now</a>
-      <small class="text-muted d-block mt-2">We respect your privacy. No spam, ever.</small>
-
-      <!-- Newsletter Form -->
       <form action="thank-you.html" method="get" class="d-flex justify-content-center mt-3 flex-wrap">
         <input type="email" name="email" class="form-control me-2 mb-2" placeholder="Enter your email" required>
         <button type="submit" class="btn btn-primary mb-2">Sign Up</button>
       </form>
+      <small class="text-muted d-block mt-2">We respect your privacy. No spam, ever.</small>
     </div>
   </section>
 
@@ -69,6 +61,7 @@
     <div class="container">
       <h2 class="mb-4 text-center">Developer Tools</h2>
       <div class="row">
+        <!-- GitHub Repo Link -->
         <div class="col-md-4 mb-3">
           <div class="card h-100 text-center card-hover scroll-fade">
             <div class="card-body">
@@ -78,6 +71,7 @@
             </div>
           </div>
         </div>
+        <!-- Code Playground -->
         <div class="col-md-4 mb-3">
           <div class="card h-100 text-center card-hover scroll-fade">
             <div class="card-body">
@@ -87,6 +81,7 @@
             </div>
           </div>
         </div>
+        <!-- API Docs -->
         <div class="col-md-4 mb-3">
           <div class="card h-100 text-center card-hover scroll-fade">
             <div class="card-body">
@@ -97,13 +92,22 @@
           </div>
         </div>
       </div>
+
+      <!-- Last Updated Timestamp -->
       <p class="text-center mt-4" style="font-size: 0.9rem; color: #bbb;">
         Last Updated: <span id="last-updated"></span>
       </p>
     </div>
   </section>
 
-  <!--Start of Tawk.to Script-->
+  <!-- Footer -->
+  <footer class="bg-dark text-light text-center py-3">
+    <div class="container">
+      <p class="mb-0">&copy; 2025 EZM Cyber. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
   <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
@@ -115,13 +119,10 @@
       s0.parentNode.insertBefore(s1,s0);
     })();
   </script>
-  <!--End of Tawk.to Script-->
 
-  <!-- JavaScript to auto-insert current date -->
   <script>
     document.getElementById("last-updated").textContent = new Date().toLocaleString();
   </script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
