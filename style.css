@@ -1,70 +1,156 @@
+/* ========================
+   General Body & Links
+========================= */
 body {
-  margin: 0;
-  font-family: 'Orbitron', sans-serif;
-  background-color: #0b0c10;
-  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background-color: #121212;
+  color: #fff;
+  scroll-behavior: smooth;
 }
 
-nav {
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* ========================
+   Navbar
+========================= */
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: #0d6efd !important;
+}
+
+/* ========================
+   Banner Section
+========================= */
+.banner-section {
+  position: relative;
   display: flex;
   justify-content: center;
-  background-color: #45a29e;
-  padding: 10px;
-  flex-wrap: wrap;
+  align-items: center;
+  min-height: 300px;
 }
 
-nav a {
-  margin: 0 15px;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  white-space: nowrap;
+.banner-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
 }
 
-nav a:hover {
-  text-decoration: underline;
-}
-
-section {
-  padding: 40px 20px;
+.banner-content {
+  position: relative;
+  z-index: 1;
   text-align: center;
-  max-width: 1000px;
-  margin: 0 auto;
 }
 
-h2 {
-  color: #66fcf1;
+.banner-content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
 }
 
+.banner-content p {
+  font-size: 1.2rem;
+}
+
+/* ========================
+   Main Content
+========================= */
+section h2 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+section p {
+  font-size: 1rem;
+}
+
+/* ========================
+   Newsletter
+========================= */
+.newsletter-form input.form-control {
+  max-width: 300px;
+}
+
+.newsletter-form button {
+  min-width: 120px;
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-outline-light {
+  border-color: #fff;
+  color: #fff;
+}
+
+.btn-outline-light:hover {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+/* ========================
+   Developer Tools Cards
+========================= */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+.card h5 {
+  font-weight: 600;
+}
+
+.card p {
+  font-size: 0.95rem;
+}
+
+/* ========================
+   Footer
+========================= */
 footer {
-  background: #1f2833;
-  padding: 10px;
-  text-align: center;
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
-/* Responsive styles */
+/* ========================
+   Responsive Adjustments
+========================= */
+@media (max-width: 576px) {
+  .banner-content h1 {
+    font-size: 2rem;
+  }
 
-@media (max-width: 599px) {
-  nav {
-    flex-direction: column;
-    padding: 0;
+  .banner-content p {
+    font-size: 1rem;
   }
-  nav a {
-    margin: 10px 0;
-    font-size: 18px;
-  }
-  section {
-    padding: 20px 10px;
-  }
-}
 
-@media (min-width: 600px) and (max-width: 899px) {
-  nav a {
-    margin: 0 12px;
-    font-size: 20px;
-  }
-  section {
-    padding: 30px 15px;
+  .newsletter-form input.form-control,
+  .newsletter-form button {
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
 }
