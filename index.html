@@ -6,45 +6,6 @@
   <title>EZM Cyber - Secure, Protect, and Respond</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* Banner overlay effect */
-    .banner-section {
-      background: url('banner.png') center/cover no-repeat;
-      min-height: 300px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-    }
-    .banner-section::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-    }
-    .banner-content {
-      position: relative;
-      text-align: center;
-      z-index: 1;
-    }
-
-    /* Developer cards hover effect */
-    .card-hover:hover {
-      transform: translateY(-5px);
-      transition: 0.3s ease-in-out;
-    }
-
-    /* Newsletter input responsiveness */
-    @media (max-width: 576px) {
-      .newsletter-form input {
-        width: 100%;
-      }
-      .newsletter-form button {
-        width: 100%;
-      }
-    }
-  </style>
 </head>
 <body>
 
@@ -71,26 +32,24 @@
     </div>
   </nav>
 
-  <!-- Banner Section -->
-  <section class="banner-section">
-    <div class="banner-content">
-      <h1 class="display-4 fw-bold">Secure, Protect, and Respond</h1>
-      <p class="lead">Your trusted source for cybersecurity insights and guidance.</p>
-    </div>
+  <!-- Banner Section (original intact) -->
+  <section
+    class="py-5 text-light position-relative"
+    style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover; min-height: 300px;">
   </section>
 
   <!-- Main Content -->
   <section class="py-5">
     <div class="container text-center">
-      <h2 class="mb-3">Welcome to EZM Cyber</h2>
-      <p class="mb-0">We provide expert cybersecurity insights, tools, and guidance to keep you safe online.</p>
+      <h2>Welcome to EZM Cyber</h2>
+      <p>Your trusted source for cybersecurity insights, tools, and guidance.</p>
     </div>
   </section>
 
   <!-- Newsletter Section -->
   <section class="py-5 bg-dark text-light">
     <div class="container text-center">
-      <h3 class="mb-3">Stay Updated</h3>
+      <h3>Stay Updated</h3>
       <p>Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
 
       <form action="thank-you.html" method="get" class="newsletter-form d-flex justify-content-center flex-wrap mt-3">
@@ -108,10 +67,8 @@
     <div class="container">
       <h2 class="mb-4 text-center">Developer Tools</h2>
       <div class="row g-4">
-
-        <!-- GitHub Repo Link -->
         <div class="col-md-4">
-          <div class="card bg-dark text-center border-0 card-hover h-100">
+          <div class="card bg-dark text-center border-0 h-100">
             <div class="card-body">
               <h5 class="card-title">GitHub Repository</h5>
               <p class="card-text">Access the source code and contribute to EZM Cyber.</p>
@@ -119,10 +76,8 @@
             </div>
           </div>
         </div>
-
-        <!-- Code Playground -->
         <div class="col-md-4">
-          <div class="card bg-dark text-center border-0 card-hover h-100">
+          <div class="card bg-dark text-center border-0 h-100">
             <div class="card-body">
               <h5 class="card-title">Code Playground</h5>
               <p class="card-text">Experiment with HTML, CSS, and JS in real-time.</p>
@@ -130,10 +85,8 @@
             </div>
           </div>
         </div>
-
-        <!-- API Docs -->
         <div class="col-md-4">
-          <div class="card bg-dark text-center border-0 card-hover h-100">
+          <div class="card bg-dark text-center border-0 h-100">
             <div class="card-body">
               <h5 class="card-title">API Documentation</h5>
               <p class="card-text">Check out useful API references for developers.</p>
@@ -141,10 +94,8 @@
             </div>
           </div>
         </div>
-
       </div>
 
-      <!-- Last Updated Timestamp -->
       <p class="text-center mt-4 text-muted" style="font-size: 0.9rem;">
         Last Updated: <span id="last-updated"></span>
       </p>
@@ -171,7 +122,6 @@
     })();
   </script>
 
-  <!-- JS Scripts -->
   <script>
     document.getElementById("last-updated").textContent = new Date().toLocaleString();
   </script>
