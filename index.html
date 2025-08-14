@@ -10,10 +10,10 @@
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="index.html">EZM Cyber</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -24,6 +24,7 @@
           <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
           <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+          <li class="nav-item"><a class="nav-link" href="videos.html">Videos</a></li>
           <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
           <li class="nav-item"><a class="nav-link" href="signup.html">Newsletter</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
@@ -32,43 +33,45 @@
     </div>
   </nav>
 
-  <!-- Banner Section (original intact) -->
-  <section
-    class="py-5 text-light position-relative"
-    style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover; min-height: 300px;">
+  <!-- Banner Section -->
+  <section class="banner-section py-5 text-light position-relative">
+    <div class="container text-center banner-content">
+      <h1 class="banner-title">Secure, Protect, and Respond</h1>
+      <p class="banner-subtitle">Your trusted source for cybersecurity insights, tools, and guidance.</p>
+    </div>
   </section>
 
   <!-- Main Content -->
   <section class="py-5">
-    <div class="container text-center">
-      <h2>Welcome to EZM Cyber</h2>
-      <p>Your trusted source for cybersecurity insights, tools, and guidance.</p>
+    <div class="container">
+      <h2 class="fade-in">Welcome to EZM Cyber</h2>
+      <p class="fade-in">Your trusted source for cybersecurity insights, tools, and guidance.</p>
     </div>
   </section>
 
   <!-- Newsletter Section -->
-  <section class="py-5 bg-dark text-light">
+  <section class="py-5 newsletter-section">
     <div class="container text-center">
       <h3>Stay Updated</h3>
       <p>Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
 
-      <form action="thank-you.html" method="get" class="newsletter-form d-flex justify-content-center flex-wrap mt-3">
+      <form action="thank-you.html" method="get" class="d-flex justify-content-center mt-3 flex-wrap">
         <input type="email" name="email" class="form-control me-2 mb-2" placeholder="Enter your email" required>
         <button type="submit" class="btn btn-primary mb-2">Sign Up</button>
       </form>
 
-      <a href="thank-you.html" class="btn btn-outline-light mt-3">Sign Up Now</a>
       <small class="text-muted d-block mt-2">We respect your privacy. No spam, ever.</small>
     </div>
   </section>
 
   <!-- Developer Tools Section -->
-  <section id="developer-tools" class="py-5 bg-secondary text-light">
+  <section id="developer-tools" class="py-5">
     <div class="container">
-      <h2 class="mb-4 text-center">Developer Tools</h2>
+      <h2 class="mb-4 text-center fade-in">Developer Tools</h2>
       <div class="row g-4">
+        <!-- GitHub Repo Link -->
         <div class="col-md-4">
-          <div class="card bg-dark text-center border-0 h-100">
+          <div class="card h-100 text-center card-hover">
             <div class="card-body">
               <h5 class="card-title">GitHub Repository</h5>
               <p class="card-text">Access the source code and contribute to EZM Cyber.</p>
@@ -76,8 +79,9 @@
             </div>
           </div>
         </div>
+        <!-- Code Playground -->
         <div class="col-md-4">
-          <div class="card bg-dark text-center border-0 h-100">
+          <div class="card h-100 text-center card-hover">
             <div class="card-body">
               <h5 class="card-title">Code Playground</h5>
               <p class="card-text">Experiment with HTML, CSS, and JS in real-time.</p>
@@ -85,8 +89,9 @@
             </div>
           </div>
         </div>
+        <!-- API Docs -->
         <div class="col-md-4">
-          <div class="card bg-dark text-center border-0 h-100">
+          <div class="card h-100 text-center card-hover">
             <div class="card-body">
               <h5 class="card-title">API Documentation</h5>
               <p class="card-text">Check out useful API references for developers.</p>
@@ -96,7 +101,7 @@
         </div>
       </div>
 
-      <p class="text-center mt-4 text-muted" style="font-size: 0.9rem;">
+      <p class="text-center mt-4" style="font-size: 0.9rem; color: #bbb;">
         Last Updated: <span id="last-updated"></span>
       </p>
     </div>
@@ -109,16 +114,16 @@
     </div>
   </footer>
 
-  <!-- Tawk.to Chat Script -->
+  <!-- Tawk.to Script -->
   <script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function () {
-      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = 'https://embed.tawk.to/68863b0ddb7610192eeac6b0/1j165dcdr';
-      s1.charset = 'UTF-8';
-      s1.setAttribute('crossorigin', '*');
-      s0.parentNode.insertBefore(s1, s0);
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/68863b0ddb7610192eeac6b0/1j165dcdr';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
     })();
   </script>
 
