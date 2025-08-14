@@ -1,7 +1,18 @@
+/* General Styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+/* Banner Section */
+section.py-5.position-relative {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .banner-title {
@@ -11,13 +22,16 @@ body {
 
 .banner-subtitle {
   font-size: 1.5rem;
-  margin-top: 10px;
+}
+
+/* Card Hover Effects */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card-hover:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-  transition: all 0.3s ease-in-out;
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* Scroll Fade Animation */
@@ -30,6 +44,23 @@ body {
 .scroll-fade.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Newsletter Form */
+form.d-flex {
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 /* Responsive Adjustments */
