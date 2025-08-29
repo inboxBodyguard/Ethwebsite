@@ -9,7 +9,7 @@
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
       <a class="navbar-brand" href="index.html">EZM Cyber</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,11 @@
   </nav>
 
   <!-- Banner Section -->
-  <section class="py-5 position-relative" style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover; min-height: 300px;">
+  <section class="py-5 banner-section">
+    <div class="container text-center text-white">
+      <h1 class="banner-title">EZM Cyber Blogs</h1>
+      <p class="banner-subtitle">Insights, Tutorials, and Updates in Cybersecurity</p>
+    </div>
   </section>
 
   <!-- Main Content -->
@@ -44,7 +48,7 @@
   </section>
 
   <!-- Suspicious Link Detection -->
-  <section class="py-5" style="background-color: #f8f9fa;">
+  <section class="py-5 section-light">
     <div class="container">
       <h3 class="text-center mb-4">Suspicious Link Detector</h3>
       <form id="linkForm" class="d-flex flex-wrap justify-content-center">
@@ -56,28 +60,28 @@
   </section>
 
   <!-- Newsletter Section -->
-  <section class="py-5" style="background-color: #1e1e1e; color: white;">
+  <section class="py-5 section-dark">
     <div class="container text-center">
       <h3>Stay Updated</h3>
       <p>Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
-      <a href="thank-you.html" class="btn btn-primary mt-3">Sign Up Now</a>
+      <a href="thank-you.html" class="btn btn-accent mt-3">Sign Up Now</a>
       <form action="thank-you.html" method="get" class="d-flex justify-content-center mt-3 flex-wrap">
         <input type="email" name="email" class="form-control me-2 mb-2" placeholder="Enter your email" required>
-        <button type="submit" class="btn btn-primary mb-2">Sign Up</button>
+        <button type="submit" class="btn btn-accent mb-2">Sign Up</button>
       </form>
       <small class="text-muted d-block mt-2">We respect your privacy. No spam, ever.</small>
     </div>
   </section>
 
   <!-- Developer Tools Section -->
-  <section id="developer-tools" class="py-5" style="background-color: #1e1e1e; color: #fff;">
+  <section id="developer-tools" class="py-5 section-dark">
     <div class="container">
       <h2 class="mb-4 text-center">Developer Tools</h2>
-      <div class="row">
+      <div class="row g-4">
         <!-- GitHub Repo Link -->
-        <div class="col-md-4 mb-3">
-          <div class="card h-100 text-center card-hover scroll-fade">
-            <div class="card-body">
+        <div class="col-md-4">
+          <div class="card h-100 card-hover">
+            <div class="card-body text-center">
               <h5 class="card-title">GitHub Repository</h5>
               <p class="card-text">Access the source code and contribute to EZM Cyber.</p>
               <a href="https://github.com/ethan89072/Ethwebsite" class="btn btn-primary" target="_blank">View on GitHub</a>
@@ -85,9 +89,9 @@
           </div>
         </div>
         <!-- Code Playground -->
-        <div class="col-md-4 mb-3">
-          <div class="card h-100 text-center card-hover scroll-fade">
-            <div class="card-body">
+        <div class="col-md-4">
+          <div class="card h-100 card-hover">
+            <div class="card-body text-center">
               <h5 class="card-title">Code Playground</h5>
               <p class="card-text">Experiment with HTML, CSS, and JS in real-time.</p>
               <a href="https://codepen.io/" class="btn btn-success" target="_blank">Try on CodePen</a>
@@ -95,9 +99,9 @@
           </div>
         </div>
         <!-- API Docs -->
-        <div class="col-md-4 mb-3">
-          <div class="card h-100 text-center card-hover scroll-fade">
-            <div class="card-body">
+        <div class="col-md-4">
+          <div class="card h-100 card-hover">
+            <div class="card-body text-center">
               <h5 class="card-title">API Documentation</h5>
               <p class="card-text">Check out useful API references for developers.</p>
               <a href="https://developer.mozilla.org/en-US/" class="btn btn-warning" target="_blank">Visit MDN Docs</a>
@@ -107,14 +111,14 @@
       </div>
 
       <!-- Last Updated Timestamp -->
-      <p class="text-center mt-4" style="font-size: 0.9rem; color: #bbb;">
+      <p class="text-center mt-4 small text-muted">
         Last Updated: <span id="last-updated"></span>
       </p>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-dark text-light text-center py-3">
+  <footer class="bg-primary text-light text-center py-3">
     <div class="container">
       <p class="mb-0">&copy; 2025 EZM Cyber. All rights reserved.</p>
     </div>
