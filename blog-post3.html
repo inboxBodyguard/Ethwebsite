@@ -3,56 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beginner’s Roadmap to Hacking | EZM Cyber</title>
+  <title>Beginner’s Roadmap to Hacking</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; }
+    .card-hover:hover { transform: scale(1.02); transition: transform 0.3s; }
+    .blog-content { max-width: 800px; margin: 0 auto; padding: 20px; }
+  </style>
 </head>
 <body>
-
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-      <a class="navbar-brand" href="index.html">EZM Cyber</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="index.html">CyberSec Blog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link active" href="blog.html">Blog</a></li>
+          <li class="nav-item"><a class="nav-link" href="blog-post1.html">Ethical Hacking</a></li>
+          <li class="nav-item"><a class="nav-link" href="blog-post2.html">Cybersecurity Mistakes</a></li>
+          <li class="nav-item"><a class="nav-link" href="blog-post3.html">Hacking Roadmap</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <main>
-    <header class="py-5 bg-primary text-white text-center">
-      <div class="container">
-        <h1 class="fw-bold">Beginner’s Roadmap to Hacking</h1>
-        <p class="mb-0">Published: August 2025</p>
-      </div>
-    </header>
+  <!-- Blog Post Content -->
+  <div class="container blog-content">
+    <img src="images/banner.PNG" class="img-fluid mb-4" alt="Beginner’s Roadmap to Hacking">
+    <h1>Beginner’s Roadmap to Hacking</h1>
+    <p class="text-muted">Published on August 29, 2025</p>
+    <hr>
+    <p>Ethical hacking is an exciting and rewarding career path, but it can feel overwhelming for beginners. Where do you start? What skills do you need? This step-by-step roadmap will guide you through the essentials of becoming an ethical hacker, from foundational knowledge to practical experience.</p>
+    
+    <h2>Step 1: Understand the Basics</h2>
+    <p>Before diving into hacking, build a strong foundation in IT and cybersecurity. Learn about computer networks, operating systems (especially Linux), and basic programming. Key areas to focus on include TCP/IP, DNS, and how data travels across networks. Free resources like Cisco’s Networking Academy or Khan Academy’s computing courses are great starting points.</p>
+    
+    <h2>Step 2: Master Programming</h2>
+    <p>Programming is a core skill for ethical hackers. Start with Python, which is versatile and widely used for scripting exploits. Learn Bash for Linux automation and JavaScript for web-based attacks. Online platforms like Codecademy and freeCodeCamp offer beginner-friendly courses. Practice by writing scripts to automate tasks or analyze network traffic.</p>
+    
+    <h2>Step 3: Explore Cybersecurity Concepts</h2>
+    <p>Familiarize yourself with key cybersecurity topics like encryption, firewalls, and penetration testing. Understand common vulnerabilities, such as SQL injection and cross-site scripting (XSS). Resources like OWASP’s Top Ten list and TryHackMe’s free labs provide practical exposure to these concepts.</p>
+    
+    <h2>Step 4: Get Hands-On Experience</h2>
+    <p>Theory is important, but hacking is a hands-on skill. Set up a home lab using virtual machines (e.g., Kali Linux, Metasploitable) to practice safely. Platforms like Hack The Box and CTFtime offer capture-the-flag challenges to test your skills. Join bug bounty programs to gain real-world experience while earning rewards.</p>
+    
+    <h2>Step 5: Pursue Certifications</h2>
+    <p>Certifications validate your skills and boost your resume. Start with CompTIA Security+ for foundational knowledge, then pursue advanced certifications like Certified Ethical Hacker (CEH) or Offensive Security Certified Professional (OSCP). These credentials demonstrate expertise and commitment to potential employers.</p>
+    
+    <h2>Step 6: Join the Community</h2>
+    <p>Ethical hacking thrives on collaboration. Join online forums like Reddit’s r/NetSec, attend cybersecurity conferences, or participate in local meetups. Engaging with the community provides mentorship, job opportunities, and insights into the latest trends.</p>
+    
+    <p>Becoming an ethical hacker takes time and dedication, but the journey is worth it. By following this roadmap, you’ll build the skills and confidence to protect organizations from cyber threats. Start small, stay curious, and never stop learning.</p>
+    
+    <a href="index.html" class="btn btn-primary mt-4">Back to Home</a>
+  </div>
 
-    <article class="py-5">
-      <div class="container">
-        <img src="images/banner3.jpg" class="img-fluid rounded mb-4" alt="A road with signs pointing towards a computer, representing a learning roadmap">
-        <p>Starting a journey into ethical hacking can feel overwhelming, but with the right roadmap, anyone can learn...</p>
-        
-        <h4>Step-by-Step Guide:</h4>
-        <ul>
-          <li>Learn the basics of networking and operating systems.</li>
-          <li>Understand how websites and applications work.</li>
-          <li>Practice with Linux and command-line tools.</li>
-          <li>Experiment in safe environments (CTFs, labs, simulations).</li>
-        </ul>
-        <p>By building a solid foundation, beginners can grow into skilled ethical hackers and security researchers...</p>
-      </div>
-    </article>
-  </main>
-
-  <footer class="bg-dark text-center text-white py-3">
-    <div class="container">
-      <p class="mb-0">&copy; 2025 EZM Cyber. All Rights Reserved.</p>
-    </div>
+  <!-- Footer -->
+  <footer class="bg-light text-center py-4">
+    <p>&copy; 2025 CyberSec Blog. All rights reserved.</p>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
