@@ -1,303 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Blog - EZMCyber</title>
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <style>
-    body {
-      background-color: #121212;
-      color: #eee;
-      font-family: 'Montserrat', Arial, sans-serif;
-      padding: 2rem;
-      line-height: 1.75;
-      font-size: 18px;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .blog-post {
-      background-color: #1e1e1e;
-      border-radius: 8px;
-      padding: 2rem;
-      margin-bottom: 3rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.75);
-      transition: box-shadow 0.3s ease;
-    }
-    .blog-post:hover {
-      box-shadow: 0 8px 20px rgba(240,165,0,0.6);
-    }
-    .blog-post img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-    .blog-post img:hover {
-      transform: scale(1.05);
-    }
-    .blog-post h2 {
-      color: #f0a500;
-      font-weight: 700;
-      margin-bottom: 1.25rem;
-      font-size: 2rem;
-    }
-    .blog-snippet {
-      font-size: 1.15rem;
-      margin-bottom: 1.25rem;
-      white-space: pre-line;
-    }
-    .read-more-btn {
-      background: none;
-      border: none;
-      color: #f0a500;
-      font-weight: 700;
-      cursor: pointer;
-      padding: 0;
-      font-size: 1.15rem;
-      transition: color 0.3s ease;
-    }
-    .read-more-btn:hover {
-      text-decoration: underline;
-      color: #ffbd33;
-    }
-    .full-post {
-      display: none;
-      margin-top: 1.5rem;
-      font-size: 1.05rem;
-      color: #ddd;
-    }
-    .full-post h3 {
-      color: #f0a500;
-      margin-top: 2rem;
-      font-weight: 600;
-      font-size: 1.5rem;
-    }
-    .back-home {
-      margin-top: 1rem;
-      display: inline-block;
-      background: linear-gradient(90deg, #f0a500 0%, #c78f00 100%);
-      color: #121212;
-      padding: 0.65rem 1.3rem;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: 700;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-    .back-home:hover {
-      background: linear-gradient(90deg, #ffbd33 0%, #e6a500 100%);
-      color: #fff;
-      text-decoration: none;
-    }
-
-    /* Responsive tweaks */
-    @media (max-width: 768px) {
-      body {
-        font-size: 16px;
-        line-height: 1.6;
-        padding: 1rem;
-      }
-      .blog-post {
-        padding: 1.25rem;
-        margin-bottom: 2rem;
-      }
-      .blog-post h2 {
-        font-size: 1.6rem;
-        margin-bottom: 1rem;
-      }
-      .blog-snippet {
-        font-size: 1rem;
-        margin-bottom: 1rem;
-      }
-      .read-more-btn {
-        font-size: 1rem;
-      }
-      .full-post h3 {
-        font-size: 1.25rem;
-        margin-top: 1.5rem;
-      }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EZM Cyber Blog</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-<div style="text-align: right; margin-bottom: 0.5rem;">
-  <a href="https://x.com/ezmcyber?s=21" target="_blank" rel="noopener noreferrer" style="color:#f0a500; font-weight:700; text-decoration:none; font-size:1.1rem;">
-    Follow me on X 🐦
-  </a>
-</div>
-    <div class="mb-4">
-      <a href="index.html" class="back-home">← Back to Homepage</a>
-    </div>
-
-    <h1 class="mb-4 text-center" style="color:#f0a500;">Latest Blog Posts</h1>
-
-    <!-- Blog Post 1 -->
-    <div class="blog-post" id="post1">
-      <img src="blog1.PNG" alt="Common Cybersecurity Mistakes" class="img-fluid rounded mb-3" />
-      <h2>Common Cybersecurity Mistakes Beginners Make</h2>
-      <p class="blog-snippet">
-        Starting out in cybersecurity? You’re not alone. Many beginners fall into common traps that slow progress or leave them vulnerable. Avoid these pitfalls and build a strong foundation...
-      </p>
-      <button class="read-more-btn" onclick="togglePost('post1')">Read More</button>
-      <div class="full-post">
-        <p>Getting started in cybersecurity can be overwhelming. Many beginners fall into common traps that can slow down their progress or put their systems at risk. Here are some of the most frequent mistakes and how to avoid them:</p>
-        
-        <h3>1. Neglecting Updates</h3>
-        <p>Failing to keep software and systems updated leaves vulnerabilities open for attackers to exploit. Always prioritize timely updates for operating systems, applications, and security tools.</p>
-        
-        <h3>Real-life Example:</h3>
-        <p>In 2017, the WannaCry ransomware attack spread rapidly by exploiting unpatched Windows systems worldwide, causing billions in damages. Many affected organizations could have prevented this by applying security updates promptly.</p>
-        
-        <h3>2. Weak Passwords</h3>
-        <p>Using simple or reused passwords is one of the easiest ways for hackers to gain access. Use strong, unique passwords and consider using password managers to keep them secure.</p>
-        
-        <h3>Tip:</h3>
-        <p>Create passwords using a mix of letters, numbers, and symbols, or use passphrases that are easy for you to remember but hard for others to guess.</p>
-        
-        <h3>3. Ignoring Backups</h3>
-        <p>Regular backups ensure you can recover from attacks like ransomware or accidental data loss. Make it a habit to back up your critical data securely and frequently.</p>
-        
-        <h3>Step-by-Step:</h3>
-        <ol>
-          <li>Identify important data to back up.</li>
-          <li>Choose reliable backup media or cloud solutions.</li>
-          <li>Schedule automatic backups weekly or daily depending on data sensitivity.</li>
-          <li>Test your backups regularly to ensure they can be restored.</li>
-        </ol>
-        
-        <h3>4. Overlooking Security Basics</h3>
-        <p>Sometimes the basics — like using firewalls, antivirus, and encryption — are skipped, but they form the foundation of good security. Don’t underestimate the power of these tools.</p>
-        
-        <h3>Personal Story:</h3>
-        <p>I once worked with a startup that ignored basic firewall configurations, leading to an easy breach through an open port. Fixing this took days and cost them valuable trust.</p>
-        
-        <p>By avoiding these common mistakes, you’ll set yourself up for success and significantly reduce your risk exposure.</p>
-        <button class="read-more-btn" onclick="togglePost('post1')">Read Less</button>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">EZM Cyber</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+          <li class="nav-item"><a class="nav-link active" href="blog.html">Blog</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
       </div>
     </div>
+  </nav>
 
-    <!-- Blog Post 2 -->
-    <div class="blog-post" id="post2">
-      <img src="blog2.PNG" alt="How Hackers Exploit Web Apps" class="img-fluid rounded mb-3" />
-      <h2>How Hackers Exploit Web Apps and How to Defend</h2>
-      <p class="blog-snippet">
-        Web applications are prime targets for attackers. Understanding common attack methods and defense strategies is essential for protecting your data and users...
-      </p>
-      <button class="read-more-btn" onclick="togglePost('post2')">Read More</button>
-      <div class="full-post">
-        <p>Web applications face constant threats from hackers exploiting vulnerabilities to steal data, hijack accounts, or disrupt services. Here’s how they operate and how you can defend:</p>
+  <!-- Blog Header -->
+  <header class="py-5 text-center bg-dark text-light">
+    <div class="container">
+      <h1 class="fw-bold">EZM Cyber Blog</h1>
+      <p class="lead">Latest insights, guides, and updates in cybersecurity.</p>
+    </div>
+  </header>
+
+  <!-- Blog Cards -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-4">
         
-        <h3>Common Exploits</h3>
-        <ul>
-          <li><strong>SQL Injection:</strong> Attackers insert malicious code into input fields to manipulate databases.</li>
-          <li><strong>Cross-Site Scripting (XSS):</strong> Hackers inject scripts to steal cookies or deface websites.</li>
-          <li><strong>Broken Authentication:</strong> Poor session management lets attackers hijack accounts.</li>
-        </ul>
-        
-        <h3>Defense Strategies</h3>
-        <ul>
-          <li>Implement input validation and sanitization.</li>
-          <li>Use prepared statements and parameterized queries.</li>
-          <li>Employ strong authentication and session controls.</li>
-          <li>Regularly patch and update your software.</li>
-        </ul>
-        
-        <h3>Real-life Example:</h3>
-        <p>The 2018 British Airways data breach was caused by a malicious script injected into their website, capturing thousands of customer payment details. Proper input validation and regular security audits might have prevented this.</p>
-        
-        <h3>Step-by-Step Defense:</h3>
-        <ol>
-          <li>Audit your web app for common vulnerabilities using tools like OWASP ZAP.</li>
-          <li>Fix input validation and sanitize all user inputs.</li>
-          <li>Implement multi-factor authentication.</li>
-          <li>Keep your frameworks and plugins updated.</li>
-          <li>Regularly monitor logs for suspicious activity.</li>
-        </ol>
-        
-        <h3>Tips & Tricks:</h3>
-        <ul>
-          <li>Use Content Security Policy (CSP) headers to reduce XSS risks.</li>
-          <li>Limit error message details to avoid giving attackers clues.</li>
-          <li>Educate your dev team on secure coding practices.</li>
-        </ul>
-        <button class="read-more-btn" onclick="togglePost('post2')">Read Less</button>
+        <!-- Post 1 -->
+        <div class="col-md-4">
+          <div class="card card-hover h-100">
+            <img src="https://source.unsplash.com/400x250/?cyber,security" class="card-img-top" alt="Cybersecurity Basics">
+            <div class="card-body">
+              <h5 class="card-title">Understanding Cybersecurity Basics</h5>
+              <p class="card-text">Every beginner should understand the fundamentals of cybersecurity. Here's what you need to know...</p>
+              <a href="blog-post1.html" class="btn btn-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 2 -->
+        <div class="col-md-4">
+          <div class="card card-hover h-100">
+            <img src="https://source.unsplash.com/400x250/?hacker,computer" class="card-img-top" alt="Ethical Hacking">
+            <div class="card-body">
+              <h5 class="card-title">Steps of Ethical Hacking</h5>
+              <p class="card-text">Ethical hacking is structured into steps like reconnaissance, scanning, gaining access, and reporting...</p>
+              <a href="blog-post2.html" class="btn btn-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 3 -->
+        <div class="col-md-4">
+          <div class="card card-hover h-100">
+            <img src="https://source.unsplash.com/400x250/?phishing,email" class="card-img-top" alt="Phishing Attack">
+            <div class="card-body">
+              <h5 class="card-title">How Phishing Attacks Work</h5>
+              <p class="card-text">Phishing remains one of the most dangerous online threats. Learn how attackers trick users...</p>
+              <a href="blog-post3.html" class="btn btn-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
+  </section>
 
-    <!-- Blog Post 3 -->
-    <div class="blog-post" id="post3">
-      <img src="blog3.PNG" alt="Build Your Cybersecurity Portfolio" class="img-fluid rounded mb-3" />
-      <h2>Build Your Cybersecurity Portfolio from Scratch</h2>
-      <p class="blog-snippet">
-        Want to break into cybersecurity? A strong portfolio can open doors. Here’s a step-by-step guide to building your portfolio from zero...
-      </p>
-      <button class="read-more-btn" onclick="togglePost('post3')">Read More</button>
-      <div class="full-post">
-        <p>Building a cybersecurity portfolio shows employers your skills and passion. Here’s how to start from scratch:</p>
-        
-        <h3>1. Learn and Practice</h3>
-        <p>Focus on foundational skills: networking, Linux, scripting, and common security tools. Practice in labs and capture-the-flag (CTF) challenges.</p>
-        
-        <h3>2. Create Projects</h3>
-        <p>Build small projects like vulnerability assessments, penetration testing reports, or security automations. Document everything thoroughly.</p>
-        
-        <h3>Personal Story:</h3>
-        <p>When I started, I created simple scripts automating network scans. Sharing them publicly helped me get noticed by recruiters and mentors.</p>
-        
-        <h3>3. Share Publicly</h3>
-        <p>Use platforms like GitHub or personal blogs to showcase your work. Write articles explaining your projects and lessons learned.</p>
-        
-        <h3>4. Contribute and Collaborate</h3>
-        <p>Join open source projects or security communities. Collaboration shows teamwork and continuous learning.</p>
-        
-        <h3>Step-by-Step:</h3>
-        <ol>
-          <li>Identify the skills you want to showcase.</li>
-          <li>Pick projects that highlight those skills.</li>
-          <li>Document your work with clear explanations and code comments.</li>
-          <li>Engage with the cybersecurity community online.</li>
-        </ol>
-        
-        <h3>Tips & Tricks:</h3>
-        <ul>
-          <li>Keep your portfolio updated regularly.</li>
-          <li>Include links to certifications or trainings completed.</li>
-          <li>Showcase problem-solving and learning journeys, not just finished projects.</li>
-        </ul>
-        
-        <p>A well-rounded portfolio makes you stand out and proves your practical knowledge.</p>
-        <button class="read-more-btn" onclick="togglePost('post3')">Read Less</button>
-      </div>
-    </div>
+  <!-- Footer -->
+  <footer class="bg-dark text-light text-center py-3">
+    <p class="mb-0">&copy; 2025 EZM Cyber. All Rights Reserved.</p>
+  </footer>
 
-    <div class="mt-4 mb-5">
-      <a href="index.html" class="back-home">← Back to Homepage</a>
-    </div>
-
-  </div>
-
-  <script>
-    function togglePost(postId) {
-      const post = document.getElementById(postId);
-      const fullPost = post.querySelector('.full-post');
-      const btn = post.querySelector('.read-more-btn');
-
-      if (fullPost.style.display === 'block') {
-        fullPost.style.display = 'none';
-        btn.textContent = 'Read More';
-      } else {
-        fullPost.style.display = 'block';
-        btn.textContent = 'Read Less';
-      }
-    }
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
