@@ -3,12 +3,19 @@ body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #121212;
+  background-color: #0f111a;
   color: #f0f0f0;
 }
 
+/* Navbar */
+.navbar.bg-primary {
+  background-color: #0d6efd !important;
+}
+
 /* Banner Section */
-section.py-5.position-relative {
+.banner-section {
+  background: linear-gradient(135deg, #0d6efd, #6610f2);
+  min-height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,14 +31,53 @@ section.py-5.position-relative {
   font-size: 1.5rem;
 }
 
+/* Section Styles */
+.section-light {
+  background-color: #f4f4f4;
+  color: #0f111a;
+}
+
+.section-dark {
+  background-color: #1c1c2e;
+  color: #f0f0f0;
+}
+
 /* Card Hover Effects */
 .card-hover {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 10px;
 }
 
 .card-hover:hover {
   transform: translateY(-8px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #0d6efd;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0a58ca;
+}
+
+.btn-accent {
+  background-color: #6610f2;
+  border: none;
+  color: #fff;
+}
+
+.btn-accent:hover {
+  background-color: #520dc2;
+}
+
+/* Newsletter Form */
+form.d-flex {
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 /* Scroll Fade Animation */
@@ -46,21 +92,9 @@ section.py-5.position-relative {
   transform: translateY(0);
 }
 
-/* Buttons */
-.btn-primary {
-  background-color: #007bff;
-  border: none;
-  transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-}
-
-/* Newsletter Form */
-form.d-flex {
-  max-width: 500px;
-  margin: 0 auto;
+/* Footer */
+footer.bg-primary {
+  background-color: #0d6efd !important;
 }
 
 /* Responsive Adjustments */
