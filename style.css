@@ -15,11 +15,7 @@ body {
 /* Banner Section */
 .banner-section {
   background: linear-gradient(135deg, #0d6efd, #6610f2);
-  min-height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+
 }
 
 .banner-title {
