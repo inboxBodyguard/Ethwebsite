@@ -3,56 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Cybersecurity Mistakes to Avoid | EZM Cyber</title>
+  <title>Top Cybersecurity Mistakes to Avoid</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; }
+    .card-hover:hover { transform: scale(1.02); transition: transform 0.3s; }
+    .blog-content { max-width: 800px; margin: 0 auto; padding: 20px; }
+  </style>
 </head>
 <body>
-
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-      <a class="navbar-brand" href="index.html">EZM Cyber</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="index.html">CyberSec Blog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link active" href="blog.html">Blog</a></li>
+          <li class="nav-item"><a class="nav-link" href="blog-post1.html">Ethical Hacking</a></li>
+          <li class="nav-item"><a class="nav-link" href="blog-post2.html">Cybersecurity Mistakes</a></li>
+          <li class="nav-item"><a class="nav-link" href="blog-post3.html">Hacking Roadmap</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <main>
-    <header class="py-5 bg-primary text-white text-center">
-      <div class="container">
-        <h1 class="fw-bold">Top Cybersecurity Mistakes to Avoid</h1>
-        <p class="mb-0">Published: August 2025</p>
-      </div>
-    </header>
+  <!-- Blog Post Content -->
+  <div class="container blog-content">
+    <img src="images/banner.PNG" class="img-fluid mb-4" alt="Top Cybersecurity Mistakes to Avoid">
+    <h1>Top Cybersecurity Mistakes to Avoid</h1>
+    <p class="text-muted">Published on August 29, 2025</p>
+    <hr>
+    <p>In today’s hyper-connected world, cybersecurity is no longer optional—it’s a necessity. Yet, individuals and organizations continue to make simple mistakes that leave them vulnerable to cyberattacks. From weak passwords to neglecting software updates, these errors can have devastating consequences. Below, we explore the most common cybersecurity mistakes and how to avoid them to keep your digital life secure.</p>
+    
+    <h2>1. Using Weak or Reused Passwords</h2>
+    <p>Passwords are your first line of defense, yet many people use weak or identical passwords across multiple accounts. A 2024 study found that “123456” and “password” remain among the most common passwords. If one account is compromised, reused passwords put all your accounts at risk. To avoid this, use strong, unique passwords for each account and consider a password manager to keep track of them. Enable two-factor authentication (2FA) for an extra layer of security.</p>
+    
+    <h2>2. Ignoring Software Updates</h2>
+    <p>Software updates often include critical security patches, yet many users delay or ignore them. In 2023, unpatched software was responsible for 60% of data breaches, according to IBM. Whether it’s your operating system, browser, or apps, always update promptly. Enable automatic updates where possible to ensure you’re protected against known vulnerabilities.</p>
+    
+    <h2>3. Falling for Phishing Scams</h2>
+    <p>Phishing emails and texts trick users into sharing sensitive information or clicking malicious links. These attacks are increasingly sophisticated, often mimicking trusted sources like banks or colleagues. To avoid falling victim, verify the sender’s email address, avoid clicking unsolicited links, and use email filters to catch suspicious messages. Training employees to recognize phishing attempts is also crucial for businesses.</p>
+    
+    <h2>4. Neglecting Backups</h2>
+    <p>Ransomware attacks, which lock your data until a ransom is paid, are on the rise. Without regular backups, you risk losing critical data. Implement a 3-2-1 backup strategy: three copies of your data, on two different devices, with one stored offsite. Test your backups regularly to ensure they’re recoverable.</p>
+    
+    <h2>5. Overlooking Physical Security</h2>
+    <p>Cybersecurity isn’t just digital. A stolen laptop or unsecured device can provide attackers with direct access to your network. Always lock your devices when unattended, use encrypted storage, and avoid public Wi-Fi without a VPN. For businesses, restrict physical access to servers and implement employee badge systems.</p>
+    
+    <p>By addressing these common mistakes, you can significantly reduce your risk of a cyberattack. Cybersecurity is an ongoing process—stay vigilant, educate yourself, and invest in robust security measures. Your digital safety depends on it.</p>
+    
+    <a href="index.html" class="btn btn-primary mt-4">Back to Home</a>
+  </div>
 
-    <article class="py-5">
-      <div class="container">
-        <img src="images/banner2.jpg" class="img-fluid rounded mb-4" alt="A lock icon on a digital screen symbolizing cybersecurity">
-        <p>Many cyberattacks succeed not because hackers are too advanced but because of simple, avoidable mistakes...</p>
-        
-        <h4>Common Mistakes:</h4>
-        <ul>
-          <li>Using weak or reused passwords.</li>
-          <li>Ignoring software updates and patches.</li>
-          <li>Falling for phishing scams.</li>
-          <li>Lack of proper data backups.</li>
-        </ul>
-        <p>By avoiding these errors, both individuals and businesses can greatly reduce their risk exposure...</p>
-      </div>
-    </article>
-  </main>
-
-  <footer class="bg-dark text-center text-white py-3">
-    <div class="container">
-      <p class="mb-0">&copy; 2025 EZM Cyber. All Rights Reserved.</p>
-    </div>
+  <!-- Footer -->
+  <footer class="bg-light text-center py-4">
+    <p>&copy; 2025 CyberSec Blog. All rights reserved.</p>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
