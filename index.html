@@ -31,7 +31,7 @@
   </nav>
 
   <!-- Banner Section -->
- <section class="py-5 banner-section" style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+  <section class="py-5 banner-section" style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
   </section>
 
   <!-- Main Content -->
@@ -133,28 +133,41 @@
     })();
 
     // Suspicious Link Detection - Upgraded
-    document.getElementById("linkForm").addEventListener("submit", function(e) {
+    const blacklist = ["phish", "scam", "malware", "virus", "hack"];
+
+    document.getElementById("linkForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const link = document.getElementById("linkInput").value.trim().toLowerCase();
       const result = document.getElementById("linkResult");
 
-      const suspiciousWords = ["phish","scam","malware","login","free","verify"];
-      const suspiciousTLDs = [".xyz",".top",".info",".club"];
-      let isSuspicious = false;
-
-      try {
-        const urlObj = new URL(link);
-        const domain = urlObj.hostname;
-
-        if (suspiciousWords.some(word => domain.includes(word))) isSuspicious = true;
-        if (suspiciousTLDs.some(tld => domain.endsWith(tld))) isSuspicious = true;
-        if (domain.length > 30) isSuspicious = true;
-      } catch(err) {
-        isSuspicious = true;
+      // Validate URL format
+      if(!link.startsWith("http")) {
+        result.textContent = "⚠️ Enter a valid URL including http:// or https://";
+        result.style.color = "orange";
+        return;
       }
 
-      if(isSuspicious){
-        alert("⚠️ Warning: This link may be suspicious! Proceed with caution.");
+      // Keyword detection
+      let flagged = blacklist.some(keyword => link.includes(keyword));
+
+      // Live URL check
+      try {
+        const response = await fetch(link, { method: 'HEAD', mode: 'no-cors' });
+        if(!response.ok && !flagged) {
+          result.textContent = "⚠️ Warning: Unable to reach this link (may be unsafe).";
+          result.style.color = "red";
+          return;
+        }
+      } catch(err) {
+        if(!flagged){
+          result.textContent = "⚠️ Warning: Unable to reach this link (may be unsafe).";
+          result.style.color = "red";
+          return;
+        }
+      }
+
+      // Final result
+      if(flagged) {
         result.textContent = "⚠️ Warning: This link may be suspicious!";
         result.style.color = "red";
       } else {
