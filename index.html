@@ -80,7 +80,7 @@
             <div class="card-body text-center">
               <h5 class="card-title">GitHub Repository</h5>
               <p class="card-text">Access the source code and contribute to EZM Cyber.</p>
-              <a href="https://github.com/ethan89072/Ethwebsite" class="btn btn-primary" target="_blank">View on GitHub</a>
+              <a href="https://github.com/inboxBodyguard/Ethwebsite" class="btn btn-primary" target="_blank">View on GitHub</a>
             </div>
           </div>
         </div>
@@ -132,12 +132,29 @@
       s0.parentNode.insertBefore(s1,s0);
     })();
 
-    // Suspicious Link Detection
+    // Suspicious Link Detection - Upgraded
     document.getElementById("linkForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const link = document.getElementById("linkInput").value.trim().toLowerCase();
       const result = document.getElementById("linkResult");
-      if (link.includes("phish") || link.includes("scam") || link.includes("malware")) {
+
+      const suspiciousWords = ["phish","scam","malware","login","free","verify"];
+      const suspiciousTLDs = [".xyz",".top",".info",".club"];
+      let isSuspicious = false;
+
+      try {
+        const urlObj = new URL(link);
+        const domain = urlObj.hostname;
+
+        if (suspiciousWords.some(word => domain.includes(word))) isSuspicious = true;
+        if (suspiciousTLDs.some(tld => domain.endsWith(tld))) isSuspicious = true;
+        if (domain.length > 30) isSuspicious = true;
+      } catch(err) {
+        isSuspicious = true;
+      }
+
+      if(isSuspicious){
+        alert("⚠️ Warning: This link may be suspicious! Proceed with caution.");
         result.textContent = "⚠️ Warning: This link may be suspicious!";
         result.style.color = "red";
       } else {
