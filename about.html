@@ -8,6 +8,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <style>
+    .highlight { color: #00f; font-weight: 600; }
+    .subtle { font-weight: 400; color: #777; font-size: 0.9em; }
+    .features-list li { margin-bottom: 10px; position: relative; padding-left: 20px; }
+    .features-list li::before { content: "→"; position: absolute; left: 0; color: #00f; }
+    .btn { display: inline-block; padding: 10px 20px; background: #007bff; color: #fff; border-radius: 5px; text-decoration: none; transition: all 0.3s ease; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+    .about-section { padding: 60px 0; }
+    .about-section.bg-dark { background-color: #f8f9fa; }
+    .center-btn { text-align: center; margin-top: 20px; }
+  </style>
 </head>
 <body>
 
@@ -38,15 +49,15 @@
   <!-- Who We Are -->
   <section class="about-section">
     <div class="container">
-      <h2>Who We Are</h2>
+      <h2>Who We Are <span class="subtle">— Real Skills, Real Defense</span></h2>
       <p>
         EzmCyber was founded by <span class="highlight">Niffy</span>, a cybersecurity analyst dedicated to building stronger digital defenses. 
         With hands-on experience in ethical hacking, incident response, and network defense, EzmCyber is more than a brand — it’s a mission.  
       </p>
       <p>
         Our focus is to share actionable knowledge, develop practical tools, and support organizations in defending against real-world cyber threats. 
-        We believe security should not just be theory — it should be <strong>measurable, accessible, and effective</strong>. Whether you’re securing a startup or strengthening 
-        government infrastructure, EzmCyber provides the skills, insights, and guidance to help you stay ahead of attackers.
+        Security shouldn’t just be theoretical — it should be <span class="highlight">measurable, accessible, and effective</span>. Whether you’re securing a startup or strengthening 
+        government infrastructure, EzmCyber provides the skills, insights, and guidance to stay ahead of attackers.
       </p>
     </div>
   </section>
@@ -54,15 +65,15 @@
   <!-- Why Choose Us -->
   <section class="about-section bg-dark">
     <div class="container">
-      <h2>Why Choose Us</h2>
+      <h2>Why Choose Us <span class="subtle">— Expertise You Can Trust</span></h2>
       <ul class="features-list">
-        <li>✔ Proven experience in penetration testing and cyber defense</li>
-        <li>✔ Real-world tools, tutorials, and insights — no fluff</li>
-        <li>✔ A community built on passion and collaboration</li>
-        <li>✔ Commitment to rapid response and measurable results</li>
+        <li>Hands-on expertise in penetration testing and cyber defense</li>
+        <li>Practical tools, tutorials, and real-world guidance — no fluff</li>
+        <li>Collaborative community for knowledge sharing and growth</li>
+        <li>Rapid, actionable guidance to stay ahead of threats</li>
       </ul>
       <div class="center-btn">
-        <a href="services.html" class="btn">Explore Our Services</a>
+        <a href="services.html" class="btn">Discover How We Can Help</a>
       </div>
     </div>
   </section>
