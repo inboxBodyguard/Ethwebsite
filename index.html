@@ -6,13 +6,14 @@
   <title>EZM Cyber - Secure, Protect, and Respond</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
       <a class="navbar-brand" href="index.html">EZM Cyber</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -35,7 +36,7 @@
   </section>
 
   <!-- Main Content -->
-  <section class="py-5">
+  <section class="py-5 scroll-fade">
     <div class="container text-center">
       <h2>Welcome to EZM Cyber</h2>
       <p>Your trusted source for cybersecurity insights, tools, and guidance.</p>
@@ -44,7 +45,7 @@
   </section>
 
   <!-- Suspicious Link Detection -->
-  <section class="py-5 section-light">
+  <section class="py-5 section-light scroll-fade">
     <div class="container">
       <h3 class="text-center mb-4">Suspicious Link Detector</h3>
       <form id="linkForm" class="d-flex flex-wrap justify-content-center">
@@ -56,7 +57,7 @@
   </section>
 
   <!-- Newsletter Section -->
-  <section class="py-5 section-dark">
+  <section class="py-5 section-dark scroll-fade">
     <div class="container text-center">
       <h3>Stay Updated</h3>
       <p>Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
@@ -70,34 +71,31 @@
   </section>
 
   <!-- Developer Tools Section -->
-  <section id="developer-tools" class="py-5 section-dark">
+  <section id="developer-tools" class="py-5 section-dark scroll-fade">
     <div class="container">
       <h2 class="mb-4 text-center">Developer Tools</h2>
       <div class="row g-4">
-        <!-- GitHub Repo Link -->
         <div class="col-md-4">
-          <div class="card h-100 card-hover">
-            <div class="card-body text-center">
+          <div class="card h-100 card-hover text-center">
+            <div class="card-body">
               <h5 class="card-title">GitHub Repository</h5>
               <p class="card-text">Access the source code and contribute to EZM Cyber.</p>
               <a href="https://github.com/ethan89072/Ethwebsite" class="btn btn-primary" target="_blank">View on GitHub</a>
             </div>
           </div>
         </div>
-        <!-- Code Playground -->
         <div class="col-md-4">
-          <div class="card h-100 card-hover">
-            <div class="card-body text-center">
+          <div class="card h-100 card-hover text-center">
+            <div class="card-body">
               <h5 class="card-title">Code Playground</h5>
               <p class="card-text">Experiment with HTML, CSS, and JS in real-time.</p>
               <a href="https://codepen.io/" class="btn btn-success" target="_blank">Try on CodePen</a>
             </div>
           </div>
         </div>
-        <!-- API Docs -->
         <div class="col-md-4">
-          <div class="card h-100 card-hover">
-            <div class="card-body text-center">
+          <div class="card h-100 card-hover text-center">
+            <div class="card-body">
               <h5 class="card-title">API Documentation</h5>
               <p class="card-text">Check out useful API references for developers.</p>
               <a href="https://developer.mozilla.org/en-US/" class="btn btn-warning" target="_blank">Visit MDN Docs</a>
@@ -106,7 +104,6 @@
         </div>
       </div>
 
-      <!-- Last Updated Timestamp -->
       <p class="text-center mt-4 small text-muted">
         Last Updated: <span id="last-updated"></span>
       </p>
@@ -120,62 +117,9 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-      s1.async=true;
-      s1.src='https://embed.tawk.to/68863b0ddb7610192eeac6b0/1j165dcdr';
-      s1.charset='UTF-8';
-      s1.setAttribute('crossorigin','*');
-      s0.parentNode.insertBefore(s1,s0);
-    })();
-
-    // Suspicious Link Detection - Keyword + VirusTotal API
-    const blacklist = ["phish", "scam", "malware", "virus", "hack"];
-
-    document.getElementById("linkForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const link = document.getElementById("linkInput").value.trim().toLowerCase();
-      const result = document.getElementById("linkResult");
-
-      if(!link.startsWith("http")) {
-        result.textContent = "⚠️ Enter a valid URL including http:// or https://";
-        result.style.color = "orange";
-        return;
-      }
-
-      // Quick keyword check
-      if(blacklist.some(keyword => link.includes(keyword))) {
-        result.textContent = "⚠️ Warning: This link may be suspicious!";
-        result.style.color = "red";
-        return;
-      }
-
-      // VirusTotal API check via Google Cloud endpoint
-      try {
-        const response = await fetch("https://your-cloud-function-url", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({url: link, apiKey: "aae37bf314798b0edf335b4818114280a268aaf936bd7d4b0e695b81870f08a8"})
-        });
-        const data = await response.json();
-        if(data.safe) {
-          result.textContent = "✅ This link appears safe.";
-          result.style.color = "green";
-        } else {
-          result.textContent = "⚠️ Warning: This link is flagged as suspicious!";
-          result.style.color = "red";
-        }
-      } catch(err) {
-        result.textContent = "⚠️ Unable to verify link. Treat with caution!";
-        result.style.color = "orange";
-      }
-    });
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
     document.getElementById("last-updated").textContent = new Date().toLocaleString();
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
