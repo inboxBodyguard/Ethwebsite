@@ -1,92 +1,69 @@
-/* General Styles */
-body {
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #0f111a;
+/* Services Section */
+.services-section {
+  padding: 60px 0;
+  background-color: #1c1c2e; /* Keep dark background */
   color: #f0f0f0;
 }
 
-/* Headings */
-h1,h2,h3,h4,h5 {
-  font-family: 'Orbitron', sans-serif;
-}
-
-/* Navbar */
-.navbar.bg-primary {
-  background-color: #0d6efd !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-}
-
-/* Banner Sections */
-.banner-section, .projects-banner {
-  position: relative;
-  height: 400px;
-}
-
-.projects-banner .banner-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  text-shadow: 0 4px 12px rgba(0,0,0,0.6);
-}
-
-.banner-section .banner-text {
+.services-section h2 {
   text-align: center;
-  color: #fff;
-  text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  margin-bottom: 40px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  font-size: 2.5rem;
 }
 
-/* Sections */
-.section-light {
-  background-color: #f4f4f4;
-  color: #0f111a;
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
 }
 
-.section-dark {
-  background-color: #1c1c2e;
-  color: #f0f0f0;
-}
-
-/* Card Hover */
-.card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+.service-card {
+  background-color: #1c1c2e; /* Dark base */
+  padding: 25px;
   border-radius: 12px;
-  background-color: #1c1c2e;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  font-family: 'Roboto', sans-serif;
 }
-.card-hover:hover {
+
+.service-card h3 {
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+}
+
+.service-card p {
+  line-height: 1.6;
+  color: #e0e0e0;
+}
+
+.service-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 25px rgba(0,0,0,0.5);
   background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
   color: #fff;
 }
 
-/* Buttons */
-.btn-primary, .btn-accent {
-  border: none;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-}
-.btn-primary { background-color: #0d6efd; color: #fff; }
-.btn-primary:hover { background-color: #0a58ca; box-shadow: 0 6px 12px rgba(13,110,253,0.4);}
-.btn-accent { background-color: #6610f2; color: #fff; }
-.btn-accent:hover { background-color: #520dc2; box-shadow: 0 6px 12px rgba(102,16,242,0.4);}
-
-/* Scroll Fade */
-.scroll-fade { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.scroll-fade.visible { opacity: 1; transform: translateY(0); }
-
-/* Footer */
-footer.bg-primary {
-  background-color: #0d6efd !important;
-  box-shadow: 0 -4px 12px rgba(0,0,0,0.25);
+/* Center button under services */
+.center-btn {
+  text-align: center;
 }
 
-/* Responsive Adjustments */
+.center-btn .btn-accent {
+  margin-top: 20px;
+  padding: 12px 40px;
+  font-size: 1rem;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .banner-section, .projects-banner { height: 300px; }
-  .projects-banner .banner-text h1 { font-size: 1.8rem; }
-  .projects-banner .banner-text p { font-size: 1rem; }
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-section h2 {
+    font-size: 2rem;
+  }
 }
