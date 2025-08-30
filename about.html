@@ -8,6 +8,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <style>
+    body { font-family: 'Roboto', sans-serif; margin:0; padding:0; background:#fff; color:#111; line-height:1.7; }
+    .container { width:90%; max-width:1200px; margin:0 auto; padding:2rem 0; }
+    nav.navbar { display:flex; justify-content:space-between; align-items:center; padding:1rem 0; background:#007BFF; color:#fff; }
+    nav.navbar .nav-links { list-style:none; display:flex; gap:1rem; margin:0; }
+    nav.navbar .nav-links li a { color:#fff; text-decoration:none; font-weight:500; }
+    nav.navbar .nav-links li a.active { text-decoration:underline; text-underline-offset:4px; }
+    .hero-banner { background:#f9f9f9; padding:6rem 0; text-align:center; }
+    .hero-banner h1 { font-size:2.8rem; margin-bottom:1rem; }
+    .hero-banner .highlight { color:#007BFF; }
+    .about-section { padding:4rem 0; }
+    .about-section.bg-dark { background:#f0f0f0; }
+    .about-section h2 { font-size:2rem; margin-bottom:1.5rem; color:#007BFF; }
+    .about-section p { margin-bottom:1.2rem; }
+    .features-list { list-style:none; padding:0; margin:1rem 0 2rem 0; }
+    .features-list li { margin-bottom:0.8rem; padding-left:1.5rem; position:relative; }
+    .features-list li::before { content:"✔"; position:absolute; left:0; color:#28a745; font-weight:bold; }
+    .center-btn { text-align:center; margin-top:2rem; }
+    .btn { background:#007BFF; color:#fff; padding:0.7rem 1.5rem; text-decoration:none; border-radius:5px; transition:0.3s; }
+    .btn:hover { background:#0056b3; }
+    footer { background:#007BFF; color:#fff; text-align:center; padding:1.5rem 0; margin-top:3rem; }
+  </style>
 </head>
 <body>
 
@@ -27,7 +49,7 @@
     </nav>
   </header>
 
-  <!-- Banner -->
+  <!-- Hero Banner -->
   <section class="hero-banner">
     <div class="container">
       <h1>About <span class="highlight">EzmCyber</span></h1>
@@ -40,40 +62,30 @@
     <div class="container">
       <h2>Who We Are</h2>
       <p>
-        <span class="highlight">EzmCyber</span> was founded by <strong>Niffy</strong>, a hands-on cybersecurity analyst with years of experience in ethical hacking, incident response, and network defense. Our mission is simple: empower individuals and organizations to defend against evolving digital threats with confidence and precision.
+        EzmCyber is the brainchild of <span class="highlight">Niffy</span>, a dedicated cybersecurity analyst with over 1 year of hands-on experience in ethical hacking, penetration testing, and network defense. I am human, passionate, and committed to building stronger digital defenses across industries.
       </p>
       <p>
-        At EzmCyber, we focus on delivering actionable guidance, practical tools, and real-world tutorials. We believe cybersecurity should be approachable, measurable, and effective — whether you are securing a small startup, fortifying corporate networks, or safeguarding government infrastructure. 
+        We operate at the intersection of research, practice, and community. Every tool, tutorial, and insight we provide is tested in real-world environments to ensure maximum effectiveness. Our mission is to empower individuals, startups, and organizations to defend themselves against cyber threats with practical, actionable solutions.
       </p>
       <p>
-        Our work is grounded in real experience. Every tool, post, and guide is tested and proven, ensuring you get reliable solutions instead of theory. Our community thrives on collaboration, learning, and building stronger digital defenses together.
-      </p>
-    </div>
-  </section>
-
-  <!-- Meet the Founder -->
-  <section class="about-section bg-dark">
-    <div class="container">
-      <h2>Meet Niffy</h2>
-      <p>
-        Niffy is not just a cybersecurity expert; he’s a practitioner who has seen attacks from the inside. With certifications in ethical hacking, penetration testing, and cyber defense, he has helped organizations identify vulnerabilities and strengthen their systems against real-world threats. His passion lies in mentoring, teaching, and sharing knowledge that actually works.
+        At EzmCyber, security is never just theoretical. It’s measurable, accessible, and effective. From securing personal devices to defending enterprise networks, we take a human-centric approach to cybersecurity. Every step, guide, and tool we create reflects hands-on expertise and an authentic understanding of attacker techniques.
       </p>
       <p>
-        When you work with EzmCyber, you are learning from someone who’s actively defending systems daily. From live security exercises to real penetration testing, Niffy ensures every insight you get is actionable and practical.
+        Our goal is to share knowledge, cultivate skills, and foster a community of defenders who are informed, prepared, and confident in their ability to respond to cyber threats.
       </p>
     </div>
   </section>
 
   <!-- Why Choose Us -->
-  <section class="about-section">
+  <section class="about-section bg-dark">
     <div class="container">
       <h2>Why Choose EzmCyber</h2>
       <ul class="features-list">
-        <li>✔ Proven hands-on experience in penetration testing and cyber defense</li>
-        <li>✔ Actionable tools, tutorials, and real-world insights — no fluff</li>
-        <li>✔ A supportive community built on knowledge sharing and collaboration</li>
-        <li>✔ Commitment to rapid response and practical, measurable results</li>
-        <li>✔ Trusted guidance from an active cybersecurity professional</li>
+        <li>✔ Human-led cybersecurity guidance with practical experience</li>
+        <li>✔ Real-world tested tools and tutorials — no fluff or automation</li>
+        <li>✔ Passion-driven community collaboration</li>
+        <li>✔ Rapid response strategies and measurable security results</li>
+        <li>✔ Transparent and trustworthy insights from a dedicated professional</li>
       </ul>
       <div class="center-btn">
         <a href="services.html" class="btn">Explore Our Services</a>
