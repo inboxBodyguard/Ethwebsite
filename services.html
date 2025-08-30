@@ -3,22 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Discover EzmCyber's comprehensive cybersecurity services, from penetration testing to cloud security, designed to protect your organization." />
   <title>Services | EzmCyber</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
-  <style>
-    /* Micro-interactions & animations */
-    .services-grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-    .service-card { background: #f8f9fa; padding: 1.5rem; border-radius: 0.5rem; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .service-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-    .btn { transition: transform 0.3s ease, background 0.3s ease; }
-    .btn:hover { transform: scale(1.05); background: linear-gradient(45deg,#007bff,#00c6ff); color:#fff; }
-    .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .scroll-fade.visible { opacity: 1; transform: translateY(0); }
-    h2, .intro-text { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    h2.visible, .intro-text.visible { opacity: 1; transform: translateY(0); }
-  </style>
 </head>
 <body>
 
@@ -47,88 +34,54 @@
   </section>
 
   <!-- Services Section -->
-  <section class="services-section scroll-fade">
+  <section class="services-section">
     <div class="container">
       <h2>Our Core Services</h2>
-      <p class="intro-text">With hands-on expertise and a mission-driven approach, EzmCyber delivers tailored cybersecurity solutions for organizations of all sizes. Our services are designed to prevent, detect, and respond to digital threats effectively.</p>
-
       <div class="services-grid">
 
-        <div class="service-card scroll-fade">
+        <div class="service-card">
           <h3>Penetration Testing</h3>
-          <p>We simulate real-world cyberattacks using advanced tools and methodologies to uncover vulnerabilities before attackers do. Our tests cover web applications, networks, and internal systems, helping you strengthen defenses proactively.</p>
-          <ul>
-            <li>Web & Mobile App Security Testing</li>
-            <li>Network Infrastructure Penetration</li>
-            <li>Social Engineering & Phishing Checks</li>
-          </ul>
+          <p>We simulate real-world cyberattacks on networks, applications, and systems to identify vulnerabilities before malicious actors exploit them. Our team uses tools like Nmap, Metasploit, Burp Suite, and custom scripts to conduct thorough assessments. Clients benefit from actionable reports, prioritized remediation steps, and increased overall security posture.</p>
+          <p><strong>Use Cases:</strong> Enterprise network security, web application testing, cloud infrastructure evaluation.</p>
+          <p><strong>Client Benefits:</strong> Reduced attack surface, compliance readiness, early threat detection.</p>
         </div>
 
-        <div class="service-card scroll-fade">
+        <div class="service-card">
           <h3>Incident Response</h3>
-          <p>When threats strike, time is critical. Our team provides rapid containment, forensic investigation, and recovery guidance to minimize downtime and data loss. We help organizations regain control and prevent future breaches.</p>
-          <ul>
-            <li>Threat Containment & Mitigation</li>
-            <li>Root Cause Analysis & Forensics</li>
-            <li>Recovery & Post-Incident Recommendations</li>
-          </ul>
+          <p>When a security breach occurs, we provide rapid containment, investigation, and recovery support. Our approach includes forensic analysis, log inspection, and breach impact assessment. Tools like Splunk, Wireshark, and ELK stack enable us to uncover root causes and mitigate damage effectively.</p>
+          <p><strong>Use Cases:</strong> Malware outbreaks, ransomware attacks, insider threats.</p>
+          <p><strong>Client Benefits:</strong> Minimized downtime, preserved data integrity, actionable incident reports.</p>
         </div>
 
-        <div class="service-card scroll-fade">
+        <div class="service-card">
           <h3>Security Audits</h3>
-          <p>Our in-depth audits assess IT infrastructure, policies, and practices to ensure compliance with industry standards and regulations. We identify gaps and provide actionable guidance to enhance your organization's security posture.</p>
-          <ul>
-            <li>IT Policy & Governance Review</li>
-            <li>Vulnerability & Risk Assessment</li>
-            <li>Compliance Audits (ISO, NIST, GDPR)</li>
-          </ul>
+          <p>Our in-depth audits assess IT infrastructure, policies, and procedures for compliance and resilience against threats. We evaluate configuration standards, access controls, and security policies using ISO 27001, NIST, and CIS benchmarks. Recommendations are practical, prioritized, and tailored to each client’s environment.</p>
+          <p><strong>Use Cases:</strong> Compliance verification, internal security review, regulatory readiness.</p>
+          <p><strong>Client Benefits:</strong> Achieve audit readiness, improve security hygiene, reduce risk exposure.</p>
         </div>
 
-        <div class="service-card scroll-fade">
+        <div class="service-card">
           <h3>Cloud Security</h3>
-          <p>We protect your cloud environments on platforms like AWS, Azure, and Google Cloud. From misconfigurations to advanced threats, our team ensures that your data and services remain secure without disrupting operations.</p>
-          <ul>
-            <li>Cloud Infrastructure Hardening</li>
-            <li>Access Control & Identity Management</li>
-            <li>Continuous Monitoring & Threat Detection</li>
-          </ul>
+          <p>Protect your AWS, Azure, or Google Cloud environments from misconfigurations, insecure APIs, and advanced attacks. We implement best practices for identity access management, network segmentation, and encryption. Security monitoring tools like Prisma Cloud, AWS GuardDuty, and CloudTrail allow proactive threat detection.</p>
+          <p><strong>Use Cases:</strong> Cloud migration security, SaaS platform protection, hybrid environment defense.</p>
+          <p><strong>Client Benefits:</strong> Data protection, compliance assurance, reduced cloud risk.</p>
         </div>
 
-        <div class="service-card scroll-fade">
+        <div class="service-card">
           <h3>Phishing Simulations</h3>
-          <p>Human error is often the weakest link in security. We conduct realistic phishing simulations and training sessions to increase employee awareness and resilience against social engineering attacks.</p>
-          <ul>
-            <li>Custom Email Attack Scenarios</li>
-            <li>Employee Training & Awareness Programs</li>
-            <li>Progress Tracking & Reporting</li>
-          </ul>
+          <p>We design realistic phishing simulations to train employees and increase awareness of social engineering threats. Using platforms like GoPhish and custom email templates, we simulate attacks tailored to the organization’s risk profile.</p>
+          <p><strong>Use Cases:</strong> Employee cybersecurity training, security awareness programs, internal policy testing.</p>
+          <p><strong>Client Benefits:</strong> Reduced successful phishing incidents, empowered workforce, measurable training results.</p>
         </div>
 
-        <div class="service-card scroll-fade">
+        <div class="service-card">
           <h3>Threat Intelligence</h3>
-          <p>Stay ahead of cybercrime with our real-time monitoring and threat intelligence services. We track emerging attack vectors, malware trends, and threat actors to keep your organization informed and protected.</p>
-          <ul>
-            <li>Real-Time Threat Monitoring</li>
-            <li>Threat Actor Analysis</li>
-            <li>Actionable Alerts & Recommendations</li>
-          </ul>
+          <p>We provide real-time monitoring and threat intelligence to identify emerging threats. Leveraging SIEM tools, threat feeds, and OSINT sources, we deliver actionable insights to prevent cyberattacks before they occur.</p>
+          <p><strong>Use Cases:</strong> Proactive threat monitoring, vulnerability trend analysis, competitor threat assessment.</p>
+          <p><strong>Client Benefits:</strong> Improved situational awareness, early mitigation, informed security strategies.</p>
         </div>
 
       </div>
-    </div>
-  </section>
-
-  <!-- Why Choose Us Section -->
-  <section class="about-section bg-dark scroll-fade">
-    <div class="container">
-      <h2>Why Choose Our Services</h2>
-      <p>Our approach blends deep technical expertise with a focus on practical results. We don’t just provide advice — we implement solutions that safeguard your organization, empower your team, and improve operational resilience.</p>
-      <ul class="features-list">
-        <li>✔ Experienced cybersecurity professionals with hands-on skills</li>
-        <li>✔ Customized solutions tailored to your organization</li>
-        <li>✔ Transparent reporting and measurable outcomes</li>
-        <li>✔ Commitment to staying ahead of evolving threats</li>
-      </ul>
     </div>
   </section>
 
@@ -138,19 +91,6 @@
       <p>&copy; 2025 EzmCyber. All rights reserved.</p>
     </div>
   </footer>
-
-  <!-- Scroll Fade Script -->
-  <script>
-    const scrollElements = document.querySelectorAll('.scroll-fade');
-    const elementInView = (el, dividend = 1) => {
-      const elementTop = el.getBoundingClientRect().top;
-      return elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend;
-    };
-    const displayScrollElement = (element) => { element.classList.add('visible'); };
-    const handleScrollAnimation = () => { scrollElements.forEach(el => { if(elementInView(el,1.25)) displayScrollElement(el); }); };
-    window.addEventListener('scroll', handleScrollAnimation);
-    window.addEventListener('load', handleScrollAnimation);
-  </script>
 
 </body>
 </html>
