@@ -6,22 +6,41 @@
   <title>Services | EzmCyber</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; margin:0; padding:0; background:#f9f9f9; }
+    .navbar { display:flex; justify-content:space-between; align-items:center; padding:1rem; background:#0d6efd; color:white; }
+    .nav-links { list-style:none; display:flex; gap:1rem; }
+    .nav-links a { color:white; text-decoration:none; font-weight:500; }
+    .nav-links a.active { text-decoration:underline; }
+    .hero-banner { background:#e9ecef; padding:4rem 1rem; text-align:center; }
+    .hero-banner h1 { font-family:'Orbitron', sans-serif; font-size:2.5rem; margin-bottom:1rem; }
+    .hero-banner p { font-size:1.2rem; color:#555; }
+    .services-section { padding:4rem 1rem; }
+    .services-section h2 { text-align:center; margin-bottom:2rem; font-family:'Orbitron', sans-serif; color:#0d6efd; }
+    .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; max-width:1200px; margin:0 auto; }
+    .service-card { background:white; padding:2rem 1.5rem; border-radius:12px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.08); transition:transform 0.3s ease, box-shadow 0.3s ease; position:relative; overflow:hidden; }
+    .service-card:hover { transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.12); }
+    .service-icon { width:60px; height:60px; margin:0 auto 1rem auto; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:white; background:linear-gradient(135deg,#0d6efd,#6610f2); }
+    .service-card h3 { margin-bottom:0.5rem; color:#0d6efd; }
+    .service-card p { color:#555; font-size:0.95rem; }
+    footer { background:#0d6efd; color:white; text-align:center; padding:1rem; margin-top:2rem; }
+    @media(max-width:768px){ .hero-banner h1{font-size:2rem;} }
+  </style>
 </head>
 <body>
 
   <!-- Navbar -->
   <header>
     <nav class="navbar">
-      <div class="container">
-        <a href="index.html" class="logo">EZM Cyber</a>
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="services.html" class="active">Services</a></li>
-          <li><a href="projects.html">Portfolio</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
+      <a href="index.html" class="logo">EZM Cyber</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html" class="active">Services</a></li>
+        <li><a href="projects.html">Portfolio</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
     </nav>
   </header>
 
@@ -40,45 +59,39 @@
       <div class="services-grid">
 
         <div class="service-card">
+          <div class="service-icon">🛡️</div>
           <h3>Penetration Testing</h3>
-          <p>We simulate real-world cyberattacks on networks, applications, and systems to identify vulnerabilities before malicious actors exploit them. Our team uses tools like Nmap, Metasploit, Burp Suite, and custom scripts to conduct thorough assessments. Clients benefit from actionable reports, prioritized remediation steps, and increased overall security posture.</p>
-          <p><strong>Use Cases:</strong> Enterprise network security, web application testing, cloud infrastructure evaluation.</p>
-          <p><strong>Client Benefits:</strong> Reduced attack surface, compliance readiness, early threat detection.</p>
+          <p>We simulate real-world cyberattacks to identify vulnerabilities before malicious actors exploit them.</p>
         </div>
 
         <div class="service-card">
+          <div class="service-icon">⚡</div>
           <h3>Incident Response</h3>
-          <p>When a security breach occurs, we provide rapid containment, investigation, and recovery support. Our approach includes forensic analysis, log inspection, and breach impact assessment. Tools like Splunk, Wireshark, and ELK stack enable us to uncover root causes and mitigate damage effectively.</p>
-          <p><strong>Use Cases:</strong> Malware outbreaks, ransomware attacks, insider threats.</p>
-          <p><strong>Client Benefits:</strong> Minimized downtime, preserved data integrity, actionable incident reports.</p>
+          <p>When threats strike, we provide rapid containment, investigation, and recovery support.</p>
         </div>
 
         <div class="service-card">
+          <div class="service-icon">🔍</div>
           <h3>Security Audits</h3>
-          <p>Our in-depth audits assess IT infrastructure, policies, and procedures for compliance and resilience against threats. We evaluate configuration standards, access controls, and security policies using ISO 27001, NIST, and CIS benchmarks. Recommendations are practical, prioritized, and tailored to each client’s environment.</p>
-          <p><strong>Use Cases:</strong> Compliance verification, internal security review, regulatory readiness.</p>
-          <p><strong>Client Benefits:</strong> Achieve audit readiness, improve security hygiene, reduce risk exposure.</p>
+          <p>In-depth assessments of IT infrastructure to ensure compliance and resilience against threats.</p>
         </div>
 
         <div class="service-card">
+          <div class="service-icon">☁️</div>
           <h3>Cloud Security</h3>
-          <p>Protect your AWS, Azure, or Google Cloud environments from misconfigurations, insecure APIs, and advanced attacks. We implement best practices for identity access management, network segmentation, and encryption. Security monitoring tools like Prisma Cloud, AWS GuardDuty, and CloudTrail allow proactive threat detection.</p>
-          <p><strong>Use Cases:</strong> Cloud migration security, SaaS platform protection, hybrid environment defense.</p>
-          <p><strong>Client Benefits:</strong> Data protection, compliance assurance, reduced cloud risk.</p>
+          <p>Protecting AWS, Azure, and Google Cloud environments from misconfigurations and advanced attacks.</p>
         </div>
 
         <div class="service-card">
+          <div class="service-icon">📧</div>
           <h3>Phishing Simulations</h3>
-          <p>We design realistic phishing simulations to train employees and increase awareness of social engineering threats. Using platforms like GoPhish and custom email templates, we simulate attacks tailored to the organization’s risk profile.</p>
-          <p><strong>Use Cases:</strong> Employee cybersecurity training, security awareness programs, internal policy testing.</p>
-          <p><strong>Client Benefits:</strong> Reduced successful phishing incidents, empowered workforce, measurable training results.</p>
+          <p>Hands-on training with realistic phishing attempts to build employee awareness and reduce risks.</p>
         </div>
 
         <div class="service-card">
+          <div class="service-icon">🕵️‍♂️</div>
           <h3>Threat Intelligence</h3>
-          <p>We provide real-time monitoring and threat intelligence to identify emerging threats. Leveraging SIEM tools, threat feeds, and OSINT sources, we deliver actionable insights to prevent cyberattacks before they occur.</p>
-          <p><strong>Use Cases:</strong> Proactive threat monitoring, vulnerability trend analysis, competitor threat assessment.</p>
-          <p><strong>Client Benefits:</strong> Improved situational awareness, early mitigation, informed security strategies.</p>
+          <p>Real-time monitoring and intelligence to stay ahead of evolving cybercrime tactics.</p>
         </div>
 
       </div>
