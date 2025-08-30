@@ -14,10 +14,11 @@ body {
 
 /* Banner Section */
 .banner-section {
-  background: linear-gradient(135deg, #0d6efd, #6610f2);
-
+  /* Removed gradient overlay to show only the banner image */
+  background: none;
 }
 
+/* Banner Text (if you want text inside banner) */
 .banner-title {
   font-size: 3rem;
   font-weight: bold;
