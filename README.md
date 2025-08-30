@@ -23,16 +23,16 @@
 ---
 
 ### 🚀 Current Focus  
-- 🌍 Developing my personal website & blog  
+- 🌍 Developing my personal website & blog → [ezmcyber.xyz](https://ezmcyber.xyz)  
 - 📝 Writing beginner-friendly guides on cybersecurity basics  
 - 🔨 Experimenting with projects that solve real-world problems  
 
 ---
 
 ### 📊 GitHub Stats  
-![Ethan's GitHub stats](https://github-readme-stats.vercel.app/api?username=ethan89072&show_icons=true&theme=tokyonight)  
+![InboxBodyguard's GitHub stats](https://github-readme-stats.vercel.app/api?username=inboxBodyguard&show_icons=true&theme=tokyonight)  
 
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=ethan89072&layout=compact&theme=tokyonight)  
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=inboxBodyguard&layout=compact&theme=tokyonight)  
 
 ---
 
