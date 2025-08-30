@@ -3,113 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Learn more about EzmCyber - a mission-driven cybersecurity firm led by Niffy.">
+  <meta name="description" content="Learn more about EzmCyber - a mission-driven cybersecurity platform led by Niffy.">
   <title>About | EzmCyber</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background-color: #0b0c10;
-      color: #ffffff;
-    }
-    header {
-      background: #1f2833;
-      padding: 20px;
-      text-align: center;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #45a29e;
-      padding: 10px;
-      flex-wrap: wrap;
-    }
-    nav a {
-      margin: 0 15px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    section {
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    h1, h2 {
-      color: #66fcf1;
-      text-align: center;
-    }
-    ul {
-      list-style-type: square;
-      padding-left: 20px;
-    }
-    .highlight {
-      color: #66fcf1;
-    }
-    footer {
-      background: #1f2833;
-      padding: 15px;
-      text-align: center;
-      font-size: 14px;
-      color: #ffffff;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #45a29e;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #66fcf1;
-      color: black;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
 </head>
 <body>
 
-<header>
-  <h1>About <span class="highlight">EzmCyber</span></h1>
-</header>
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="container">
+        <a href="index.html" class="logo">EZM Cyber</a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="projects.html">Portfolio</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="services.html">Services</a>
-  <a href="projects.html">Portfolio</a>
-  <a href="contact.html">Contact</a>
-</nav>
+  <!-- Banner -->
+  <section class="hero-banner">
+    <div class="container">
+      <h1>About <span class="highlight">EzmCyber</span></h1>
+      <p>Driven by purpose. Focused on defense. Built for impact.</p>
+    </div>
+  </section>
 
-<section>
-  <h2>Who We Are</h2>
-  <p>
-    EzmCyber was founded by Niffy, a passionate cybersecurity analyst dedicated to securing digital environments in the real world. With years of hands-on experience in penetration testing, threat response, and system hardening, this platform is not just a brand — it's a mission. At EzmCyber, we believe that everyone deserves access to reliable security knowledge and tools that actually work in the field. Whether you're defending a startup or working with government infrastructure, our focus is real-world impact, not theory. Every resource shared, every line of code written, and every solution provided is built to protect, empower, and evolve with the digital threats of today and tomorrow.
-  </p>
-</section>
+  <!-- Who We Are -->
+  <section class="about-section">
+    <div class="container">
+      <h2>Who We Are</h2>
+      <p>
+        EzmCyber was founded by <span class="highlight">Niffy</span>, a cybersecurity analyst dedicated to building stronger digital defenses. 
+        With hands-on experience in ethical hacking, incident response, and network defense, EzmCyber is more than a brand — it’s a mission.  
+      </p>
+      <p>
+        Our focus is to share actionable knowledge, develop practical tools, and support organizations in defending against real-world cyber threats. 
+        We believe security should not just be theory — it should be <strong>measurable, accessible, and effective</strong>. Whether you’re securing a startup or strengthening 
+        government infrastructure, EzmCyber provides the skills, insights, and guidance to help you stay ahead of attackers.
+      </p>
+    </div>
+  </section>
 
-<section>
-  <h2>Why Choose Us</h2>
-  <ul>
-    <li>Real-world experience in ethical hacking and defense</li>
-    <li>Actionable tools and scripts, not fluff</li>
-    <li>Passion-driven community and support</li>
-    <li>Clear focus on protecting systems in minutes — not hours</li>
-  </ul>
-  <div style="text-align: center;">
-    <a href="services.html"><button>Explore Our Services</button></a>
-  </div>
-</section>
+  <!-- Why Choose Us -->
+  <section class="about-section bg-dark">
+    <div class="container">
+      <h2>Why Choose Us</h2>
+      <ul class="features-list">
+        <li>✔ Proven experience in penetration testing and cyber defense</li>
+        <li>✔ Real-world tools, tutorials, and insights — no fluff</li>
+        <li>✔ A community built on passion and collaboration</li>
+        <li>✔ Commitment to rapid response and measurable results</li>
+      </ul>
+      <div class="center-btn">
+        <a href="services.html" class="btn">Explore Our Services</a>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  &copy; 2025 EzmCyber by Niffy. All rights reserved.
-</footer>
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 EzmCyber by Niffy. All rights reserved.</p>
+    </div>
+  </footer>
 
 </body>
 </html>
