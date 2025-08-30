@@ -12,7 +12,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="index.html">EZM Cyber</a>
+      <a class="navbar-brand" href="index.html">EZM Cyber</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -32,30 +32,25 @@
   </nav>
 
   <!-- Banner Section -->
-  <section class="py-5 banner-section position-relative d-flex align-items-center justify-content-center" style="background-image: url('banner.png');">
-    <div class="banner-text text-center text-light">
-      <h1 class="fw-bold display-4">Secure, Protect, and Respond</h1>
-      <p class="lead mt-3">Cybersecurity insights, tools, and guidance for professionals and enthusiasts.</p>
-      <a href="videos.html" class="btn btn-primary btn-lg mt-3 shadow">🎥 Watch Video</a>
-    </div>
+  <section class="py-5 banner-section" style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
   </section>
 
   <!-- Main Content -->
   <section class="py-5 scroll-fade">
     <div class="container text-center">
-      <h2 class="mb-3">Welcome to EZM Cyber</h2>
-      <p class="lead mb-4">Your trusted source for cybersecurity insights, tools, and guidance.</p>
-      <a href="projects.html" class="btn btn-accent btn-lg shadow">Explore Projects</a>
+      <h2>Welcome to EZM Cyber</h2>
+      <p>Your trusted source for cybersecurity insights, tools, and guidance.</p>
+      <a href="videos.html" class="btn btn-primary btn-lg mt-3">🎥 Watch Video</a>
     </div>
   </section>
 
   <!-- Suspicious Link Detection -->
   <section class="py-5 section-light scroll-fade">
-    <div class="container text-center">
-      <h3 class="mb-4">Suspicious Link Detector</h3>
+    <div class="container">
+      <h3 class="text-center mb-4">Suspicious Link Detector</h3>
       <form id="linkForm" class="d-flex flex-wrap justify-content-center">
         <input type="url" id="linkInput" class="form-control me-2 mb-2" placeholder="Enter a link to verify" required style="max-width: 400px;">
-        <button type="submit" class="btn btn-danger mb-2 shadow">Check Link</button>
+        <button type="submit" class="btn btn-danger mb-2">Check Link</button>
       </form>
       <p id="linkResult" class="text-center mt-3 fw-bold"></p>
     </div>
@@ -64,18 +59,19 @@
   <!-- Newsletter Section -->
   <section class="py-5 section-dark scroll-fade">
     <div class="container text-center">
-      <h3 class="mb-3">Stay Updated</h3>
-      <p class="mb-4">Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
-      <form action="thank-you.html" method="get" class="d-flex justify-content-center flex-wrap gap-2">
-        <input type="email" name="email" class="form-control" placeholder="Enter your email" required style="max-width: 400px;">
-        <button type="submit" class="btn btn-accent shadow">Sign Up</button>
+      <h3>Stay Updated</h3>
+      <p>Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
+      <a href="thank-you.html" class="btn btn-accent mt-3">Sign Up Now</a>
+      <form action="thank-you.html" method="get" class="d-flex justify-content-center mt-3 flex-wrap">
+        <input type="email" name="email" class="form-control me-2 mb-2" placeholder="Enter your email" required>
+        <button type="submit" class="btn btn-accent mb-2">Sign Up</button>
       </form>
       <small class="text-muted d-block mt-2">We respect your privacy. No spam, ever.</small>
     </div>
   </section>
 
   <!-- Developer Tools Section -->
-  <section id="developer-tools" class="py-5 scroll-fade">
+  <section id="developer-tools" class="py-5 section-dark scroll-fade">
     <div class="container">
       <h2 class="mb-4 text-center">Developer Tools</h2>
       <div class="row g-4">
@@ -84,7 +80,7 @@
             <div class="card-body">
               <h5 class="card-title">GitHub Repository</h5>
               <p class="card-text">Access the source code and contribute to EZM Cyber.</p>
-              <a href="https://github.com/ethan89072/Ethwebsite" class="btn btn-primary shadow" target="_blank">View on GitHub</a>
+              <a href="https://github.com/ethan89072/Ethwebsite" class="btn btn-primary" target="_blank">View on GitHub</a>
             </div>
           </div>
         </div>
@@ -93,7 +89,7 @@
             <div class="card-body">
               <h5 class="card-title">Code Playground</h5>
               <p class="card-text">Experiment with HTML, CSS, and JS in real-time.</p>
-              <a href="https://codepen.io/" class="btn btn-success shadow" target="_blank">Try on CodePen</a>
+              <a href="https://codepen.io/" class="btn btn-success" target="_blank">Try on CodePen</a>
             </div>
           </div>
         </div>
@@ -102,11 +98,12 @@
             <div class="card-body">
               <h5 class="card-title">API Documentation</h5>
               <p class="card-text">Check out useful API references for developers.</p>
-              <a href="https://developer.mozilla.org/en-US/" class="btn btn-warning shadow" target="_blank">Visit MDN Docs</a>
+              <a href="https://developer.mozilla.org/en-US/" class="btn btn-warning" target="_blank">Visit MDN Docs</a>
             </div>
           </div>
         </div>
       </div>
+
       <p class="text-center mt-4 small text-muted">
         Last Updated: <span id="last-updated"></span>
       </p>
@@ -114,11 +111,24 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-primary text-light text-center py-4 mt-5">
+  <footer class="bg-primary text-light text-center py-3">
     <div class="container">
       <p class="mb-0">&copy; 2025 EZM Cyber. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- Live Chat (Tawk.to) -->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/YOUR_WIDGET_ID/default';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
