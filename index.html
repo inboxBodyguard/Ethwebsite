@@ -14,21 +14,25 @@
       background-color: #0f111a;
       color: #f0f0f0;
     }
-    h1,h2,h3,h4,h5 {
-      font-family: 'Orbitron', sans-serif;
-    }
+    h1,h2,h3,h4,h5 { font-family: 'Orbitron', sans-serif; }
     .navbar.bg-primary { background-color: #0d6efd !important; }
+
+    /* Banner - keep natural size and positioning */
     .banner {
       background: url('banner.png') center/cover no-repeat;
-      height: 60vh;
+      width: 100%;
+      height: auto; /* natural banner height */
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       position: relative;
     }
+
     section { padding: 60px 20px; }
     footer { background: #111; }
+
+    /* Developer Cards */
     .developer-card {
       background: #1a1a2e;
       border-radius: 10px;
@@ -92,28 +96,25 @@
     <h2>Our Developers</h2>
     <p>At EZM Cybersecurity, our dedicated team of developers builds secure solutions and constantly improves tools to protect users online.</p>
     <div class="row justify-content-center">
-      <!-- Developer Card 1 -->
+      <!-- Developer Card 1: GitHub -->
       <div class="col-md-4">
         <div class="developer-card">
-          <h3>Developer 1</h3>
-          <p>Lead Security Engineer</p>
-          <a href="https://github.com/developer1" target="_blank" class="btn btn-outline-light">GitHub</a>
+          <h3>GitHub</h3>
+          <a href="https://github.com/ethan89072" target="_blank" class="btn btn-outline-light">View Profile</a>
         </div>
       </div>
-      <!-- Developer Card 2 -->
+      <!-- Developer Card 2: CodePen -->
       <div class="col-md-4">
         <div class="developer-card">
-          <h3>Developer 2</h3>
-          <p>Frontend Specialist</p>
-          <a href="https://github.com/developer2" target="_blank" class="btn btn-outline-light">GitHub</a>
+          <h3>CodePen</h3>
+          <a href="https://codepen.io/ethan89072" target="_blank" class="btn btn-outline-light">View Profile</a>
         </div>
       </div>
-      <!-- Developer Card 3 -->
+      <!-- Developer Card 3: MDN -->
       <div class="col-md-4">
         <div class="developer-card">
-          <h3>Developer 3</h3>
-          <p>Backend Specialist</p>
-          <a href="https://github.com/developer3" target="_blank" class="btn btn-outline-light">GitHub</a>
+          <h3>MDN</h3>
+          <a href="https://developer.mozilla.org/en-US/users/ethan89072" target="_blank" class="btn btn-outline-light">View Profile</a>
         </div>
       </div>
     </div>
@@ -145,7 +146,7 @@
   <div class="container">
     <p>&copy; 2024 EZM Cybersecurity. All Rights Reserved.</p>
     <a href="https://x.com/inboxbodyguard?s=21" class="text-white me-3">Twitter</a>
-    <a href="https://github.com" class="text-white me-3">GitHub</a>
+    <a href="https://github.com/ethan89072" class="text-white me-3">GitHub</a>
     <br><br>
     <button onclick="Tawk_API && Tawk_API.maximize();" class="btn btn-outline-light mt-2">💬 Chat With Us</button>
   </div>
