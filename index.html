@@ -2,277 +2,301 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EZM Cyber - Secure, Protect, and Respond</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EZM Cybersecurity</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* Button hover effects */
-    .btn:hover {
-      transform: scale(1.05);
-      transition: transform 0.3s ease, background 0.3s ease;
+    /* General Styles */
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #0f111a;
+      color: #f0f0f0;
     }
-
-    /* Card hover effects */
-    .card-hover:hover {
+    h1, h2, h3, h4, h5 {
+      font-family: 'Orbitron', sans-serif;
+    }
+    /* Navbar */
+    .navbar.bg-primary {
+      background-color: #0d1117 !important;
+    }
+    .navbar-brand {
+      font-weight: 700;
+      color: #00ffc6 !important;
+    }
+    .nav-link {
+      color: #f0f0f0 !important;
+      transition: color 0.3s;
+    }
+    .nav-link:hover {
+      color: #00ffc6 !important;
+    }
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #0f111a, #1a1f2e);
+      text-align: center;
+      padding: 120px 20px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #00ffc6;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      margin-top: 15px;
+      color: #ccc;
+    }
+    /* Sections */
+    section {
+      padding: 60px 20px;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    /* Cards */
+    .service-card, .project-card {
+      background: #1a1f2e;
+      border: none;
+      border-radius: 10px;
+      padding: 25px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .service-card:hover, .project-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 12px 20px rgba(0,0,0,0.15);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.6);
     }
-
-    /* Nav link hover underline */
-    .navbar-nav .nav-link {
-      position: relative;
+    /* Tools Section */
+    .tool-box {
+      background: #1a1f2e;
+      padding: 20px;
+      border-radius: 8px;
     }
-    .navbar-nav .nav-link::after {
-      content: '';
-      position: absolute;
-      width: 0%;
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background-color: #fff;
-      transition: width 0.3s;
+    /* Newsletter */
+    .newsletter {
+      background: linear-gradient(135deg, #1a1f2e, #0f111a);
+      text-align: center;
+      padding: 50px 20px;
+      border-radius: 10px;
     }
-    .navbar-nav .nav-link:hover::after {
-      width: 100%;
+    .newsletter input {
+      max-width: 400px;
+      margin: auto;
     }
-
-    /* Scroll fade-in */
+    /* Footer */
+    footer {
+      background: #0d1117;
+      text-align: center;
+      padding: 20px;
+      color: #888;
+    }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     .scroll-fade {
       opacity: 0;
       transform: translateY(20px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .scroll-fade.visible {
       opacity: 1;
       transform: translateY(0);
     }
-
-    /* VirusTotal checker styling */
-    #engineList {
-      margin-top: 10px;
-      font-family: monospace;
-      white-space: pre-wrap;
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.html">EZM Cyber</a>
+      <a class="navbar-brand" href="#">EZM Cybersecurity</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
-          <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-          <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
-          <li class="nav-item"><a class="nav-link" href="signup.html">Newsletter</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#tools">Tools</a></li>
+          <li class="nav-item"><a class="nav-link" href="#newsletter">Newsletter</a></li>
+          <li class="nav-item"><a class="nav-link" href="#resources">Resources</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Banner Section -->
-  <section class="py-5 banner-section" style="background-image: url('banner.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <h1>Secure, Protect, and Respond</h1>
+    <p>Your trusted partner in cybersecurity defense and innovation.</p>
   </section>
 
-  <!-- Main Content -->
-  <section class="py-5 scroll-fade">
-    <div class="container text-center">
-      <h2>Welcome to EZM Cyber</h2>
-      <p>Your trusted source for cybersecurity insights, tools, and guidance.</p>
-      <a href="videos.html" class="btn btn-primary btn-lg mt-3">🎥 Watch Video</a>
-    </div>
-  </section>
-
-  <!-- Suspicious Link Detection -->
-  <section class="py-5 section-light scroll-fade">
+  <!-- Services -->
+  <section id="services">
+    <h2 class="section-title">Our Services</h2>
     <div class="container">
-      <h3 class="text-center mb-4">Suspicious Link Detector</h3>
-      <form id="linkForm" class="d-flex flex-wrap justify-content-center">
-        <input type="url" id="linkInput" class="form-control me-2 mb-2" placeholder="Enter a link to verify" required style="max-width: 400px;">
-        <button type="submit" class="btn btn-danger mb-2">Check Link</button>
-      </form>
-      <p id="linkResult" class="text-center mt-3 fw-bold"></p>
-      <pre id="engineList" class="text-center"></pre>
-    </div>
-  </section>
-
-  <!-- Newsletter Section -->
-  <section class="py-5 section-dark scroll-fade">
-    <div class="container text-center">
-      <h3>Stay Updated</h3>
-      <p>Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
-      <a href="thank-you.html" class="btn btn-accent mt-3">Sign Up Now</a>
-      <form action="thank-you.html" method="get" class="d-flex justify-content-center mt-3 flex-wrap">
-        <input type="email" name="email" class="form-control me-2 mb-2" placeholder="Enter your email" required>
-        <button type="submit" class="btn btn-accent mb-2">Sign Up</button>
-      </form>
-      <small class="text-muted d-block mt-2">We respect your privacy. No spam, ever.</small>
-    </div>
-  </section>
-
-  <!-- Developer Tools Section -->
-  <section id="developer-tools" class="py-5 section-dark scroll-fade">
-    <div class="container">
-      <h2 class="mb-4 text-center">Developer Tools</h2>
       <div class="row g-4">
         <div class="col-md-4">
-          <div class="card h-100 card-hover text-center">
-            <div class="card-body">
-              <h5 class="card-title">GitHub Repository</h5>
-              <p class="card-text">Access the source code and contribute to EZM Cyber.</p>
-              <a href="https://github.com/ethan89072/Ethwebsite" class="btn btn-primary" target="_blank">View on GitHub</a>
-            </div>
+          <div class="service-card scroll-fade">
+            <h4>Penetration Testing</h4>
+            <p>Simulating cyberattacks to uncover vulnerabilities before attackers do.</p>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card h-100 card-hover text-center">
-            <div class="card-body">
-              <h5 class="card-title">Code Playground</h5>
-              <p class="card-text">Experiment with HTML, CSS, and JS in real-time.</p>
-              <a href="https://codepen.io/" class="btn btn-success" target="_blank">Try on CodePen</a>
-            </div>
+          <div class="service-card scroll-fade">
+            <h4>Incident Response</h4>
+            <p>24/7 support to contain and recover from security incidents.</p>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card h-100 card-hover text-center">
-            <div class="card-body">
-              <h5 class="card-title">API Documentation</h5>
-              <p class="card-text">Check out useful API references for developers.</p>
-              <a href="https://developer.mozilla.org/en-US/" class="btn btn-warning" target="_blank">Visit MDN Docs</a>
-            </div>
+          <div class="service-card scroll-fade">
+            <h4>Training & Awareness</h4>
+            <p>Empowering teams with the knowledge to defend against cyber threats.</p>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <p class="text-center mt-4 small text-muted">
-        Last Updated: <span id="last-updated"></span>
-      </p>
+  <!-- Projects -->
+  <section id="projects">
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="project-card scroll-fade">
+            <h5>Threat Intelligence Dashboard</h5>
+            <p>Real-time monitoring of global cyber threats with actionable insights.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="project-card scroll-fade">
+            <h5>Phishing Simulation Platform</h5>
+            <p>Training employees to detect phishing attempts effectively.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="project-card scroll-fade">
+            <h5>IoT Security Framework</h5>
+            <p>Securing smart devices with innovative defense mechanisms.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools -->
+  <section id="tools">
+    <h2 class="section-title">Suspicious Link Checker</h2>
+    <div class="container">
+      <div class="tool-box">
+        <form id="linkCheckerForm">
+          <input type="url" id="urlInput" class="form-control mb-3" placeholder="Enter a URL to analyze" required>
+          <button type="submit" class="btn btn-primary">Check Link</button>
+        </form>
+        <div id="result" class="mt-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section id="newsletter">
+    <div class="container newsletter">
+      <h3>Subscribe to Our Newsletter</h3>
+      <p>Stay updated with the latest in cybersecurity trends and news.</p>
+      <form>
+        <input type="email" class="form-control mb-3" placeholder="Enter your email" required>
+        <button type="submit" class="btn btn-success">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Resources -->
+  <section id="resources">
+    <h2 class="section-title">Developer Resources</h2>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="tool-box scroll-fade">
+            <h5>GitHub Repository</h5>
+            <p>Access our open-source cybersecurity tools and frameworks.</p>
+            <a href="https://github.com/ethan89072/Ethwebsite" class="btn btn-outline-light">Visit GitHub</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="tool-box scroll-fade">
+            <h5>Learning Hub</h5>
+            <p>Comprehensive guides and tutorials for aspiring cybersecurity experts.</p>
+            <a href="blog.html" class="btn btn-outline-light">Explore Blog</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-primary text-light text-center py-3">
-    <div class="container">
-      <p class="mb-0">&copy; 2025 EZM Cyber. All rights reserved.</p>
-    </div>
+  <footer>
+    <p>&copy; <span id="year"></span> EZM Cybersecurity. All Rights Reserved.</p>
   </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Scroll fade effect
+    const scrollElements = document.querySelectorAll(".scroll-fade");
+    const scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    });
+    scrollElements.forEach(el => scrollObserver.observe(el));
+
+    // Link Checker
+    document.getElementById("linkCheckerForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const url = document.getElementById("urlInput").value;
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "Checking...";
+      try {
+        const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent("https://www.virustotal.com/api/v3/urls/" + btoa(url))}`);
+        if (response.ok) {
+          resultDiv.innerHTML = "<span style='color:lime'>URL successfully sent for analysis (mock response)</span>";
+        } else {
+          resultDiv.innerHTML = "<span style='color:orange'>Using fallback analysis: Be cautious of unknown links</span>";
+        }
+      } catch {
+        resultDiv.innerHTML = "<span style='color:red'>Error checking link. Treat unknown links with caution.</span>";
+      }
+    });
+  </script>
 
   <!-- Live Chat (Tawk.to) -->
   <script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/68b2e27a5b034c23e1c00f71/default';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-  })();
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/YOUR_PROPERTY_ID_HERE/1';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+    })();
   </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script>
-    document.getElementById("last-updated").textContent = new Date().toLocaleString();
-
-    const scrollElements = document.querySelectorAll('.scroll-fade');
-    const elementInView = (el, dividend = 1) => {
-      const elementTop = el.getBoundingClientRect().top;
-      return elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend;
-    };
-    const displayScrollElement = (element) => { element.classList.add('visible'); };
-    const handleScrollAnimation = () => { scrollElements.forEach(el => { if(elementInView(el,1.25)) displayScrollElement(el); }); };
-    window.addEventListener('scroll', handleScrollAnimation);
-    window.addEventListener('load', handleScrollAnimation);
-  </script>
-
-  <!-- VirusTotal Link Checker JS -->
-  <script>
-const apiKey = "aae37bf314798b0edf335b4818114280a268aaf936bd7d4b0e695b81870f08a8";
-
-document.getElementById("linkForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
-  const url = document.getElementById("linkInput").value.trim();
-  const resultEl = document.getElementById("linkResult");
-  const engineEl = document.getElementById("engineList");
-  resultEl.textContent = "🔍 Checking...";
-  resultEl.style.color = "blue";
-  engineEl.textContent = "";
-
-  try {
-    const encodedUrl = encodeURIComponent(url);
-
-    const response = await fetch(`https://www.virustotal.com/api/v3/urls`, {
-      method: "POST",
-      headers: {
-        "x-apikey": apiKey,
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `url=${encodedUrl}`
-    });
-
-    if (!response.ok) throw new Error("API error during URL scan");
-
-    const data = await response.json();
-    const analysisId = data.data.id;
-
-    async function pollAnalysis(id) {
-      const analysisResponse = await fetch(`https://www.virustotal.com/api/v3/analyses/${id}`, {
-        headers: { "x-apikey": apiKey }
-      });
-
-      if (!analysisResponse.ok) throw new Error("API error fetching analysis results");
-
-      const analysisData = await analysisResponse.json();
-      const status = analysisData.data.attributes.status;
-
-      if (status === "completed") {
-        const stats = analysisData.data.attributes.stats;
-        const engines = analysisData.data.attributes.results;
-
-        if (stats.malicious > 0) {
-          resultEl.textContent = `🚨 This URL is flagged as malicious`;
-          resultEl.style.color = "red";
-        } else if (stats.suspicious > 0) {
-          resultEl.textContent = `⚠️ This URL is suspicious`;
-          resultEl.style.color = "orange";
-        } else {
-          resultEl.textContent = `✅ This URL appears clean`;
-          resultEl.style.color = "green";
-        }
-
-        let engineText = "";
-        for (let engine in engines) {
-          if (engines[engine].category === "malicious" || engines[engine].category === "suspicious") {
-            engineText += `${engine}: ${engines[engine].category}\n`;
-          }
-        }
-        if (engineText) engineEl.textContent = "⚠️ Detected by:\n" + engineText;
-      } else {
-        resultEl.textContent = "🔄 Analysis in progress...";
-        setTimeout(() => pollAnalysis(id), 2000);
-      }
-    }
-
-    pollAnalysis(analysisId);
-
-  } catch (error) {
-    resultEl.textContent = `❌ Error checking URL: ${error.message}`;
-    resultEl.style.color = "gray";
-  }
-});
-</script>
-
 </body>
 </html>
