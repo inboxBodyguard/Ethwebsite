@@ -1,70 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EZM Cybersecurity</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #0f111a; /* dark cyber background */
-      color: #f0f0f0;
-    }
-    h1,h2,h3,h4,h5 { font-family: 'Orbitron', sans-serif; }
-    .navbar.bg-primary { background-color: #0d6efd !important; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EZM Cybersecurity</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  color: #0f111a;
+}
+h1,h2,h3,h4,h5 { font-family: 'Orbitron', sans-serif; }
+.navbar.bg-primary { background-color: #0d6efd !important; }
 
-    /* Banner - natural size, no black overlay */
-    .banner {
-      background: url('banner.png') center/cover no-repeat;
-      width: 100%;
-      height: auto; /* keep original size */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      position: relative;
-    }
+.banner {
+  background: url('banner.png') center/contain no-repeat;
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 
-    section { padding: 60px 20px; }
-    footer { background: #111; }
+/* Developer Cards */
+.developer-card {
+  background: #e6f0ff;
+  border-radius: 12px;
+  padding: 25px;
+  margin: 15px;
+  color: #0d0d2b;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.developer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+.developer-card a { color: #0d6efd; text-decoration: none; }
 
-    /* Developer Cards */
-    .developer-card {
-      background: #1a1a2e; /* dark card with cyber theme */
-      border-radius: 10px;
-      padding: 20px;
-      margin: 15px;
-      color: #fff;
-      transition: transform 0.3s;
-    }
-    .developer-card:hover { transform: translateY(-5px); }
-    .newsletter input { max-width: 400px; display: inline-block; margin-right: 10px; }
-  </style>
+/* Newsletter */
+.newsletter input { max-width: 400px; display: inline-block; margin-right: 10px; }
+
+/* Services Section */
+.services-section {
+  padding: 60px 0;
+  background-color: #e6f0ff;
+  color: #0d0d2b;
+}
+.services-section h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  font-size: 2.5rem;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+.service-card {
+  background-color: #e6f0ff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  font-family: 'Roboto', sans-serif;
+}
+.service-card h3 {
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+}
+.service-card p { line-height: 1.6; color: #0d0d2b; }
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+  background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+  color: #fff;
+}
+.center-btn { text-align: center; }
+.center-btn .btn-accent { margin-top: 20px; padding: 12px 40px; font-size: 1rem; }
+
+@media (max-width: 768px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .services-section h2 { font-size: 2rem; }
+}
+</style>
 </head>
 <body>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">EZM Cybersecurity</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
-      </ul>
-    </div>
+<div class="container">
+  <a class="navbar-brand" href="index.html">EZM Cybersecurity</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+      <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+      <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+      <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
+    </ul>
   </div>
+</div>
 </nav>
 
 <!-- Banner -->
@@ -72,113 +120,84 @@
 
 <!-- Welcome Section -->
 <section class="text-center">
-  <div class="container">
-    <h2>Welcome to EZM Cybersecurity</h2>
-    <p>We help individuals and businesses stay safe online by offering cutting-edge cybersecurity services, tools, and education.</p>
-  </div>
+<div class="container">
+  <h2>Welcome to EZM Cybersecurity</h2>
+  <p>We help individuals and businesses stay safe online by offering cutting-edge cybersecurity services, tools, and education.</p>
+</div>
 </section>
 
-<!-- Suspicious Link Checker -->
+<!-- VirusTotal Link Checker -->
 <section class="text-center">
-  <div class="container">
-    <h2>Suspicious Link Checker</h2>
-    <form id="linkCheckerForm" class="d-flex justify-content-center">
-      <input type="url" id="urlInput" class="form-control w-50 me-2" placeholder="Enter a URL to verify" required>
-      <button type="submit" class="btn btn-primary">Check</button>
-    </form>
-    <p id="result" class="mt-3"></p>
-  </div>
+<div class="container">
+<h2>Suspicious Link Checker</h2>
+<form id="linkCheckerForm" class="d-flex justify-content-center">
+  <input type="url" id="urlInput" class="form-control w-50 me-2" placeholder="Enter a URL to verify" required>
+  <button type="submit" class="btn btn-primary">Check</button>
+</form>
+<p id="result" class="mt-3"></p>
+</div>
 </section>
 
 <!-- Developer Section -->
 <section>
-  <div class="container text-center">
-    <h2>Our Developers</h2>
-    <p>Our dedicated team builds secure solutions and improves tools to protect users online.</p>
-    <div class="row justify-content-center">
-      <!-- Developer Card 1 -->
-      <div class="col-md-4">
-        <div class="developer-card">
-          <h3>GitHub</h3>
-          <p>Access the source code and contribute to EZM Cyber.</p>
-          <a href="https://github.com/inboxBodyguard" target="_blank" class="btn btn-outline-light">View Profile</a>
-        </div>
-      </div>
-      <!-- Developer Card 2 -->
-      <div class="col-md-4">
-        <div class="developer-card">
-          <h3>CodePen</h3>
-          <p>Experiment with HTML, CSS, and JS in real-time.</p>
-          <a href="#" target="_blank" class="btn btn-outline-light">Try on CodePen</a>
-        </div>
-      </div>
-      <!-- You can add more cards later -->
+<div class="container text-center">
+<h2>Our Developers</h2>
+<p>Our dedicated team builds secure solutions and improves tools to protect users online.</p>
+<div class="row justify-content-center">
+  <div class="col-md-4">
+    <div class="developer-card">
+      <h3>GitHub</h3>
+      <p>Access the source code and contribute to EZM Cyber.</p>
+      <a href="https://github.com/inboxBodyguard" target="_blank">View Profile</a>
     </div>
   </div>
+  <div class="col-md-4">
+    <div class="developer-card">
+      <h3>CodePen</h3>
+      <p>Experiment with HTML, CSS, and JS in real-time.</p>
+      <a href="#" target="_blank">Try on CodePen</a>
+    </div>
+  </div>
+</div>
+</div>
 </section>
 
-<!-- Newsletter Section -->
+<!-- Services Section -->
+<section class="services-section">
+<div class="container">
+<h2>Our Services</h2>
+<div class="services-grid">
+  <div class="service-card"><h3>Penetration Testing</h3><p>Simulate attacks to identify vulnerabilities in systems and networks.</p></div>
+  <div class="service-card"><h3>Threat Analysis</h3><p>Analyze emerging threats and provide actionable cybersecurity insights.</p></div>
+  <div class="service-card"><h3>Secure Development</h3><p>Build and review software with security best practices from day one.</p></div>
+</div>
+<div class="center-btn"><button class="btn btn-primary btn-accent">Explore Services</button></div>
+</div>
+</section>
+
+<!-- Newsletter -->
 <section class="text-center newsletter">
-  <div class="container">
-    <h2>Subscribe to Our Newsletter</h2>
-    <form class="d-flex justify-content-center">
-      <input type="email" class="form-control" placeholder="Enter your email" required>
-      <button type="submit" class="btn btn-primary">Subscribe</button>
-    </form>
-  </div>
+<div class="container">
+<h2>Subscribe to Our Newsletter</h2>
+<form class="d-flex justify-content-center">
+  <input type="email" class="form-control" placeholder="Enter your email" required>
+  <button type="submit" class="btn btn-primary">Subscribe</button>
+</form>
+</div>
 </section>
 
-<!-- Contact Section -->
+<!-- Contact -->
 <section>
-  <div class="container text-center">
-    <h2>Contact Us</h2>
-    <p>Email: <a href="mailto:contact@ezmcyber.xyz">contact@ezmcyber.xyz</a></p>
-    <p>Twitter: <a href="https://x.com/inboxbodyguard?s=21" target="_blank">@inboxbodyguard</a></p>
-  </div>
+<div class="container text-center">
+<h2>Contact Us</h2>
+<p>Email: <a href="mailto:contact@ezmcyber.xyz">contact@ezmcyber.xyz</a></p>
+<p>Twitter: <a href="https://x.com/inboxbodyguard?s=21" target="_blank">@inboxbodyguard</a></p>
+</div>
 </section>
 
 <!-- Footer -->
-<footer class="text-white text-center py-4">
-  <div class="container">
-    <p>&copy; 2024 EZM Cybersecurity. All Rights Reserved.</p>
-    <a href="https://x.com/inboxbodyguard?s=21" class="text-white me-3">Twitter</a>
-    <a href="https://github.com/inboxBodyguard" class="text-white me-3">GitHub</a>
-    <br><br>
-    <button onclick="Tawk_API && Tawk_API.maximize();" class="btn btn-outline-light mt-2">💬 Chat With Us</button>
-  </div>
-</footer>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Suspicious Link Checker Script -->
-<script>
-  document.getElementById('linkCheckerForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const url = document.getElementById('urlInput').value;
-    const result = document.getElementById('result');
-    if (url.includes('http://')) {
-      result.textContent = "⚠️ This link is potentially unsafe. Avoid using non-HTTPS links.";
-      result.style.color = "red";
-    } else {
-      result.textContent = "✅ This link looks safe (HTTPS detected).";
-      result.style.color = "lightgreen";
-    }
-  });
-</script>
-
-<!-- Tawk.to Script -->
-<script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/68863b0ddb7610192eeac6b0/1j165dcdr';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-  })();
-</script>
-
-</body>
-</html>
+<footer class="text-white text-center py-4" style="background-color:#0d6efd;">
+<div class="container">
+<p>&copy; 2025 EZM Cybersecurity. All Rights Reserved.</p>
+<a href="https://x.com/inboxbodyguard?s=21" class="text-white me-3">Twitter</a>
+<a href="https://github
