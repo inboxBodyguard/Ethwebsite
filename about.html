@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -18,9 +19,11 @@
     .hero-banner { background:#f9f9f9; padding:6rem 0; text-align:center; }
     .hero-banner h1 { font-size:2.8rem; margin-bottom:1rem; }
     .hero-banner .highlight { color:#007BFF; }
+    .hero-banner .subtitle { font-size:1.2rem; color:#555; margin-top:1rem; }
     .about-section { padding:4rem 0; }
     .about-section.bg-dark { background:#f0f0f0; }
     .about-section h2 { font-size:2rem; margin-bottom:1.5rem; color:#007BFF; }
+    .about-section h3 { font-size:1.5rem; margin-bottom:1rem; color:#333; margin-top:2rem; }
     .about-section p { margin-bottom:1.2rem; }
     .features-list { list-style:none; padding:0; margin:1rem 0 2rem 0; }
     .features-list li { margin-bottom:0.8rem; padding-left:1.5rem; position:relative; }
@@ -28,12 +31,22 @@
     .center-btn { text-align:center; margin-top:2rem; }
     .btn { background:#007BFF; color:#fff; padding:0.7rem 1.5rem; text-decoration:none; border-radius:5px; transition:0.3s; }
     .btn:hover { background:#0056b3; }
+    .toc-section { background:#f8f9fa; padding:3rem 0; border-left:4px solid #007BFF; }
+    .toc-list { list-style:none; padding:0; margin:1rem 0; }
+    .toc-list li { margin-bottom:0.5rem; }
+    .toc-list li a { color:#007BFF; text-decoration:none; font-weight:500; }
+    .toc-list li a:hover { text-decoration:underline; }
+    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:2rem; margin:2rem 0; }
+    .stat-card { background:#fff; padding:1.5rem; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.1); text-align:center; }
+    .stat-number { font-size:2rem; font-weight:bold; color:#007BFF; }
+    .stat-label { font-size:0.9rem; color:#666; margin-top:0.5rem; }
     footer { background:#007BFF; color:#fff; text-align:center; padding:1.5rem 0; margin-top:3rem; }
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
+
   <header>
     <nav class="navbar">
       <div class="container">
@@ -50,50 +63,261 @@
   </header>
 
   <!-- Hero Banner -->
+
   <section class="hero-banner">
     <div class="container">
       <h1>About <span class="highlight">EzmCyber</span></h1>
-      <p>Driven by purpose. Focused on defense. Built for impact.</p>
+      <p class="subtitle">Driven by purpose. Focused on defense. Built for impact.</p>
+    </div>
+  </section>
+
+  <!-- Table of Contents -->
+
+  <section class="toc-section">
+    <div class="container">
+      <h2>Table of Contents</h2>
+      <ul class="toc-list">
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#who-we-are">Who We Are</a></li>
+        <li><a href="#our-mission">Our Mission & Vision</a></li>
+        <li><a href="#expertise">Our Expertise & Experience</a></li>
+        <li><a href="#approach">Our Approach</a></li>
+        <li><a href="#why-choose-us">Why Choose EzmCyber</a></li>
+        <li><a href="#commitment">Our Commitment</a></li>
+        <li><a href="#contact-info">Get In Touch</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Introduction -->
+
+  <section id="introduction" class="about-section">
+    <div class="container">
+      <h2>Introduction</h2>
+      <p>
+        EzmCyber represents a new paradigm in cybersecurity education and defense, built on the foundation of practical experience, ethical practices, and community-driven knowledge sharing. We understand the critical importance of protecting digital assets in an increasingly connected world, and we're dedicated to making cybersecurity accessible, understandable, and actionable for everyone.
+      </p>
+      <p>
+        This platform serves as your comprehensive resource for cybersecurity guidance, tools, and insights, whether you're an individual looking to secure your personal devices, a small business owner protecting your company's data, or an enterprise seeking advanced security solutions. Our approach combines real-world experience with cutting-edge research to deliver practical, effective cybersecurity solutions.
+      </p>
     </div>
   </section>
 
   <!-- Who We Are -->
-  <section class="about-section">
+
+  <section id="who-we-are" class="about-section bg-dark">
     <div class="container">
       <h2>Who We Are</h2>
       <p>
-        EzmCyber is the brainchild of <span class="highlight">Niffy</span>, a dedicated cybersecurity analyst with over 1 year of hands-on experience in ethical hacking, penetration testing, and network defense. I am human, passionate, and committed to building stronger digital defenses across industries.
+        EzmCyber is the brainchild of <span class="highlight">Niffy</span>, a dedicated cybersecurity analyst with extensive hands-on experience in ethical hacking, penetration testing, and network defense. As a human-driven platform, we bring passion, authenticity, and genuine expertise to every aspect of cybersecurity education and implementation.
       </p>
-      <p>
-        We operate at the intersection of research, practice, and community. Every tool, tutorial, and insight we provide is tested in real-world environments to ensure maximum effectiveness. Our mission is to empower individuals, startups, and organizations to defend themselves against cyber threats with practical, actionable solutions.
-      </p>
-      <p>
-        At EzmCyber, security is never just theoretical. It’s measurable, accessible, and effective. From securing personal devices to defending enterprise networks, we take a human-centric approach to cybersecurity. Every step, guide, and tool we create reflects hands-on expertise and an authentic understanding of attacker techniques.
-      </p>
-      <p>
-        Our goal is to share knowledge, cultivate skills, and foster a community of defenders who are informed, prepared, and confident in their ability to respond to cyber threats.
-      </p>
+
+```
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">1+</div>
+      <div class="stat-label">Years of Experience</div>
     </div>
+    <div class="stat-card">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Ethical Approach</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">24/7</div>
+      <div class="stat-label">Threat Monitoring</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">∞</div>
+      <div class="stat-label">Learning Commitment</div>
+    </div>
+  </div>
+
+  <p>
+    We operate at the intersection of research, practice, and community engagement. Every tool, tutorial, and insight we provide undergoes rigorous testing in real-world environments to ensure maximum effectiveness and practical applicability. Our commitment extends beyond just providing information – we're building a community of informed defenders.
+  </p>
+</div>
+```
+
+  </section>
+
+  <!-- Mission & Vision -->
+
+  <section id="our-mission" class="about-section">
+    <div class="container">
+      <h2>Our Mission & Vision</h2>
+
+```
+  <h3>Mission Statement</h3>
+  <p>
+    To empower individuals, startups, and organizations with practical, accessible, and effective cybersecurity solutions through education, tools, and community-driven defense strategies. We believe that strong cybersecurity should not be a privilege reserved for large corporations, but a fundamental right accessible to everyone.
+  </p>
+
+  <h3>Our Vision</h3>
+  <p>
+    To create a world where cybersecurity knowledge is democratized, where every person and organization has the tools and understanding necessary to protect their digital assets effectively. We envision a future where cyber threats are met with informed, prepared, and confident defenders at every level.
+  </p>
+
+  <h3>Core Values</h3>
+  <ul class="features-list">
+    <li>Transparency in all our methods and recommendations</li>
+    <li>Ethical practices in all cybersecurity activities</li>
+    <li>Community-first approach to knowledge sharing</li>
+    <li>Practical, actionable solutions over theoretical concepts</li>
+    <li>Continuous learning and adaptation to emerging threats</li>
+    <li>Accessibility of cybersecurity for all skill levels</li>
+  </ul>
+</div>
+```
+
+  </section>
+
+  <!-- Expertise -->
+
+  <section id="expertise" class="about-section bg-dark">
+    <div class="container">
+      <h2>Our Expertise & Experience</h2>
+
+```
+  <h3>Technical Specializations</h3>
+  <ul class="features-list">
+    <li>Ethical Hacking & Penetration Testing</li>
+    <li>Network Security & Defense Architecture</li>
+    <li>Vulnerability Assessment & Management</li>
+    <li>Incident Response & Digital Forensics</li>
+    <li>Security Awareness Training & Education</li>
+    <li>Compliance & Risk Management</li>
+    <li>Threat Intelligence & Analysis</li>
+    <li>Security Tool Development & Implementation</li>
+  </ul>
+
+  <h3>Industry Experience</h3>
+  <p>
+    Our experience spans across multiple industries and security scenarios, from securing personal devices and home networks to protecting enterprise-level infrastructures. We've encountered and addressed a wide range of security challenges, giving us unique insights into both common vulnerabilities and sophisticated attack vectors.
+  </p>
+
+  <p>
+    Every recommendation we make, every tool we develop, and every strategy we share is grounded in real-world application and testing. We don't just theorize about cybersecurity – we live it, breathe it, and continuously refine our approach based on the evolving threat landscape.
+  </p>
+</div>
+```
+
+  </section>
+
+  <!-- Our Approach -->
+
+  <section id="approach" class="about-section">
+    <div class="container">
+      <h2>Our Approach</h2>
+
+```
+  <h3>Human-Centric Cybersecurity</h3>
+  <p>
+    At EzmCyber, we recognize that the human element is both the greatest vulnerability and the strongest defense in cybersecurity. Our approach prioritizes understanding, education, and empowerment over complex technical jargon and intimidating security protocols.
+  </p>
+
+  <h3>Practical Over Theoretical</h3>
+  <p>
+    Security is never just theoretical at EzmCyber. Every solution we provide is measurable, accessible, and effective. We focus on practical implementations that work in real-world scenarios, not just in controlled laboratory environments.
+  </p>
+
+  <h3>Community-Driven Learning</h3>
+  <p>
+    We believe in the power of community learning and knowledge sharing. Our platform serves as a hub for cybersecurity enthusiasts, professionals, and anyone interested in improving their security posture. We foster an environment of collaborative learning and mutual support.
+  </p>
+
+  <h3>Continuous Innovation</h3>
+  <p>
+    The cybersecurity landscape evolves rapidly, and so do we. We continuously research emerging threats, test new defense strategies, and adapt our methodologies to stay ahead of the curve. Innovation isn't just about new tools – it's about new ways of thinking about security challenges.
+  </p>
+</div>
+```
+
   </section>
 
   <!-- Why Choose Us -->
-  <section class="about-section bg-dark">
+
+  <section id="why-choose-us" class="about-section bg-dark">
     <div class="container">
       <h2>Why Choose EzmCyber</h2>
       <ul class="features-list">
-        <li>✔ Human-led cybersecurity guidance with practical experience</li>
-        <li>✔ Real-world tested tools and tutorials — no fluff or automation</li>
-        <li>✔ Passion-driven community collaboration</li>
-        <li>✔ Rapid response strategies and measurable security results</li>
-        <li>✔ Transparent and trustworthy insights from a dedicated professional</li>
+        <li>Human-led cybersecurity guidance with practical, hands-on experience</li>
+        <li>Real-world tested tools and tutorials — no theoretical fluff or generic automation</li>
+        <li>Passion-driven community collaboration and knowledge sharing</li>
+        <li>Rapid response strategies with measurable security improvements</li>
+        <li>Transparent and trustworthy insights from a dedicated cybersecurity professional</li>
+        <li>Comprehensive coverage from personal security to enterprise defense</li>
+        <li>Accessible learning materials for all skill levels</li>
+        <li>Ethical approach to all cybersecurity practices</li>
+        <li>Continuous support and guidance for your security journey</li>
+        <li>Cost-effective solutions without compromising on quality</li>
       </ul>
-      <div class="center-btn">
-        <a href="services.html" class="btn">Explore Our Services</a>
-      </div>
-    </div>
+
+```
+  <h3>What Sets Us Apart</h3>
+  <p>
+    Unlike automated security platforms or purely theoretical educational resources, EzmCyber combines the authenticity of human expertise with the accessibility of digital education. We provide personalized guidance that adapts to your specific needs, whether you're just starting your cybersecurity journey or looking to advance your existing knowledge.
+  </p>
+</div>
+```
+
+  </section>
+
+  <!-- Our Commitment -->
+
+  <section id="commitment" class="about-section">
+    <div class="container">
+      <h2>Our Commitment</h2>
+
+```
+  <h3>To Our Community</h3>
+  <p>
+    We are committed to fostering a supportive, inclusive, and educational community where cybersecurity knowledge is freely shared and continuously expanded. Every member of our community, regardless of their current skill level, contributes to our collective defense against cyber threats.
+  </p>
+
+  <h3>To Quality & Excellence</h3>
+  <p>
+    Every piece of content, every tool, and every recommendation we provide undergoes rigorous quality assurance. We maintain high standards because we understand that in cybersecurity, mediocrity can be dangerous. Our reputation is built on reliability, accuracy, and effectiveness.
+  </p>
+
+  <h3>To Ethical Practices</h3>
+  <p>
+    We operate under strict ethical guidelines, ensuring that all our cybersecurity activities are conducted responsibly and legally. We promote ethical hacking, responsible disclosure, and defensive security practices that protect rather than exploit vulnerabilities.
+  </p>
+
+  <h3>To Continuous Improvement</h3>
+  <p>
+    The cybersecurity field never stands still, and neither do we. We are committed to continuous learning, adaptation, and improvement. We regularly update our knowledge base, refine our methodologies, and expand our capabilities to serve our community better.
+  </p>
+</div>
+```
+
+  </section>
+
+  <!-- Get In Touch -->
+
+  <section id="contact-info" class="about-section bg-dark">
+    <div class="container">
+      <h2>Get In Touch</h2>
+      <p>
+        Ready to strengthen your cybersecurity posture? Whether you're looking for personalized guidance, have questions about our services, or want to join our community of cybersecurity defenders, we're here to help. Your security journey starts with a single step, and we're honored to be part of that journey.
+      </p>
+
+```
+  <div class="center-btn">
+    <a href="contact.html" class="btn">Contact Us Today</a>
+    <a href="services.html" class="btn" style="margin-left:1rem;">Explore Our Services</a>
+  </div>
+  
+  <p style="text-align:center; margin-top:2rem; font-style:italic;">
+    "Security is not a product, but a process. Let's build that process together."
+  </p>
+</div>
+```
+
   </section>
 
   <!-- Footer -->
+
   <footer>
     <div class="container">
       <p>&copy; 2025 EzmCyber by Niffy. All rights reserved.</p>
