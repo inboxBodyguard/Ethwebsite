@@ -64,8 +64,8 @@
 ## 📫 Connect With Me
 - [LinkedIn](https://www.linkedin.com/in/ethan89072)  
 - [Portfolio / Website](https://ezmcyber.xyz)  
-- [Email](mailto:your-email@example.com)  
-
+- [Email](contact@ezmcyber.xyz)  
+- [x]   (https://x.com/inboxbodyguard?s=21)
 ---
 
 ⚡ “I break things to understand threats — and learn how to defend against them.”
