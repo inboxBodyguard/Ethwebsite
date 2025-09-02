@@ -89,6 +89,39 @@
     </div>
   </section>
 
+  <!-- Optional New Tools Section -->
+  <section class="py-5 section-light scroll-fade">
+    <div class="container">
+      <h3 class="text-center mb-4">Additional Cybersecurity Tools</h3>
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
+          <div class="card h-100 card-hover text-center">
+            <div class="card-body">
+              <h5 class="card-title">IP Reputation Checker</h5>
+              <p class="card-text">Check if an IP address is flagged by security vendors.</p>
+              <form id="ipForm">
+                <input type="text" id="ipInput" class="form-control mb-2" placeholder="Enter IP address" required>
+                <button type="submit" class="btn btn-warning">Check IP</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 card-hover text-center">
+            <div class="card-body">
+              <h5 class="card-title">Domain WHOIS Lookup</h5>
+              <p class="card-text">Get domain registration info and details.</p>
+              <form id="domainForm">
+                <input type="text" id="domainInput" class="form-control mb-2" placeholder="Enter domain (example.com)" required>
+                <button type="submit" class="btn btn-info">Lookup Domain</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Newsletter Section -->
   <section class="py-5 section-dark scroll-fade">
     <div class="container text-center">
@@ -181,12 +214,28 @@
     window.addEventListener('scroll', handleScrollAnimation);
     window.addEventListener('load', handleScrollAnimation);
 
-    // VirusTotal Link Checker (uses base64 for GUI)
+    // VirusTotal Link Checker (strong logic)
     document.getElementById("linkForm").addEventListener("submit", function(e){
       e.preventDefault();
       const url = document.getElementById("linkInput").value.trim();
       if(!url) return;
       window.open(`https://www.virustotal.com/gui/url/${btoa(url)}/detection`, "_blank");
+    });
+
+    // IP Reputation Checker
+    document.getElementById("ipForm")?.addEventListener("submit", function(e){
+      e.preventDefault();
+      const ip = document.getElementById("ipInput").value.trim();
+      if(!ip) return;
+      window.open(`https://www.virustotal.com/gui/ip-address/${ip}/detection`, "_blank");
+    });
+
+    // Domain WHOIS Lookup
+    document.getElementById("domainForm")?.addEventListener("submit", function(e){
+      e.preventDefault();
+      const domain = document.getElementById("domainInput").value.trim();
+      if(!domain) return;
+      window.open(`https://whois.domaintools.com/${domain}`, "_blank");
     });
   </script>
 </body>
