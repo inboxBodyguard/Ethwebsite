@@ -476,7 +476,7 @@
         </div>
     </nav>
 
-```
+
 <!-- Spacer for fixed navbar -->
 <div style="height: 100px;"></div>
 
@@ -494,37 +494,70 @@
 
 <!-- Suspicious Link Checker Tool -->
 <section class="py-5 section-light scroll-fade">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card card-hover">
-                    <div class="card-body text-center">
-                        <h3 class="card-title mb-4">🔍 Suspicious Link Checker</h3>
-                        <p class="card-text mb-4">Verify the safety of any URL using VirusTotal's comprehensive security analysis</p>
-                        
-                        <form id="linkForm" class="mb-4">
-                            <div class="input-group input-group-lg">
-                                <input type="url" 
-                                       id="linkInput" 
-                                       class="form-control" 
-                                       placeholder="Paste or type a link to verify (e.g., https://example.com)" 
-                                       required
-                                       style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
-                                <button type="submit" class="btn btn-danger">
-                                    <strong>Check Link</strong>
-                                </button>
-                            </div>
-                        </form>
-                        
-                        <p class="text-muted mb-0">
-                            <small>🔒 Secure analysis • Results open in new tab • Powered by VirusTotal</small>
-                        </p>
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card card-hover">
+          <div class="card-body text-center">
+            <h3 class="card-title mb-4">🔍 Suspicious Link Checker</h3>
+            <p class="card-text mb-4">Verify the safety of any URL using VirusTotal's comprehensive security analysis</p>
+
+            <form id="linkForm" class="mb-4">
+              <div class="input-group input-group-lg">
+                <input type="url" 
+                       id="linkInput" 
+                       class="form-control" 
+                       placeholder="Paste or type a link to verify (e.g., https://example.com)" 
+                       required
+                       style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                <button type="submit" class="btn btn-danger">
+                  <strong>Check Link</strong>
+                </button>
+              </div>
+            </form>
+
+            <div id="result" class="mt-2"></div>
+
+            <p class="text-muted mb-0">
+              <small>🔒 Secure analysis • Results open in new tab • Powered by VirusTotal</small>
+            </p>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </section>
+
+<script>
+const form = document.getElementById('linkForm');
+const result = document.getElementById('result');
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  const url = document.getElementById('linkInput').value.trim();
+
+  if (!url.startsWith("https://") && !url.startsWith("http://")) {
+    result.textContent = "⚠️ Please include http:// or https://";
+    result.style.color = "yellow";
+    return;
+  }
+
+  const suspiciousKeywords = ["free-gift", "login-now", "verify-account", "bit.ly", "tinyurl"];
+  let isSuspicious = suspiciousKeywords.some(keyword => url.includes(keyword));
+
+  if (isSuspicious) {
+    result.textContent = "🚨 Warning: This link may be unsafe or part of a phishing scheme.";
+    result.style.color = "red";
+  } else {
+    result.textContent = "✅ This link appears to be okay. Opening VirusTotal...";
+    result.style.color = "lightgreen";
+
+    setTimeout(() => {
+      window.open(`https://www.virustotal.com/gui/url/${encodeURIComponent(url)}/detection`, "_blank");
+    }, 1000);
+  }
+});
+</script>
 
 <!-- Additional Cybersecurity Tools -->
 <section class="py-5 section-light scroll-fade">
