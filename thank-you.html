@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,9 +7,10 @@
   <title>Thank You | EZM Cyber</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
-      background-color: #0b0c10;
+      background: linear-gradient(135deg, #0b0c10 0%, #1f2937 50%, #0b0c10 100%);
       color: #ffffff;
       font-family: 'Orbitron', sans-serif;
       display: flex;
@@ -18,35 +20,379 @@
       min-height: 100vh;
       text-align: center;
       padding: 30px;
+      position: relative;
+      overflow-x: hidden;
     }
-    h1 {
-      color: #66fcf1;
-      font-size: 2.8rem;
-    }
-    p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin-top: 20px;
-    }
-    a.btn {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 12px 28px;
-      background-color: #45a29e;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-    }
-    a.btn:hover {
-      background-color: #66fcf1;
-      color: #0b0c10;
-    }
+
+```
+/* Animated Background Elements */
+.bg-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.floating-icon {
+  position: absolute;
+  color: rgba(102, 252, 241, 0.1);
+  animation: float 6s ease-in-out infinite;
+  font-size: 2rem;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+.success-container {
+  background: rgba(17, 24, 39, 0.8);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(102, 252, 241, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  max-width: 700px;
+  width: 100%;
+  position: relative;
+  animation: slideIn 0.8s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.success-icon {
+  font-size: 4rem;
+  color: #66fcf1;
+  margin-bottom: 1rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+h1 {
+  color: #66fcf1;
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 20px rgba(102, 252, 241, 0.5);
+}
+
+.subtitle {
+  color: #c7d2fe;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 20px auto;
+  line-height: 1.6;
+}
+
+.features-section {
+  margin: 2.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  max-width: 600px;
+}
+
+.feature-card {
+  background: rgba(69, 162, 158, 0.1);
+  border: 1px solid rgba(102, 252, 241, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(102, 252, 241, 0.5);
+  background: rgba(69, 162, 158, 0.2);
+}
+
+.feature-card i {
+  color: #66fcf1;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card h3 {
+  color: #66fcf1;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+  font-size: 0.9rem;
+  color: #c7d2fe;
+  margin: 0;
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 20px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #45a29e 0%, #66fcf1 100%);
+  color: #0b0c10;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(69, 162, 158, 0.4);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 252, 241, 0.6);
+  background: linear-gradient(135deg, #66fcf1 0%, #45a29e 100%);
+}
+
+.btn-secondary {
+  background: rgba(102, 252, 241, 0.1);
+  color: #66fcf1;
+  border: 2px solid #66fcf1;
+}
+
+.btn-secondary:hover {
+  background: #66fcf1;
+  color: #0b0c10;
+}
+
+.social-links {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.social-link {
+  color: rgba(102, 252, 241, 0.7);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+}
+
+.social-link:hover {
+  color: #66fcf1;
+  transform: scale(1.2);
+}
+
+.countdown {
+  background: rgba(69, 162, 158, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border: 1px solid rgba(102, 252, 241, 0.2);
+}
+
+.countdown-text {
+  font-size: 0.9rem;
+  color: #c7d2fe;
+}
+
+.next-steps {
+  text-align: left;
+  margin: 2rem 0;
+  background: rgba(17, 24, 39, 0.5);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #66fcf1;
+}
+
+.next-steps h3 {
+  color: #66fcf1;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.next-steps ul {
+  list-style: none;
+  padding: 0;
+}
+
+.next-steps li {
+  margin: 0.8rem 0;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.next-steps li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #66fcf1;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .success-container {
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+  }
+  
+  h1 {
+    font-size: 2.2rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .features-section {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
   </style>
 </head>
 <body>
-  <h1>✅ Message Sent!</h1>
-  <p>Thank you for reaching out to EZM Cyber. We’ve received your message and will get back to you shortly.</p>
-  <a href="index.html" class="btn">← Back to Homepage</a>
+  <div class="bg-animation">
+    <i class="fas fa-shield-alt floating-icon" style="top: 10%; left: 10%; animation-delay: 0s;"></i>
+    <i class="fas fa-lock floating-icon" style="top: 20%; right: 15%; animation-delay: 1s;"></i>
+    <i class="fas fa-user-shield floating-icon" style="bottom: 30%; left: 20%; animation-delay: 2s;"></i>
+    <i class="fas fa-bug floating-icon" style="bottom: 10%; right: 10%; animation-delay: 3s;"></i>
+    <i class="fas fa-search floating-icon" style="top: 50%; left: 5%; animation-delay: 4s;"></i>
+    <i class="fas fa-globe floating-icon" style="top: 70%; right: 25%; animation-delay: 5s;"></i>
+  </div>
+
+  <div class="success-container">
+    <div class="success-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+
+```
+<h1>✅ Welcome to EZM Cyber!</h1>
+<p class="subtitle">Your subscription has been confirmed successfully</p>
+
+<p>Thank you for joining our cybersecurity community! We've received your subscription and will keep you updated with the latest security insights, threat analysis, and protective measures.</p>
+
+<div class="countdown">
+  <p class="countdown-text">
+    <i class="fas fa-clock"></i>
+    <strong>First newsletter arrives in 24-48 hours</strong> - Check your inbox for exclusive content!
+  </p>
+</div>
+
+<div class="next-steps">
+  <h3><i class="fas fa-route"></i> What Happens Next?</h3>
+  <ul>
+    <li>You'll receive a welcome email with exclusive cybersecurity resources</li>
+    <li>Weekly newsletter with latest threat reports and security tips</li>
+    <li>Early access to new tools and vulnerability reports</li>
+    <li>Invitations to cybersecurity webinars and community events</li>
+  </ul>
+</div>
+
+<div class="features-section">
+  <div class="feature-card">
+    <i class="fas fa-tools"></i>
+    <h3>Security Tools</h3>
+    <p>Access our free link checker, IP analyzer, and threat detection tools</p>
+  </div>
+  
+  <div class="feature-card">
+    <i class="fas fa-graduation-cap"></i>
+    <h3>Learn & Grow</h3>
+    <p>Discover tutorials, guides, and best practices for cybersecurity</p>
+  </div>
+  
+  <div class="feature-card">
+    <i class="fas fa-users"></i>
+    <h3>Join Community</h3>
+    <p>Connect with security professionals and share knowledge</p>
+  </div>
+</div>
+
+<div class="action-buttons">
+  <a href="index.html" class="btn">
+    <i class="fas fa-home"></i>
+    Back to Homepage
+  </a>
+  
+  <a href="about.html" class="btn btn-secondary">
+    <i class="fas fa-info-circle"></i>
+    Learn More About Us
+  </a>
+  
+  <a href="services.html" class="btn btn-secondary">
+    <i class="fas fa-shield-alt"></i>
+    Explore Our Tools
+  </a>
+</div>
+
+<div class="social-links">
+  <a href="#" class="social-link" title="Follow us on Twitter">
+    <i class="fab fa-twitter"></i>
+  </a>
+  <a href="#" class="social-link" title="Connect on LinkedIn">
+    <i class="fab fa-linkedin"></i>
+  </a>
+  <a href="#" class="social-link" title="Join our Discord">
+    <i class="fab fa-discord"></i>
+  </a>
+  <a href="#" class="social-link" title="GitHub Projects">
+    <i class="fab fa-github"></i>
+  </a>
+</div>
+```
+
+  </div>
+
+  <script>
+    // Add some interactive elements
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animate feature cards on load
+      const cards = document.querySelectorAll('.feature-card');
+      cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.2}s`;
+        card.style.animation = 'slideIn 0.6s ease-out forwards';
+      });
+      
+      // Add click tracking for analytics (if you implement it later)
+      const buttons = document.querySelectorAll('.btn');
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          console.log('Button clicked:', this.textContent.trim());
+        });
+      });
+      
+      // Add smooth scroll for better UX
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>
