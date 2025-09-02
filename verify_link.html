@@ -12,9 +12,7 @@
       font-family: 'Orbitron', sans-serif;
       padding: 30px;
     }
-    h1 {
-      color: #00ffcc;
-    }
+    h1 { color: #00ffcc; }
     input[type="url"] {
       width: 100%;
       padding: 12px;
@@ -30,19 +28,9 @@
       color: #000;
       cursor: pointer;
       font-weight: bold;
-      margin-right: 10px;
     }
-    button:hover {
-      background-color: #00ccaa;
-    }
-    #result {
-      margin-top: 20px;
-      font-weight: bold;
-    }
-    #vtButton {
-      display: none;
-      margin-top: 10px;
-    }
+    button:hover { background-color: #00ccaa; }
+    #result { margin-top: 20px; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -56,17 +44,14 @@
   </form>
 
   <div id="result"></div>
-  <button id="vtButton">🔍 Scan on VirusTotal</button>
 
   <script>
     const form = document.getElementById('linkForm');
     const result = document.getElementById('result');
-    const vtButton = document.getElementById('vtButton');
 
     form.addEventListener('submit', function(event) {
       event.preventDefault();
       const url = document.getElementById('urlInput').value.trim();
-      vtButton.style.display = "none"; // hide button each check
 
       if (!url.startsWith("https://") && !url.startsWith("http://")) {
         result.textContent = "⚠️ Please include http:// or https://";
@@ -74,23 +59,28 @@
         return;
       }
 
+      // Strong logic: suspicious keyword detection
       const suspiciousKeywords = ["free-gift", "login-now", "verify-account", "bit.ly", "tinyurl"];
-      const isSuspicious = suspiciousKeywords.some(kw => url.includes(kw));
+      let isSuspicious = false;
+
+      for (let keyword of suspiciousKeywords) {
+        if (url.includes(keyword)) {
+          isSuspicious = true;
+          break;
+        }
+      }
 
       if (isSuspicious) {
         result.textContent = "🚨 Warning: This link may be unsafe or part of a phishing scheme.";
         result.style.color = "red";
       } else {
-        result.textContent = "✅ This link appears to be okay, but always stay alert.";
+        result.textContent = "✅ This link appears to be okay. Redirecting to VirusTotal in 1 second...";
         result.style.color = "lightgreen";
-        vtButton.style.display = "inline-block"; // show VirusTotal button
-      }
-    });
 
-    vtButton.addEventListener('click', function() {
-      const url = document.getElementById('urlInput').value.trim();
-      if(url) {
-        window.open(`https://www.virustotal.com/gui/url/${btoa(url)}/detection`, "_blank");
+        // Open result on VirusTotal after 1 second delay
+        setTimeout(() => {
+          window.open(`https://www.virustotal.com/gui/url/${btoa(url)}/detection`, "_blank");
+        }, 1000);
       }
     });
   </script>
