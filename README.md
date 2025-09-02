@@ -1,29 +1,35 @@
-👋 Hi, I'm Niffy  
-🛡️ Aspiring Threat Analyst | 🔐 Cybersecurity & Computer Defense | 💡 Lifelong Learner  
+# 👋 Hi, I'm Niffy
+
+🛡️ Aspiring Threat Analyst | 🔐 Cybersecurity & Computer Defense | 💡 Lifelong Learner
 
 ---
 
-### 👨‍💻 About Me
+## 👨‍💻 About Me
 - 🌱 Currently learning Web Security & Threat Analysis  
 - 🔐 Exploring the world of Cybersecurity, Computer Defense & Incident Response  
-- 🛠️ Building tools & small projects to sharpen my skills  
+- 🛠️ Building tools, small projects, and fully functioning web/apps to sharpen my skills  
+- 💻 Experienced with full-stack development: MongoDB, Express.js, Node.js, React, and other modern web technologies  
 - 📚 Documenting my cyber journey here on GitHub  
 - 🤝 Open to collaboration, knowledge sharing, and security research  
 
 ---
 
-### 🧰 Tech & Tools I'm Learning
-- ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)  
-- ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)  
-- ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)  
-- ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)  
-- ![APIs](https://img.shields.io/badge/APIs-0D6EFD?style=for-the-badge&logo=apiblueprint&logoColor=white)  
-- ![Threat Analysis](https://img.shields.io/badge/Threat_Analysis-6610F2?style=for-the-badge&logoColor=white)  
-- ![Incident Response](https://img.shields.io/badge/Incident_Response-198754?style=for-the-badge&logoColor=white)  
+## 🧰 Tech & Tools I'm Learning
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![Wireshark](https://img.shields.io/badge/Wireshark-1A1A1A?style=for-the-badge&logo=wireshark&logoColor=blue)
 
 ---
 
-### 🚀 Current Focus
+## 🚀 Current Focus
 - 🌍 Developing my personal cybersecurity website → [ezmcyber.xyz](https://ezmcyber.xyz)  
 - 📝 Writing beginner-friendly guides on threats, exploits & defenses  
 - 🛡️ Practicing threat detection & analysis  
@@ -31,26 +37,34 @@
 
 ---
 
-### 🛠️ Tools & Features on ezmcyber.xyz
-| Feature | Description |
-|---------|-------------|
-| 🔗 **Suspicious Link Checker** | Scan URLs safely and detect phishing or malicious links |
-| 🌐 **IP & Domain Info Tool** | Get quick WHOIS and geolocation data |
-| 📰 **Newsletter Signup** | Stay updated with cybersecurity guides and resources |
-| 📂 **Project Showcases** | View small projects & scripts built for threat analysis |
-| 💬 **Live Chat Support** | Ask questions or report suspicious links in real-time |
+## 🛠️ Tools & Features on ezmcyber.xyz
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| 🔗 Suspicious Link Checker | Scan URLs safely and detect phishing or malicious links | ![Live](https://img.shields.io/badge/status-live-brightgreen) |
+| 🌐 IP & Domain Info Tool | Get quick WHOIS and geolocation data | ![Live](https://img.shields.io/badge/status-live-brightgreen) |
+| 📰 Newsletter Signup | Stay updated with cybersecurity guides and resources | ![Live](https://img.shields.io/badge/status-live-brightgreen) |
+| 📂 Project Showcases | View small projects & scripts built for threat analysis | ![Live](https://img.shields.io/badge/status-live-brightgreen) |
+| 💬 Live Chat Support | Ask questions or report suspicious links in real-time | ![Live](https://img.shields.io/badge/status-live-brightgreen) |
+| 🔍 URL Reputation Analysis | Check domains and links for reputation & safety score | ![Live](https://img.shields.io/badge/status-live-brightgreen) |
+| 🛡️ Vulnerability Scanner | Scan web apps for basic security vulnerabilities | ![Live](https://img.shields.io/badge/status-live-brightgreen) |
+| 🗂️ Threat Reports & Logs | Access example threat analysis reports and logs | ![Live](https://img.shields.io/badge/status-live-brightgreen) |
+| 📊 Cybersecurity Learning Resources | Curated tutorials, articles, and tool guides | ![Live](https://img.shields.io/badge/status-live-brightgreen) |
 
 ---
 
-### 📊 GitHub Stats
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=YOUR_USERNAME&show_icons=true&theme=dark)  
+## 📊 GitHub Stats
+
+![Niffy’s GitHub stats](https://github-readme-stats.vercel.app/api?username=inboxBodyguard&show_icons=true&theme=radical)
+
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=inboxBodyguard&layout=compact&theme=radical)
 
 ---
 
-### 📫 Connect With Me
-- [LinkedIn](https://linkedin.com/in/YOUR_LINKEDIN)  
-- <a href="https://x.com/inboxbodyguard?s=21"><img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter"></a>  
+## 📫 Connect With Me
+- [LinkedIn](https://www.linkedin.com/in/ethan89072)  
 - [Portfolio / Website](https://ezmcyber.xyz)  
+- [Email](mailto:your-email@example.com)  
 
 ---
 
