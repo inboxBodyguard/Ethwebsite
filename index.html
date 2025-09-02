@@ -1,141 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EzmCyber - Secure, Protect, and Respond</title>
-  <meta name="description" content="EzmCyber helps individuals and businesses stay secure with link verification, cyber threat analysis, and professional cybersecurity services.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EZM Cyber - Secure, Protect, and Respond</title>
+  <meta name="description" content="EZM Cyber helps individuals and businesses stay secure with link verification, cyber threat analysis, and professional cybersecurity services.">
 
-  <!-- Google Search Console Verification -->
+  <!-- Google Search Console Verification (inserted) -->
   <meta name="google-site-verification" content="1ySkKwSAo8xfnYYX-i4cabslkNW-ovZt8kB-bUeb0UU" />
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <!-- Google Analytics (G-RMFR5JV1BC) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RMFR5JV1BC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RMFR5JV1BC');
+  </script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Small inline styles kept for banner/responsive behavior */
+    .banner-section {
+      background-image: url('banner.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 100%;
+      height: 250px;
+    }
+    @media (max-width: 992px) { .banner-section { height: 200px; } }
+    @media (max-width: 768px) { .banner-section { height: 150px; } }
+    @media (max-width: 576px) { .banner-section { height: 120px; } }
+
+    .btn:hover { transform: scale(1.05); transition: transform 0.3s ease, background 0.3s ease; }
+    .card-hover:hover { transform: translateY(-5px); box-shadow: 0 12px 20px rgba(0,0,0,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+  </style>
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
-      <a class="navbar-brand" href="index.html">EzmCyber</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="index.html">EZM Cyber</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
           <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-          <li class="nav-item"><a class="nav-link" href="case-studies.html">Case Studies</a></li>
-          <li class="nav-item"><a class="nav-link" href="community-forum.html">Community</a></li>
-          <li class="nav-item"><a class="nav-link" href="testimonials.html">Testimonials</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
           <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
+          <li class="nav-item"><a class="nav-link" href="signup.html">Newsletter</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <header class="bg-primary text-white text-center py-5">
-    <div class="container">
-      <h1 class="display-4">Secure, Protect, and Respond</h1>
-      <p class="lead">Your trusted partner in cybersecurity solutions.</p>
-    </div>
-  </header>
+  <!-- Banner Section -->
+  <section class="py-5 banner-section"></section>
 
-  <!-- Link Verifier Section -->
-  <section class="py-5">
-    <div class="container">
-      <h2 class="text-center mb-4">Suspicious Link Checker</h2>
-      <form id="linkForm" class="d-flex justify-content-center">
-        <input type="url" id="linkInput" class="form-control w-50 me-2" placeholder="Enter a URL to check..." required>
-        <button type="submit" class="btn btn-primary">Check</button>
-      </form>
-      <p id="result" class="text-center mt-3"></p>
+  <!-- Main Content -->
+  <section class="py-5 scroll-fade">
+    <div class="container text-center">
+      <h2>Welcome to EZM Cyber</h2>
+      <p>Your trusted source for cybersecurity insights, tools, and guidance.</p>
+      <a href="videos.html" class="btn btn-primary btn-lg mt-3">🎥 Watch Video</a>
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section class="bg-light py-5">
+  <!-- Suspicious Link Checker -->
+  <section class="py-5 section-light scroll-fade">
     <div class="container">
-      <h2 class="text-center mb-4">Contact Us</h2>
-      <div class="row justify-content-center">
-        <div class="col-md-8">
-          <form>
-            <div class="mb-3">
-              <label for="name" class="form-label">Full Name</label>
-              <input type="text" class="form-control" id="name" required>
+      <h3 class="text-center mb-4">Suspicious Link Checker</h3>
+      <form id="linkForm" class="d-flex flex-wrap justify-content-center">
+        <input type="url" id="linkInput" class="form-control me-2 mb-2" placeholder="Enter a link to verify" required style="max-width: 400px;">
+        <button type="submit" class="btn btn-danger mb-2">Check Link</button>
+      </form>
+      <p class="text-center mt-3 fw-bold"><small>Results will open in a new tab on VirusTotal</small></p>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="py-5 section-dark scroll-fade">
+    <div class="container text-center">
+      <h3>Stay Updated</h3>
+      <p>Join our newsletter to receive exclusive cybersecurity tips and updates.</p>
+      <a href="thank-you.html" class="btn btn-accent mt-3">Sign Up Now</a>
+      <form action="thank-you.html" method="get" class="d-flex justify-content-center mt-3 flex-wrap">
+        <input type="email" name="email" class="form-control me-2 mb-2" placeholder="Enter your email" required>
+        <button type="submit" class="btn btn-accent mb-2">Sign Up</button>
+      </form>
+      <small class="text-muted d-block mt-2">We respect your privacy. No spam, ever.</small>
+    </div>
+  </section>
+
+  <!-- Developer Tools Section -->
+  <section id="developer-tools" class="py-5 section-dark scroll-fade">
+    <div class="container">
+      <h2 class="mb-4 text-center">Developer Tools</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 card-hover text-center">
+            <div class="card-body">
+              <h5 class="card-title">GitHub Repository</h5>
+              <p class="card-text">Access the source code and contribute to EZM Cyber.</p>
+              <a href="https://github.com/inboxBodyguard" class="btn btn-primary" target="_blank">View on GitHub</a>
             </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email Address</label>
-              <input type="email" class="form-control" id="email" required>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 card-hover text-center">
+            <div class="card-body">
+              <h5 class="card-title">Code Playground</h5>
+              <p class="card-text">Experiment with HTML, CSS, and JS in real-time.</p>
+              <a href="https://codepen.io/" class="btn btn-success" target="_blank">Try on CodePen</a>
             </div>
-            <div class="mb-3">
-              <label for="service" class="form-label">Service</label>
-              <select class="form-select" id="service" required>
-                <option value="">Choose...</option>
-                <option>Website Design</option>
-                <option>Mobile App Design</option>
-                <option>Logo Design</option>
-                <option>Threat Analysis</option>
-                <option>Cybersecurity Training</option>
-                <option>Phishing Protection</option>
-              </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 card-hover text-center">
+            <div class="card-body">
+              <h5 class="card-title">API Documentation</h5>
+              <p class="card-text">Check out useful API references for developers.</p>
+              <a href="https://developer.mozilla.org/en-US/" class="btn btn-warning" target="_blank">Visit MDN Docs</a>
             </div>
-            <div class="mb-3">
-              <label for="message" class="form-label">Message</label>
-              <textarea class="form-control" id="message" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-dark">Send Message</button>
-          </form>
+          </div>
         </div>
       </div>
+
+      <p class="text-center mt-4 small text-muted">
+        Last Updated: <span id="last-updated"></span>
+      </p>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-3">
+  <footer class="bg-primary text-light text-center py-3">
     <div class="container">
-      <p class="mb-0">&copy; 2025 EzmCyber. All Rights Reserved.</p>
-      <div class="social-links mt-2">
-        <a href="#" class="text-white me-3">Twitter</a>
-        <a href="#" class="text-white me-3">LinkedIn</a>
-        <a href="#" class="text-white">GitHub</a>
-      </div>
+      <p class="mb-2">&copy; 2025 EZM Cyber. All rights reserved.</p>
+      <a href="privacy.html" class="text-decoration-none text-light me-3">Privacy Policy</a>
+      <a href="community/index.html" class="text-decoration-none text-light">Community</a>
     </div>
   </footer>
 
-  <!-- Tawk.to Script -->
+  <!-- Tawk.to Live Chat -->
   <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
       var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
       s1.async=true;
-      s1.src='https://embed.tawk.to/YOUR_PROPERTY_ID_HERE/1hYOUR_ID';
+      s1.src='https://embed.tawk.to/64d21fdf94cf5d49dc6889c3/1h7ab4v6a';
       s1.charset='UTF-8';
       s1.setAttribute('crossorigin','*');
       s0.parentNode.insertBefore(s1,s0);
     })();
   </script>
 
-  <!-- Suspicious Link Detection Script -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    document.getElementById('linkForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const url = document.getElementById('linkInput').value;
-      const result = document.getElementById('result');
-      if(url.includes("http")) {
-        result.textContent = "Checking... redirecting to VirusTotal.";
-        window.open(`https://www.virustotal.com/gui/url/${encodeURIComponent(url)}`, '_blank');
-      } else {
-        result.textContent = "Please enter a valid URL.";
-      }
+    // last updated
+    document.getElementById("last-updated").textContent = new Date().toLocaleString();
+
+    // scroll fade-in
+    const scrollElements = document.querySelectorAll('.scroll-fade');
+    const elementInView = (el, dividend = 1) => {
+      const elementTop = el.getBoundingClientRect().top;
+      return elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend;
+    };
+    const displayScrollElement = (element) => { element.classList.add('visible'); };
+    const handleScrollAnimation = () => { scrollElements.forEach(el => { if(elementInView(el,1.25)) displayScrollElement(el); }); };
+    window.addEventListener('scroll', handleScrollAnimation);
+    window.addEventListener('load', handleScrollAnimation);
+
+    // VirusTotal Link Checker
+    document.getElementById("linkForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      const url = document.getElementById("linkInput").value.trim();
+      if(!url) return;
+      // open VirusTotal (base64 encoding expected by their GUI URL)
+      window.open(`https://www.virustotal.com/gui/url/${btoa(url)}/detection`, "_blank");
     });
   </script>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
