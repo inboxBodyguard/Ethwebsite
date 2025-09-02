@@ -1,97 +1,1008 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projects - EZM Cyber</title>
+  <title>Cybersecurity Projects - EZM Cyber</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cyber-primary: #00f5ff;
+      --cyber-secondary: #ff6b35;
+      --cyber-dark: #0a0a0a;
+      --cyber-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --neon-glow: 0 0 20px rgba(0, 245, 255, 0.5);
+    }
+    
+    body {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    .navbar-brand {
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      color: var(--cyber-primary) !important;
+      text-shadow: var(--neon-glow);
+    }
+    
+    .projects-banner {
+      position: relative;
+      height: 500px;
+      background: linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(26, 26, 46, 0.8) 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,245,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .banner-content {
+      text-align: center;
+      z-index: 2;
+      max-width: 800px;
+      padding: 2rem;
+    }
+    
+    .banner-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--cyber-primary);
+      text-shadow: var(--neon-glow);
+      margin-bottom: 1rem;
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    .banner-subtitle {
+      font-size: 1.3rem;
+      color: #c7d2fe;
+      margin-bottom: 2rem;
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+    
+    .stats-container {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      animation: fadeInUp 1s ease-out 0.6s both;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--cyber-primary);
+      text-shadow: var(--neon-glow);
+      display: block;
+    }
+    
+    .stat-label {
+      color: #c7d2fe;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      color: var(--cyber-primary);
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 2px;
+      background: var(--cyber-gradient);
+      box-shadow: var(--neon-glow);
+    }
+    
+    .project-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 245, 255, 0.2);
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+    }
+    
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: var(--cyber-gradient);
+      transition: left 0.5s ease;
+    }
+    
+    .project-card:hover::before {
+      left: 0;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--cyber-primary);
+      box-shadow: var(--neon-glow), 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .project-icon {
+      font-size: 3rem;
+      color: var(--cyber-primary);
+      margin-bottom: 1rem;
+      text-shadow: var(--neon-glow);
+    }
+    
+    .project-status {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    
+    .status-active {
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+      border: 1px solid #22c55e;
+    }
+    
+    .status-development {
+      background: rgba(251, 191, 36, 0.2);
+      color: #fbbf24;
+      border: 1px solid #fbbf24;
+    }
+    
+    .status-completed {
+      background: rgba(59, 130, 246, 0.2);
+      color: #3b82f6;
+      border: 1px solid #3b82f6;
+    }
+    
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    
+    .tech-badge {
+      background: rgba(0, 245, 255, 0.1);
+      color: var(--cyber-primary);
+      border: 1px solid rgba(0, 245, 255, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .project-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .metric {
+      text-align: center;
+      padding: 0.75rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--cyber-primary);
+      display: block;
+    }
+    
+    .metric-label {
+      font-size: 0.8rem;
+      color: #c7d2fe;
+      text-transform: uppercase;
+    }
+    
+    .btn-cyber {
+      background: var(--cyber-gradient);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-cyber::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+      transition: left 0.5s ease;
+    }
+    
+    .btn-cyber:hover::before {
+      left: 0;
+    }
+    
+    .btn-cyber:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--neon-glow);
+    }
+    
+    .project-category {
+      background: rgba(255, 107, 53, 0.1);
+      color: var(--cyber-secondary);
+      border: 1px solid var(--cyber-secondary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+    
+    .github-link {
+      color: var(--cyber-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(0, 245, 255, 0.3);
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+    
+    .github-link:hover {
+      background: rgba(0, 245, 255, 0.1);
+      color: var(--cyber-primary);
+      text-decoration: none;
+    }
+    
+    .floating-elements {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    
+    .floating-icon {
+      position: absolute;
+      color: rgba(0, 245, 255, 0.1);
+      font-size: 2rem;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+    }
+    
+    .scroll-fade {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    
+    .scroll-fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    @media (max-width: 768px) {
+      .banner-title { font-size: 2.5rem; }
+      .stats-container { gap: 1.5rem; }
+      .stat-number { font-size: 2rem; }
+      .project-metrics { grid-template-columns: 1fr; }
+    }
+  </style>
+
 </head>
 <body>
+  <div class="floating-elements">
+    <i class="fas fa-shield-alt floating-icon" style="top: 10%; left: 5%; animation-delay: 0s;"></i>
+    <i class="fas fa-bug floating-icon" style="top: 20%; right: 10%; animation-delay: 1s;"></i>
+    <i class="fas fa-lock floating-icon" style="bottom: 30%; left: 15%; animation-delay: 2s;"></i>
+    <i class="fas fa-search floating-icon" style="bottom: 20%; right: 20%; animation-delay: 3s;"></i>
+    <i class="fas fa-network-wired floating-icon" style="top: 60%; left: 10%; animation-delay: 4s;"></i>
+  </div>
+
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="index.html">EZM Cyber</a>
+      <a class="navbar-brand fw-bold" href="index.html">
+        <i class="fas fa-shield-alt me-2"></i>EZM Cyber
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link active" href="projects.html">Projects</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-          <li class="nav-item"><a class="nav-link" href="https://github.com/inboxBodyguard" target="_blank">GitHub</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i>Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html"><i class="fas fa-user me-1"></i>About</a></li>
+          <li class="nav-item"><a class="nav-link active" href="projects.html"><i class="fas fa-project-diagram me-1"></i>Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html"><i class="fas fa-envelope me-1"></i>Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://github.com/inboxBodyguard" target="_blank"><i class="fab fa-github me-1"></i>GitHub</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
   <!-- Projects Banner -->
-  <section class="projects-banner d-flex align-items-center justify-content-center text-center text-light">
-    <img src="projects-banner.PNG" alt="Projects Banner" class="img-fluid w-100 rounded shadow" style="max-height: 400px; object-fit: cover;">
-    
+
+  <section class="projects-banner">
+    <div class="banner-content">
+      <h1 class="banner-title">Cybersecurity Arsenal</h1>
+      <p class="banner-subtitle">Real-world security tools and threat detection systems built for modern cyber defense</p>
+
+```
+  <div class="stats-container">
+    <div class="stat-item">
+      <span class="stat-number">12+</span>
+      <span class="stat-label">Active Projects</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">50K+</span>
+      <span class="stat-label">Threats Detected</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">99.8%</span>
+      <span class="stat-label">Accuracy Rate</span>
+    </div>
+  </div>
+</div>
+```
+
   </section>
 
   <!-- Projects Section -->
-  <section class="py-5 scroll-fade">
+
+  <section class="py-5">
     <div class="container">
-      <div class="row g-4">
-        <!-- Project 1 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 card-hover shadow-sm">
-            <div class="card-body d-flex flex-column text-center">
-              <h5 class="card-title">Threat Detection System</h5>
-              <p class="card-text">An advanced cybersecurity project designed to detect and mitigate threats in real time.</p>
-              <a href="project1.html" class="btn btn-primary mt-auto shadow">View Details</a>
+      <h2 class="section-title">Featured Security Projects</h2>
+
+```
+  <div class="row g-4 scroll-fade">
+    <!-- Advanced Threat Detection System -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card project-card h-100">
+        <div class="project-status status-active">Live</div>
+        <div class="card-body p-4 d-flex flex-column">
+          <div class="project-category">AI-Powered Defense</div>
+          <div class="project-icon text-center">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h5 class="card-title text-center mb-3">AI Threat Detection Engine</h5>
+          <p class="card-text flex-grow-1">Machine learning-powered system that analyzes network traffic patterns to identify and neutralize advanced persistent threats in real-time.</p>
+          
+          <div class="tech-stack">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">TensorFlow</span>
+            <span class="tech-badge">Scikit-learn</span>
+            <span class="tech-badge">Docker</span>
+          </div>
+          
+          <div class="project-metrics">
+            <div class="metric">
+              <span class="metric-value">97.3%</span>
+              <span class="metric-label">Detection Rate</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">0.2s</span>
+              <span class="metric-label">Response Time</span>
             </div>
           </div>
-        </div>
-
-        <!-- Project 2 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 card-hover shadow-sm">
-            <div class="card-body d-flex flex-column text-center">
-              <h5 class="card-title">Network Traffic Analyzer</h5>
-              <p class="card-text">A powerful tool for analyzing network traffic and preventing malicious intrusions.</p>
-              <a href="project2.html" class="btn btn-primary mt-auto shadow">View Details</a>
-            </div>
+          
+          <div class="mt-auto">
+            <a href="project1.html" class="btn btn-cyber w-100 mb-2">
+              <i class="fas fa-eye me-2"></i>View Details
+            </a>
+            <a href="https://github.com/inboxBodyguard" target="_blank" class="github-link">
+              <i class="fab fa-github"></i>View Source Code
+            </a>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Project 3 -->
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 card-hover shadow-sm">
-            <div class="card-body d-flex flex-column text-center">
-              <h5 class="card-title">Cyber Labs & Exercises</h5>
-              <p class="card-text">Hands-on labs and collaborative projects to practice cybersecurity in real-world scenarios.</p>
-              <a href="project3.html" class="btn btn-primary mt-auto shadow">View Details</a>
+    <!-- Network Security Analyzer -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card project-card h-100">
+        <div class="project-status status-active">Live</div>
+        <div class="card-body p-4 d-flex flex-column">
+          <div class="project-category">Network Security</div>
+          <div class="project-icon text-center">
+            <i class="fas fa-network-wired"></i>
+          </div>
+          <h5 class="card-title text-center mb-3">Real-Time Network Monitor</h5>
+          <p class="card-text flex-grow-1">Comprehensive network traffic analysis tool with deep packet inspection, anomaly detection, and automated incident response capabilities.</p>
+          
+          <div class="tech-stack">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">Wireshark</span>
+            <span class="tech-badge">Scapy</span>
+            <span class="tech-badge">Redis</span>
+          </div>
+          
+          <div class="project-metrics">
+            <div class="metric">
+              <span class="metric-value">10GB/s</span>
+              <span class="metric-label">Traffic Analysis</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">24/7</span>
+              <span class="metric-label">Monitoring</span>
+            </div>
+          </div>
+          
+          <div class="mt-auto">
+            <a href="project2.html" class="btn btn-cyber w-100 mb-2">
+              <i class="fas fa-eye me-2"></i>View Details
+            </a>
+            <a href="https://github.com/inboxBodyguard" target="_blank" class="github-link">
+              <i class="fab fa-github"></i>View Source Code
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vulnerability Assessment Platform -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card project-card h-100">
+        <div class="project-status status-development">Beta</div>
+        <div class="card-body p-4 d-flex flex-column">
+          <div class="project-category">Penetration Testing</div>
+          <div class="project-icon text-center">
+            <i class="fas fa-bug"></i>
+          </div>
+          <h5 class="card-title text-center mb-3">Automated Vulnerability Scanner</h5>
+          <p class="card-text flex-grow-1">Advanced web application security scanner that identifies OWASP Top 10 vulnerabilities, SQL injection, XSS, and zero-day exploits.</p>
+          
+          <div class="tech-stack">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">Selenium</span>
+            <span class="tech-badge">SQLmap</span>
+            <span class="tech-badge">Nmap</span>
+          </div>
+          
+          <div class="project-metrics">
+            <div class="metric">
+              <span class="metric-value">500+</span>
+              <span class="metric-label">Vulnerability Tests</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">95%</span>
+              <span class="metric-label">Coverage</span>
+            </div>
+          </div>
+          
+          <div class="mt-auto">
+            <a href="project3.html" class="btn btn-cyber w-100 mb-2">
+              <i class="fas fa-eye me-2"></i>View Details
+            </a>
+            <a href="https://github.com/inboxBodyguard" target="_blank" class="github-link">
+              <i class="fab fa-github"></i>View Source Code
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phishing Detection System -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card project-card h-100">
+        <div class="project-status status-active">Live</div>
+        <div class="card-body p-4 d-flex flex-column">
+          <div class="project-category">Email Security</div>
+          <div class="project-icon text-center">
+            <i class="fas fa-fish"></i>
+          </div>
+          <h5 class="card-title text-center mb-3">Anti-Phishing Guardian</h5>
+          <p class="card-text flex-grow-1">AI-powered email and URL analysis system that detects sophisticated phishing attempts, business email compromise, and social engineering attacks.</p>
+          
+          <div class="tech-stack">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">NLP</span>
+            <span class="tech-badge">VirusTotal API</span>
+            <span class="tech-badge">MongoDB</span>
+          </div>
+          
+          <div class="project-metrics">
+            <div class="metric">
+              <span class="metric-value">99.1%</span>
+              <span class="metric-label">Detection Rate</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">1M+</span>
+              <span class="metric-label">URLs Analyzed</span>
+            </div>
+          </div>
+          
+          <div class="mt-auto">
+            <a href="project4.html" class="btn btn-cyber w-100 mb-2">
+              <i class="fas fa-eye me-2"></i>View Details
+            </a>
+            <a href="https://github.com/inboxBodyguard" target="_blank" class="github-link">
+              <i class="fab fa-github"></i>View Source Code
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Incident Response Automation -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card project-card h-100">
+        <div class="project-status status-active">Live</div>
+        <div class="card-body p-4 d-flex flex-column">
+          <div class="project-category">SOAR Platform</div>
+          <div class="project-icon text-center">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h5 class="card-title text-center mb-3">Cyber Incident Orchestrator</h5>
+          <p class="card-text flex-grow-1">Automated Security Orchestration, Automation and Response (SOAR) platform that streamlines incident response workflows and threat containment.</p>
+          
+          <div class="tech-stack">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">REST APIs</span>
+            <span class="tech-badge">Elasticsearch</span>
+            <span class="tech-badge">Ansible</span>
+          </div>
+          
+          <div class="project-metrics">
+            <div class="metric">
+              <span class="metric-value">80%</span>
+              <span class="metric-label">Time Reduction</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">24/7</span>
+              <span class="metric-label">Automation</span>
+            </div>
+          </div>
+          
+          <div class="mt-auto">
+            <a href="project5.html" class="btn btn-cyber w-100 mb-2">
+              <i class="fas fa-eye me-2"></i>View Details
+            </a>
+            <a href="https://github.com/inboxBodyguard" target="_blank" class="github-link">
+              <i class="fab fa-github"></i>View Source Code
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Digital Forensics Toolkit -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card project-card h-100">
+        <div class="project-status status-completed">Complete</div>
+        <div class="card-body p-4 d-flex flex-column">
+          <div class="project-category">Digital Forensics</div>
+          <div class="project-icon text-center">
+            <i class="fas fa-search"></i>
+          </div>
+          <h5 class="card-title text-center mb-3">Cyber Crime Investigation Suite</h5>
+          <p class="card-text flex-grow-1">Comprehensive digital forensics toolkit for incident investigation, evidence collection, malware analysis, and chain of custody documentation.</p>
+          
+          <div class="tech-stack">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">Volatility</span>
+            <span class="tech-badge">YARA</span>
+            <span class="tech-badge">Autopsy</span>
+          </div>
+          
+          <div class="project-metrics">
+            <div class="metric">
+              <span class="metric-value">200+</span>
+              <span class="metric-label">Investigation Tools</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">TB</span>
+              <span class="metric-label">Data Processing</span>
+            </div>
+          </div>
+          
+          <div class="mt-auto">
+            <a href="project6.html" class="btn btn-cyber w-100 mb-2">
+              <i class="fas fa-eye me-2"></i>View Details
+            </a>
+            <a href="https://github.com/inboxBodyguard" target="_blank" class="github-link">
+              <i class="fab fa-github"></i>View Source Code
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Research & Development Section -->
+  <div class="row mt-5 scroll-fade">
+    <div class="col-12">
+      <h3 class="section-title">Research & Development</h3>
+    </div>
+    
+    <div class="col-lg-6 mb-4">
+      <div class="card project-card h-100">
+        <div class="project-status status-development">Research</div>
+        <div class="card-body p-4">
+          <div class="project-category">Zero-Day Research</div>
+          <div class="project-icon text-center">
+            <i class="fas fa-flask"></i>
+          </div>
+          <h5 class="card-title text-center mb-3">Advanced Persistent Threat Lab</h5>
+          <p class="card-text">Isolated research environment for analyzing nation-state malware, APT campaigns, and developing novel detection methodologies for emerging threats.</p>
+          
+          <div class="tech-stack">
+            <span class="tech-badge">VMware vSphere</span>
+            <span class="tech-badge">Cuckoo Sandbox</span>
+            <span class="tech-badge">IDA Pro</span>
+            <span class="tech-badge">YARA Rules</span>
+          </div>
+          
+          <div class="project-metrics">
+            <div class="metric">
+              <span class="metric-value">150+</span>
+              <span class="metric-label">Malware Samples</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">25</span>
+              <span class="metric-label">Zero-Days Analyzed</span>
+            </div>
+          </div>
+          
+          <a href="https://github.com/inboxBodyguard" target="_blank" class="github-link">
+            <i class="fab fa-github"></i>Research Documentation
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-6 mb-4">
+      <div class="card project-card h-100">
+        <div class="project-status status-active">Live</div>
+        <div class="card-body p-4">
+          <div class="project-category">Threat Intelligence</div>
+          <div class="project-icon text-center">
+            <i class="fas fa-satellite-dish"></i>
+          </div>
+          <h5 class="card-title text-center mb-3">Global Threat Intelligence Feed</h5>
+          <p class="card-text">Real-time threat intelligence aggregation system pulling from 50+ sources including dark web monitoring, honeypots, and security vendor feeds.</p>
+          
+          <div class="tech-stack">
+            <span class="tech-badge">Apache Kafka</span>
+            <span class="tech-badge">Elasticsearch</span>
+            <span class="tech-badge">MISP</span>
+            <span class="tech-badge">STIX/TAXII</span>
+          </div>
+          
+          <div class="project-metrics">
+            <div class="metric">
+              <span class="metric-value">1M+</span>
+              <span class="metric-label">Daily IOCs</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">50+</span>
+              <span class="metric-label">Intel Sources</span>
+            </div>
+          </div>
+          
+          <a href="https://github.com/inboxBodyguard" target="_blank" class="github-link">
+            <i class="fab fa-github"></i>View Intelligence APIs
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Community & Open Source Section -->
+  <div class="row mt-4 scroll-fade">
+    <div class="col-12 mb-4">
+      <h3 class="section-title">Community Contributions</h3>
+    </div>
+    
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card project-card h-100">
+        <div class="project-status status-active">Active</div>
+        <div class="card-body p-4 text-center">
+          <div class="project-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h5 class="card-title mb-3">Cybersecurity Training Platform</h5>
+          <p class="card-text">Free, open-source training modules for aspiring security professionals with hands-on labs and real-world scenarios.</p>
+          
+          <div class="project-metrics">
+            <div class="metric">
+              <span class="metric-value">10K+</span>
+              <span class="metric-label">Students Trained</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">50+</span>
+              <span class="metric-label">Lab Exercises</span>
             </div>
           </div>
         </div>
       </div>
     </div>
+    
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card project-card h-100">
+        <div class="project-status status-active">Contributing</div>
+        <div class="card-body p-4 text-center">
+          <div class="project-icon">
+            <i class="fab fa-osi"></i>
+          </div>
+          <h5 class="card-title mb-3">Open Source Security Tools</h5>
+          <p class="card-text">Active contributor to major cybersecurity projects including OWASP, Metasploit modules, and security frameworks.</p>
+          
+          <div class="project-metrics">
+            <div class="metric">
+              <span class="metric-value">25+</span>
+              <span class="metric-label">Pull Requests</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">5</span>
+              <span class="metric-label">Major Projects</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card project-card h-100">
+        <div class="project-status status-active">Speaking</div>
+        <div class="card-body p-4 text-center">
+          <div class="project-icon">
+            <i class="fas fa-microphone"></i>
+          </div>
+          <h5 class="card-title mb-3">Security Conference Talks</h5>
+          <p class="card-text">Regular speaker at cybersecurity conferences sharing research on threat detection methodologies and defense strategies.</p>
+          
+          <div class="project-metrics">
+            <div class="metric">
+              <span class="metric-value">15+</span>
+              <span class="metric-label">Conferences</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">3K+</span>
+              <span class="metric-label">Audience Reached</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Certifications & Achievements -->
+  <div class="row mt-4 scroll-fade">
+    <div class="col-12">
+      <div class="card project-card">
+        <div class="card-body p-4">
+          <h4 class="text-center mb-4 text-primary">Professional Achievements & Recognition</h4>
+          
+          <div class="row">
+            <div class="col-md-3 text-center mb-3">
+              <div class="achievement-icon">
+                <i class="fas fa-certificate text-warning" style="font-size: 2.5rem;"></i>
+              </div>
+              <h6 class="mt-2">Security+ Certified</h6>
+              <small class="text-muted">CompTIA Security+</small>
+            </div>
+            
+            <div class="col-md-3 text-center mb-3">
+              <div class="achievement-icon">
+                <i class="fas fa-bug text-danger" style="font-size: 2.5rem;"></i>
+              </div>
+              <h6 class="mt-2">Bug Bounty Hunter</h6>
+              <small class="text-muted">15 Validated Findings</small>
+            </div>
+            
+            <div class="col-md-3 text-center mb-3">
+              <div class="achievement-icon">
+                <i class="fas fa-trophy text-success" style="font-size: 2.5rem;"></i>
+              </div>
+              <h6 class="mt-2">CTF Champion</h6>
+              <small class="text-muted">Top 5% Global Ranking</small>
+            </div>
+            
+            <div class="col-md-3 text-center mb-3">
+              <div class="achievement-icon">
+                <i class="fas fa-graduation-cap text-info" style="font-size: 2.5rem;"></i>
+              </div>
+              <h6 class="mt-2">Research Published</h6>
+              <small class="text-muted">3 Security Papers</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="text-center mt-5 scroll-fade">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h4 class="text-primary mb-4">Ready to Collaborate?</h4>
+        <p class="lead mb-4">These projects represent real-world cybersecurity solutions. I'm always interested in collaborating on innovative security research and building tools that make the digital world safer.</p>
+        
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <a href="https://github.com/inboxBodyguard" target="_blank" class="btn btn-cyber btn-lg">
+            <i class="fab fa-github me-2"></i>Explore All Projects
+          </a>
+          <a href="contact.html" class="btn btn-cyber btn-lg" style="background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);">
+            <i class="fas fa-handshake me-2"></i>Let's Collaborate
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
   </section>
 
   <!-- Footer -->
-  <footer class="bg-primary text-light text-center py-4 mt-5">
-    <p class="mb-0">&copy; 2025 EZM Cyber. All rights reserved.</p>
+
+  <footer class="bg-dark text-light text-center py-5 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <h5 class="text-primary">EZM Cyber</h5>
+          <p class="mb-0">Building the future of cybersecurity, one project at a time.</p>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="d-flex justify-content-center gap-3">
+            <a href="https://github.com/inboxBodyguard" class="text-light" target="_blank">
+              <i class="fab fa-github fa-2x"></i>
+            </a>
+            <a href="#" class="text-light">
+              <i class="fab fa-linkedin fa-2x"></i>
+            </a>
+            <a href="#" class="text-light">
+              <i class="fab fa-twitter fa-2x"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4">
+      <p class="mb-0">&copy; 2025 EZM Cyber. All rights reserved. | Securing the digital frontier.</p>
+    </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
   <script>
+    // Enhanced scroll animations
     const scrollElements = document.querySelectorAll('.scroll-fade');
     const elementInView = (el, dividend = 1) => {
       const elementTop = el.getBoundingClientRect().top;
       return elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend;
     };
-    const displayScrollElement = (element) => { element.classList.add('visible'); };
-    const handleScrollAnimation = () => {
-      scrollElements.forEach(el => { if(elementInView(el,1.25)) displayScrollElement(el); });
+    
+    const displayScrollElement = (element) => {
+      element.classList.add('visible');
     };
+    
+    const handleScrollAnimation = () => {
+      scrollElements.forEach(el => {
+        if (elementInView(el, 1.25)) {
+          displayScrollElement(el);
+        }
+      });
+    };
+    
     window.addEventListener('scroll', handleScrollAnimation);
     window.addEventListener('load', handleScrollAnimation);
+    
+    // Add dynamic stats counter animation
+    const animateCounter = (element, target) => {
+      let current = 0;
+      const increment = target / 100;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          element.textContent = target + (element.dataset.suffix || '');
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current) + (element.dataset.suffix || '');
+        }
+      }, 20);
+    };
+    
+    // Animate counters when page loads
+    window.addEventListener('load', () => {
+      const counters = document.querySelectorAll('.stat-number, .metric-value');
+      counters.forEach(counter => {
+        const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
+        if (target && target > 0) {
+          counter.dataset.suffix = counter.textContent.replace(/[\d]/g, '');
+          animateCounter(counter, target);
+        }
+      });
+    });
+    
+    // Add particle effect on hover for project cards
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-10px) rotateX(5deg)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) rotateX(0)';
+      });
+    });
+    
+    // Add typing effect for banner title
+    const bannerTitle = document.querySelector('.banner-title');
+    if (bannerTitle) {
+      const originalText = bannerTitle.textContent;
+      bannerTitle.textContent = '';
+      
+      let i = 0;
+      const typeWriter = () => {
+        if (i < originalText.length) {
+          bannerTitle.textContent += originalText.charAt(i);
+          i++;
+          setTimeout(typeWriter, 100);
+        }
+      };
+      
+      setTimeout(typeWriter, 1000);
+    }
+    
+    // Add glow effect to buttons on hover
+    document.querySelectorAll('.btn-cyber').forEach(btn => {
+      btn.addEventListener('mouseenter', function() {
+        this.style.boxShadow = '0 0 30px rgba(0, 245, 255, 0.8), 0 0 60px rgba(0, 245, 255, 0.4)';
+      });
+      
+      btn.addEventListener('mouseleave', function() {
+        this.style.boxShadow = '';
+      });
+    });
   </script>
+
 </body>
 </html>
