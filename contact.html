@@ -32,37 +32,39 @@
       background-color: #009acc;
     }
 
-    /* Custom expandable service dropdown */
-    .service-dropdown {
+    /* Custom dropdown styles */
+    .dropdown {
       position: relative;
-      cursor: pointer;
+      display: inline-block;
+      width: 100%;
     }
-    .service-dropdown .selected {
-      padding: 0.75rem 1rem;
+    .dropdown-toggle {
+      width: 100%;
+      text-align: left;
+    }
+    .dropdown-menu {
+      position: absolute;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      background-color: #1a1a1a;
       border: 1px solid #333;
       border-radius: 5px;
-      background-color: #1a1a1a;
+      display: none;
+      z-index: 1000;
+    }
+    .dropdown-menu.show {
+      display: block;
+    }
+    .dropdown-item {
+      padding: 10px 15px;
+      cursor: pointer;
       color: #fff;
     }
-    .service-options {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background-color: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 5px;
-      z-index: 10;
-      margin-top: 5px;
-    }
-    .service-options div {
-      padding: 0.75rem 1rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .service-options div:hover {
-      background-color: #333;
+    .dropdown-item:hover,
+    .dropdown-item.active {
+      background-color: #00bfff;
+      color: #000;
     }
   </style>
 </head>
@@ -113,16 +115,24 @@
               <input type="email" class="form-control" id="email" name="email" required>
             </div>
 
-            <!-- Services -->
-            <div class="mb-3 service-dropdown">
-              <label class="form-label">Service</label>
-              <div class="selected">Select a service</div>
-              <div class="service-options">
-                <div data-value="Website Design">Website Design</div>
-                <div data-value="Mobile App Design">Mobile App Design</div>
-                <div data-value="Logo Design">Logo Design</div>
+            <!-- Services Dropdown -->
+            <div class="mb-3">
+              <label for="service" class="form-label">Service</label>
+              <div class="dropdown">
+                <button type="button" class="form-control dropdown-toggle" id="dropdownButton" aria-expanded="false">
+                  Select a service
+                </button>
+                <ul class="dropdown-menu" id="dropdownMenu">
+                  <li class="dropdown-item">Website Design</li>
+                  <li class="dropdown-item">Mobile App Design</li>
+                  <li class="dropdown-item">Logo Design</li>
+                  <li class="dropdown-item">Threat Analysis</li>
+                  <li class="dropdown-item">Penetration Testing</li>
+                  <li class="dropdown-item">Network Security</li>
+                  <li class="dropdown-item">Cybersecurity Consultation</li>
+                </ul>
               </div>
-              <input type="hidden" name="service" id="serviceInput" required>
+              <input type="hidden" id="serviceInput" name="service" required>
             </div>
 
             <!-- Message -->
@@ -149,28 +159,69 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Expandable service dropdown
-    const serviceDropdown = document.querySelector('.service-dropdown');
-    const selected = serviceDropdown.querySelector('.selected');
-    const options = serviceDropdown.querySelector('.service-options');
+    const dropdownButton = document.getElementById('dropdownButton');
+    const dropdownMenu = document.getElementById('dropdownMenu');
     const serviceInput = document.getElementById('serviceInput');
+    let items = Array.from(dropdownMenu.querySelectorAll('.dropdown-item'));
+    let currentIndex = -1;
 
-    selected.addEventListener('click', () => {
-      options.style.display = options.style.display === 'block' ? 'none' : 'block';
+    // Toggle dropdown
+    dropdownButton.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('show');
+      dropdownButton.setAttribute('aria-expanded', dropdownMenu.classList.contains('show'));
     });
 
-    options.querySelectorAll('div').forEach(option => {
-      option.addEventListener('click', () => {
-        selected.textContent = option.getAttribute('data-value');
-        serviceInput.value = option.getAttribute('data-value');
-        options.style.display = 'none';
+    // Click selection
+    items.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        dropdownButton.textContent = item.textContent;
+        serviceInput.value = item.textContent;
+        dropdownMenu.classList.remove('show');
+        currentIndex = index;
       });
     });
 
+    // Keyboard navigation
+    dropdownButton.addEventListener('keydown', (e) => {
+      if (!dropdownMenu.classList.contains('show')) {
+        dropdownMenu.classList.add('show');
+        dropdownButton.setAttribute('aria-expanded', true);
+      }
+
+      if (e.key === 'ArrowDown') {
+        currentIndex = (currentIndex + 1) % items.length;
+        updateActive();
+        e.preventDefault();
+      } else if (e.key === 'ArrowUp') {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        updateActive();
+        e.preventDefault();
+      } else if (e.key === 'Enter') {
+        if (currentIndex >= 0) {
+          dropdownButton.textContent = items[currentIndex].textContent;
+          serviceInput.value = items[currentIndex].textContent;
+        }
+        dropdownMenu.classList.remove('show');
+        dropdownButton.setAttribute('aria-expanded', false);
+        e.preventDefault();
+      } else if (e.key === 'Escape') {
+        dropdownMenu.classList.remove('show');
+        dropdownButton.setAttribute('aria-expanded', false);
+      }
+    });
+
+    function updateActive() {
+      items.forEach((item, i) => {
+        item.classList.toggle('active', i === currentIndex);
+        item.scrollIntoView({block: "nearest"});
+      });
+    }
+
     // Close dropdown if clicked outside
     document.addEventListener('click', (e) => {
-      if (!serviceDropdown.contains(e.target)) {
-        options.style.display = 'none';
+      if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.remove('show');
+        dropdownButton.setAttribute('aria-expanded', false);
       }
     });
   </script>
