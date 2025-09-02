@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Verify Suspicious Link | EzmCyber</title>
+  <title>Suspicious Link Checker | EZM Cyber</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -36,7 +36,7 @@
 <body>
 
   <h1>Suspicious Link Checker</h1>
-  <p>Enter a link below to see if it might be risky:</p>
+  <p>Enter a link below to verify its safety:</p>
 
   <form id="linkForm">
     <input type="url" id="urlInput" placeholder="Paste suspicious URL here..." required />
@@ -59,27 +59,20 @@
         return;
       }
 
-      // Strong logic: suspicious keyword detection
       const suspiciousKeywords = ["free-gift", "login-now", "verify-account", "bit.ly", "tinyurl"];
-      let isSuspicious = false;
-
-      for (let keyword of suspiciousKeywords) {
-        if (url.includes(keyword)) {
-          isSuspicious = true;
-          break;
-        }
-      }
+      let isSuspicious = suspiciousKeywords.some(keyword => url.includes(keyword));
 
       if (isSuspicious) {
         result.textContent = "🚨 Warning: This link may be unsafe or part of a phishing scheme.";
         result.style.color = "red";
       } else {
-        result.textContent = "✅ This link appears to be okay. Redirecting to VirusTotal in 1 second...";
+        result.textContent = "✅ Link looks safe. Opening VirusTotal...";
         result.style.color = "lightgreen";
 
-        // Open result on VirusTotal after 1 second delay
+        // Open VirusTotal with correct URL
+        const encodedUrl = encodeURIComponent(url);
         setTimeout(() => {
-          window.open(`https://www.virustotal.com/gui/url/${btoa(url)}/detection`, "_blank");
+          window.open(`https://www.virustotal.com/gui/home/url?url=${encodedUrl}`, "_blank");
         }, 1000);
       }
     });
