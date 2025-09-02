@@ -1,23 +1,669 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Case Studies - EZM Cyber</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #0d6efd 0%, #0051a5 100%);
+      --success-gradient: linear-gradient(135deg, #198754 0%, #0f5132 100%);
+      --warning-gradient: linear-gradient(135deg, #ffc107 0%, #f57c00 100%);
+      --danger-gradient: linear-gradient(135deg, #dc3545 0%, #b02a37 100%);
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+```
+body {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+  background: var(--primary-gradient) !important;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+.navbar-nav .nav-link {
+  position: relative;
+  padding: 0.7rem 1rem !important;
+  border-radius: 8px;
+  margin: 0 0.2rem;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.navbar-nav .nav-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: white;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: 80%;
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 4px 8px;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+}
+
+.hero-section {
+  background: var(--primary-gradient);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.3;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  opacity: 0.95;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.case-study-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: all 0.4s ease;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(13, 110, 253, 0.1);
+}
+
+.case-study-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.case-header {
+  background: var(--primary-gradient);
+  color: white;
+  padding: 2rem;
+  position: relative;
+}
+
+.case-header::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #0051a5;
+  transform: translateX(-50%);
+}
+
+.case-industry {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  display: inline-block;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.case-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.case-subtitle {
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.case-body {
+  padding: 2rem;
+}
+
+.metrics-row {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.metric-item {
+  text-align: center;
+  padding: 1rem;
+}
+
+.metric-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.metric-label {
+  color: #6c757d;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.threat-level {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.threat-critical {
+  background: linear-gradient(135deg, #dc3545, #b02a37);
+  color: white;
+}
+
+.threat-high {
+  background: linear-gradient(135deg, #fd7e14, #e55a00);
+  color: white;
+}
+
+.threat-medium {
+  background: linear-gradient(135deg, #ffc107, #f57c00);
+  color: black;
+}
+
+.solution-highlight {
+  background: linear-gradient(135deg, #e7f3ff, #cce7ff);
+  border-left: 4px solid #0d6efd;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin: 1.5rem 0;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 3rem;
+  margin-bottom: 2rem;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 12px;
+  height: 12px;
+  background: var(--primary-gradient);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.2);
+}
+
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 1.5rem;
+  width: 2px;
+  height: calc(100% + 1rem);
+  background: linear-gradient(to bottom, #0d6efd, transparent);
+}
+
+.timeline-item:last-child::after {
+  display: none;
+}
+
+.timeline-content h5 {
+  color: #0d6efd;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.coming-soon-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 2px dashed #dee2e6;
+  border-radius: 20px;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin: 3rem 0;
+  transition: all 0.3s ease;
+}
+
+.coming-soon-section:hover {
+  border-color: #0d6efd;
+  background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+  transform: translateY(-5px);
+}
+
+.coming-soon-icon {
+  font-size: 5rem;
+  color: #6c757d;
+  margin-bottom: 2rem;
+  opacity: 0.6;
+}
+
+.stats-banner {
+  background: white;
+  padding: 3rem 0;
+  margin: 4rem 0;
+  border-radius: 20px;
+  box-shadow: var(--card-shadow);
+}
+
+.stat-card {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--primary-gradient);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #0d6efd;
+  display: block;
+}
+
+.stat-description {
+  color: #6c757d;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+}
+
+footer {
+  background: var(--primary-gradient) !important;
+  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .case-study-card {
+    margin-bottom: 1.5rem;
+  }
+  
+  .case-header, .case-body {
+    padding: 1.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .metric-number {
+    font-size: 2rem;
+  }
+}
+```
+
+  </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-      <a class="navbar-brand" href="index.html">EZM Cyber</a>
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-shield-alt me-2"></i>EZM Cyber
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="fas fa-home me-1"></i>Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">
+              <i class="fas fa-info-circle me-1"></i>About
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="services.html">
+              <i class="fas fa-cogs me-1"></i>Services
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="projects.html">
+              <i class="fas fa-project-diagram me-1"></i>Projects
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="blog.html">
+              <i class="fas fa-blog me-1"></i>Blog
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="signup.html">
+              <i class="fas fa-envelope me-1"></i>Newsletter
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">
+              <i class="fas fa-phone me-1"></i>Contact
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 
-  <section class="py-5 text-center">
+  <section class="hero-section text-center">
     <div class="container">
-      <h1>Case Studies</h1>
-      <p>Discover real-world examples of how our tools prevent cyber threats. More case studies coming soon!</p>
+      <div class="hero-content">
+        <h1 class="hero-title">Case Studies</h1>
+        <p class="hero-subtitle">Discover real-world examples of how our tools prevent cyber threats. More case studies coming soon!</p>
+      </div>
     </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <!-- Case Study 1: Financial Institution -->
+      <div class="case-study-card fade-in">
+        <div class="case-header">
+          <div class="case-industry">Financial Services</div>
+          <h2 class="case-title">Major Bank Prevents $15M Ransomware Attack</h2>
+          <p class="case-subtitle">How EZM Cyber's advanced threat detection stopped a sophisticated ransomware campaign targeting critical banking infrastructure</p>
+        </div>
+        <div class="case-body">
+          <div class="threat-level threat-critical">
+            <i class="fas fa-exclamation-triangle me-1"></i>Critical Threat Level
+          </div>
+
+```
+      <h4><i class="fas fa-crosshairs me-2 text-danger"></i>The Challenge</h4>
+      <p>A leading financial institution with over 500 branches faced a sophisticated ransomware attack targeting their core banking systems. The attackers used advanced persistent threat (APT) techniques, including zero-day exploits and lateral movement through compromised credentials.</p>
+      
+      <div class="solution-highlight">
+        <h5><i class="fas fa-shield-alt me-2 text-primary"></i>EZM Cyber Solution</h5>
+        <p>Our AI-powered threat detection system identified anomalous network behavior within 3 minutes of initial intrusion. The automated incident response immediately quarantined affected systems and blocked malicious communications.</p>
+      </div>
+
+      <h5><i class="fas fa-clock me-2 text-info"></i>Timeline of Events</h5>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h5>Initial Detection</h5>
+          <p>EZM Cyber's EDR solution detected suspicious PowerShell activity and unauthorized privilege escalation attempts.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h5>Automatic Response</h5>
+          <p>Automated containment protocols activated, isolating affected endpoints and blocking C&C communications.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h5>Threat Neutralization</h5>
+          <p>Complete eradication of ransomware payload and restoration of normal operations within 4 hours.</p>
+        </div>
+      </div>
+
+      <div class="metrics-row">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="metric-item">
+              <span class="metric-number text-success">3min</span>
+              <span class="metric-label">Detection Time</span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="metric-item">
+              <span class="metric-number text-primary">$15M</span>
+              <span class="metric-label">Loss Prevented</span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="metric-item">
+              <span class="metric-number text-info">4hrs</span>
+              <span class="metric-label">Full Recovery</span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="metric-item">
+              <span class="metric-number text-warning">0</span>
+              <span class="metric-label">Data Compromised</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case Study 2: Healthcare System -->
+  <div class="case-study-card fade-in">
+    <div class="case-header">
+      <div class="case-industry">Healthcare</div>
+      <h2 class="case-title">Hospital Network Secures 50,000 Patient Records</h2>
+      <p class="case-subtitle">EZM Cyber's comprehensive security overhaul protects sensitive medical data from advanced cyber threats</p>
+    </div>
+    <div class="case-body">
+      <div class="threat-level threat-high">
+        <i class="fas fa-shield-alt me-1"></i>High Risk Environment
+      </div>
+      
+      <h4><i class="fas fa-hospital me-2 text-danger"></i>The Challenge</h4>
+      <p>A regional hospital network managing 50,000+ patient records needed to comply with HIPAA regulations while defending against increasing cyber threats targeting healthcare infrastructure during the pandemic surge.</p>
+      
+      <div class="solution-highlight">
+        <h5><i class="fas fa-lock me-2 text-primary"></i>Comprehensive Security Implementation</h5>
+        <p>EZM Cyber deployed end-to-end encryption, multi-factor authentication, network segmentation, and 24/7 SOC monitoring to create a robust security posture.</p>
+      </div>
+
+      <div class="metrics-row">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="metric-item">
+              <span class="metric-number text-success">100%</span>
+              <span class="metric-label">HIPAA Compliance</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="metric-item">
+              <span class="metric-number text-primary">50K+</span>
+              <span class="metric-label">Records Protected</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="metric-item">
+              <span class="metric-number text-info">99.9%</span>
+              <span class="metric-label">Uptime Maintained</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case Study 3: Manufacturing -->
+  <div class="case-study-card fade-in">
+    <div class="case-header">
+      <div class="case-industry">Manufacturing</div>
+      <h2 class="case-title">Industrial IoT Security for Smart Factory</h2>
+      <p class="case-subtitle">Securing 1,000+ connected devices in a modern manufacturing environment</p>
+    </div>
+    <div class="case-body">
+      <div class="threat-level threat-medium">
+        <i class="fas fa-industry me-1"></i>IoT Security Challenge
+      </div>
+      
+      <h4><i class="fas fa-cogs me-2 text-primary"></i>The Challenge</h4>
+      <p>A smart manufacturing facility with 1,000+ IoT devices needed comprehensive security without disrupting critical production processes. Legacy systems and diverse device types created significant security gaps.</p>
+      
+      <div class="solution-highlight">
+        <h5><i class="fas fa-network-wired me-2 text-primary"></i>IoT Security Platform</h5>
+        <p>Implementation of specialized IoT monitoring, device authentication protocols, and network micro-segmentation to secure operational technology (OT) environments.</p>
+      </div>
+
+      <div class="metrics-row">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="metric-item">
+              <span class="metric-number text-success">1,000+</span>
+              <span class="metric-label">Devices Secured</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="metric-item">
+              <span class="metric-number text-primary">24/7</span>
+              <span class="metric-label">Monitoring</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="metric-item">
+              <span class="metric-number text-info">0</span>
+              <span class="metric-label">Production Downtime</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Banner -->
+  <div class="stats-banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <span class="stat-value">500+</span>
+            <span class="stat-description">Threats Blocked</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+            <span class="stat-value">$100M+</span>
+            <span class="stat-description">Losses Prevented</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <span class="stat-value">2.5min</span>
+            <span class="stat-description">Avg Response Time</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <span class="stat-value">200+</span>
+            <span class="stat-description">Organizations Protected</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Coming Soon Section -->
+  <div class="coming-soon-section fade-in">
+    <i class="fas fa-chart-line coming-soon-icon"></i>
+    <h2 class="mb-3">More Case Studies Coming Soon!</h2>
+    <p class="text-muted mb-4">We're continuously documenting our latest security victories and innovative solutions. Check back regularly for new case studies showcasing how EZM Cyber protects organizations across various industries.</p>
+    <button class="btn btn-primary btn-lg">
+      <i class="fas fa-bell me-2"></i>Notify Me of New Cases
+    </button>
+  </div>
+</div>
+```
+
   </section>
 
   <footer class="bg-primary text-light text-center py-3">
@@ -25,5 +671,103 @@
       <p>&copy; 2025 EZM Cyber. All rights reserved.</p>
     </div>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Smooth scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Initialize animations for case study cards
+    document.querySelectorAll('.case-study-card, .coming-soon-section').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      observer.observe(card);
+    });
+
+    // Animate statistics counters
+    const animateCounter = (element, start, end, duration) => {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        
+        let value;
+        if (element.textContent.includes('M')) {
+          value = Math.floor(progress * (end - start) + start);
+          element.textContent = `$${value}M+`;
+        } else if (element.textContent.includes('min')) {
+          value = (progress * (end - start) + start).toFixed(1);
+          element.textContent = `${value}min`;
+        } else if (element.textContent.includes('%')) {
+          value = (progress * (end - start) + start).toFixed(1);
+          element.textContent = `${value}%`;
+        } else {
+          value = Math.floor(progress * (end - start) + start);
+          element.textContent = `${value}${element.dataset.suffix || '+'}`;
+        }
+        
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    };
+
+    // Stats animation observer
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const statValues = entry.target.querySelectorAll('.stat-value, .metric-number');
+          statValues.forEach(stat => {
+            const text = stat.textContent;
+            let endValue = parseFloat(text.replace(/[^\d.]/g, ''));
+            
+            if (text.includes('$') && text.includes('M')) {
+              endValue = 100;
+            } else if (text.includes('min')) {
+              endValue = 2.5;
+            } else if (text.includes('%')) {
+              endValue = parseFloat(text.replace('%', ''));
+            }
+            
+            stat.dataset.suffix = text.replace(/[\d.]/g, '');
+            animateCounter(stat, 0, endValue, 2000);
+          });
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    });
+
+    document.querySelectorAll('.stats-banner, .metrics-row').forEach(section => {
+      statsObserver.observe(section);
+    });
+
+    // Add hover effects to timeline items
+    document.querySelectorAll('.timeline-item').forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateX(10px)';
+        this.style.transition = 'transform 0.3s ease';
+      });
+      
+      item.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateX(0)';
+      });
+    });
+  </script>
+
 </body>
-</html> 
+</html>
