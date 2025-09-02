@@ -62,10 +62,14 @@
 ---
 
 ## 📫 Connect With Me
-- [LinkedIn](https://www.linkedin.com/in/ethan89072)  
-- [Portfolio / Website](https://ezmcyber.xyz)  
-- [Email](contact@ezmcyber.xyz)  
-- [x]   (https://x.com/inboxbodyguard?s=21)
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ethan89072)  
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-00AEEF?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ezmcyber.xyz)  
+
+[![Email](https://img.shields.io/badge/Email-FF6F61?style=for-the-badge&logo=gmail&logoColor=white)](mailto:contact@ezmcyber.xyz)  
+
+[![X/Twitter](https://img.shields.io/badge/X-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/inboxbodyguard?s=21)
 ---
 
 ⚡ “I break things to understand threats — and learn how to defend against them.”
