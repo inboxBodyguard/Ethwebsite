@@ -9,6 +9,7 @@
     body {
       background-color: #0a0a0a;
       color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
     }
     .contact-section {
       padding: 80px 0;
@@ -17,22 +18,30 @@
       background-color: #1a1a1a;
       color: #ffffff;
       border-color: #333333;
+      border-radius: 6px;
     }
     .form-control:focus {
       background-color: #1a1a1a;
       color: #ffffff;
       border-color: #00bfff;
-      box-shadow: none;
+      box-shadow: 0 0 0 0.2rem rgba(0, 191, 255, 0.25);
     }
     .btn-primary {
       background-color: #00bfff;
       border: none;
+      transition: all 0.2s;
     }
     .btn-primary:hover {
       background-color: #009acc;
+      transform: scale(1.05);
     }
-
-    /* Custom dropdown styles */
+    /* Responsive spacing */
+    @media (max-width: 768px) {
+      .contact-section {
+        padding: 50px 15px;
+      }
+    }
+    /* Dropdown styles */
     .dropdown {
       position: relative;
       display: inline-block;
@@ -41,6 +50,8 @@
     .dropdown-toggle {
       width: 100%;
       text-align: left;
+      border-radius: 6px;
+      cursor: pointer;
     }
     .dropdown-menu {
       position: absolute;
@@ -49,9 +60,10 @@
       overflow-y: auto;
       background-color: #1a1a1a;
       border: 1px solid #333;
-      border-radius: 5px;
+      border-radius: 6px;
       display: none;
       z-index: 1000;
+      padding: 0;
     }
     .dropdown-menu.show {
       display: block;
@@ -60,6 +72,7 @@
       padding: 10px 15px;
       cursor: pointer;
       color: #fff;
+      transition: background 0.2s;
     }
     .dropdown-item:hover,
     .dropdown-item.active {
