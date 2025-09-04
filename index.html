@@ -798,8 +798,25 @@ form.addEventListener('submit', function(event) {
         window.open(`https://whois.domaintools.com/${domain}`, "_blank");
     });
 </script>
-```
+document.getElementById("liveSupportBtn").addEventListener("click", function() {
+    // Gather user info or context if needed
+    const userInfo = {
+        name: "User Name", // optional
+        email: "user@example.com", // optional
+        message: "User clicked Live Support"
+    };
 
+    // Send to your API
+    fetch("YOUR_API_ENDPOINT", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userInfo)
+    }).then(res => {
+        alert("Support request sent!");
+    }).catch(err => {
+        console.error("Failed to notify admin", err);
+    });
+});
 </body>
 
 </html>
