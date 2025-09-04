@@ -819,27 +819,7 @@ document.getElementById("liveSupportBtn").addEventListener("click", function() {
 <button id="liveSupportBtn" class="btn btn-primary">Live Support</button>
 
 <script>
-document.getElementById("liveSupportBtn").addEventListener("click", function() {
-    const userInfo = {
-        name: "User Name", // optional, you can dynamically fill
-        email: "user@example.com", // optional
-        message: "User clicked Live Support"
-    };
 
-    fetch("notify-admin.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userInfo)
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.message); // Notifies user the request was sent
-    })
-    .catch(err => {
-        console.error("Failed to notify admin", err);
-        alert("Error sending support request");
-    });
-});
 </script>
 </body>
 
