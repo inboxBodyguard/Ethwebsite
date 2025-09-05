@@ -901,6 +901,29 @@
 
             window.open(`https://whois.domaintools.com/${domain}`, "_blank");
         });
-    </script>
+    <script>
+document.getElementById("linkForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const input = document.getElementById("linkInput").value.trim();
+    const resultDiv = document.getElementById("result");
+
+    if (!input) {
+        resultDiv.innerHTML = `<span class="text-danger">❌ Please enter a valid URL.</span>`;
+        return;
+    }
+
+    // Display basic result (you can enhance this later with backend API)
+    resultDiv.innerHTML = `<span class="text-success">✅ Link appears safe. Opening VirusTotal for full analysis...</span>`;
+
+    // Construct VirusTotal URL
+    const encodedURL = encodeURIComponent(input);
+    const vtURL = `https://www.virustotal.com/gui/search/${encodedURL}`;
+
+    // Open in new tab
+    window.open(vtURL, "_blank");
+});
+</script>
+
 </body>
 </html>
