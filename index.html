@@ -762,10 +762,16 @@
         }
 
         // Tawk.to Integration with Escalation
-        var Tawk_API = Tawk_API || {};
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
 
         Tawk_API.onLoad = function() {
-            console.log('Tawk.to loaded successfully - Property ID: a1420b151c0b1631b1556c41de9ccbb9dc516e9c');
+            console.log('Tawk.to widget loaded successfully - Property ID: 68ba524c8ad9941922457891/default');
+            // Verify widget visibility
+            if (document.querySelector('#tawkchat-container')) {
+                console.log('Tawk.to chat widget container found in DOM');
+            } else {
+                console.error('Tawk.to chat widget container NOT found in DOM');
+            }
         };
 
         Tawk_API.onChatMessageVisitor = function(message) {
@@ -786,16 +792,25 @@
             }
         };
 
-        // Load Tawk.to
+        // Load Tawk.to with Error Handling
         (function() {
-            var s1 = document.createElement("script");
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/a1420b151c0b1631b1556c41de9ccbb9dc516e9c';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            var s0 = document.getElementsByTagName("script")[0];
-            s0.parentNode.insertBefore(s1, s0);
-            console.log('Tawk.to script loaded with Property ID: a1420b151c0b1631b1556c41de9ccbb9dc516e9c');
+            try {
+                var s1 = document.createElement("script");
+                s1.async = true;
+                s1.src = 'https://embed.tawk.to/68ba524c8ad9941922457891/default';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s1.onload = function() {
+                    console.log('Tawk.to script loaded successfully with Property ID: 68ba524c8ad9941922457891/default');
+                };
+                s1.onerror = function() {
+                    console.error('Tawk.to script failed to load: Check Property ID or network');
+                };
+                var s0 = document.getElementsByTagName("script")[0];
+                s0.parentNode.insertBefore(s1, s0);
+            } catch (error) {
+                console.error('Error loading Tawk.to script:', error);
+            }
         })();
 
         // Test Escalation Function
@@ -886,18 +901,6 @@
 
             window.open(`https://whois.domaintools.com/${domain}`, "_blank");
         });
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/68ba524c8ad9941922457891/default';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
+    </script>
 </body>
 </html>
