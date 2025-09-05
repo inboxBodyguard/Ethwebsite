@@ -717,6 +717,9 @@
         // Initialize EmailJS
         if (typeof emailjs !== 'undefined') {
             emailjs.init(ESCALATION.publicKey);
+            console.log('EmailJS initialized with public key:', ESCALATION.publicKey);
+        } else {
+            console.error('EmailJS script failed to load');
         }
 
         // Escalation Functions
@@ -728,13 +731,17 @@
             const alert = document.getElementById('escalationAlert');
             if (alert) {
                 alert.classList.add('show');
-                setTimeout(() => alert.classList.remove('show'), 5000);
+                console.log('Escalation alert displayed on screen');
+                setTimeout(() => {
+                    alert.classList.remove('show');
+                    console.log('Escalation alert hidden');
+                }, 5000);
             }
         }
 
         async function sendAlert(userInfo, message) {
             showAlert();
-            
+            console.log('Sending alert with userInfo:', userInfo, 'Message:', message);
             try {
                 if (typeof emailjs !== 'undefined') {
                     await emailjs.send(ESCALATION.serviceID, ESCALATION.templateID, {
@@ -745,7 +752,9 @@
                         timestamp: new Date().toISOString(),
                         page_url: window.location.href
                     });
-                    console.log('Email sent successfully');
+                    console.log('Email sent successfully to:', ESCALATION.email);
+                } else {
+                    console.error('EmailJS not loaded');
                 }
             } catch (error) {
                 console.error('Email failed:', error);
@@ -756,24 +765,23 @@
         var Tawk_API = Tawk_API || {};
 
         Tawk_API.onLoad = function() {
-            console.log('Tawk.to loaded - Escalation active');
+            console.log('Tawk.to loaded successfully - Property ID: a1420b151c0b1631b1556c41de9ccbb9dc516e9c');
         };
 
         Tawk_API.onChatMessageVisitor = function(message) {
+            console.log('Visitor message received:', message.text);
             if (checkEscalation(message.text)) {
-                console.log('ESCALATION DETECTED');
-                
+                console.log('ESCALATION DETECTED for message:', message.text);
                 const userInfo = {
                     name: 'Chat User',
                     sessionId: Date.now().toString(),
                     timestamp: new Date().toISOString()
                 };
-
                 sendAlert(userInfo, message.text);
-
+                console.log('Agent should see announcement in Tawk.to dashboard');
                 // Auto-respond
                 setTimeout(() => {
-                    console.log("Sending escalation response");
+                    console.log('Sending escalation auto-response');
                 }, 1000);
             }
         };
@@ -782,15 +790,17 @@
         (function() {
             var s1 = document.createElement("script");
             s1.async = true;
-            s1.src = 'https://embed.tawk.to/68863b0ddb7610192eeac6b0/1j165dcdr';
+            s1.src = 'https://embed.tawk.to/a1420b151c0b1631b1556c41de9ccbb9dc516e9c';
             s1.charset = 'UTF-8';
             s1.setAttribute('crossorigin', '*');
             var s0 = document.getElementsByTagName("script")[0];
             s0.parentNode.insertBefore(s1, s0);
+            console.log('Tawk.to script loaded with Property ID: a1420b151c0b1631b1556c41de9ccbb9dc516e9c');
         })();
 
         // Test Escalation Function
         function testEscalation() {
+            console.log('Testing escalation');
             sendAlert({name: 'Test User'}, 'I need live support please');
         }
         window.testEscalation = testEscalation;
