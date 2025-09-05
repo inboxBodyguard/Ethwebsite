@@ -902,6 +902,7 @@
             window.open(`https://whois.domaintools.com/${domain}`, "_blank");
         });
     
+
 document.getElementById("linkForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -913,17 +914,18 @@ document.getElementById("linkForm").addEventListener("submit", function(e) {
         return;
     }
 
-    // Display basic result (you can enhance this later with backend API)
+    // Display basic result
     resultDiv.innerHTML = `<span class="text-success">✅ Link appears safe. Opening VirusTotal for full analysis...</span>`;
 
-    // Construct VirusTotal URL
-    const encodedURL = encodeURIComponent(input);
-    const vtURL = `https://www.virustotal.com/gui/search/${encodedURL}`;
+    // Encode URL to base64 and remove padding
+    const base64Url = btoa(input).replace(/=+$/, '');
+    const vtURL = `https://www.virustotal.com/gui/url/${base64Url}`;
 
     // Open in new tab
     window.open(vtURL, "_blank");
 });
 </script>
+
 
 </body>
 </html>
