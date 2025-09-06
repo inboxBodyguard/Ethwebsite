@@ -1,0 +1,33 @@
+<section class="py-5 section-light">
+    <div class="container text-center">
+        <h2 class="mb-4">Network Tools</h2>
+        <p class="lead mb-4">Check IP and domain security with integrated tools.</p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form id="ipForm" class="mb-3">
+                    <input type="text" id="ipInput" class="form-control mb-3" placeholder="Enter IP address" required>
+                    <button type="submit" class="btn btn-warning w-100">Check IP</button>
+                </form>
+
+                <form id="domainForm" class="mb-3">
+                    <input type="text" id="domainInput" class="form-control mb-3" placeholder="Enter domain" required>
+                    <button type="submit" class="btn btn-info w-100">Check Domain</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.getElementById("ipForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    const ip = document.getElementById("ipInput").value.trim();
+    if(ip) window.open(`https://www.virustotal.com/gui/ip-address/${ip}/detection`,"_blank");
+});
+document.getElementById("domainForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    const domain = document.getElementById("domainInput").value.trim();
+    if(domain) window.open(`https://whois.domaintools.com/${domain}`,"_blank");
+});
+</script>
