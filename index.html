@@ -1,31 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>EZM Cyber - Secure, Protect, and Respond</title>
     <meta name="description" content="EZM Cyber helps individuals and businesses stay secure with link verification, cyber threat analysis, and professional cybersecurity services.">
 
     <!-- Google Search Console Verification -->
-    <meta name="google-site-verification" content="1ySkKwSAo8xfnYYX-i4cabslkNW-ovZt8kB-bUeb0UU" />
+    <meta name="google-site-verification" content="1ySkKwSAo8xfnYYX-i4cabslkNW-ovZt8kB-bUeb0UU">
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RMFR5JV1BC"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'G-RMFR5JV1BC');
-    </script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- External CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Modern Visual Design -->
     <style>
         :root {
             --primary-color: #6366f1;
@@ -54,12 +43,10 @@
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             color: var(--text-primary);
             line-height: 1.7;
-            font-weight: 400;
-            letter-spacing: -0.02em;
             min-height: 100vh;
         }
 
-        /* Navigation - Glass Effect */
+        /* Navigation */
         .navbar {
             background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(20px);
@@ -75,7 +62,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -0.03em;
         }
 
         .nav-link {
@@ -84,8 +70,6 @@
             padding: 0.75rem 1.25rem !important;
             border-radius: 12px;
             margin: 0 0.25rem;
-            position: relative;
-            overflow: hidden;
         }
 
         .nav-link:hover,
@@ -96,35 +80,11 @@
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
         }
 
-        /* Banner Section - Modern Gradient */
+        /* Banner */
         .banner-section {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            background-image: url('banner.png');
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-blend-mode: overlay;
-            width: 100%;
             height: 250px;
             position: relative;
-            overflow: hidden;
-        }
-
-        @media (max-width: 992px) {
-            .banner-section { height: 200px; }
-        }
-
-        @media (max-width: 768px) {
-            .banner-section { height: 150px; }
-        }
-
-        @media (max-width: 576px) {
-            .banner-section { height: 120px; }
-        }
-
-        /* Newsletter Section Background */
-        .newsletter-section {
-            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
         }
 
         /* Sections */
@@ -133,30 +93,14 @@
             padding: 4rem 0;
         }
 
-        .section-dark {
-            background: var(--dark-bg);
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
             color: white;
-            padding: 4rem 0;
-            position: relative;
-        }
-
-        .section-dark::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-            z-index: 0;
-        }
-
-        .section-dark > * {
-            position: relative;
-            z-index: 1;
         }
 
         /* Typography */
         h1, h2, h3, h4, h5, h6 {
             font-weight: 700;
-            letter-spacing: -0.03em;
             line-height: 1.2;
             margin-bottom: 1.5rem;
         }
@@ -174,33 +118,17 @@
             color: var(--text-primary);
         }
 
-        .section-dark h3 {
-            color: white;
-        }
-
-        p {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .section-dark p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
         .lead {
             font-size: 1.25rem;
-            font-weight: 400;
             color: var(--text-secondary);
         }
 
-        /* Cards - Modern Design */
+        /* Cards */
         .card {
             border: none;
             border-radius: 16px;
             background: var(--light-card);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
             border: 1px solid var(--border-color);
         }
 
@@ -208,38 +136,18 @@
             padding: 2rem;
         }
 
-        .card-title {
-            font-weight: 600;
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .card-text {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-
         .card-hover:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 20px rgba(0,0,0,0.15);
         }
 
-        /* Buttons - Modern Styling */
+        /* Buttons */
         .btn {
             font-weight: 600;
             border-radius: 12px;
             padding: 0.75rem 1.5rem;
             font-size: 1rem;
             border: none;
-            letter-spacing: -0.01em;
-            position: relative;
             transition: all 0.3s ease;
         }
 
@@ -253,20 +161,10 @@
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
-        .btn-primary:hover {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
-        }
-
         .btn-danger {
             background: linear-gradient(135deg, var(--danger-color), #dc2626);
             color: white;
             box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-        }
-
-        .btn-danger:hover {
-            background: linear-gradient(135deg, #dc2626, var(--danger-color));
-            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
         }
 
         .btn-warning {
@@ -275,31 +173,10 @@
             box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
         }
 
-        .btn-warning:hover {
-            background: linear-gradient(135deg, #d97706, var(--warning-color));
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
-        }
-
         .btn-info {
             background: linear-gradient(135deg, var(--accent-color), #0891b2);
             color: white;
             box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
-        }
-
-        .btn-info:hover {
-            background: linear-gradient(135deg, #0891b2, var(--accent-color));
-            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, var(--success-color), #059669);
-            color: white;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
-
-        .btn-success:hover {
-            background: linear-gradient(135deg, #059669, var(--success-color));
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
         }
 
         .btn-accent {
@@ -308,18 +185,13 @@
             box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
         }
 
-        .btn-accent:hover {
-            background: linear-gradient(135deg, #7c3aed, var(--secondary-color));
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
-        }
-
         .btn-lg {
             padding: 1rem 2rem;
             font-size: 1.125rem;
             border-radius: 16px;
         }
 
-        /* Forms - Modern Input Design */
+        /* Forms */
         .form-control {
             border: 2px solid var(--border-color);
             border-radius: 12px;
@@ -327,18 +199,23 @@
             font-size: 1rem;
             background: var(--light-card);
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .form-control:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-            background: white;
+            outline: none;
         }
 
-        .form-control::placeholder {
-            color: var(--text-light);
-            font-weight: 400;
+        .input-group-lg .form-control {
+            padding: 1rem 1.25rem;
+            font-size: 1.125rem;
+        }
+
+        .input-group .btn {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            padding: 1rem 1.5rem;
         }
 
         /* Scroll Animation */
@@ -358,6 +235,7 @@
             background: var(--dark-bg) !important;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding: 2rem 0 !important;
+            color: white;
         }
 
         footer a {
@@ -371,24 +249,7 @@
             color: var(--accent-color) !important;
         }
 
-        /* Enhanced Form Styling for Link Checker */
-        .input-group-lg .form-control {
-            padding: 1rem 1.25rem;
-            font-size: 1.125rem;
-        }
-
-        .input-group .btn {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            padding: 1rem 1.5rem;
-            white-space: nowrap;
-        }
-
-        .input-group .form-control:focus {
-            z-index: 3;
-        }
-
-        /* Escalation Alert */
+        /* Alert */
         .escalation-alert {
             position: fixed;
             top: 20px;
@@ -413,142 +274,98 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* Make the input more tappable on mobile */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            .banner-section { height: 150px; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.75rem; }
+            .card-body { padding: 1.5rem; }
+            .btn-lg { font-size: 1rem; }
             .input-group-lg .form-control {
-                padding: 1.25rem 1rem;
                 font-size: 1rem;
                 min-height: 60px;
-            }
-            
-            .input-group .btn {
-                padding: 1.25rem 1rem;
-                min-height: 60px;
-                font-size: 0.95rem;
-            }
-        }
-
-        /* Responsive improvements */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            h2 {
-                font-size: 2rem;
-            }
-            
-            h3 {
-                font-size: 1.75rem;
-            }
-            
-            .card-body {
-                padding: 1.5rem;
-            }
-            
-            .btn {
-                padding: 0.75rem 1.5rem;
-            }
-            
-            .btn-lg {
-                padding: 1rem 2rem;
-                font-size: 1rem;
             }
         }
     </style>
 </head>
-
 <body>
-    <!-- Escalation Alert -->
+    <!-- Alert -->
     <div id="escalationAlert" class="escalation-alert">
         <strong>ESCALATION TRIGGERED</strong><br>
         <small>User requested human support.</small>
     </div>
 
-    <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">EZM Cyber</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="about.html">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="services.html">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="projects.html">Projects</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="blog.html">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="github.html">GitHub</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="signup.html">Newsletter</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-
-                <!-- New Dropdown for Tools -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="toolsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Hash Generator
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="toolsDropdown">
-                        <li><a class="dropdown-item" href="hash-generator/password-tools.html">Password Tools</a></li>
-                        <li><a class="dropdown-item" href="hash-generator/file-scanner.html">File Scanner</a></li>
-                        <li><a class="dropdown-item" href="hash-generator/network-tools.html">Network Tools</a></li>
-                        <li><a class="dropdown-item" href="hash-generator/checker.html">Checker</a></li>
-                    </ul>
-                </li>
-                <!-- End Dropdown -->
-            </ul>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">EZM Cyber</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <!-- Hash Generator Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="toolsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Hash Generator
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="toolsDropdown">
+                            <li><a class="dropdown-item" href="hash-generator/password-tools.html">Password Tools</a></li>
+                            <li><a class="dropdown-item" href="hash-generator/file-scanner.html">File Scanner</a></li>
+                            <li><a class="dropdown-item" href="hash-generator/network-tools.html">Network Tools</a></li>
+                            <li><a class="dropdown-item" href="hash-generator/checker.html">Checker</a></li>
+                        </ul>
+                    </li>
+                    <!-- End Hash Generator Dropdown -->
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
-    <!-- Spacer for fixed navbar -->
+    </nav>
+
+    <!-- Spacer -->
     <div style="height: 100px;"></div>
 
-    <!-- Banner Section -->
+    <!-- Banner -->
     <section class="banner-section"></section>
 
-    <!-- Main Welcome Content -->
+    <!-- Welcome Section -->
     <section class="py-5 scroll-fade">
         <div class="container text-center">
             <h2 class="mb-4">Welcome to EZM Cyber</h2>
             <p class="lead mb-5">Your trusted source for cybersecurity insights, tools, and guidance.</p>
-            <a href="videos.html" class="btn btn-primary btn-lg">🎥 Watch Video</a>
+            <a href="#" class="btn btn-primary btn-lg">Watch Video</a>
         </div>
     </section>
 
-    <!-- Suspicious Link Checker Tool -->
+    <!-- Link Checker -->
     <section class="py-5 section-light scroll-fade">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="card card-hover">
                         <div class="card-body text-center">
-                            <h3 class="card-title mb-4">🔍 Suspicious Link Checker</h3>
+                            <h3 class="card-title mb-4">Suspicious Link Checker</h3>
                             <p class="card-text mb-4">Verify the safety of any URL using VirusTotal's comprehensive security analysis</p>
 
                             <form id="linkForm" class="mb-4">
                                 <div class="input-group input-group-lg">
                                     <input type="url" 
-                                           id="linkInput" 
-                                           class="form-control" 
-                                           placeholder="Paste or type a link to verify (e.g., https://example.com)" 
-                                           required
-                                           style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                        id="linkInput" 
+                                        class="form-control" 
+                                        placeholder="Paste or type a link to verify (e.g., https://example.com)" 
+                                        required>
                                     <button type="submit" class="btn btn-danger">
                                         <strong>Check Link</strong>
                                     </button>
@@ -558,7 +375,7 @@
                             <div id="result" class="mt-2"></div>
 
                             <p class="text-muted mb-0">
-                                <small>🔒 Secure analysis • Results open in new tab • Powered by VirusTotal</small>
+                                <small>Secure analysis • Results open in new tab • Powered by VirusTotal</small>
                             </p>
                         </div>
                     </div>
@@ -567,7 +384,7 @@
         </div>
     </section>
 
-    <!-- Additional Cybersecurity Tools -->
+    <!-- Additional Tools -->
     <section class="py-5 section-light scroll-fade">
         <div class="container">
             <div class="text-center mb-5">
@@ -575,36 +392,36 @@
                 <p class="lead">Comprehensive security analysis tools for IP addresses and domains</p>
             </div>
             <div class="row g-4 justify-content-center">
-                <!-- IP Reputation Checker -->
+                <!-- IP Checker -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <h5 class="card-title">🛡️ IP Reputation Checker</h5>
-                            <p class="card-text">Analyze IP addresses for malicious activity and security threats using VirusTotal's database.</p>
+                            <h5 class="card-title">IP Reputation Checker</h5>
+                            <p class="card-text">Analyze IP addresses for malicious activity and security threats.</p>
                             <form id="ipForm" class="mb-3">
                                 <input type="text" 
-                                       id="ipInput" 
-                                       class="form-control mb-3" 
-                                       placeholder="Enter IP address (e.g., 192.168.1.1)" 
-                                       required>
+                                    id="ipInput" 
+                                    class="form-control mb-3" 
+                                    placeholder="Enter IP address" 
+                                    required>
                                 <button type="submit" class="btn btn-warning w-100">Check IP Reputation</button>
                             </form>
                         </div>
                     </div>
                 </div>
 
-                <!-- Domain WHOIS Lookup -->
+                <!-- Domain Lookup -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <h5 class="card-title">🔍 Domain WHOIS Lookup</h5>
-                            <p class="card-text">Get comprehensive domain registration information, ownership details, and DNS records.</p>
+                            <h5 class="card-title">Domain WHOIS Lookup</h5>
+                            <p class="card-text">Get comprehensive domain registration information and DNS records.</p>
                             <form id="domainForm" class="mb-3">
                                 <input type="text" 
-                                       id="domainInput" 
-                                       class="form-control mb-3" 
-                                       placeholder="Enter domain (e.g., example.com)" 
-                                       required>
+                                    id="domainInput" 
+                                    class="form-control mb-3" 
+                                    placeholder="Enter domain" 
+                                    required>
                                 <button type="submit" class="btn btn-info w-100">Lookup Domain</button>
                             </form>
                         </div>
@@ -614,1394 +431,146 @@
         </div>
     </section>
 
-    <!-- Newsletter Signup Section -->
+    <!-- Newsletter -->
     <section class="py-5 newsletter-section scroll-fade">
         <div class="container text-center">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <h3 class="mb-4 text-white">Stay Updated with EZM Cyber</h3>
-                    <p class="mb-5 text-white-50">Join our newsletter to receive exclusive cybersecurity tips, threat alerts, and industry insights delivered straight to your inbox.</p>
+                    <p class="mb-5" style="color: rgba(255,255,255,0.8);">Join our newsletter to receive exclusive cybersecurity tips, threat alerts, and industry insights.</p>
                     <div class="mb-4">
-                        <a href="thank-you.html" class="btn btn-accent btn-lg me-3 mb-3">Quick Sign Up</a>
+                        <a href="#" class="btn btn-accent btn-lg me-3 mb-3">Quick Sign Up</a>
                     </div>
-                    <form action="thank-you.html" method="get" class="d-flex flex-column flex-md-row justify-content-center gap-3">
+                    <form class="d-flex flex-column flex-md-row justify-content-center gap-3">
                         <input type="email" 
-                               name="email" 
-                               class="form-control flex-grow-1" 
-                               placeholder="Enter your email address" 
-                               required
-                               style="max-width: 400px;">
+                            class="form-control flex-grow-1" 
+                            placeholder="Enter your email address" 
+                            required
+                            style="max-width: 400px;">
                         <button type="submit" class="btn btn-accent px-4">Subscribe Now</button>
                     </form>
-                    <small class="text-white-50 d-block mt-3">🔐 We respect your privacy. No spam, ever. Unsubscribe anytime.</small>
+                    <small style="color: rgba(255,255,255,0.6);" class="d-block mt-3">We respect your privacy. No spam, ever.</small>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Developer Tools Section -->
-    <section id="developer-tools" class="py-5 section-light scroll-fade">
+    <!-- Developer Tools -->
+    <section class="py-5 section-light scroll-fade">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="mb-4">Developer Tools & Resources</h2>
-                <p class="lead">Essential development resources and tools for cybersecurity professionals</p>
+                <h3 class="mb-4">Developer Tools</h3>
+                <p class="lead">Explore resources and repositories for developers</p>
             </div>
-            <div class="row g-4">
-                <!-- GitHub Repository -->
+            <div class="row g-4 justify-content-center">
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <h5 class="card-title">📚 GitHub Repository</h5>
-                            <p class="card-text">Access the complete source code, contribute to EZM Cyber, and explore our open-source security tools.</p>
-                            <a href="https://github.com/inboxBodyguard" 
-                               class="btn btn-primary w-100" 
-                               target="_blank">View on GitHub</a>
+                            <h5 class="card-title">GitHub Repository</h5>
+                            <p class="card-text">Access our open-source cybersecurity tools and scripts.</p>
+                            <a href="https://github.com/" target="_blank" class="btn btn-dark">View on GitHub</a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Code Playground -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <h5 class="card-title">⚡ Code Playground</h5>
-                            <p class="card-text">Experiment with HTML, CSS, and JavaScript in real-time. Perfect for testing security concepts and prototypes.</p>
-                            <a href="https://codepen.io/" 
-                               class="btn btn-success w-100" 
-                               target="_blank">Try on CodePen</a>
+                            <h5 class="card-title">CodePen Examples</h5>
+                            <p class="card-text">Interactive code snippets and front-end experiments.</p>
+                            <a href="https://codepen.io/" target="_blank" class="btn btn-dark">View on CodePen</a>
                         </div>
                     </div>
                 </div>
-
-                <!-- API Documentation -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <h5 class="card-title">📖 API Documentation</h5>
-                            <p class="card-text">Comprehensive API references and web development documentation for building secure applications.</p>
-                            <a href="https://developer.mozilla.org/en-US/" 
-                               class="btn btn-warning w-100" 
-                               target="_blank">Visit MDN Docs</a>
+                            <h5 class="card-title">MDN Documentation</h5>
+                            <p class="card-text">Comprehensive web development documentation and tutorials.</p>
+                            <a href="https://developer.mozilla.org/" target="_blank" class="btn btn-dark">Visit MDN Docs</a>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="text-center mt-5">
                 <p class="text-muted">
-                    <small>📅 Last Updated: <span id="last-updated" class="fw-bold"></span></small>
+                    Last Updated: <span id="lastUpdated"></span>
                 </p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="text-light text-center">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <p class="mb-3 fw-bold">&copy; 2025 EZM Cyber. All rights reserved.</p>
-                    <div class="d-flex justify-content-center gap-4 flex-wrap">
-                        <a href="privacy.html">Privacy Policy</a>
-                        <a href="community/index.html">Community</a>
-                    </div>
-                </div>
+    <footer class="py-4">
+        <div class="container text-center">
+            <p class="mb-2">&copy; 2024 EZM Cyber. All rights reserved.</p>
+            <div>
+                <a href="#" class="me-3">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
             </div>
         </div>
     </footer>
 
-    <!-- EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Bootstrap JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Custom JavaScript -->
+    <!-- Custom JS -->
     <script>
-        // Escalation Configuration
-        const ESCALATION = {
-            serviceID: 'service_xhsccsu',
-            templateID: 'template_07zalka',
-            publicKey: 'f_bE0Ed-eJCnK8IZO',
-            email: 'contact@ezmcyber.xyz',
-            keywords: ['live support', 'human help', 'speak to agent', 'need help', 'escalate', 'urgent', 'crisis', 'breach', 'hacked']
-        };
+        // Update Last Updated timestamp
+        document.getElementById('lastUpdated').textContent =
+            new Date().toLocaleString();
 
-        // Initialize EmailJS
-        if (typeof emailjs !== 'undefined') {
-            emailjs.init(ESCALATION.publicKey);
-            console.log('EmailJS initialized with public key:', ESCALATION.publicKey);
-        } else {
-            console.error('EmailJS script failed to load');
-        }
-
-        // Escalation Functions
-        function checkEscalation(message) {
-            return ESCALATION.keywords.some(keyword => message.toLowerCase().includes(keyword));
-        }
-
-        function showAlert() {
-            const alert = document.getElementById('escalationAlert');
-            if (alert) {
-                alert.classList.add('show');
-                console.log('Escalation alert displayed on screen');
-                setTimeout(() => {
-                    alert.classList.remove('show');
-                    console.log('Escalation alert hidden');
-                }, 5000);
-            }
-        }
-
-        async function sendAlert(userInfo, message) {
-            showAlert();
-            console.log('Sending alert with userInfo:', userInfo, 'Message:', message);
-            try {
-                if (typeof emailjs !== 'undefined') {
-                    await emailjs.send(ESCALATION.serviceID, ESCALATION.templateID, {
-                        to_email: ESCALATION.email,
-                        subject: 'URGENT: Live Support Request - EZM Cyber',
-                        user_message: message,
-                        user_info: JSON.stringify(userInfo, null, 2),
-                        timestamp: new Date().toISOString(),
-                        page_url: window.location.href
-                    });
-                    console.log('Email sent successfully to:', ESCALATION.email);
-                } else {
-                    console.error('EmailJS not loaded');
-                }
-            } catch (error) {
-                console.error('Email failed:', error);
-            }
-        }
-
-        // Tawk.to Integration with Escalation
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-
-        Tawk_API.onLoad = function() {
-            console.log('Tawk.to widget loaded successfully - Property ID: 68ba524c8ad9941922457891/default');
-            // Verify widget visibility
-            if (document.querySelector('#tawkchat-container')) {
-                console.log('Tawk.to chat widget container found in DOM');
-            } else {
-                console.error('Tawk.to chat widget container NOT found in DOM');
-            }
-        };
-
-        Tawk_API.onChatMessageVisitor = function(message) {
-            console.log('Visitor message received:', message.text);
-            if (checkEscalation(message.text)) {
-                console.log('ESCALATION DETECTED for message:', message.text);
-                const userInfo = {
-                    name: 'Chat User',
-                    sessionId: Date.now().toString(),
-                    timestamp: new Date().toISOString()
-                };
-                sendAlert(userInfo, message.text);
-                console.log('Agent should see announcement in Tawk.to dashboard');
-                // Auto-respond
-                setTimeout(() => {
-                    console.log('Sending escalation auto-response');
-                }, 1000);
-            }
-        };
-
-        // Load Tawk.to with Error Handling
-        (function() {
-            try {
-                var s1 = document.createElement("script");
-                s1.async = true;
-                s1.src = 'https://embed.tawk.to/68ba524c8ad9941922457891/default';
-                s1.charset = 'UTF-8';
-                s1.setAttribute('crossorigin', '*');
-                s1.onload = function() {
-                    console.log('Tawk.to script loaded successfully with Property ID: 68ba524c8ad9941922457891/default');
-                };
-                s1.onerror = function() {
-                    console.error('Tawk.to script failed to load: Check Property ID or network');
-                };
-                var s0 = document.getElementsByTagName("script")[0];
-                s0.parentNode.insertBefore(s1, s0);
-            } catch (error) {
-                console.error('Error loading Tawk.to script:', error);
-            }
-        })();
-
-        // Test Escalation Function
-        function testEscalation() {
-            console.log('Testing escalation');
-            sendAlert({name: 'Test User'}, 'I need live support please');
-        }
-        window.testEscalation = testEscalation;
-
-        // Last Updated Timestamp
-        document.getElementById("last-updated").textContent = new Date().toLocaleString();
-
-        // Scroll Fade-In Animation
-        const scrollElements = document.querySelectorAll('.scroll-fade');
-
+        // Scroll animation
+        const scrollElements = document.querySelectorAll(".scroll-fade");
         const elementInView = (el, dividend = 1) => {
             const elementTop = el.getBoundingClientRect().top;
-            return elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend;
+            return elementTop <=
+                (window.innerHeight || document.documentElement.clientHeight) / dividend;
         };
-
         const displayScrollElement = (element) => {
-            element.classList.add('visible');
+            element.classList.add("visible");
         };
-
+        const hideScrollElement = (element) => {
+            element.classList.remove("visible");
+        };
         const handleScrollAnimation = () => {
-            scrollElements.forEach(el => {
+            scrollElements.forEach((el) => {
                 if (elementInView(el, 1.25)) {
                     displayScrollElement(el);
+                } else {
+                    hideScrollElement(el);
                 }
             });
         };
+        window.addEventListener("scroll", handleScrollAnimation);
 
-        window.addEventListener('scroll', handleScrollAnimation);
-        window.addEventListener('load', handleScrollAnimation);
-
-        // VirusTotal Link Checker
-        
-
-            const suspiciousKeywords = ["free-gift", "login-now", "verify-account", "bit.ly", "tinyurl"];
-            let isSuspicious = suspiciousKeywords.some(keyword => url.includes(keyword));
-
-            if (isSuspicious) {
-                result.textContent = "🚨 Warning: This link may be unsafe or part of a phishing scheme.";
-                result.style.color = "red";
-            } else {
-                result.textContent = "✅ This link appears to be okay. Opening VirusTotal...";
-                result.style.color = "green";
-
-                setTimeout(() => {
-                    window.open(`https://www.virustotal.com/gui/url/${encodeURIComponent(url)}/detection`, "_blank");
-                }, 1000);
-            }
-        });
-
-        // IP Reputation Checker
-        document.getElementById("ipForm")?.addEventListener("submit", function(e) {
+        // Link checker
+        document.getElementById('linkForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const ip = document.getElementById("ipInput").value.trim();
-            
-            if (!ip) {
-                return;
-            }
-
-            window.open(`https://www.virustotal.com/gui/ip-address/${ip}/detection`, "_blank");
+            const url = document.getElementById('linkInput').value;
+            const encodedUrl = encodeURIComponent(url);
+            window.open(`https://www.virustotal.com/gui/url/${encodedUrl}`, '_blank');
         });
 
-        // Domain WHOIS Lookup
-        document.getElementById("domainForm")?.addEventListener("submit", function(e) {
+        // IP checker
+        document.getElementById('ipForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const domain = document.getElementById("domainInput").value.trim();
-            
-            if (!domain) {
-                return;
-            }
-
-            window.open(`https://whois.domaintools.com/${domain}`, "_blank");
+            const ip = document.getElementById('ipInput').value;
+            window.open(`https://www.virustotal.com/gui/ip-address/${ip}`, '_blank');
         });
-    
 
-document.getElementById("linkForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const input = document.getElementById("linkInput").value.trim();
-    const resultDiv = document.getElementById("result");
-
-    if (!input) {
-        resultDiv.innerHTML = `<span class="text-danger">❌ Please enter a valid URL.</span>`;
-        return;
-    }
-
-    // Display basic result
-    resultDiv.innerHTML = `<span class="text-success">✅ Link appears safe. Opening VirusTotal for full analysis...</span>`;
-
-    // Encode URL to base64 and remove padding
-    const base64Url = btoa(input).replace(/=+$/, '');
-    const vtURL = `https://www.virustotal.com/gui/url/${base64Url}`;
-
-    // Open in new tab
-    window.open(vtURL, "_blank");
-});
-<!-- Enhanced Hash Generator/Checker Tool -->
-
-<div class="cyber-tool" id="hash-tool">
-    <div class="tool-header">
-        <h3><i class="icon">🔐</i> Hash Generator & Validator</h3>
-        <div class="tool-status">Ready</div>
-    </div>
-    <div class="tool-body">
-        <div class="input-group">
-            <textarea id="hashInput" placeholder="Enter text to hash or paste existing hash for verification..." rows="3"></textarea>
-        </div>
-        <div class="button-grid">
-            <button class="btn-primary" onclick="generateHash('md5')">MD5</button>
-            <button class="btn-primary" onclick="generateHash('sha1')">SHA-1</button>
-            <button class="btn-primary" onclick="generateHash('sha256')">SHA-256</button>
-            <button class="btn-secondary" onclick="clearHash()">Clear</button>
-        </div>
-        <div id="hashResult" class="output-terminal"></div>
-    </div>
-</div>
-
-<!-- Advanced Password Security Suite -->
-
-<div class="cyber-tool" id="password-tool">
-    <div class="tool-header">
-        <h3><i class="icon">🛡️</i> Password Security Suite</h3>
-        <div class="tool-status">Active</div>
-    </div>
-    <div class="tool-body">
-        <div class="input-group">
-            <input type="password" id="passwordInput" placeholder="Enter password for security analysis...">
-            <button class="visibility-toggle" onclick="togglePasswordVisibility()">👁️</button>
-        </div>
-        <div class="strength-display">
-            <div class="strength-label">Security Level:</div>
-            <div id="strengthMeter" class="strength-meter">
-                <div id="strengthBar" class="strength-bar"></div>
-            </div>
-        </div>
-        <div class="button-grid">
-            <button class="btn-primary" onclick="generateSecurePassword()">Generate Secure</button>
-            <button class="btn-primary" onclick="checkBreached()">Check Breaches</button>
-        </div>
-        <div id="passwordResult" class="output-terminal"></div>
-    </div>
-</div>
-
-<!-- File Threat Scanner -->
-
-<div class="cyber-tool" id="file-scanner">
-    <div class="tool-header">
-        <h3><i class="icon">🦠</i> File Threat Scanner</h3>
-        <div class="tool-status">Scanning</div>
-    </div>
-    <div class="tool-body">
-        <div class="file-drop-zone" id="fileDropZone">
-            <input type="file" id="fileInput" hidden>
-            <div class="drop-content">
-                <div class="drop-icon">📁</div>
-                <div>Drop files here or click to browse</div>
-                <div class="drop-subtitle">Max size: 100MB</div>
-            </div>
-        </div>
-        <div class="button-grid">
-            <button class="btn-danger" onclick="scanFile()">Deep Scan</button>
-            <button class="btn-primary" onclick="quickScan()">Quick Scan</button>
-        </div>
-        <div id="fileScanResult" class="output-terminal"></div>
-    </div>
-</div>
-
-<!-- SSL/TLS Certificate Analyzer -->
-
-<div class="cyber-tool" id="ssl-analyzer">
-    <div class="tool-header">
-        <h3><i class="icon">🔒</i> SSL/TLS Certificate Analyzer</h3>
-        <div class="tool-status">Monitoring</div>
-    </div>
-    <div class="tool-body">
-        <div class="input-group">
-            <input type="url" id="sslInput" placeholder="https://example.com">
-            <button class="btn-primary" onclick="analyzeCertificate()">Analyze</button>
-        </div>
-        <div class="ssl-metrics">
-            <div class="metric-card">
-                <div class="metric-value" id="sslGrade">-</div>
-                <div class="metric-label">Security Grade</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-value" id="sslExpiry">-</div>
-                <div class="metric-label">Days to Expiry</div>
-            </div>
-        </div>
-        <div id="sslResult" class="output-terminal"></div>
-    </div>
-</div>
-
-<!-- Network Intelligence Tool -->
-
-<div class="cyber-tool" id="network-intel">
-    <div class="tool-header">
-        <h3><i class="icon">🌐</i> Network Intelligence</h3>
-        <div class="tool-status">Tracing</div>
-    </div>
-    <div class="tool-body">
-        <div class="input-group">
-            <input type="text" id="networkTarget" placeholder="domain.com or 192.168.1.1">
-        </div>
-        <div class="button-grid">
-            <button class="btn-primary" onclick="traceRoute()">Traceroute</button>
-            <button class="btn-primary" onclick="portScan()">Port Scan</button>
-            <button class="btn-primary" onclick="dnsLookup()">DNS Lookup</button>
-        </div>
-        <div id="networkResult" class="output-terminal"></div>
-    </div>
-</div>
-
-<!-- HTTP Security Scanner -->
-
-<div class="cyber-tool" id="http-scanner">
-    <div class="tool-header">
-        <h3><i class="icon">📡</i> HTTP Security Scanner</h3>
-        <div class="tool-status">Analyzing</div>
-    </div>
-    <div class="tool-body">
-        <div class="input-group">
-            <input type="url" id="httpTarget" placeholder="https://website.com">
-            <button class="btn-primary" onclick="scanHeaders()">Scan Headers</button>
-        </div>
-        <div class="security-checklist">
-            <div class="check-item" id="cspCheck">CSP <span class="check-status">⏳</span></div>
-            <div class="check-item" id="hstsCheck">HSTS <span class="check-status">⏳</span></div>
-            <div class="check-item" id="xssCheck">XSS Protection <span class="check-status">⏳</span></div>
-        </div>
-        <div id="httpResult" class="output-terminal"></div>
-    </div>
-</div>
-
-<!-- Base64 Encoder/Decoder -->
-
-<div class="cyber-tool" id="encoder-tool">
-    <div class="tool-header">
-        <h3><i class="icon">🔄</i> Base64 Encoder/Decoder</h3>
-        <div class="tool-status">Ready</div>
-    </div>
-    <div class="tool-body">
-        <div class="input-group">
-            <textarea id="encoderInput" placeholder="Enter text or Base64 string..." rows="3"></textarea>
-        </div>
-        <div class="button-grid">
-            <button class="btn-primary" onclick="encodeBase64()">Encode</button>
-            <button class="btn-primary" onclick="decodeBase64()">Decode</button>
-            <button class="btn-secondary" onclick="clearEncoder()">Clear</button>
-        </div>
-        <div id="encoderResult" class="output-terminal"></div>
-    </div>
-</div>
-
-<!-- Subnet Calculator -->
-
-<div class="cyber-tool" id="subnet-calc">
-    <div class="tool-header">
-        <h3><i class="icon">🧮</i> Subnet Calculator</h3>
-        <div class="tool-status">Computing</div>
-    </div>
-    <div class="tool-body">
-        <div class="input-group">
-            <input type="text" id="subnetInput" placeholder="192.168.1.0/24">
-            <button class="btn-primary" onclick="calculateSubnet()">Calculate</button>
-        </div>
-        <div id="subnetResult" class="output-terminal"></div>
-    </div>
-</div>
-
-<style>
-/* Enhanced Cybersecurity Toolkit Styling */
-.cyber-tool {
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-    border: 1px solid #00ff88;
-    border-radius: 12px;
-    margin: 24px 0;
-    padding: 0;
-    box-shadow: 
-        0 8px 32px rgba(0, 255, 136, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.cyber-tool::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #00ff88, #00ccff, #ff0080);
-    animation: borderGlow 3s ease-in-out infinite alternate;
-}
-
-@keyframes borderGlow {
-    0% { opacity: 0.5; }
-    100% { opacity: 1; }
-}
-
-.cyber-tool:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-        0 12px 40px rgba(0, 255, 136, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.tool-header {
-    background: linear-gradient(90deg, #1a1a1a, #2a2a2a);
-    padding: 16px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #333;
-}
-
-.tool-header h3 {
-    color: #00ff88;
-    margin: 0;
-    font-size: 1.1em;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.icon {
-    font-size: 1.2em;
-    filter: drop-shadow(0 0 5px #00ff88);
-}
-
-.tool-status {
-    background: #00ff88;
-    color: #000;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8em;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-}
-
-.tool-body {
-    padding: 24px;
-}
-
-.input-group {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-    position: relative;
-}
-
-.cyber-tool input,
-.cyber-tool textarea {
-    flex: 1;
-    background: #0d1117;
-    border: 2px solid #30363d;
-    border-radius: 8px;
-    color: #c9d1d9;
-    padding: 12px 16px;
-    font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
-    font-size: 14px;
-    transition: all 0.3s ease;
-}
-
-.cyber-tool input:focus,
-.cyber-tool textarea:focus {
-    outline: none;
-    border-color: #00ff88;
-    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
-}
-
-.visibility-toggle {
-    background: #30363d;
-    border: 2px solid #30363d;
-    border-radius: 8px;
-    color: #c9d1d9;
-    padding: 12px 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.visibility-toggle:hover {
-    background: #484f58;
-    border-color: #00ff88;
-}
-
-.button-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 12px;
-    margin-bottom: 20px;
-}
-
-.btn-primary, .btn-secondary, .btn-danger {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9em;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #00ff88, #00cc6a);
-    color: #000;
-}
-
-.btn-primary:hover {
-    background: linear-gradient(135deg, #00cc6a, #00aa55);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
-}
-
-.btn-secondary {
-    background: #30363d;
-    color: #c9d1d9;
-    border: 2px solid #484f58;
-}
-
-.btn-secondary:hover {
-    background: #484f58;
-    border-color: #00ff88;
-}
-
-.btn-danger {
-    background: linear-gradient(135deg, #ff4444, #cc0000);
-    color: #fff;
-}
-
-.btn-danger:hover {
-    background: linear-gradient(135deg, #cc0000, #aa0000);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
-}
-
-.output-terminal {
-    background: #0d1117;
-    border: 2px solid #30363d;
-    border-radius: 8px;
-    padding: 20px;
-    color: #00ff88;
-    font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
-    font-size: 13px;
-    line-height: 1.6;
-    min-height: 60px;
-    max-height: 400px;
-    overflow-y: auto;
-    white-space: pre-wrap;
-    word-break: break-all;
-    position: relative;
-}
-
-.output-terminal::before {
-    content: '> ';
-    color: #00ff88;
-    font-weight: bold;
-}
-
-.output-terminal:empty::before {
-    content: '> Waiting for input...';
-    color: #6e7681;
-    animation: blink 1.5s ease-in-out infinite;
-}
-
-@keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0.3; }
-}
-
-.strength-display {
-    margin-bottom: 16px;
-}
-
-.strength-label {
-    color: #c9d1d9;
-    font-size: 0.9em;
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-.strength-meter {
-    background: #30363d;
-    border-radius: 12px;
-    height: 12px;
-    overflow: hidden;
-    position: relative;
-}
-
-.strength-bar {
-    height: 100%;
-    width: 0%;
-    border-radius: 12px;
-    transition: all 0.5s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.strength-bar::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
-    animation: shine 2s ease-in-out infinite;
-}
-
-@keyframes shine {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-}
-
-.strength-weak { background: linear-gradient(135deg, #ff4444, #cc0000); }
-.strength-fair { background: linear-gradient(135deg, #ffaa00, #cc8800); }
-.strength-good { background: linear-gradient(135deg, #88ff00, #66cc00); }
-.strength-strong { background: linear-gradient(135deg, #00ff88, #00cc6a); }
-
-.file-drop-zone {
-    border: 2px dashed #30363d;
-    border-radius: 12px;
-    padding: 40px 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 16px;
-    position: relative;
-}
-
-.file-drop-zone:hover {
-    border-color: #00ff88;
-    background: rgba(0, 255, 136, 0.05);
-}
-
-.file-drop-zone.dragover {
-    border-color: #00ff88;
-    background: rgba(0, 255, 136, 0.1);
-    transform: scale(1.02);
-}
-
-.drop-content {
-    color: #c9d1d9;
-}
-
-.drop-icon {
-    font-size: 2em;
-    margin-bottom: 12px;
-    filter: drop-shadow(0 0 10px #00ff88);
-}
-
-.drop-subtitle {
-    font-size: 0.8em;
-    color: #6e7681;
-    margin-top: 8px;
-}
-
-.ssl-metrics {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 16px;
-    margin-bottom: 20px;
-}
-
-.metric-card {
-    background: #0d1117;
-    border: 2px solid #30363d;
-    border-radius: 8px;
-    padding: 16px;
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.metric-card:hover {
-    border-color: #00ff88;
-    transform: translateY(-2px);
-}
-
-.metric-value {
-    font-size: 1.8em;
-    font-weight: bold;
-    color: #00ff88;
-    margin-bottom: 4px;
-    font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
-}
-
-.metric-label {
-    font-size: 0.8em;
-    color: #6e7681;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.security-checklist {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 12px;
-    margin-bottom: 20px;
-}
-
-.check-item {
-    background: #0d1117;
-    border: 2px solid #30363d;
-    border-radius: 8px;
-    padding: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.9em;
-    color: #c9d1d9;
-    transition: all 0.3s ease;
-}
-
-.check-status {
-    font-size: 1.2em;
-}
-
-.check-item.pass {
-    border-color: #00ff88;
-    background: rgba(0, 255, 136, 0.1);
-}
-
-.check-item.fail {
-    border-color: #ff4444;
-    background: rgba(255, 68, 68, 0.1);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .tool-header {
-        padding: 12px 16px;
-    }
-    
-    .tool-body {
-        padding: 16px;
-    }
-    
-    .button-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .ssl-metrics,
-    .security-checklist {
-        grid-template-columns: 1fr;
-    }
-    
-    .input-group {
-        flex-direction: column;
-    }
-}
-
-/* Scrollbar Styling */
-.output-terminal::-webkit-scrollbar {
-    width: 6px;
-}
-
-.output-terminal::-webkit-scrollbar-track {
-    background: #30363d;
-    border-radius: 3px;
-}
-
-.output-terminal::-webkit-scrollbar-thumb {
-    background: #00ff88;
-    border-radius: 3px;
-}
-
-.output-terminal::-webkit-scrollbar-thumb:hover {
-    background: #00cc6a;
-}
-
-// Hash Generator Functions
-async function generateHash(algorithm) {
-    const input = document.getElementById('hashInput');
-    const result = document.getElementById('hashResult');
-    
-    // Added: Check for missing elements
-    if (!input || !result) {
-        console.error('Hash Generator: Missing input or result element');
-        return;
-    }
-    
-    if (!input.value.trim()) {
-        result.textContent = 'Please enter text to hash.';
-        return;
-    }
-    
-    result.textContent = 'Generating hash...';
-    
-    try {
-        // Added: Check for crypto.subtle availability
-        if (!crypto.subtle) {
-            result.textContent = 'Web Crypto API unavailable. Please use HTTPS.';
-            return;
+        // Domain lookup
+        document.getElementById('domainForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const domain = document.getElementById('domainInput').value;
+            window.open(`https://whois.domaintools.com/${domain}`, '_blank');
+        });
+
+        // Escalation alert test
+        function testEscalation() {
+            const alert = document.getElementById('escalationAlert');
+            alert.classList.add('show');
+            setTimeout(() => alert.classList.remove('show'), 3000);
         }
-        
-        const encoder = new TextEncoder();
-        const data = encoder.encode(input.value);
-        let hash;
-        
-        if (algorithm === 'md5') {
-            // Simple MD5 simulation for demo
-            hash = btoa(input.value + Date.now()).substring(0, 32).toLowerCase();
-            result.innerHTML = `MD5: ${hash}\n\nNote: This is a demo MD5 hash for display purposes.`;
-        } else {
-            const hashAlgorithm = algorithm.toUpperCase().replace('SHA', 'SHA-');
-            const hashBuffer = await crypto.subtle.digest(hashAlgorithm, data);
-            hash = Array.from(new Uint8Array(hashBuffer))
-                .map(b => b.toString(16).padStart(2, '0')).join('');
-            
-            result.innerHTML = `${algorithm.toUpperCase()}: ${hash}\n\nHash Length: ${hash.length} characters\nGenerated: ${new Date().toLocaleString()}`;
-        }
-    } catch (error) {
-        result.textContent = `Error: ${error.message}`;
-    }
-}
-
-function clearHash() {
-    const input = document.getElementById('hashInput');
-    const result = document.getElementById('hashResult');
-    
-    // Added: Check for missing elements
-    if (!input || !result) {
-        console.error('Clear Hash: Missing input or result element');
-        return;
-    }
-    
-    input.value = '';
-    result.textContent = '';
-}
-
-// Password Functions
-function analyzePassword() {
-    const password = document.getElementById('passwordInput');
-    const result = document.getElementById('passwordResult');
-    const strengthBar = document.getElementById('strengthBar');
-    
-    // Added: Check for missing elements
-    if (!password || !result || !strengthBar) {
-        console.error('Analyze Password: Missing input, result, or strengthBar element');
-        return;
-    }
-    
-    if (!password.value) {
-        result.textContent = '';
-        strengthBar.style.width = '0%';
-        strengthBar.className = 'strength-bar';
-        return;
-    }
-    
-    let score = 0;
-    let feedback = [];
-    
-    if (password.value.length >= 8) score += 25;
-    else feedback.push('Use at least 8 characters');
-    
-    if (/[A-Z]/.test(password.value)) score += 25;
-    else feedback.push('Include uppercase letters');
-    
-    if (/[a-z]/.test(password.value)) score += 25;
-    else feedback.push('Include lowercase letters');
-    
-    if (/\d/.test(password.value)) score += 25;
-    else feedback.push('Include numbers');
-    
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(password.value)) score += 20;
-    
-    if (password.value.length >= 12) score += 10;
-    
-    strengthBar.style.width = Math.min(score, 100) + '%';
-    
-    if (score < 50) {
-        strengthBar.className = 'strength-bar strength-weak';
-        result.innerHTML = `Strength: Weak (${score}%)\n\nSuggestions:\n• ${feedback.join('\n• ')}`;
-    } else if (score < 75) {
-        strengthBar.className = 'strength-bar strength-fair';
-        result.innerHTML = `Strength: Fair (${score}%)\n\nSuggestions:\n• ${feedback.join('\n• ')}`;
-    } else if (score < 90) {
-        strengthBar.className = 'strength-bar strength-good';
-        result.innerHTML = `Strength: Good (${score}%)`;
-    } else {
-        strengthBar.className = 'strength-bar strength-strong';
-        result.innerHTML = `Strength: Strong (${score}%)\n\nExcellent password! 🔒`;
-    }
-}
-
-function generateSecurePassword() {
-    const input = document.getElementById('passwordInput');
-    
-    // Added: Check for missing element
-    if (!input) {
-        console.error('Generate Secure Password: Missing input element');
-        return;
-    }
-    
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
-    let password = '';
-    for (let i = 0; i < 16; i++) {
-        password += chars[Math.floor(Math.random() * chars.length)];
-    }
-    input.value = password;
-    analyzePassword();
-}
-
-function checkBreached() {
-    const result = document.getElementById('passwordResult');
-    
-    // Added: Check for missing element
-    if (!result) {
-        console.error('Check Breached: Missing result element');
-        return;
-    }
-    
-    result.textContent = 'Checking breach databases...';
-    
-    setTimeout(() => {
-        const isBreached = Math.random() > 0.8;
-        result.innerHTML = `Breach Check: ${isBreached ? '⚠️ FOUND IN BREACHES' : '✅ NOT FOUND'}\n\n${isBreached ? 'This password has been compromised!' : 'Password appears safe.'}`;
-    }, 2000);
-}
-
-function togglePasswordVisibility() {
-    const input = document.getElementById('passwordInput');
-    
-    // Added: Check for missing element
-    if (!input) {
-        console.error('Toggle Password Visibility: Missing input element');
-        return;
-    }
-    
-    input.type = input.type === 'password' ? 'text' : 'password';
-}
-
-// File Scanner Functions
-function setupFileDropZone() {
-    const dropZone = document.getElementById('fileDropZone');
-    const fileInput = document.getElementById('fileInput');
-    
-    // Added: Check for missing elements
-    if (!dropZone || !fileInput) {
-        console.error('Setup File Drop Zone: Missing dropZone or fileInput element');
-        return;
-    }
-    
-    dropZone.addEventListener('click', () => fileInput.click());
-    
-    dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropZone.classList.add('dragover');
-    });
-    
-    dropZone.addEventListener('dragleave', () => {
-        dropZone.classList.remove('dragover');
-    });
-    
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('dragover');
-        fileInput.files = e.dataTransfer.files;
-        scanFile();
-    });
-}
-
-async function scanFile() {
-    const fileInput = document.getElementById('fileInput');
-    const result = document.getElementById('fileScanResult');
-    
-    // Added: Check for missing elements
-    if (!fileInput || !result) {
-        console.error('Scan File: Missing fileInput or result element');
-        return;
-    }
-    
-    if (!fileInput.files[0]) {
-        result.textContent = 'Please select a file to scan.';
-        return;
-    }
-    
-    const file = fileInput.files[0];
-    result.textContent = 'Scanning file...';
-    
-    setTimeout(() => {
-        const isClean = Math.random() > 0.2;
-        result.innerHTML = `🦠 SCAN COMPLETE\n\nFile: ${file.name}\nSize: ${(file.size / 1024).toFixed(2)} KB\n\nResult: ${isClean ? '✅ CLEAN' : '⚠️ SUSPICIOUS'}\n\n${isClean ? 'No threats detected.' : 'Potential threats found!'}`;
-    }, 2000);
-}
-
-function quickScan() {
-    const fileInput = document.getElementById('fileInput');
-    const result = document.getElementById('fileScanResult');
-    
-    // Added: Check for missing elements
-    if (!fileInput || !result) {
-        console.error('Quick Scan: Missing fileInput or result element');
-        return;
-    }
-    
-    if (!fileInput.files[0]) {
-        result.textContent = 'Please select a file for quick scan.';
-        return;
-    }
-    
-    const file = fileInput.files[0];
-    result.innerHTML = `⚡ QUICK SCAN\n\nFile: ${file.name}\nStatus: Quick check passed\nTime: 0.5s`;
-}
-
-// SSL Functions
-function analyzeCertificate() {
-    const url = document.getElementById('sslInput');
-    const result = document.getElementById('sslResult');
-    const gradeEl = document.getElementById('sslGrade');
-    const expiryEl = document.getElementById('sslExpiry');
-    
-    // Added: Check for missing elements
-    if (!url || !result || !gradeEl || !expiryEl) {
-        console.error('Analyze Certificate: Missing input, result, gradeEl, or expiryEl element');
-        return;
-    }
-    
-    if (!url.value) {
-        result.textContent = 'Please enter a URL to analyze.';
-        return;
-    }
-    
-    result.textContent = 'Analyzing certificate...';
-    gradeEl.textContent = '...';
-    expiryEl.textContent = '...';
-    
-    setTimeout(() => {
-        const grade = ['A+', 'A', 'B+', 'B'][Math.floor(Math.random() * 4)];
-        const days = Math.floor(Math.random() * 365) + 30;
-        
-        gradeEl.textContent = grade;
-        expiryEl.textContent = days;
-        
-        result.innerHTML = `🔒 SSL ANALYSIS\n\nDomain: ${new URL(url.value).hostname}\nGrade: ${grade}\nExpires: ${days} days\nProtocol: TLS 1.3\n\nStatus: ${grade.startsWith('A') ? '✅ Secure' : '⚠️ Issues detected'}`;
-    }, 2000);
-}
-
-// Network Functions
-function traceRoute() {
-    const target = document.getElementById('networkTarget');
-    const result = document.getElementById('networkResult');
-    
-    // Added: Check for missing elements
-    if (!target || !result) {
-        console.error('Trace Route: Missing target or result element');
-        return;
-    }
-    
-    if (!target.value) {
-        result.textContent = 'Please enter a target.';
-        return;
-    }
-    
-    result.textContent = 'Starting traceroute...';
-    
-    setTimeout(() => {
-        result.innerHTML = `🌐 TRACEROUTE TO ${target.value}\n\n1  192.168.1.1      2ms\n2  10.0.0.1         15ms\n3  203.0.113.1      45ms\n4  ${target.value}         67ms\n\nTrace complete: 4 hops`;
-    }, 3000);
-}
-
-function portScan() {
-    const target = document.getElementById('networkTarget');
-    const result = document.getElementById('networkResult');
-    
-    // Added: Check for missing elements
-    if (!target || !result) {
-        console.error('Port Scan: Missing target or result element');
-        return;
-    }
-    
-    if (!target.value) {
-        result.textContent = 'Please enter a target.';
-        return;
-    }
-    
-    result.textContent = 'Scanning ports...';
-    
-    setTimeout(() => {
-        result.innerHTML = `🔍 PORT SCAN: ${target.value}\n\n22/SSH     CLOSED\n80/HTTP    OPEN\n443/HTTPS  OPEN\n3306/MySQL CLOSED\n\nScan complete: 2/4 ports open`;
-    }, 2500);
-}
-
-function dnsLookup() {
-    const target = document.getElementById('networkTarget');
-    const result = document.getElementById('networkResult');
-    
-    // Added: Check for missing elements
-    if (!target || !result) {
-        console.error('DNS Lookup: Missing target or result element');
-        return;
-    }
-    
-    if (!target.value) {
-        result.textContent = 'Please enter a domain.';
-        return;
-    }
-    
-    result.textContent = 'Looking up DNS...';
-    
-    setTimeout(() => {
-        result.innerHTML = `🔍 DNS LOOKUP: ${target.value}\n\nA Records:\n203.0.113.10\n203.0.113.11\n\nMX Records:\n10 mail.${target.value}\n\nNS Records:\nns1.${target.value}\nns2.${target.value}`;
-    }, 1500);
-}
-
-// HTTP Scanner Functions
-function scanHeaders() {
-    const url = document.getElementById('httpTarget');
-    const result = document.getElementById('httpResult');
-    
-    // Added: Check for missing elements
-    if (!url || !result) {
-        console.error('Scan Headers: Missing url or result element');
-        return;
-    }
-    
-    if (!url.value) {
-        result.textContent = 'Please enter a URL.';
-        return;
-    }
-    
-    result.textContent = 'Analyzing headers...';
-    
-    setTimeout(() => {
-        const hasCSP = Math.random() > 0.5;
-        const hasHSTS = Math.random() > 0.4;
-        const hasXSS = Math.random() > 0.6;
-        
-        updateCheck('cspCheck', hasCSP);
-        updateCheck('hstsCheck', hasHSTS);
-        updateCheck('xssCheck', hasXSS);
-        
-        const grade = [hasCSP, hasHSTS, hasXSS].filter(Boolean).length >= 2 ? 'A' : 'B';
-        
-        result.innerHTML = `📡 HEADER ANALYSIS\n\nTarget: ${new URL(url.value).hostname}\nGrade: ${grade}\n\n${hasCSP ? '✅' : '❌'} Content-Security-Policy\n${hasHSTS ? '✅' : '❌'} HSTS\n${hasXSS ? '✅' : '❌'} XSS Protection\n\nSecurity: ${grade === 'A' ? 'Good' : 'Needs improvement'}`;
-    }, 2000);
-}
-
-function updateCheck(id, passed) {
-    const element = document.getElementById(id);
-    
-    // Added: Check for missing element
-    if (!element) {
-        console.error(`Update Check (${id}): Missing element`);
-        return;
-    }
-    
-    element.classList.add(passed ? 'pass' : 'fail');
-    element.querySelector('.check-status').textContent = passed ? '✅' : '❌';
-}
-
-// Base64 Functions
-function encodeBase64() {
-    const input = document.getElementById('encoderInput');
-    const result = document.getElementById('encoderResult');
-    
-    // Added: Check for missing elements
-    if (!input || !result) {
-        console.error('Encode Base64: Missing input or result element');
-        return;
-    }
-    
-    if (!input.value) {
-        result.textContent = 'Please enter text to encode.';
-        return;
-    }
-    
-    try {
-        const encoded = btoa(input.value);
-        result.innerHTML = `🔄 ENCODED\n\nOriginal: ${input.value}\nBase64: ${encoded}`;
-    } catch (error) {
-        result.textContent = 'Encoding error: ' + error.message;
-    }
-}
-
-function decodeBase64() {
-    const input = document.getElementById('encoderInput');
-    const result = document.getElementById('encoderResult');
-    
-    // Added: Check for missing elements
-    if (!input || !result) {
-        console.error('Decode Base64: Missing input or result element');
-        return;
-    }
-    
-    if (!input.value) {
-        result.textContent = 'Please enter Base64 to decode.';
-        return;
-    }
-    
-    try {
-        const decoded = atob(input.value);
-        result.innerHTML = `🔄 DECODED\n\nBase64: ${input.value}\nDecoded: ${decoded}`;
-    } catch (error) {
-        result.textContent = 'Decoding error: Invalid Base64';
-    }
-}
-
-function clearEncoder() {
-    const input = document.getElementById('encoderInput');
-    const result = document.getElementById('encoderResult');
-    
-    // Added: Check for missing elements
-    if (!input || !result) {
-        console.error('Clear Encoder: Missing input or result element');
-        return;
-    }
-    
-    input.value = '';
-    result.textContent = '';
-}
-
-// Subnet Calculator
-function calculateSubnet() {
-    const input = document.getElementById('subnetInput');
-    const result = document.getElementById('subnetResult');
-    
-    // Added: Check for missing elements
-    if (!input || !result) {
-        console.error('Calculate Subnet: Missing input or result element');
-        return;
-    }
-    
-    if (!input.value) {
-        result.textContent = 'Please enter CIDR notation (e.g., 192.168.1.0/24).';
-        return;
-    }
-    
-    try {
-        const [network, cidr] = input.value.split('/');
-        const cidrNum = parseInt(cidr);
-        
-        if (cidrNum < 0 || cidrNum > 32) {
-            throw new Error('CIDR must be 0-32');
-        }
-        
-        const totalHosts = Math.pow(2, 32 - cidrNum);
-        const usableHosts = totalHosts - 2;
-        
-        result.innerHTML = `🧮 SUBNET CALCULATION\n\nNetwork: ${network}/${cidr}\nTotal Hosts: ${totalHosts.toLocaleString()}\nUsable Hosts: ${usableHosts.toLocaleString()}\nSubnet Mask: ${cidrNum >= 24 ? '255.255.255.0' : cidrNum >= 16 ? '255.255.0.0' : '255.0.0.0'}`;
-    } catch (error) {
-        result.textContent = 'Calculation error: ' + error.message;
-    }
-}
-
-// Initialize everything
-document.addEventListener('DOMContentLoaded', function() {
-    // Added: Check if setupFileDropZone and passwordInput exist before setup
-    if (document.getElementById('fileDropZone') && document.getElementById('fileInput')) {
-        setupFileDropZone();
-    } else {
-        console.error('DOMContentLoaded: Missing fileDropZone or fileInput element');
-    }
-    
-    const passwordInput = document.getElementById('passwordInput');
-    if (passwordInput) {
-        passwordInput.addEventListener('input', analyzePassword);
-    } else {
-        console.error('DOMContentLoaded: Missing passwordInput element');
-    }
-});
-</script>
-
+    </script>
 </body>
 </html>
