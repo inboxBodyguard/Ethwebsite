@@ -610,22 +610,7 @@
             return ipRegex.test(ip);
         }
 
-        // Domain validation helper
-        function isValidDomain(domain) {
-            const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/;
-            return domainRegex.test(domain);
-        }
-
-        // Link Checker
-        document.getElementById("linkForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            const input = document.getElementById("linkInput").value.trim();
-            const result = document.getElementById("result");
-
-            if (!input) {
-                result.innerHTML = '<span class="text-danger">❌ Please enter a URL.</span>';
-                return;
-            }
+        
 
             if (!isValidUrl(input)) {
                 result.innerHTML = '<span class="text-danger">❌ Invalid URL format. Please include protocol (e.g., https://).</span>';
