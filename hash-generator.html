@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hash Generator - EZM Cyber</title>
+    <meta name="description" content="Generate secure hashes for any text using popular algorithms.">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Paste your full existing CSS from index.html here to keep everything consistent --- */
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar (same as index.html) -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">EZM Cyber</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span style="display:inline-block;width:1.5em;height:1.5em;vertical-align:middle;background-image:url('data:image/svg+xml;charset=utf8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 30 30%27%3E%3Cpath stroke=%27rgba(33, 37, 41, 0.75)%27 stroke-linecap=%27round%27 stroke-miterlimit=%2710%27 stroke-width=%272%27 d=%27M4 7h22M4 15h22M4 23h22%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-size:1.5em 1.5em;"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+                <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                <li class="nav-item"><a class="nav-link" href="github.html">GitHub</a></li>
+                <li class="nav-item"><a class="nav-link" href="signup.html">Newsletter</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                <li class="nav-item"><a class="nav-link active" href="hash-generator.html">Hash Generator</a></li>
+                <li class="nav-item"><a class="nav-link" href="password-tools.html">Password Tools</a></li>
+                <li class="nav-item"><a class="nav-link" href="file-scanner.html">File Scanner</a></li>
+                <li class="nav-item"><a class="nav-link" href="network-tools.html">Network Tools</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Spacer -->
+<div style="height: 100px;"></div>
+
+<!-- Banner Section -->
+<section class="banner-section"></section>
+
+<!-- Hash Generator Content -->
+<section class="py-5 section-light">
+    <div class="container text-center">
+        <h2 class="mb-4">Hash Generator</h2>
+        <p class="lead mb-4">Generate secure hashes for any text using popular algorithms like MD5, SHA-1, SHA-256.</p>
+
+        <form id="hashForm" class="mb-4">
+            <div class="mb-3">
+                <input type="text" id="hashInput" class="form-control form-control-lg" placeholder="Enter text to hash" required>
+            </div>
+            <select id="algorithm" class="form-select mb-3">
+                <option value="SHA-256">SHA-256</option>
+                <option value="SHA-1">SHA-1</option>
+                <option value="MD5">MD5</option>
+            </select>
+            <button type="submit" class="btn btn-primary btn-lg">Generate Hash</button>
+        </form>
+
+        <div id="hashResult" class="mt-3 fs-5"></div>
+    </div>
+</section>
+
+<!-- Footer (same as index.html) -->
+<footer class="text-light text-center py-4">
+    <p class="mb-0">&copy; 2025 EZM Cyber. All rights reserved.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+document.getElementById("hashForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    const input = document.getElementById("hashInput").value;
+    const algorithm = document.getElementById("algorithm").value;
+
+    const encoder = new TextEncoder();
+    const data = encoder.encode(input);
+    const hashBuffer = await crypto.subtle.digest(algorithm, data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    document.getElementById("hashResult").textContent = `Hash (${algorithm}): ${hashHex}`;
+});
+</script>
+
+</body>
+</html>
