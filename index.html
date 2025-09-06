@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>EZM Cyber - Secure, Protect, and Respond</title>
     <meta name="description" content="EZM Cyber helps individuals and businesses stay secure with link verification, cyber threat analysis, and professional cybersecurity services.">
 
     <!-- Google Search Console Verification -->
-    <meta name="google-site-verification" content="1ySkKwSAo8xfnYYX-i4cabslkNW-ovZt8kB-bUeb0UU">
+    <meta name="google-site-verification" content="1ySkKwSAo8xfnYYX-i4cabslkNW-ovZt8kB-bUeb0UU" />
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
         :root {
@@ -34,9 +34,7 @@
             --border-color: #e2e8f0;
         }
 
-        * {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        * { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -54,7 +52,6 @@
             padding: 1.25rem 0;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
-
         .navbar-brand {
             font-weight: 700;
             font-size: 1.75rem;
@@ -63,7 +60,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         .nav-link {
             color: var(--text-primary) !important;
             font-weight: 500;
@@ -71,11 +67,10 @@
             border-radius: 12px;
             margin: 0 0.25rem;
         }
-
         .nav-link:hover,
         .nav-link.active {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white !important;
+            color: #fff !important;
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
         }
@@ -85,26 +80,20 @@
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             height: 250px;
             position: relative;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 12px 30px rgba(79,70,229,0.25) inset;
         }
 
         /* Sections */
-        .section-light {
-            background: var(--light-bg);
+        .section-light { background: var(--light-bg); padding: 4rem 0; }
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
+            color: #fff;
             padding: 4rem 0;
         }
 
-        .newsletter-section {
-            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
-            color: white;
-        }
-
         /* Typography */
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-        }
-
+        h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; }
         h2 {
             font-size: 2.5rem;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -112,16 +101,8 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        h3 {
-            font-size: 2rem;
-            color: var(--text-primary);
-        }
-
-        .lead {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-        }
+        h3 { font-size: 2rem; color: var(--text-primary); }
+        .lead { font-size: 1.25rem; color: var(--text-secondary); }
 
         /* Cards */
         .card {
@@ -131,11 +112,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             border: 1px solid var(--border-color);
         }
-
-        .card-body {
-            padding: 2rem;
-        }
-
+        .card-body { padding: 2rem; }
         .card-hover:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 20px rgba(0,0,0,0.15);
@@ -143,53 +120,41 @@
 
         /* Buttons */
         .btn {
-            font-weight: 600;
-            border-radius: 12px;
-            padding: 0.75rem 1.5rem;
+            font-weight: 700;
+            border-radius: 14px;
+            padding: 0.9rem 1.6rem;
             font-size: 1rem;
             border: none;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-
-        .btn:hover {
-            transform: scale(1.05);
-        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.12); }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
+            color: #fff;
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
-
         .btn-danger {
             background: linear-gradient(135deg, var(--danger-color), #dc2626);
-            color: white;
+            color: #fff;
             box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
         }
-
         .btn-warning {
             background: linear-gradient(135deg, var(--warning-color), #d97706);
-            color: white;
+            color: #fff;
             box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
         }
-
         .btn-info {
             background: linear-gradient(135deg, var(--accent-color), #0891b2);
-            color: white;
+            color: #fff;
             box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
         }
-
         .btn-accent {
             background: linear-gradient(135deg, var(--secondary-color), #7c3aed);
-            color: white;
+            color: #fff;
             box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
         }
-
-        .btn-lg {
-            padding: 1rem 2rem;
-            font-size: 1.125rem;
-            border-radius: 16px;
-        }
+        .btn-lg { padding: 1rem 2rem; font-size: 1.1rem; border-radius: 16px; }
 
         /* Forms */
         .form-control {
@@ -200,54 +165,32 @@
             background: var(--light-card);
             transition: all 0.3s ease;
         }
-
         .form-control:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
             outline: none;
         }
-
-        .input-group-lg .form-control {
-            padding: 1rem 1.25rem;
-            font-size: 1.125rem;
-        }
-
-        .input-group .btn {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            padding: 1rem 1.5rem;
-        }
+        .input-group-lg .form-control { padding: 1rem 1.25rem; font-size: 1.125rem; }
+        .input-group .btn { border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.5rem; }
 
         /* Scroll Animation */
-        .scroll-fade {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .scroll-fade.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .scroll-fade.visible { opacity: 1; transform: translateY(0); }
 
         /* Footer */
         footer {
             background: var(--dark-bg) !important;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding: 2rem 0 !important;
-            color: white;
+            color: #fff;
         }
-
         footer a {
             color: rgba(255, 255, 255, 0.8) !important;
             text-decoration: none !important;
             font-weight: 500;
             transition: all 0.3s ease;
         }
-
-        footer a:hover {
-            color: var(--accent-color) !important;
-        }
+        footer a:hover { color: var(--accent-color) !important; }
 
         /* Alert */
         .escalation-alert {
@@ -263,16 +206,8 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             display: none;
         }
-
-        .escalation-alert.show {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+        .escalation-alert.show { display: block; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
@@ -281,17 +216,14 @@
             h3 { font-size: 1.75rem; }
             .card-body { padding: 1.5rem; }
             .btn-lg { font-size: 1rem; }
-            .input-group-lg .form-control {
-                font-size: 1rem;
-                min-height: 60px;
-            }
+            .input-group-lg .form-control { font-size: 1rem; min-height: 60px; }
         }
     </style>
 </head>
 <body>
     <!-- Alert -->
     <div id="escalationAlert" class="escalation-alert">
-        <strong>ESCALATION TRIGGERED</strong><br>
+        <strong>ESCALATION TRIGGERED</strong><br />
         <small>User requested human support.</small>
     </div>
 
@@ -299,28 +231,18 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">EZM Cyber</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                     <!-- Hash Generator Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="toolsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Hash Generator
-                        </a>
+                        <a class="nav-link dropdown-toggle" href="#" id="toolsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hash Generator</a>
                         <ul class="dropdown-menu" aria-labelledby="toolsDropdown">
                             <li><a class="dropdown-item" href="hash-generator/password-tools.html">Password Tools</a></li>
                             <li><a class="dropdown-item" href="hash-generator/file-scanner.html">File Scanner</a></li>
@@ -334,7 +256,7 @@
         </div>
     </nav>
 
-    <!-- Spacer -->
+    <!-- Spacer (kept as you had it) -->
     <div style="height: 100px;"></div>
 
     <!-- Banner -->
@@ -349,7 +271,7 @@
         </div>
     </section>
 
-    <!-- Link Checker -->
+    <!-- Suspicious Link Checker -->
     <section class="py-5 section-light scroll-fade">
         <div class="container">
             <div class="row justify-content-center">
@@ -361,14 +283,8 @@
 
                             <form id="linkForm" class="mb-4">
                                 <div class="input-group input-group-lg">
-                                    <input type="url" 
-                                        id="linkInput" 
-                                        class="form-control" 
-                                        placeholder="Paste or type a link to verify (e.g., https://example.com)" 
-                                        required>
-                                    <button type="submit" class="btn btn-danger">
-                                        <strong>Check Link</strong>
-                                    </button>
+                                    <input type="url" id="linkInput" class="form-control" placeholder="Paste or type a link to verify (e.g., https://example.com)" required />
+                                    <button type="submit" class="btn btn-danger"><strong>Check Link</strong></button>
                                 </div>
                             </form>
 
@@ -399,31 +315,38 @@
                             <h5 class="card-title">IP Reputation Checker</h5>
                             <p class="card-text">Analyze IP addresses for malicious activity and security threats.</p>
                             <form id="ipForm" class="mb-3">
-                                <input type="text" 
-                                    id="ipInput" 
-                                    class="form-control mb-3" 
-                                    placeholder="Enter IP address" 
-                                    required>
+                                <input type="text" id="ipInput" class="form-control mb-3" placeholder="Enter IP address" required />
                                 <button type="submit" class="btn btn-warning w-100">Check IP Reputation</button>
                             </form>
                         </div>
                     </div>
                 </div>
 
-                <!-- Domain Lookup -->
+                <!-- Domain Lookup (DomainTools) -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
                             <h5 class="card-title">Domain WHOIS Lookup</h5>
                             <p class="card-text">Get comprehensive domain registration information and DNS records.</p>
                             <form id="domainForm" class="mb-3">
-                                <input type="text" 
-                                    id="domainInput" 
-                                    class="form-control mb-3" 
-                                    placeholder="Enter domain" 
-                                    required>
+                                <input type="text" id="domainInput" class="form-control mb-3" placeholder="Enter domain" required />
                                 <button type="submit" class="btn btn-info w-100">Lookup Domain</button>
                             </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WHOISXML API Lookup (opens our own results page) -->
+                <div class="col-md-6 col-lg-8">
+                    <div class="card h-100 card-hover text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">WHOISXML API Lookup</h5>
+                            <p class="card-text">Use WHOISXML to query detailed WHOIS records. Results will open on a dedicated page.</p>
+                            <form id="wxForm" class="mb-3">
+                                <input type="text" id="wxDomain" class="form-control mb-3" placeholder="Enter domain (e.g., example.com)" required />
+                                <button type="submit" class="btn btn-primary w-100">Check with WHOISXML</button>
+                            </form>
+                            <small class="text-muted d-block">Powered by WHOISXML API</small>
                         </div>
                     </div>
                 </div>
@@ -442,11 +365,7 @@
                         <a href="#" class="btn btn-accent btn-lg me-3 mb-3">Quick Sign Up</a>
                     </div>
                     <form class="d-flex flex-column flex-md-row justify-content-center gap-3">
-                        <input type="email" 
-                            class="form-control flex-grow-1" 
-                            placeholder="Enter your email address" 
-                            required
-                            style="max-width: 400px;">
+                        <input type="email" class="form-control flex-grow-1" placeholder="Enter your email address" required style="max-width: 400px;" />
                         <button type="submit" class="btn btn-accent px-4">Subscribe Now</button>
                     </form>
                     <small style="color: rgba(255,255,255,0.6);" class="d-block mt-3">We respect your privacy. No spam, ever.</small>
@@ -459,53 +378,60 @@
     <section class="py-5 section-light scroll-fade">
         <div class="container">
             <div class="text-center mb-5">
-                <h3 class="mb-4">Developer Tools</h3>
-                <p class="lead">Explore resources and repositories for developers</p>
+                <h2 class="mb-4">Developer Tools & Resources</h2>
+                <p class="lead">Essential development resources and tools for cybersecurity professionals</p>
             </div>
-            <div class="row g-4 justify-content-center">
+            <div class="row g-4">
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
                             <h5 class="card-title">GitHub Repository</h5>
-                            <p class="card-text">Access our open-source cybersecurity tools and scripts.</p>
-                            <a href="https://github.com/" target="_blank" class="btn btn-dark">View on GitHub</a>
+                            <p class="card-text">Access the complete source code and contribute to EZM Cyber.</p>
+                            <a href="https://github.com/inboxBodyguard" class="btn btn-primary w-100" target="_blank" rel="noopener">View on GitHub</a>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <h5 class="card-title">CodePen Examples</h5>
-                            <p class="card-text">Interactive code snippets and front-end experiments.</p>
-                            <a href="https://codepen.io/" target="_blank" class="btn btn-dark">View on CodePen</a>
+                            <h5 class="card-title">Code Playground</h5>
+                            <p class="card-text">Experiment with HTML, CSS, and JavaScript in real-time.</p>
+                            <a href="https://codepen.io/" class="btn btn-info w-100" target="_blank" rel="noopener">Try on CodePen</a>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <h5 class="card-title">MDN Documentation</h5>
-                            <p class="card-text">Comprehensive web development documentation and tutorials.</p>
-                            <a href="https://developer.mozilla.org/" target="_blank" class="btn btn-dark">Visit MDN Docs</a>
+                            <h5 class="card-title">API Documentation</h5>
+                            <p class="card-text">Comprehensive API references for building secure applications.</p>
+                            <a href="https://developer.mozilla.org/en-US/" class="btn btn-warning w-100" target="_blank" rel="noopener">Visit MDN Docs</a>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="text-center mt-5">
                 <p class="text-muted">
-                    Last Updated: <span id="lastUpdated"></span>
+                    <small>Last Updated: <span id="last-updated" class="fw-bold"></span></small>
                 </p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-4">
-        <div class="container text-center">
-            <p class="mb-2">&copy; 2024 EZM Cyber. All rights reserved.</p>
-            <div>
-                <a href="#" class="me-3">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
+    <footer class="text-light text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p class="mb-3 fw-bold">&copy; 2025 EZM Cyber. All rights reserved.</p>
+                    <div class="d-flex justify-content-center gap-4 flex-wrap">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Community</a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
@@ -513,64 +439,95 @@
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom JS -->
     <script>
-        // Update Last Updated timestamp
-        document.getElementById('lastUpdated').textContent =
-            new Date().toLocaleString();
+        // Timestamp
+        document.getElementById("last-updated").textContent = new Date().toLocaleString();
 
-        // Scroll animation
-        const scrollElements = document.querySelectorAll(".scroll-fade");
+        // Scroll fade animation
+        const scrollElements = document.querySelectorAll('.scroll-fade');
         const elementInView = (el, dividend = 1) => {
             const elementTop = el.getBoundingClientRect().top;
-            return elementTop <=
-                (window.innerHeight || document.documentElement.clientHeight) / dividend;
+            return elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend;
         };
-        const displayScrollElement = (element) => {
-            element.classList.add("visible");
-        };
-        const hideScrollElement = (element) => {
-            element.classList.remove("visible");
-        };
+        const displayScrollElement = (element) => element.classList.add('visible');
         const handleScrollAnimation = () => {
-            scrollElements.forEach((el) => {
-                if (elementInView(el, 1.25)) {
-                    displayScrollElement(el);
-                } else {
-                    hideScrollElement(el);
-                }
+            scrollElements.forEach(el => {
+                if (elementInView(el, 1.25)) displayScrollElement(el);
             });
         };
-        window.addEventListener("scroll", handleScrollAnimation);
+        window.addEventListener('scroll', handleScrollAnimation);
+        window.addEventListener('load', handleScrollAnimation);
 
-        // Link checker
-        document.getElementById('linkForm').addEventListener('submit', function(e) {
+        // Base64URL encode for VirusTotal (works for UTF-8)
+        function toBase64Url(str) {
+            const utf8 = new TextEncoder().encode(str);
+            let binary = '';
+            utf8.forEach(b => binary += String.fromCharCode(b));
+            const base64 = btoa(binary);
+            return base64.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+        }
+
+        // Link Checker -> VirusTotal URL analysis (correct path)
+        document.getElementById("linkForm").addEventListener("submit", function(e) {
             e.preventDefault();
-            const url = document.getElementById('linkInput').value;
-            const encodedUrl = encodeURIComponent(url);
-            window.open(`https://www.virustotal.com/gui/url/${encodedUrl}`, '_blank');
+            const input = document.getElementById("linkInput").value.trim();
+            const resultDiv = document.getElementById("result");
+            if (!input) {
+                resultDiv.innerHTML = '<span style="color: #ef4444;">Please enter a valid URL.</span>';
+                return;
+            }
+            resultDiv.innerHTML = '<span style="color: #10b981;">Opening VirusTotal for analysis...</span>';
+            setTimeout(() => {
+                const encoded = toBase64Url(input);
+                const vtURL = `https://www.virustotal.com/gui/url/${encoded}`;
+                window.open(vtURL, "_blank", "noopener");
+            }, 500);
         });
 
-        // IP checker
-        document.getElementById('ipForm').addEventListener('submit', function(e) {
+        // IP Checker -> VirusTotal IP page
+        document.getElementById("ipForm").addEventListener("submit", function(e) {
             e.preventDefault();
-            const ip = document.getElementById('ipInput').value;
-            window.open(`https://www.virustotal.com/gui/ip-address/${ip}`, '_blank');
+            const ip = document.getElementById("ipInput").value.trim();
+            if (ip) window.open(`https://www.virustotal.com/gui/ip-address/${ip}/detection`, "_blank", "noopener");
         });
 
-        // Domain lookup
-        document.getElementById('domainForm').addEventListener('submit', function(e) {
+        // Domain Lookup -> DomainTools (kept)
+        document.getElementById("domainForm").addEventListener("submit", function(e) {
             e.preventDefault();
-            const domain = document.getElementById('domainInput').value;
-            window.open(`https://whois.domaintools.com/${domain}`, '_blank');
+            const domain = document.getElementById("domainInput").value.trim();
+            if (domain) window.open(`https://whois.domaintools.com/${domain}`, "_blank", "noopener");
         });
 
-        // Escalation alert test
+        // WHOISXML API: send to our results page
+        document.getElementById("wxForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const d = document.getElementById("wxDomain").value.trim();
+            if (!d) return;
+            const qs = new URLSearchParams({ domain: d }).toString();
+            window.open(`whoisxmlapi.html?${qs}`, "_blank");
+        });
+
+        // Test escalation function (kept)
         function testEscalation() {
             const alert = document.getElementById('escalationAlert');
             alert.classList.add('show');
             setTimeout(() => alert.classList.remove('show'), 3000);
         }
+        window.testEscalation = testEscalation;
     </script>
+
+    <!-- Start of Tawk.to Script (kept & fixed) -->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/68ba524c8ad9941922457891/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!-- End of Tawk.to Script -->
 </body>
 </html>
