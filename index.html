@@ -357,56 +357,7 @@
 <script>
   const API_KEY = "aae37bf314798b0edf335b4818114280a268aaf936bd7d4b0e695b81870f08a8";
 
-  document.getElementById("linkForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
 
-    const url = document.getElementById("linkInput").value.trim();
-    const resultBox = document.getElementById("result");
-
-    if (!url) {
-      resultBox.innerHTML = '<span class="text-danger">⚠️ Please enter a valid URL.</span>';
-      return;
-    }
-
-    resultBox.innerHTML = "⏳ Scanning link on VirusTotal...";
-
-    try {
-      // Submit URL for scanning
-      const submitRes = await fetch("https://www.virustotal.com/api/v3/urls", {
-        method: "POST",
-        headers: {
-          "x-apikey": API_KEY,
-          "content-type": "application/x-www-form-urlencoded",
-        },
-        body: `url=${encodeURIComponent(url)}`,
-      });
-
-      const submitData = await submitRes.json();
-      const analysisId = submitData.data.id;
-
-      // Fetch analysis results
-      const analysisRes = await fetch(`https://www.virustotal.com/api/v3/analyses/${analysisId}`, {
-        headers: { "x-apikey": API_KEY },
-      });
-
-      const analysisData = await analysisRes.json();
-      const stats = analysisData.data.attributes.stats;
-
-      resultBox.innerHTML = `
-        <div class="alert alert-light border">
-          <h5>🔎 Analysis Result:</h5>
-          <p><strong>Harmless:</strong> ${stats.harmless}</p>
-          <p><strong>Malicious:</strong> ${stats.malicious}</p>
-          <p><strong>Suspicious:</strong> ${stats.suspicious}</p>
-          <p><strong>Undetected:</strong> ${stats.undetected}</p>
-          <a href="https://www.virustotal.com/gui/url/${analysisId}" target="_blank" class="btn btn-sm btn-primary mt-2">View Full Report</a>
-        </div>
-      `;
-    } catch (error) {
-      resultBox.innerHTML = `<span class="text-danger">❌ Error checking link: ${error.message}</span>`;
-    }
-  });
-</script>
 
     <!-- Additional Cybersecurity Tools -->
     <section class="py-5 section-light">
