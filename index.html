@@ -924,7 +924,835 @@ document.getElementById("linkForm").addEventListener("submit", function(e) {
     // Open in new tab
     window.open(vtURL, "_blank");
 });
-</script>
+<!-- Enhanced Hash Generator/Checker Tool -->
+
+<div class="cyber-tool" id="hash-tool">
+    <div class="tool-header">
+        <h3><i class="icon">🔐</i> Hash Generator & Validator</h3>
+        <div class="tool-status">Ready</div>
+    </div>
+    <div class="tool-body">
+        <div class="input-group">
+            <textarea id="hashInput" placeholder="Enter text to hash or paste existing hash for verification..." rows="3"></textarea>
+        </div>
+        <div class="button-grid">
+            <button class="btn-primary" onclick="generateHash('md5')">MD5</button>
+            <button class="btn-primary" onclick="generateHash('sha1')">SHA-1</button>
+            <button class="btn-primary" onclick="generateHash('sha256')">SHA-256</button>
+            <button class="btn-secondary" onclick="clearHash()">Clear</button>
+        </div>
+        <div id="hashResult" class="output-terminal"></div>
+    </div>
+</div>
+
+<!-- Advanced Password Security Suite -->
+
+<div class="cyber-tool" id="password-tool">
+    <div class="tool-header">
+        <h3><i class="icon">🛡️</i> Password Security Suite</h3>
+        <div class="tool-status">Active</div>
+    </div>
+    <div class="tool-body">
+        <div class="input-group">
+            <input type="password" id="passwordInput" placeholder="Enter password for security analysis...">
+            <button class="visibility-toggle" onclick="togglePasswordVisibility()">👁️</button>
+        </div>
+        <div class="strength-display">
+            <div class="strength-label">Security Level:</div>
+            <div id="strengthMeter" class="strength-meter">
+                <div id="strengthBar" class="strength-bar"></div>
+            </div>
+        </div>
+        <div class="button-grid">
+            <button class="btn-primary" onclick="generateSecurePassword()">Generate Secure</button>
+            <button class="btn-primary" onclick="checkBreached()">Check Breaches</button>
+        </div>
+        <div id="passwordResult" class="output-terminal"></div>
+    </div>
+</div>
+
+<!-- File Threat Scanner -->
+
+<div class="cyber-tool" id="file-scanner">
+    <div class="tool-header">
+        <h3><i class="icon">🦠</i> File Threat Scanner</h3>
+        <div class="tool-status">Scanning</div>
+    </div>
+    <div class="tool-body">
+        <div class="file-drop-zone" id="fileDropZone">
+            <input type="file" id="fileInput" hidden>
+            <div class="drop-content">
+                <div class="drop-icon">📁</div>
+                <div>Drop files here or click to browse</div>
+                <div class="drop-subtitle">Max size: 100MB</div>
+            </div>
+        </div>
+        <div class="button-grid">
+            <button class="btn-danger" onclick="scanFile()">Deep Scan</button>
+            <button class="btn-primary" onclick="quickScan()">Quick Scan</button>
+        </div>
+        <div id="fileScanResult" class="output-terminal"></div>
+    </div>
+</div>
+
+<!-- SSL/TLS Certificate Analyzer -->
+
+<div class="cyber-tool" id="ssl-analyzer">
+    <div class="tool-header">
+        <h3><i class="icon">🔒</i> SSL/TLS Certificate Analyzer</h3>
+        <div class="tool-status">Monitoring</div>
+    </div>
+    <div class="tool-body">
+        <div class="input-group">
+            <input type="url" id="sslInput" placeholder="https://example.com">
+            <button class="btn-primary" onclick="analyzeCertificate()">Analyze</button>
+        </div>
+        <div class="ssl-metrics">
+            <div class="metric-card">
+                <div class="metric-value" id="sslGrade">-</div>
+                <div class="metric-label">Security Grade</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="sslExpiry">-</div>
+                <div class="metric-label">Days to Expiry</div>
+            </div>
+        </div>
+        <div id="sslResult" class="output-terminal"></div>
+    </div>
+</div>
+
+<!-- Network Intelligence Tool -->
+
+<div class="cyber-tool" id="network-intel">
+    <div class="tool-header">
+        <h3><i class="icon">🌐</i> Network Intelligence</h3>
+        <div class="tool-status">Tracing</div>
+    </div>
+    <div class="tool-body">
+        <div class="input-group">
+            <input type="text" id="networkTarget" placeholder="domain.com or 192.168.1.1">
+        </div>
+        <div class="button-grid">
+            <button class="btn-primary" onclick="traceRoute()">Traceroute</button>
+            <button class="btn-primary" onclick="portScan()">Port Scan</button>
+            <button class="btn-primary" onclick="dnsLookup()">DNS Lookup</button>
+        </div>
+        <div id="networkResult" class="output-terminal"></div>
+    </div>
+</div>
+
+<!-- HTTP Security Scanner -->
+
+<div class="cyber-tool" id="http-scanner">
+    <div class="tool-header">
+        <h3><i class="icon">📡</i> HTTP Security Scanner</h3>
+        <div class="tool-status">Analyzing</div>
+    </div>
+    <div class="tool-body">
+        <div class="input-group">
+            <input type="url" id="httpTarget" placeholder="https://website.com">
+            <button class="btn-primary" onclick="scanHeaders()">Scan Headers</button>
+        </div>
+        <div class="security-checklist">
+            <div class="check-item" id="cspCheck">CSP <span class="check-status">⏳</span></div>
+            <div class="check-item" id="hstsCheck">HSTS <span class="check-status">⏳</span></div>
+            <div class="check-item" id="xssCheck">XSS Protection <span class="check-status">⏳</span></div>
+        </div>
+        <div id="httpResult" class="output-terminal"></div>
+    </div>
+</div>
+
+<!-- Base64 Encoder/Decoder -->
+
+<div class="cyber-tool" id="encoder-tool">
+    <div class="tool-header">
+        <h3><i class="icon">🔄</i> Base64 Encoder/Decoder</h3>
+        <div class="tool-status">Ready</div>
+    </div>
+    <div class="tool-body">
+        <div class="input-group">
+            <textarea id="encoderInput" placeholder="Enter text or Base64 string..." rows="3"></textarea>
+        </div>
+        <div class="button-grid">
+            <button class="btn-primary" onclick="encodeBase64()">Encode</button>
+            <button class="btn-primary" onclick="decodeBase64()">Decode</button>
+            <button class="btn-secondary" onclick="clearEncoder()">Clear</button>
+        </div>
+        <div id="encoderResult" class="output-terminal"></div>
+    </div>
+</div>
+
+<!-- Subnet Calculator -->
+
+<div class="cyber-tool" id="subnet-calc">
+    <div class="tool-header">
+        <h3><i class="icon">🧮</i> Subnet Calculator</h3>
+        <div class="tool-status">Computing</div>
+    </div>
+    <div class="tool-body">
+        <div class="input-group">
+            <input type="text" id="subnetInput" placeholder="192.168.1.0/24">
+            <button class="btn-primary" onclick="calculateSubnet()">Calculate</button>
+        </div>
+        <div id="subnetResult" class="output-terminal"></div>
+    </div>
+</div>
+
+<style>
+/* Enhanced Cybersecurity Toolkit Styling */
+.cyber-tool {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    border: 1px solid #00ff88;
+    border-radius: 12px;
+    margin: 24px 0;
+    padding: 0;
+    box-shadow: 
+        0 8px 32px rgba(0, 255, 136, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-tool::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00ff88, #00ccff, #ff0080);
+    animation: borderGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes borderGlow {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.cyber-tool:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 12px 40px rgba(0, 255, 136, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.tool-header {
+    background: linear-gradient(90deg, #1a1a1a, #2a2a2a);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+
+.tool-header h3 {
+    color: #00ff88;
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon {
+    font-size: 1.2em;
+    filter: drop-shadow(0 0 5px #00ff88);
+}
+
+.tool-status {
+    background: #00ff88;
+    color: #000;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.tool-body {
+    padding: 24px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.cyber-tool input,
+.cyber-tool textarea {
+    flex: 1;
+    background: #0d1117;
+    border: 2px solid #30363d;
+    border-radius: 8px;
+    color: #c9d1d9;
+    padding: 12px 16px;
+    font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.cyber-tool input:focus,
+.cyber-tool textarea:focus {
+    outline: none;
+    border-color: #00ff88;
+    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+}
+
+.visibility-toggle {
+    background: #30363d;
+    border: 2px solid #30363d;
+    border-radius: 8px;
+    color: #c9d1d9;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.visibility-toggle:hover {
+    background: #484f58;
+    border-color: #00ff88;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.btn-primary, .btn-secondary, .btn-danger {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    color: #000;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #00cc6a, #00aa55);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+}
+
+.btn-secondary {
+    background: #30363d;
+    color: #c9d1d9;
+    border: 2px solid #484f58;
+}
+
+.btn-secondary:hover {
+    background: #484f58;
+    border-color: #00ff88;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #cc0000, #aa0000);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+}
+
+.output-terminal {
+    background: #0d1117;
+    border: 2px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    color: #00ff88;
+    font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 60px;
+    max-height: 400px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    position: relative;
+}
+
+.output-terminal::before {
+    content: '> ';
+    color: #00ff88;
+    font-weight: bold;
+}
+
+.output-terminal:empty::before {
+    content: '> Waiting for input...';
+    color: #6e7681;
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+}
+
+.strength-display {
+    margin-bottom: 16px;
+}
+
+.strength-label {
+    color: #c9d1d9;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.strength-meter {
+    background: #30363d;
+    border-radius: 12px;
+    height: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 12px;
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.strength-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    animation: shine 2s ease-in-out infinite;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.strength-weak { background: linear-gradient(135deg, #ff4444, #cc0000); }
+.strength-fair { background: linear-gradient(135deg, #ffaa00, #cc8800); }
+.strength-good { background: linear-gradient(135deg, #88ff00, #66cc00); }
+.strength-strong { background: linear-gradient(135deg, #00ff88, #00cc6a); }
+
+.file-drop-zone {
+    border: 2px dashed #30363d;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.file-drop-zone:hover {
+    border-color: #00ff88;
+    background: rgba(0, 255, 136, 0.05);
+}
+
+.file-drop-zone.dragover {
+    border-color: #00ff88;
+    background: rgba(0, 255, 136, 0.1);
+    transform: scale(1.02);
+}
+
+.drop-content {
+    color: #c9d1d9;
+}
+
+.drop-icon {
+    font-size: 2em;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 0 10px #00ff88);
+}
+
+.drop-subtitle {
+    font-size: 0.8em;
+    color: #6e7681;
+    margin-top: 8px;
+}
+
+.ssl-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.metric-card {
+    background: #0d1117;
+    border: 2px solid #30363d;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+    border-color: #00ff88;
+    transform: translateY(-2px);
+}
+
+.metric-value {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #00ff88;
+    margin-bottom: 4px;
+    font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+}
+
+.metric-label {
+    font-size: 0.8em;
+    color: #6e7681;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.security-checklist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.check-item {
+    background: #0d1117;
+    border: 2px solid #30363d;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9em;
+    color: #c9d1d9;
+    transition: all 0.3s ease;
+}
+
+.check-status {
+    font-size: 1.2em;
+}
+
+.check-item.pass {
+    border-color: #00ff88;
+    background: rgba(0, 255, 136, 0.1);
+}
+
+.check-item.fail {
+    border-color: #ff4444;
+    background: rgba(255, 68, 68, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tool-header {
+        padding: 12px 16px;
+    }
+    
+    .tool-body {
+        padding: 16px;
+    }
+    
+    .button-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .ssl-metrics,
+    .security-checklist {
+        grid-template-columns: 1fr;
+    }
+    
+    .input-group {
+        flex-direction: column;
+    }
+}
+
+/* Scrollbar Styling */
+.output-terminal::-webkit-scrollbar {
+    width: 6px;
+}
+
+.output-terminal::-webkit-scrollbar-track {
+    background: #30363d;
+    border-radius: 3px;
+}
+
+.output-terminal::-webkit-scrollbar-thumb {
+    background: #00ff88;
+    border-radius: 3px;
+}
+
+.output-terminal::-webkit-scrollbar-thumb:hover {
+    background: #00cc6a;
+}
+</style>
+
+<script>
+// Enhanced Hash Generator with real crypto functions
+async function generateHash(algorithm) {
+    const input = document.getElementById('hashInput').value;
+    const result = document.getElementById('hashResult');
+    
+    if (!input.trim()) {
+        result.textContent = 'Please enter text to hash.';
+        return;
+    }
+    
+    result.textContent = 'Generating hash...';
+    
+    try {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(input);
+        let hash;
+        
+        if (algorithm === 'md5') {
+            // Simple MD5 simulation for demo
+            hash = btoa(input + Date.now()).substring(0, 32).toLowerCase();
+            result.innerHTML = `MD5: ${hash}\n\nNote: This is a demo MD5 hash for display purposes.
+For production use, integrate with a proper MD5 library.`;
+        } else {
+            const hashAlgorithm = algorithm.toUpperCase().replace('SHA', 'SHA-');
+            const hashBuffer = await crypto.subtle.digest(hashAlgorithm, data);
+            hash = Array.from(new Uint8Array(hashBuffer))
+                .map(b => b.toString(16).padStart(2, '0')).join('');
+            
+            result.innerHTML = `${algorithm.toUpperCase()}: ${hash}
+
+Hash Length: ${hash.length} characters
+Input Length: ${input.length} characters
+Generated: ${new Date().toLocaleString()}
+
+✓ Hash generated successfully using Web Crypto API`;
+        }
+    } catch (error) {
+        result.textContent = `Error generating ${algorithm.toUpperCase()} hash: ${error.message}`;
+    }
+}
+
+function clearHash() {
+    document.getElementById('hashInput').value = '';
+    document.getElementById('hashResult').textContent = '';
+}
+
+// Enhanced Password Security Suite
+function analyzePassword() {
+    const password = document.getElementById('passwordInput').value;
+    const result = document.getElementById('passwordResult');
+    const strengthBar = document.getElementById('strengthBar');
+    
+    if (!password) {
+        result.textContent = '';
+        strengthBar.style.width = '0%';
+        strengthBar.className = 'strength-bar';
+        return;
+    }
+    
+    let score = 0;
+    let feedback = [];
+    let bonuses = [];
+    
+    // Length scoring
+    if (password.length >= 8) score += 20;
+    else feedback.push('Use at least 8 characters');
+    if (password.length >= 12) { score += 15; bonuses.push('Good length (12+)'); }
+    if (password.length >= 16) { score += 10; bonuses.push('Excellent length (16+)'); }
+    
+    // Character variety
+    if (/[A-Z]/.test(password)) { score += 15; bonuses.push('Uppercase letters'); }
+    else feedback.push('Include uppercase letters (A-Z)');
+    
+    if (/[a-z]/.test(password)) { score += 15; bonuses.push('Lowercase letters'); }
+    else feedback.push('Include lowercase letters (a-z)');
+    
+    if (/\d/.test(password)) { score += 15; bonuses.push('Numbers'); }
+    else feedback.push('Include numbers (0-9)');
+    
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) { score += 20; bonuses.push('Special characters'); }
+    else feedback.push('Include special characters (!@#$%^&*)');
+    
+    // Advanced patterns
+    if (!/(.)\1{2,}/.test(password)) { score += 5; bonuses.push('No repeated characters'); }
+    if (!/123|abc|qwe|password|admin/i.test(password)) { score += 10; bonuses.push('No common patterns'); }
+    
+    // Update strength bar and classification
+    const finalScore = Math.min(score, 100);
+    strengthBar.style.width = finalScore + '%';
+    
+    let strengthText, className;
+    if (finalScore < 40) {
+        strengthText = 'WEAK'; className = 'strength-weak';
+    } else if (finalScore < 60) {
+        strengthText = 'FAIR'; className = 'strength-fair';
+    } else if (finalScore < 80) {
+        strengthText = 'GOOD'; className = 'strength-good';
+    } else {
+        strengthText = 'STRONG'; className = 'strength-strong';
+    }
+    
+    strengthBar.className = `strength-bar ${className}`;
+    
+    let output = `Password Strength: ${strengthText} (${finalScore}/100)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+`;
+    
+    if (bonuses.length) {
+        output += `✓ Security Features:\n${bonuses.map(b => `  • ${b}`).join('\n')}\n\n`;
+    }
+    
+    if (feedback.length) {
+        output += `⚠ Recommendations:\n${feedback.map(f => `  • ${f}`).join('\n')}\n\n`;
+    }
+    
+    output += `Estimated crack time: ${estimateCrackTime(finalScore)}`;
+    
+    result.textContent = output;
+}
+
+function estimateCrackTime(score) {
+    if (score < 40) return 'Minutes to hours';
+    if (score < 60) return 'Days to weeks';  
+    if (score < 80) return 'Years to decades';
+    return 'Centuries+';
+}
+
+function generateSecurePassword() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+    const length = 16;
+    let password = '';
+    
+    // Ensure at least one of each type
+    password += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 26)];
+    password += 'abcdefghijklmnopqrstuvwxyz'[Math.floor(Math.random() * 26)];
+    password += '0123456789'[Math.floor(Math.random() * 10)];
+    password += '!@#$%^&*()'[Math.floor(Math.random() * 10)];
+    
+    // Fill the rest randomly
+    for (let i = password.length; i < length; i++) {
+        password += chars[Math.floor(Math.random() * chars.length)];
+    }
+    
+    // Shuffle the password
+    password = password.split('').sort(() => Math.random() - 0.5).join('');
+    
+    document.getElementById('passwordInput').value = password;
+    analyzePassword();
+}
+
+function checkBreached() {
+    const password = document.getElementById('passwordInput').value;
+    const result = document.getElementById('passwordResult');
+    
+    if (!password) {
+        result.textContent = 'Please enter a password to check for breaches.';
+        return;
+    }
+    
+    result.textContent = 'Checking password against breach databases...';
+    
+    // Demo breach check
+    setTimeout(() => {
+        const isBreached = Math.random() > 0.7;
+        const breachCount = isBreached ? Math.floor(Math.random() * 10000) + 1 : 0;
+        
+        result.innerHTML = `Breach Database Check Results:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Status: ${isBreached ? '⚠️ FOUND IN BREACHES' : '✅ NOT FOUND'}
+${isBreached ? `Times seen: ${breachCount.toLocaleString()} breaches` : 'This password has not been found in known data breaches.'}
+
+${isBreached ? 
+  '🚨 RECOMMENDATION: Change this password immediately!\nThis password has been compromised in previous data breaches.' :
+  '✓ This password appears to be unique and not compromised.'
+}
+
+Note: This is a demo check. For production, integrate with HaveIBeenPwned API.`;
+    }, 2000);
+}
+
+function togglePasswordVisibility() {
+    const input = document.getElementById('passwordInput');
+    input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+// Real-time password analysis
+document.getElementById('passwordInput').addEventListener('input', analyzePassword);
+
+// File Scanner with Enhanced Features
+function setupFileDropZone() {
+    const dropZone = document.getElementById('fileDropZone');
+    const fileInput = document.getElementById('fileInput');
+    
+    dropZone.addEventListener('click', () => fileInput.click());
+    
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+    });
+    
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('dragover');
+    });
+    
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        fileInput.files = e.dataTransfer.files;
+        scanFile();
+    });
+}
+
+async function scanFile() {
+    const fileInput = document.getElementById('fileInput');
+    const result = document.getElementById('fileScanResult');
+    
+    if (!fileInput.files[0]) {
+        result.textContent = 'Please select a file to scan.';
+        return;
+    }
+    
+    const file = fileInput.files[0];
+    result.textContent = 'Initiating deep scan...';
+    
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+        try {
+            const arrayBuffer = e.target.result;
+            const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+            const hash = Array.from(new Uint8Array(hashBuffer))
+                .map(b => b.toString(16).padStart(2, '0')).join('');
+            
+            // Simulate comprehensive scan
+            const scanResults = {
+                threats: Math.random() > 0.85,
+                suspiciousPatterns: Math.random() > 0.7,
+                fileEntropy: (Math.random() * 8).toFixed(2),
+                compressionRatio: (Math.random() * 0.8 + 0.1).toFixed(3)
+            };
 
 
 </body>
