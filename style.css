@@ -1,21 +1,15 @@
 /* Banner */
 .banner-section {
+  background: url('banner.png') no-repeat center center;
+  background-size: cover;
+  height: 250px;
+  position: relative;
   display: flex;
-  justify-content: center;   /* center horizontally */
-  align-items: center;       /* center vertically */
-  width: 100%;
-  height: 250px;             /* adjust to your banner height */
-  overflow: hidden;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   padding: 20px;
   color: white;
-  position: relative;
-}
-
-.banner-img {
-  max-width: 100%;           /* responsive */
-  height: auto;              /* keep aspect ratio */
-  object-fit: cover;         /* ensures it fills without stretching */
 }
 
 .banner-content {
@@ -287,6 +281,4 @@
 
   .center-btn .btn-accent {
     padding: 12px 32px;
-    font-size: 0.95rem;
-  }
-}
+    font-size: 0.95rem
