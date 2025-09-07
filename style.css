@@ -179,7 +179,7 @@ transform: translateY(-1px) scale(1.02);
 
 /* Banner */
 .banner-section {
-    background: url('banner.png') no-repeat center center;
+    background: url('image/banner.png') no-repeat center center;
     background-size: cover;
     height: 250px;
     position: relative;
