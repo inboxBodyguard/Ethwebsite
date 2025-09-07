@@ -177,16 +177,12 @@ left: 100%;
 transform: translateY(-1px) scale(1.02);
 }
 
-/* Banner Section - FIXED VERSION */
+/* Banner */
 .banner-section {
 background: url(‘banner.png’) no-repeat center center;
 background-size: cover;
 height: 250px;
-width: 100%;              /* makes it span full width */
-margin: 0 auto;           /* centers it if you give it a max-width */
 position: relative;
-/* Debug - remove this line once your image loads */
-background-color: #f0f0f0;
 }
 
 /* Responsive adjustments */
