@@ -177,13 +177,13 @@ left: 100%;
 transform: translateY(-1px) scale(1.02);
 }
 
-/* Banner */
 .banner-section {
     background: url("banner.png") no-repeat center center;
-    background-size: contain;   /* shows whole image */
+    background-size: contain;
     background-position: center;
-    height: 250px;
     width: 100%;
+    height: auto;         /* let height adjust */
+    aspect-ratio: 16/9;   /* keeps banner proportions */
 }
 
 /* Tablet */
