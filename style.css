@@ -177,144 +177,159 @@ left: 100%;
 transform: translateY(-1px) scale(1.02);
 }
 
-/* ✅ Fixed Banner Section */
+/* ✅ SUPER AGGRESSIVE BANNER FIXES - WILL OVERRIDE EVERYTHING */
 .banner-section {
-background: url(“banner.jpg”) no-repeat center center;
-background-size: cover;
-background-attachment: scroll;
-background-color: #000;
-min-height: 100vh;
-width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-text-align: center;
-padding: 0 20px;
-box-sizing: border-box;
+background: url(“banner.jpg”) no-repeat center center !important;
+background-size: cover !important;
+background-attachment: scroll !important;
+background-color: #000 !important;
+min-height: 100vh !important;
+width: 100% !important;
+display: flex !important;
+flex-direction: column !important;
+align-items: center !important;
+justify-content: center !important;
+text-align: center !important;
+padding: 0 20px !important;
+box-sizing: border-box !important;
 }
 
-.banner-section h1 {
-color: #fff;
-margin: 0 0 15px;
-font-size: 3.5rem;
-font-weight: 700;
-line-height: 1.2;
+.banner-section h1,
+.banner-section .banner-title,
+.banner-section h1.banner-title {
+color: #fff !important;
+margin: 0 0 15px 0 !important;
+font-size: 3.5rem !important;
+font-weight: 700 !important;
+line-height: 1.2 !important;
+max-width: 100% !important;
+overflow-wrap: break-word !important;
+word-wrap: break-word !important;
 }
 
-.banner-section p {
-color: #fff;
-margin: 0 0 15px;
-font-size: 1.3rem;
-max-width: 800px;
-line-height: 1.6;
+.banner-section p,
+.banner-section .banner-subtitle {
+color: #fff !important;
+margin: 0 0 15px 0 !important;
+font-size: 1.3rem !important;
+max-width: 800px !important;
+line-height: 1.6 !important;
+overflow-wrap: break-word !important;
+word-wrap: break-word !important;
 }
 
 .banner-section .btn-learn {
-margin-top: 20px;
+margin-top: 20px !important;
 }
 
 .btn-services {
-padding: 14px 42px;
-font-size: 1.1rem;
-font-weight: 600;
-background: linear-gradient(135deg, #6610f2 0%, #8a2be2 100%);
-border: none;
-border-radius: 12px;
-color: #ffffff;
-text-decoration: none;
-display: inline-block;
-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-box-shadow: 0 4px 15px rgba(102, 16, 242, 0.3),
-inset 0 1px 0 rgba(255, 255, 255, 0.2);
-position: relative;
-overflow: hidden;
+padding: 14px 42px !important;
+font-size: 1.1rem !important;
+font-weight: 600 !important;
+background: linear-gradient(135deg, #6610f2 0%, #8a2be2 100%) !important;
+border: none !important;
+border-radius: 12px !important;
+color: #ffffff !important;
+text-decoration: none !important;
+display: inline-block !important;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+box-shadow: 0 4px 15px rgba(102, 16, 242, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+position: relative !important;
+overflow: hidden !important;
 }
 
 .btn-services::before {
-content: ‘’;
-position: absolute;
-top: 0;
-left: -100%;
-width: 100%;
-height: 100%;
-background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-transition: left 0.5s ease;
+content: ‘’ !important;
+position: absolute !important;
+top: 0 !important;
+left: -100% !important;
+width: 100% !important;
+height: 100% !important;
+background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent) !important;
+transition: left 0.5s ease !important;
 }
 
 .btn-services:hover {
-transform: translateY(-3px) scale(1.05);
-box-shadow: 0 8px 25px rgba(102, 16, 242, 0.4),
-inset 0 1px 0 rgba(255, 255, 255, 0.3);
+transform: translateY(-3px) scale(1.05) !important;
+box-shadow: 0 8px 25px rgba(102, 16, 242, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
 .btn-services:hover::before {
-left: 100%;
+left: 100% !important;
 }
 
 .btn-services:active {
-transform: translateY(-1px) scale(1.02);
+transform: translateY(-1px) scale(1.02) !important;
 }
 
-/* Tablet */
+/* Tablet - FORCE OVERRIDE */
 @media (max-width: 1024px) {
 .banner-section {
-min-height: 90vh;
+min-height: 90vh !important;
 }
 
-.banner-section h1 {
-font-size: 2.8rem;
+.banner-section h1,
+.banner-section .banner-title,
+.banner-section h1.banner-title {
+font-size: 2.8rem !important;
 }
 
-.banner-section p {
-font-size: 1.2rem;
+.banner-section p,
+.banner-section .banner-subtitle {
+font-size: 1.2rem !important;
 }
 }
 
-/* Mobile */
+/* Mobile - FORCE OVERRIDE */
 @media (max-width: 768px) {
 .banner-section {
-min-height: 85vh;
-background-position: top center;
-padding: 0 15px;
+min-height: 85vh !important;
+background-position: top center !important;
+padding: 0 15px !important;
 }
 
-.banner-section h1 {
-font-size: 2.2rem;
-margin-bottom: 20px;
+.banner-section h1,
+.banner-section .banner-title,
+.banner-section h1.banner-title {
+font-size: 2rem !important;
+margin-bottom: 20px !important;
 }
 
-.banner-section p {
-font-size: 1.1rem;
-margin-bottom: 25px;
+.banner-section p,
+.banner-section .banner-subtitle {
+font-size: 1rem !important;
+margin-bottom: 25px !important;
 }
 
 .btn-services {
-padding: 12px 32px;
-font-size: 1rem;
+padding: 12px 32px !important;
+font-size: 1rem !important;
 }
 }
 
-/* Small phones */
+/* Small phones - FORCE OVERRIDE */
 @media (max-width: 480px) {
 .banner-section {
-min-height: 80vh;
-padding: 0 12px;
+min-height: 80vh !important;
+padding: 0 12px !important;
 }
 
-.banner-section h1 {
-font-size: 1.8rem;
-margin-bottom: 18px;
+.banner-section h1,
+.banner-section .banner-title,
+.banner-section h1.banner-title {
+font-size: 1.5rem !important;
+margin-bottom: 18px !important;
 }
 
-.banner-section p {
-font-size: 1rem;
-margin-bottom: 22px;
+.banner-section p,
+.banner-section .banner-subtitle {
+font-size: 0.9rem !important;
+margin-bottom: 22px !important;
 }
 
 .btn-services {
-padding: 10px 28px;
-font-size: 0.95rem;
+padding: 10px 28px !important;
+font-size: 0.95rem !important;
 }
 
 .services-section {
@@ -351,18 +366,21 @@ font-size: 0.95rem;
 }
 }
 
-/* Extra small phones */
+/* Extra small phones - FORCE OVERRIDE */
 @media (max-width: 360px) {
-.banner-section h1 {
-font-size: 1.6rem;
+.banner-section h1,
+.banner-section .banner-title,
+.banner-section h1.banner-title {
+font-size: 1.3rem !important;
 }
 
-.banner-section p {
-font-size: 0.95rem;
+.banner-section p,
+.banner-section .banner-subtitle {
+font-size: 0.85rem !important;
 }
 
 .btn-services {
-padding: 10px 24px;
-font-size: 0.9rem;
+padding: 10px 24px !important;
+font-size: 0.9rem !important;
 }
 }
