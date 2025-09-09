@@ -182,12 +182,12 @@ html {
   background: url("banner.jpg") no-repeat center center;
   background-size: cover;
   width: 100%;
-  min-height: 70vh;   /* taller for desktops */
+  min-height: 70vh;   /* default desktop */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0 20px;    /* keep text from touching screen edges */
+  padding: 0 20px;
 }
 
 .banner-section .btn-learn {
@@ -197,7 +197,7 @@ html {
 /* Tablet adjustments */
 @media (max-width: 1024px) {
   .banner-section {
-    min-height: 60vh;  /* slightly shorter */
+    min-height: 60vh;
     padding: 0 15px;
   }
 }
@@ -205,59 +205,18 @@ html {
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .banner-section {
-    min-height: 50vh;  /* reduce banner size on phones */
+    min-height: 50vh;
     padding: 0 10px;
   }
 }
 
+/* Small phones */
 @media (max-width: 480px) {
   .banner-section {
-    min-height: 45vh;  /* even smaller for very small devices */
+    min-height: 45vh;
     padding: 0 8px;
   }
-}
 
-
-
-
-   .services-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-
-  .services-section h2 {
-    font-size: 2.3rem;
-    margin-bottom: 50px;
-  }
-
-  .service-card {
-    padding: 30px 25px;
-    border-radius: 18px;
-  }
-
-  .service-card h3 {
-    font-size: 1.5rem;
-  }
-
-  .service-card p {
-    font-size: 1rem;
-  }
-
-  .center-btn {
-    margin-top: 50px;
-  }
-
-  .center-btn .btn-accent {
-    padding: 14px 36px;
-    font-size: 1rem;
-  }
-
-  .banner-section {
-    height: 250px;
-  }
-}
-
-@media (max-width: 480px) {
   .services-section {
     padding: 50px 15px;
   }
@@ -268,6 +227,7 @@ html {
   }
 
   .services-grid {
+    grid-template-columns: 1fr;
     gap: 25px;
   }
 
@@ -330,9 +290,5 @@ html {
 
   .btn-services:active {
     transform: translateY(-1px) scale(1.02);
-  }
-
-  .banner-section {
-    height: 180px;
   }
 }
