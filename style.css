@@ -1,390 +1,273 @@
+/* ================================
+   GLOBAL RESET
+================================== */
 html {
-scroll-behavior: smooth;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
 }
 
-/* Services Section */
+*, *::before, *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================================
+   BANNER SECTION
+================================== */
+.banner-section {
+  position: relative;
+  background: url("banner.jpg") no-repeat center center;
+  background-size: cover;
+  background-attachment: scroll;
+  width: 100%;
+  height: 180px; /* default height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* Overlay */
+.banner-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+/* Text container */
+.banner-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 15px;
+}
+
+.banner-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.banner-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+/* CTA Button */
+.btn-services {
+  padding: 10px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #6610f2 0%, #8a2be2 100%);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 16, 242, 0.3);
+}
+
+.btn-services:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(102, 16, 242, 0.5);
+}
+
+/* ================================
+   SERVICES SECTION
+================================== */
 .services-section {
-padding: 80px 0;
-background: linear-gradient(135deg, #1c1c2e 0%, #242446 50%, #1c1c2e 100%);
-color: #f0f0f0;
-position: relative;
-overflow: hidden;
+  padding: 80px 0;
+  background: linear-gradient(135deg, #1c1c2e 0%, #242446 50%, #1c1c2e 100%);
+  color: #f0f0f0;
+  position: relative;
+  overflow: hidden;
 }
 
 .services-section::before {
-content: ‘’;
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background: radial-gradient(circle at 25% 25%, rgba(13, 110, 253, 0.08) 0%, transparent 50%),
-radial-gradient(circle at 75% 75%, rgba(102, 16, 242, 0.08) 0%, transparent 50%);
-pointer-events: none;
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 25% 25%, rgba(13, 110, 253, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 75% 75%, rgba(102, 16, 242, 0.08) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .services-section h2 {
-text-align: center;
-margin-bottom: 60px;
-font-family: ‘Orbitron’, sans-serif;
-font-weight: 600;
-font-size: 2.8rem;
-background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 30%, #e0e6ff 70%, #d0d6f0 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-position: relative;
-z-index: 1;
+  text-align: center;
+  margin-bottom: 60px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  font-size: 2.8rem;
+  background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 30%, #e0e6ff 70%, #d0d6f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
 }
 
 .services-section h2::after {
-content: ‘’;
-position: absolute;
-bottom: -12px;
-left: 50%;
-transform: translateX(-50%);
-width: 60px;
-height: 3px;
-background: linear-gradient(90deg, #0d6efd, #6610f2);
-border-radius: 2px;
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #0d6efd, #6610f2);
+  border-radius: 2px;
 }
 
 .services-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-gap: 40px;
-position: relative;
-z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  position: relative;
+  z-index: 1;
 }
 
 .service-card {
-background: rgba(28, 28, 46, 0.8);
-backdrop-filter: blur(10px);
-padding: 35px 30px;
-border-radius: 20px;
-border: 1px solid rgba(255, 255, 255, 0.1);
-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-inset 0 1px 0 rgba(255, 255, 255, 0.1);
-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-font-family: ‘Roboto’, sans-serif;
-position: relative;
-overflow: hidden;
+  background: rgba(28, 28, 46, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 35px 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  overflow: hidden;
 }
 
 .service-card::before {
-content: ‘’;
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background: linear-gradient(135deg, rgba(13, 110, 253, 0.1) 0%, rgba(102, 16, 242, 0.1) 100%);
-opacity: 0;
-transition: opacity 0.4s ease;
-pointer-events: none;
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(13, 110, 253, 0.1) 0%, rgba(102, 16, 242, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
 }
 
 .service-card h3 {
-font-family: ‘Orbitron’, sans-serif;
-margin-bottom: 20px;
-font-size: 1.7rem;
-font-weight: 600;
-color: #ffffff;
-transition: all 0.3s ease;
-position: relative;
-z-index: 1;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 20px;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #ffffff;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .service-card p {
-line-height: 1.7;
-color: #e0e0e0;
-font-size: 1.05rem;
-transition: all 0.3s ease;
-position: relative;
-z-index: 1;
+  line-height: 1.7;
+  color: #e0e0e0;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .service-card:hover {
-transform: translateY(-12px) scale(1.02);
-box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
-0 0 0 1px rgba(255, 255, 255, 0.15),
-inset 0 1px 0 rgba(255, 255, 255, 0.2);
-background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
-color: #fff;
-border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+              0 0 0 1px rgba(255, 255, 255, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .service-card:hover::before {
-opacity: 1;
+  opacity: 1;
 }
 
 .service-card:hover h3 {
-color: #ffffff;
-text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .service-card:hover p {
-color: #f8f9ff;
+  color: #f8f9ff;
 }
 
 /* Center button under services */
 .center-btn {
-text-align: center;
-margin-top: 60px;
-position: relative;
-z-index: 1;
+  text-align: center;
+  margin-top: 60px;
+  position: relative;
+  z-index: 1;
 }
 
 .center-btn .btn-accent {
-padding: 16px 48px;
-font-size: 1.1rem;
-font-weight: 600;
-background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
-border: none;
-border-radius: 12px;
-color: #ffffff;
-text-decoration: none;
-display: inline-block;
-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3),
-inset 0 1px 0 rgba(255, 255, 255, 0.2);
-position: relative;
-overflow: hidden;
-}
-
-.center-btn .btn-accent::before {
-content: ‘’;
-position: absolute;
-top: 0;
-left: -100%;
-width: 100%;
-height: 100%;
-background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-transition: left 0.5s ease;
+  padding: 16px 48px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
 }
 
 .center-btn .btn-accent:hover {
-transform: translateY(-3px) scale(1.05);
-box-shadow: 0 8px 25px rgba(13, 110, 253, 0.4),
-inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(13, 110, 253, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.center-btn .btn-accent:hover::before {
-left: 100%;
-}
+/* ================================
+   RESPONSIVE FIXES
+================================== */
 
-.center-btn .btn-accent:active {
-transform: translateY(-1px) scale(1.02);
-}
-
-/* ✅ SUPER AGGRESSIVE BANNER FIXES - WILL OVERRIDE EVERYTHING */
-.banner-section {
-background: url(“banner.jpg”) no-repeat center center !important;
-background-size: cover !important;
-background-attachment: scroll !important;
-background-color: #000 !important;
-height: 250px !important;
-width: 100% !important;
-display: flex !important;
-flex-direction: column !important;
-align-items: center !important;
-justify-content: center !important;
-text-align: center !important;
-padding: 0 20px !important;
-box-sizing: border-box !important;
-}
-
-.banner-section h1,
-.banner-section .banner-title,
-.banner-section h1.banner-title {
-color: #fff !important;
-margin: 0 0 15px 0 !important;
-font-size: 3.5rem !important;
-font-weight: 700 !important;
-line-height: 1.2 !important;
-max-width: 100% !important;
-overflow-wrap: break-word !important;
-word-wrap: break-word !important;
-}
-
-.banner-section p,
-.banner-section .banner-subtitle {
-color: #fff !important;
-margin: 0 0 15px 0 !important;
-font-size: 1.3rem !important;
-max-width: 800px !important;
-line-height: 1.6 !important;
-overflow-wrap: break-word !important;
-word-wrap: break-word !important;
-}
-
-.banner-section .btn-learn {
-margin-top: 20px !important;
-}
-
-.btn-services {
-padding: 14px 42px !important;
-font-size: 1.1rem !important;
-font-weight: 600 !important;
-background: linear-gradient(135deg, #6610f2 0%, #8a2be2 100%) !important;
-border: none !important;
-border-radius: 12px !important;
-color: #ffffff !important;
-text-decoration: none !important;
-display: inline-block !important;
-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-box-shadow: 0 4px 15px rgba(102, 16, 242, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-position: relative !important;
-overflow: hidden !important;
-}
-
-.btn-services::before {
-content: ‘’ !important;
-position: absolute !important;
-top: 0 !important;
-left: -100% !important;
-width: 100% !important;
-height: 100% !important;
-background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent) !important;
-transition: left 0.5s ease !important;
-}
-
-.btn-services:hover {
-transform: translateY(-3px) scale(1.05) !important;
-box-shadow: 0 8px 25px rgba(102, 16, 242, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
-}
-
-.btn-services:hover::before {
-left: 100% !important;
-}
-
-.btn-services:active {
-transform: translateY(-1px) scale(1.02) !important;
-}
-
-/* Tablet - FORCE OVERRIDE */
+/* Tablets */
 @media (max-width: 1024px) {
-.banner-section {
-height: 200px !important;
+  .banner-section { height: 160px; }
+  .banner-title { font-size: 2rem; }
+  .banner-subtitle { font-size: 1rem; }
 }
 
-.banner-section h1,
-.banner-section .banner-title,
-.banner-section h1.banner-title {
-font-size: 2.2rem !important;
-}
-
-.banner-section p,
-.banner-section .banner-subtitle {
-font-size: 1rem !important;
-}
-}
-
-/* Mobile - FORCE OVERRIDE */
+/* Mobile */
 @media (max-width: 768px) {
-.banner-section {
-height: 180px !important;
-background-position: center center !important;
-padding: 0 15px !important;
+  .banner-section { height: 140px; padding: 0 10px; }
+  .banner-title { font-size: 1.6rem; }
+  .banner-subtitle { font-size: 0.9rem; }
+  .btn-services { padding: 8px 20px; font-size: 0.9rem; }
 }
 
-.banner-section h1,
-.banner-section .banner-title,
-.banner-section h1.banner-title {
-font-size: 1.6rem !important;
-margin-bottom: 8px !important;
-}
-
-.banner-section p,
-.banner-section .banner-subtitle {
-font-size: 0.9rem !important;
-margin-bottom: 12px !important;
-}
-
-.btn-services {
-padding: 8px 20px !important;
-font-size: 0.85rem !important;
-}
-}
-
-/* Small phones - FORCE OVERRIDE */
+/* Small phones */
 @media (max-width: 480px) {
-.banner-section {
-height: 160px !important;
-padding: 0 10px !important;
+  .banner-section { height: 120px; }
+  .banner-title { font-size: 1.3rem; }
+  .banner-subtitle { font-size: 0.8rem; }
+  .btn-services { padding: 6px 16px; font-size: 0.8rem; }
+  .services-section { padding: 50px 15px; }
+  .services-section h2 { font-size: 2rem; margin-bottom: 40px; }
+  .services-grid { grid-template-columns: 1fr; gap: 25px; }
+  .service-card { padding: 25px 20px; border-radius: 16px; }
+  .service-card h3 { font-size: 1.4rem; margin-bottom: 15px; }
+  .center-btn { margin-top: 40px; }
+  .center-btn .btn-accent { padding: 12px 32px; font-size: 0.95rem; }
 }
 
-.banner-section h1,
-.banner-section .banner-title,
-.banner-section h1.banner-title {
-font-size: 1.3rem !important;
-margin-bottom: 6px !important;
-}
-
-.banner-section p,
-.banner-section .banner-subtitle {
-font-size: 0.8rem !important;
-margin-bottom: 10px !important;
-}
-
-.btn-services {
-padding: 6px 16px !important;
-font-size: 0.8rem !important;
-}
-
-.services-section {
-padding: 50px 15px;
-}
-
-.services-section h2 {
-font-size: 2rem;
-margin-bottom: 40px;
-}
-
-.services-grid {
-grid-template-columns: 1fr;
-gap: 25px;
-}
-
-.service-card {
-padding: 25px 20px;
-border-radius: 16px;
-}
-
-.service-card h3 {
-font-size: 1.4rem;
-margin-bottom: 15px;
-}
-
-.center-btn {
-margin-top: 40px;
-}
-
-.center-btn .btn-accent {
-padding: 12px 32px;
-font-size: 0.95rem;
-}
-}
-
-/* Extra small phones - FORCE OVERRIDE */
+/* Extra small phones */
 @media (max-width: 360px) {
-.banner-section {
-height: 140px !important;
-}
-
-.banner-section h1,
-.banner-section .banner-title,
-.banner-section h1.banner-title {
-font-size: 1.1rem !important;
-}
-
-.banner-section p,
-.banner-section .banner-subtitle {
-font-size: 0.75rem !important;
-}
-
-.btn-services {
-padding: 6px 14px !important;
-font-size: 0.75rem !important;
-}
+  .banner-section { height: 110px; }
+  .banner-title { font-size: 1.1rem; }
+  .banner-subtitle { font-size: 0.75rem; }
+  .btn-services { padding: 5px 14px; font-size: 0.75rem; }
 }
