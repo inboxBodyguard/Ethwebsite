@@ -177,14 +177,27 @@ html {
   transform: translateY(-1px) scale(1.02);
 }
 
+/* ✅ Fixed Banner Section */
 .banner-section {
   background: url("banner.jpg") no-repeat center center;
-  background-size: contain; /* shows full image */
-  background-color: #000;   /* fills the space around */
-  min-height: 50vh;         /* adapts to screen height */
+  background-size: cover;       /* fill section fully */
+  background-color: #000;       /* fallback */
+  min-height: 100vh;            /* full screen */
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
+.banner-section h1,
+.banner-section p {
+  color: #fff;
+  margin: 0 0 15px;
+}
 
 .banner-section .btn-learn {
   margin-top: 20px;
@@ -193,7 +206,7 @@ html {
 /* Tablet adjustments */
 @media (max-width: 1024px) {
   .banner-section {
-    min-height: 60vh;
+    min-height: 80vh;
     padding: 0 15px;
   }
 }
@@ -201,16 +214,32 @@ html {
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .banner-section {
-    min-height: 50vh;
+    min-height: 70vh;
     padding: 0 10px;
+  }
+
+  .banner-section h1 {
+    font-size: 1.8rem;
+  }
+
+  .banner-section p {
+    font-size: 1rem;
   }
 }
 
 /* Small phones */
 @media (max-width: 480px) {
   .banner-section {
-    min-height: 45vh;
+    min-height: 60vh;
     padding: 0 8px;
+  }
+
+  .banner-section h1 {
+    font-size: 1.5rem;
+  }
+
+  .banner-section p {
+    font-size: 0.9rem;
   }
 
   .services-section {
