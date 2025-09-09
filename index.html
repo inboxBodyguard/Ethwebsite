@@ -209,15 +209,16 @@
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
         /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .banner-section { height: 150px; }
-            h2 { font-size: 2rem; }
-            h3 { font-size: 1.75rem; }
-            .card-body { padding: 1.5rem; }
-            .btn-lg { font-size: 1rem; }
-            .input-group-lg .form-control { font-size: 1rem; min-height: 60px; }
-        }
-    </style>
+@media (max-width: 768px) {
+    .banner-section { 
+        min-height: 50vh;   /* scale with screen height instead of fixed 150px */
+    }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.5rem; }
+    .card-body { padding: 1.25rem; }
+    .btn-lg { font-size: 0.95rem; }
+    .input-group-lg .form-control { font-size: 0.95rem; min-height: 55px; }
+}
 </head>
 <body>
     <!-- Alert -->
@@ -278,15 +279,18 @@
 <section class="banner-section d-flex align-items-center justify-content-center">
   <a href="#services" class="btn-learn btn btn-primary btn-lg">Learn More</a>
 </section>
-
 <!-- Welcome Section -->
 <section class="py-5 scroll-fade">
   <div class="container text-center">
-    <h2 class="mb-4">Welcome to EZM Cyber</h2>
-    <p class="lead mb-5">Your trusted source for cybersecurity insights, tools, and guidance.</p>
+    <h2 class="mb-4">Building Digital Trust with EZM Cyber</h2>
+    <p class="lead mb-5">
+      We help businesses stay secure with expert guidance, modern tools, 
+      and proven cybersecurity strategies—empowering you to focus on growth with confidence.
+    </p>
     <a href="#" class="btn btn-primary btn-lg">Watch Video</a>
   </div>
 </section>
+
 
 <!-- Services (target for #services) -->
 <section id="services" class="section-light scroll-fade">
