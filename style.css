@@ -177,18 +177,14 @@ html {
   transform: translateY(-1px) scale(1.02);
 }
 
-/* Responsive Banner Section */
 .banner-section {
   background: url("banner.jpg") no-repeat center center;
-  background-size: cover;
+  background-size: contain; /* shows full image */
+  background-color: #000;   /* fills the space around */
+  min-height: 50vh;         /* adapts to screen height */
   width: 100%;
-  min-height: 70vh;   /* default desktop */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 20px;
 }
+
 
 .banner-section .btn-learn {
   margin-top: 20px;
