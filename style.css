@@ -180,36 +180,19 @@ html {
 /* Responsive Banner Section */
 .banner-section {
   background: url("banner.jpg") no-repeat center center;
-  background-size: cover;
+  background-size: cover;   /* cover ensures full background fill */
   background-position: center;
   width: 100%;
-  min-height: 60vh;   /* scales with screen height */
+  min-height: 60vh;         /* scales with screen height */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Tablet */
-@media (max-width: 1024px) {
-  .banner-section {
-    height: 300px;
-  }
-}
 
-/* Mobile */
-@media (max-width: 600px) {
-  .banner-section {
-    height: 200px;
-  }
-}
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .services-section {
-    padding: 60px 20px;
-  }
 
-  .services-grid {
+   .services-grid {
     grid-template-columns: 1fr;
     gap: 30px;
   }
