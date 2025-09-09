@@ -180,13 +180,41 @@ html {
 /* Responsive Banner Section */
 .banner-section {
   background: url("banner.jpg") no-repeat center center;
-  background-size: cover;   /* cover ensures full background fill */
-  background-position: center;
+  background-size: cover;
   width: 100%;
-  min-height: 60vh;         /* scales with screen height */
+  min-height: 70vh;   /* taller for desktops */
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  padding: 0 20px;    /* keep text from touching screen edges */
+}
+
+.banner-section .btn-learn {
+  margin-top: 20px;
+}
+
+/* Tablet adjustments */
+@media (max-width: 1024px) {
+  .banner-section {
+    min-height: 60vh;  /* slightly shorter */
+    padding: 0 15px;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .banner-section {
+    min-height: 50vh;  /* reduce banner size on phones */
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-section {
+    min-height: 45vh;  /* even smaller for very small devices */
+    padding: 0 8px;
+  }
 }
 
 
