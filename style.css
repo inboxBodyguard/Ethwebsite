@@ -183,7 +183,7 @@ background: url(“banner.jpg”) no-repeat center center !important;
 background-size: cover !important;
 background-attachment: scroll !important;
 background-color: #000 !important;
-min-height: 100vh !important;
+height: 250px !important;
 width: 100% !important;
 display: flex !important;
 flex-direction: column !important;
@@ -265,71 +265,71 @@ transform: translateY(-1px) scale(1.02) !important;
 /* Tablet - FORCE OVERRIDE */
 @media (max-width: 1024px) {
 .banner-section {
-min-height: 90vh !important;
+height: 200px !important;
 }
 
 .banner-section h1,
 .banner-section .banner-title,
 .banner-section h1.banner-title {
-font-size: 2.8rem !important;
+font-size: 2.2rem !important;
 }
 
 .banner-section p,
 .banner-section .banner-subtitle {
-font-size: 1.2rem !important;
+font-size: 1rem !important;
 }
 }
 
 /* Mobile - FORCE OVERRIDE */
 @media (max-width: 768px) {
 .banner-section {
-min-height: 85vh !important;
-background-position: top center !important;
+height: 180px !important;
+background-position: center center !important;
 padding: 0 15px !important;
 }
 
 .banner-section h1,
 .banner-section .banner-title,
 .banner-section h1.banner-title {
-font-size: 2rem !important;
-margin-bottom: 20px !important;
+font-size: 1.6rem !important;
+margin-bottom: 8px !important;
 }
 
 .banner-section p,
 .banner-section .banner-subtitle {
-font-size: 1rem !important;
-margin-bottom: 25px !important;
+font-size: 0.9rem !important;
+margin-bottom: 12px !important;
 }
 
 .btn-services {
-padding: 12px 32px !important;
-font-size: 1rem !important;
+padding: 8px 20px !important;
+font-size: 0.85rem !important;
 }
 }
 
 /* Small phones - FORCE OVERRIDE */
 @media (max-width: 480px) {
 .banner-section {
-min-height: 80vh !important;
-padding: 0 12px !important;
+height: 160px !important;
+padding: 0 10px !important;
 }
 
 .banner-section h1,
 .banner-section .banner-title,
 .banner-section h1.banner-title {
-font-size: 1.5rem !important;
-margin-bottom: 18px !important;
+font-size: 1.3rem !important;
+margin-bottom: 6px !important;
 }
 
 .banner-section p,
 .banner-section .banner-subtitle {
-font-size: 0.9rem !important;
-margin-bottom: 22px !important;
+font-size: 0.8rem !important;
+margin-bottom: 10px !important;
 }
 
 .btn-services {
-padding: 10px 28px !important;
-font-size: 0.95rem !important;
+padding: 6px 16px !important;
+font-size: 0.8rem !important;
 }
 
 .services-section {
@@ -368,19 +368,23 @@ font-size: 0.95rem;
 
 /* Extra small phones - FORCE OVERRIDE */
 @media (max-width: 360px) {
+.banner-section {
+height: 140px !important;
+}
+
 .banner-section h1,
 .banner-section .banner-title,
 .banner-section h1.banner-title {
-font-size: 1.3rem !important;
+font-size: 1.1rem !important;
 }
 
 .banner-section p,
 .banner-section .banner-subtitle {
-font-size: 0.85rem !important;
+font-size: 0.75rem !important;
 }
 
 .btn-services {
-padding: 10px 24px !important;
-font-size: 0.9rem !important;
+padding: 6px 14px !important;
+font-size: 0.75rem !important;
 }
 }
