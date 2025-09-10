@@ -76,10 +76,12 @@
         }
 
                    .banner-section {
-    background: url("banner.jpg") no-repeat center center;
-    background-size: cover;  /* fills the box, might crop */
-    height: 250px;
-    width: 100%;
+  position: relative;
+  width: 100%;
+  background: url("banner.jpg") no-repeat center center;
+  background-size: cover;
+  min-height: 250px;
+  aspect-ratio: 16 / 6; /* keeps it responsive */
 }
 
 
