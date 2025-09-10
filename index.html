@@ -230,7 +230,7 @@
     </div>
 
     <!-- Navigation -->
-<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-transparent">
   <div class="container">
     <a class="navbar-brand" href="index.html">EZM Cyber</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
@@ -240,9 +240,8 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-
         <!-- Main pages -->
-        <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
         <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
@@ -251,19 +250,25 @@
         <li class="nav-item"><a class="nav-link" href="videos.html">Videos</a></li>
 
         <!-- Fixed styling for privacy & forum -->
-        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
-        <li class="nav-item"><a class="nav-link" href="community-forum.html">Community Forum</a></li>
+        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy</a></li>
+        <li class="nav-item"><a class="nav-link" href="community-forum.html">Forum</a></li>
 
-        <!-- User & Newsletter -->
-        <li class="nav-item"><a class="nav-link" href="signup.html">Sign Up</a></li>
-        <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
-        <li class="nav-item"><a class="nav-link" href="newsletter.html">Newsletter</a></li>
+        <!-- User & Newsletter Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" 
+             data-bs-toggle="dropdown" aria-expanded="false">Get Involved</a>
+          <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
+            <li><a class="dropdown-item" href="register.html">Register</a></li>
+            <li><a class="dropdown-item" href="newsletter.html">Newsletter</a></li>
+          </ul>
+        </li>
 
         <!-- Tools Dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="toolsDropdown" role="button" 
              data-bs-toggle="dropdown" aria-expanded="false">Tools</a>
-          <ul class="dropdown-menu" aria-labelledby="toolsDropdown">
+          <ul class="dropdown-menu tools-dropdown" aria-labelledby="toolsDropdown">
             <li><a class="dropdown-item" href="hash-generator.html">Hash Generator</a></li>
             <li><a class="dropdown-item" href="password-tools.html">Password Tools</a></li>
             <li><a class="dropdown-item" href="file-scanner.html">File Scanner</a></li>
@@ -271,7 +276,6 @@
             <li><a class="dropdown-item" href="checker.html">Checker</a></li>
           </ul>
         </li>
-
       </ul>
     </div>
   </div>
