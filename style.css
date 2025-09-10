@@ -1,91 +1,288 @@
-/* ================================
-   BANNER SECTION (RESPONSIVE FIXED)
-================================== */
-.banner-section {
-  position: relative;
-  width: 100%;
-  background-color: #071028;
-  min-height: 180px;
-  padding-top: 37.5%; /* 6/16 as percentage for dynamic aspect ratio */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #fff;
-  overflow: hidden;
-}
+<style>
+    :root {
+        --primary-color: #6366f1;
+        --primary-dark: #4f46e5;
+        --secondary-color: #8b5cf6;
+        --accent-color: #06b6d4;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --danger-color: #ef4444;
+        --dark-bg: #0f172a;
+        --dark-card: #1e293b;
+        --light-bg: #f8fafc;
+        --light-card: #ffffff;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --text-light: #94a3b8;
+        --border-color: #e2e8f0;
+    }
 
-.banner-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("banner.png");
-  background-repeat: no-repeat;
-  background-size: contain; /* Ensures full image visibility */
-  background-position: center;
-  background-attachment: scroll;
-  z-index: 0;
-  /* Removed transform and will-change for simplicity unless animation is added */
-  pointer-events: none;
-}
+    * { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 
-.banner-overlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.35); /* Slightly lighter overlay for cleaner look */
-  z-index: 1;
-  pointer-events: none;
-}
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        color: var(--text-primary);
+        line-height: 1.7;
+        min-height: 100vh;
+    }
 
-.banner-content {
-  position: relative;
-  z-index: 2;
-  padding: 0 18px 10px; /* Added bottom padding for breathing room */
-  width: 100%;
-  max-width: 1100px;
-  box-sizing: border-box;
-}
+    /* Navigation */
+    .navbar {
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border-color);
+        padding: 1.25rem 0;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    .navbar-brand {
+        font-weight: 700;
+        font-size: 1.75rem;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .nav-link {
+        color: var(--text-primary) !important;
+        font-weight: 500;
+        padding: 0.75rem 1.25rem !important;
+        border-radius: 12px;
+        margin: 0 0.25rem;
+    }
+    .nav-link:hover,
+    .nav-link.active {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: #fff !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+    }
 
-.banner-title {
-  font-size: clamp(1.3rem, 3.5vw, 2.5rem); /* Adjusted vw for smoother scaling */
-  font-weight: 700;
-  margin-bottom: 10px;
-  line-height: 1.2; /* Slightly increased for readability */
-  color: #e9eefc;
-  font-family: 'Orbitron', sans-serif;
-}
+    /* ================================
+       BANNER SECTION (RESPONSIVE FIXED)
+    ================================== */
+    .banner-section {
+        position: relative;
+        width: 100%;
+        background-color: #071028;
+        min-height: 180px;
+        padding-top: 37.5%; /* 6/16 as percentage for dynamic aspect ratio, adjusted from 250px min-height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #fff;
+        overflow: hidden;
+        margin-top: 80px; /* Offset for fixed navbar height (~70-80px) to prevent overlap */
+    }
 
-.banner-subtitle {
-  font-size: clamp(0.95rem, 2.0vw, 1.2rem); /* Adjusted vw for balance */
-  margin-bottom: 16px;
-  line-height: 1.5; /* Increased for better legibility */
-  color: rgba(230, 235, 255, 0.9);
-  max-width: 780px;
-  margin-left: auto;
-  margin-right: auto;
-}
+    .banner-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("banner.png");
+        background-repeat: no-repeat;
+        background-size: contain; /* Ensures full image visibility, replaced cover */
+        background-position: center;
+        background-attachment: scroll;
+        z-index: 0;
+        pointer-events: none;
+    }
 
-/* ================================
-   RESPONSIVE FIXES (IMPROVED)
-================================== */
-@media (max-width: 768px) {
-  .banner-section {
-    min-height: 140px;
-    padding-top: 50%; /* Adjusted for tablet aspect ratio */
-  }
-  .banner-section::before {
-    background-position: center;
-    background-size: contain;
-  }
-  .banner-title { font-size: clamp(1.1rem, 4.5vw, 1.6rem); }
-  .banner-subtitle { font-size: clamp(0.9rem, 3vw, 1.1rem); }
-}
+    .banner-overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0, 0, 0, 0.35); /* Slightly lighter overlay for cleaner look */
+        z-index: 1;
+        pointer-events: none;
+    }
 
-@media (max-width: 480px) {
-  .banner-section {
-    min-height: 120px;
-    padding-top: 56.25%; /* 9/16 for mobile aspect ratio */
-  }
-  .banner-title { font-size: clamp(1.0rem, 5vw, 1.4rem); }
-  .banner-subtitle { font-size: clamp(0.8rem, 3.5vw, 1.0rem); }
-}
+    .banner-content {
+        position: relative;
+        z-index: 2;
+        padding: 0 18px 10px; /* Added bottom padding for breathing room */
+        width: 100%;
+        max-width: 1100px;
+        box-sizing: border-box;
+    }
+
+    .banner-title {
+        font-size: clamp(1.3rem, 3.5vw, 2.5rem); /* Adjusted vw for smoother scaling */
+        font-weight: 700;
+        margin-bottom: 10px;
+        line-height: 1.2; /* Slightly increased for readability */
+        color: #e9eefc;
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    .banner-subtitle {
+        font-size: clamp(0.95rem, 2.0vw, 1.2rem); /* Adjusted vw for balance */
+        margin-bottom: 16px;
+        line-height: 1.5; /* Increased for better legibility */
+        color: rgba(230, 235, 255, 0.9);
+        max-width: 780px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* ================================
+       RESPONSIVE FIXES (IMPROVED)
+    ================================== */
+    @media (max-width: 768px) {
+        .banner-section {
+            min-height: 140px;
+            padding-top: 50%; /* Adjusted for tablet aspect ratio */
+            margin-top: 60px; /* Reduced navbar offset for mobile */
+        }
+        .banner-section::before {
+            background-position: center;
+            background-size: contain;
+        }
+        .banner-title { font-size: clamp(1.1rem, 4.5vw, 1.6rem); }
+        .banner-subtitle { font-size: clamp(0.9rem, 3vw, 1.1rem); }
+    }
+
+    @media (max-width: 480px) {
+        .banner-section {
+            min-height: 120px;
+            padding-top: 56.25%; /* 9/16 for mobile aspect ratio */
+            margin-top: 50px; /* Further reduced for smaller screens */
+        }
+        .banner-title { font-size: clamp(1.0rem, 5vw, 1.4rem); }
+        .banner-subtitle { font-size: clamp(0.8rem, 3.5vw, 1.0rem); }
+    }
+
+    /* Sections */
+    .section-light { background: var(--light-bg); padding: 4rem 0; }
+    .newsletter-section {
+        background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-card) 100%);
+        color: #fff;
+        padding: 4rem 0;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; }
+    h2 {
+        font-size: 2.5rem;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    h3 { font-size: 2rem; color: var(--text-primary); }
+    .lead { font-size: 1.25rem; color: var(--text-secondary); }
+
+    /* Cards */
+    .card {
+        border: none;
+        border-radius: 16px;
+        background: var(--light-card);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--border-color);
+    }
+    .card-body { padding: 2rem; }
+    .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+    }
+
+    /* Buttons */
+    .btn {
+        font-weight: 700;
+        border-radius: 14px;
+        padding: 0.9rem 1.6rem;
+        font-size: 1rem;
+        border: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.12); }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    .btn-danger {
+        background: linear-gradient(135deg, var(--danger-color), #dc2626);
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    }
+    .btn-warning {
+        background: linear-gradient(135deg, var(--warning-color), #d97706);
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+    .btn-info {
+        background: linear-gradient(135deg, var(--accent-color), #0891b2);
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+    }
+    .btn-accent {
+        background: linear-gradient(135deg, var(--secondary-color), #7c3aed);
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    }
+    .btn-lg { padding: 1rem 2rem; font-size: 1.1rem; border-radius: 16px; }
+
+    /* Forms */
+    .form-control {
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        padding: 0.875rem 1rem;
+        font-size: 1rem;
+        background: var(--light-card);
+        transition: all 0.3s ease;
+    }
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        outline: none;
+    }
+    .input-group-lg .form-control { padding: 1rem 1.25rem; font-size: 1.125rem; }
+    .input-group .btn { border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.5rem; }
+
+    /* Scroll Animation */
+    .scroll-fade { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .scroll-fade.visible { opacity: 1; transform: translateY(0); }
+
+    /* Footer */
+    footer {
+        background: var(--dark-bg) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 2rem 0 !important;
+        color: #fff;
+    }
+    footer a {
+        color: rgba(255, 255, 255, 0.8) !important;
+        text-decoration: none !important;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    footer a:hover { color: var(--accent-color) !important; }
+
+    /* Alert */
+    .escalation-alert {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        max-width: 300px;
+        background: #ff4757;
+        color: white;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        display: none;
+    }
+    .escalation-alert.show { display: block; animation: slideIn 0.3s ease; }
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        h2 { font-size: 1.75rem; }
+        h3 { font-size: 1.5rem; }
+        .card-body { padding: 1.25rem; }
+        .btn-lg { font-size: 0.95rem; }
+        .input-group-lg .form-control { font-size: 0.95rem; min-height: 55px; }
+    }
+</style>
