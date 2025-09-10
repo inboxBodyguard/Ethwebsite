@@ -6,7 +6,7 @@
   width: 100%;
   background-color: #071028;
   min-height: 180px;
-  aspect-ratio: 16 / 6;
+  padding-top: 37.5%; /* 6/16 as percentage for dynamic aspect ratio */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,45 +21,44 @@
   inset: 0;
   background-image: url("banner.png");
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center; /* Centered for better scaling */
+  background-size: contain; /* Ensures full image visibility */
+  background-position: center;
   background-attachment: scroll;
   z-index: 0;
-  transform: translateZ(0);
-  will-change: transform;
+  /* Removed transform and will-change for simplicity unless animation is added */
   pointer-events: none;
 }
 
 .banner-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.35); /* Slightly lighter overlay for cleaner look */
   z-index: 1;
   pointer-events: none;
 }
 
 .banner-content {
   position: relative;
-  z-index: 2; /* Ensure text is above overlay */
-  padding: 0 18px;
+  z-index: 2;
+  padding: 0 18px 10px; /* Added bottom padding for breathing room */
   width: 100%;
   max-width: 1100px;
   box-sizing: border-box;
 }
 
 .banner-title {
-  font-size: clamp(1.3rem, 4.0vw, 2.5rem);
+  font-size: clamp(1.3rem, 3.5vw, 2.5rem); /* Adjusted vw for smoother scaling */
   font-weight: 700;
   margin-bottom: 10px;
-  line-height: 1.15;
+  line-height: 1.2; /* Slightly increased for readability */
   color: #e9eefc;
   font-family: 'Orbitron', sans-serif;
 }
 
 .banner-subtitle {
-  font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+  font-size: clamp(0.95rem, 2.0vw, 1.2rem); /* Adjusted vw for balance */
   margin-bottom: 16px;
-  line-height: 1.4;
+  line-height: 1.5; /* Increased for better legibility */
   color: rgba(230, 235, 255, 0.9);
   max-width: 780px;
   margin-left: auto;
@@ -72,21 +71,21 @@
 @media (max-width: 768px) {
   .banner-section {
     min-height: 140px;
-    aspect-ratio: 16 / 8;
+    padding-top: 50%; /* Adjusted for tablet aspect ratio */
   }
   .banner-section::before {
-    background-position: center top;
-    background-size: cover;
+    background-position: center;
+    background-size: contain;
   }
-  .banner-title { font-size: clamp(1.1rem, 5.2vw, 1.6rem); }
-  .banner-subtitle { font-size: 0.95rem; }
+  .banner-title { font-size: clamp(1.1rem, 4.5vw, 1.6rem); }
+  .banner-subtitle { font-size: clamp(0.9rem, 3vw, 1.1rem); }
 }
 
 @media (max-width: 480px) {
   .banner-section {
     min-height: 120px;
-    aspect-ratio: 16 / 9;
+    padding-top: 56.25%; /* 9/16 for mobile aspect ratio */
   }
-  .banner-title { font-size: clamp(1.1rem, 6vw, 1.4rem); }
-  .banner-subtitle { font-size: clamp(0.8rem, 4vw, 1rem); }
+  .banner-title { font-size: clamp(1.0rem, 5vw, 1.4rem); }
+  .banner-subtitle { font-size: clamp(0.8rem, 3.5vw, 1.0rem); }
 }
