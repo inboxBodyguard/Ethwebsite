@@ -75,15 +75,72 @@
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
         }
 
-                   .banner-section {
-  position: relative;
-  width: 100%;
-  background: url("banner.png") no-repeat center center;
-  background-size: cover;
-  min-height: 250px;
-  aspect-ratio: 16 / 6; /* keeps it responsive */
-}
+        /* ================================
+           BANNER SECTION (RESPONSIVE FIXED)
+        ================================== */
+        .banner-section {
+            position: relative;
+            width: 100%;
+            background-color: #071028;
+            min-height: 180px;
+            padding-top: 37.5%; /* 6/16 as percentage for dynamic aspect ratio */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            overflow: hidden;
+            margin-top: 80px; /* Offset for fixed-top navbar (~70-80px) */
+        }
 
+        .banner-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url("banner.png");
+            background-repeat: no-repeat;
+            background-size: contain; /* Ensures full image visibility */
+            background-position: center;
+            background-attachment: scroll;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.35); /* Lighter overlay for cleaner look */
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 18px 10px; /* Bottom padding for breathing room */
+            width: 100%;
+            max-width: 1100px;
+            box-sizing: border-box;
+        }
+
+        /* ================================
+           RESPONSIVE FIXES (IMPROVED)
+        ================================== */
+        @media (max-width: 768px) {
+            .banner-section {
+                min-height: 140px;
+                padding-top: 50%; /* Adjusted for tablet aspect ratio */
+                margin-top: 60px; /* Reduced navbar offset for mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner-section {
+                min-height: 120px;
+                padding-top: 56.25%; /* 9/16 for mobile aspect ratio */
+                margin-top: 50px; /* Further reduced for smaller screens */
+            }
+        }
 
         /* Sections */
         .section-light { background: var(--light-bg); padding: 4rem 0; }
@@ -131,7 +188,7 @@
         .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.12); }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            background: linear-gradient(135deg, var(--primary-color), --primary-dark));
             color: #fff;
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
@@ -211,16 +268,14 @@
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
         /* Mobile Responsive */
-@media (max-width: 768px) {
-    .banner-section { 
-        min-height: 50vh;   /* scale with screen height instead of fixed 150px */
-    }
-    h2 { font-size: 1.75rem; }
-    h3 { font-size: 1.5rem; }
-    .card-body { padding: 1.25rem; }
-    .btn-lg { font-size: 0.95rem; }
-    .input-group-lg .form-control { font-size: 0.95rem; min-height: 55px; }
-</style>
+        @media (max-width: 768px) {
+            h2 { font-size: 1.75rem; }
+            h3 { font-size: 1.5rem; }
+            .card-body { padding: 1.25rem; }
+            .btn-lg { font-size: 0.95rem; }
+            .input-group-lg .form-control { font-size: 0.95rem; min-height: 55px; }
+        }
+    </style>
 </head>
 <body>
     <!-- Alert -->
@@ -230,92 +285,92 @@
     </div>
 
     <!-- Navigation -->
-<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-transparent">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">EZM Cyber</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-transparent">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">EZM Cyber</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <!-- Main pages -->
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="videos.html">Videos</a></li>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Main pages -->
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="videos.html">Videos</a></li>
 
-        <!-- Fixed styling for privacy & forum -->
-        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy</a></li>
-        <li class="nav-item"><a class="nav-link" href="community-forum.html">Forum</a></li>
+                    <!-- Fixed styling for privacy & forum -->
+                    <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy</a></li>
+                    <li class="nav-item"><a class="nav-link" href="community-forum.html">Forum</a></li>
 
-        <!-- User & Newsletter Dropdown -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" 
-             data-bs-toggle="dropdown" aria-expanded="false">Get Involved</a>
-          <ul class="dropdown-menu" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
-            <li><a class="dropdown-item" href="register.html">Register</a></li>
-            <li><a class="dropdown-item" href="newsletter.html">Newsletter</a></li>
-          </ul>
-        </li>
+                    <!-- User & Newsletter Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" 
+                            data-bs-toggle="dropdown" aria-expanded="false">Get Involved</a>
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
+                            <li><a class="dropdown-item" href="register.html">Register</a></li>
+                            <li><a class="dropdown-item" href="newsletter.html">Newsletter</a></li>
+                        </ul>
+                    </li>
 
-        <!-- Tools Dropdown -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="toolsDropdown" role="button" 
-             data-bs-toggle="dropdown" aria-expanded="false">Tools</a>
-          <ul class="dropdown-menu tools-dropdown" aria-labelledby="toolsDropdown">
-            <li><a class="dropdown-item" href="hash-generator.html">Hash Generator</a></li>
-            <li><a class="dropdown-item" href="password-tools.html">Password Tools</a></li>
-            <li><a class="dropdown-item" href="file-scanner.html">File Scanner</a></li>
-            <li><a class="dropdown-item" href="network-tools.html">Network Tools</a></li>
-            <li><a class="dropdown-item" href="checker.html">Checker</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+                    <!-- Tools Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="toolsDropdown" role="button" 
+                            data-bs-toggle="dropdown" aria-expanded="false">Tools</a>
+                        <ul class="dropdown-menu tools-dropdown" aria-labelledby="toolsDropdown">
+                            <li><a class="dropdown-item" href="hash-generator.html">Hash Generator</a></li>
+                            <li><a class="dropdown-item" href="password-tools.html">Password Tools</a></li>
+                            <li><a class="dropdown-item" href="file-scanner.html">File Scanner</a></li>
+                            <li><a class="dropdown-item" href="network-tools.html">Network Tools</a></li>
+                            <li><a class="dropdown-item" href="checker.html">Checker</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <!-- Banner -->
-<section class="banner-section d-flex align-items-center justify-content-center">
-  <!-- Clean banner, no button -->
-</section>
+    <section class="banner-section d-flex align-items-center justify-content-center">
+        <div class="banner-content">
+        </div>
+    </section>
 
-<!-- Welcome Section -->
-<section class="py-5 scroll-fade">
-  <div class="container text-center">
-    <h2 class="mb-4">Welcome to EZM Cyber</h2>
-    <p class="lead mb-5">Your trusted source for cybersecurity insights, tools, and guidance.</p>
-    <a href="#" class="btn btn-primary btn-lg">Watch Video</a>
-  </div>
-</section>
+    <!-- Welcome Section -->
+    <section class="py-5 scroll-fade">
+        <div class="container text-center">
+            <h2 class="mb-4">Welcome to EZM Cyber</h2>
+            <p class="lead mb-5">Your trusted source for cybersecurity insights, tools, and guidance.</p>
+            <a href="#" class="btn btn-primary btn-lg">Watch Video</a>
+        </div>
+    </section>
 
-<!-- Trust Section -->
-<section class="py-5 scroll-fade">
-  <div class="container text-center">
-    <h2 class="mb-4">Building Digital Trust with EZM Cyber</h2>
-    <p class="lead mb-5">
-      We help businesses stay secure with expert guidance, modern tools, 
-      and proven cybersecurity strategies—empowering you to focus on growth with confidence.
-    </p>
-    <a href="#" class="btn btn-primary btn-lg">Learn More</a>
-  </div>
-</section>
+    <!-- Trust Section -->
+    <section class="py-5 scroll-fade">
+        <div class="container text-center">
+            <h2 class="mb-4">Building Digital Trust with EZM Cyber</h2>
+            <p class="lead mb-5">
+                We help businesses stay secure with expert guidance, modern tools, 
+                and proven cybersecurity strategies—empowering you to focus on growth with confidence.
+            </p>
+            <a href="#" class="btn btn-primary btn-lg">Learn More</a>
+        </div>
+    </section>
 
-
-<!-- Services (target for #services) -->
-<section id="services" class="section-light scroll-fade">
-  <div class="container text-center">
-    <h2 class="mb-4">Our Services</h2>
-    <p class="lead mb-4">Pen testing, incident response, cloud security, training, and more.</p>
-    <a href="services.html" class="btn btn-services">Explore Services</a>
-  </div>
-</section>
+    <!-- Services (target for #services) -->
+    <section id="services" class="section-light scroll-fade">
+        <div class="container text-center">
+            <h2 class="mb-4">Our Services</h2>
+            <p class="lead mb-4">Pen testing, incident response, cloud security, training, and more.</p>
+            <a href="services.html" class="btn btn-services">Explore Services</a>
+        </div>
+    </section>
 
     <!-- Suspicious Link Checker -->
     <section class="py-5 section-light scroll-fade">
@@ -562,17 +617,17 @@
         window.testEscalation = testEscalation;
     </script>
 
-    <!-- Start of Tawk.to Script (kept & fixed) -->
+    <!-- Start of Tawk.to Script -->
     <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.async=true;
-        s1.src='https://embed.tawk.to/68ba524c8ad9941922457891/default';
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
-    })();
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/68ba524c8ad9941922457891/default';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
     </script>
     <!-- End of Tawk.to Script -->
 </body>
