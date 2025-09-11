@@ -566,33 +566,70 @@
     </section>
 
     <!-- Suspicious Link Checker -->
-    <section class="py-5 section-light scroll-fade">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card card-hover">
-                        <div class="card-body text-center">
-                            <h3 class="card-title mb-4">Suspicious Link Checker</h3>
-                            <p class="card-text mb-4">Verify the safety of any URL using VirusTotal's comprehensive security analysis</p>
+<section class="py-5 section-light scroll-fade">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card card-hover">
+          <div class="card-body text-center">
+            <h3 class="card-title mb-4">Suspicious Link Checker</h3>
+            <p class="card-text mb-4">
+              Verify the safety of any URL using VirusTotal's comprehensive security analysis
+            </p>
 
-                            <form id="linkForm" class="mb-4">
-                                <div class="input-group input-group-lg">
-                                    <input type="url" id="linkInput" class="form-control" placeholder="Paste or type a link to verify (e.g., https://example.com)" required />
-                                    <button type="submit" class="btn btn-danger"><strong>Check Link</strong></button>
-                                </div>
-                            </form>
+            <!-- Form -->
+            <form id="linkForm" class="mb-4">
+              <div class="input-group input-group-lg">
+                <input
+                  type="url"
+                  id="linkInput"
+                  class="form-control"
+                  placeholder="Paste or type a link to verify (e.g., https://example.com)"
+                  required
+                />
+                <button type="submit" class="btn btn-danger">
+                  <strong>Check Link</strong>
+                </button>
+              </div>
+            </form>
 
-                            <div id="result" class="mt-2"></div>
+            <!-- Result container -->
+            <div id="result" class="mt-2"></div>
 
-                            <p class="text-muted mb-0">
-                                <small>Secure analysis • Results open in new tab • Powered by VirusTotal</small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <p class="text-muted mb-0">
+              <small>Secure analysis • Results open in new tab • Powered by VirusTotal</small>
+            </p>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VirusTotal Script -->
+<script>
+  document.getElementById("linkForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const input = document.getElementById("linkInput").value.trim();
+    if (!input) return;
+
+    try {
+      // Encode URL to Base64 (VirusTotal requires it without '=' padding, using URL-safe encoding)
+      const base64Url = btoa(input)
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
+
+      // Open VirusTotal analysis page in a new tab
+      const vtLink = `https://www.virustotal.com/gui/url/${base64Url}`;
+      window.open(vtLink, "_blank");
+    } catch (err) {
+      document.getElementById("result").innerHTML =
+        '<div class="alert alert-danger">Invalid URL format. Please try again.</div>';
+    }
+  });
+</script>
 
     <!-- Additional Tools -->
     <section class="py-5 section-light scroll-fade">
