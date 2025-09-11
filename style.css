@@ -1,219 +1,498 @@
-<style>
-    :root {
-        --primary-color: #6366f1;
-        --primary-dark: #4f46e5;
-        --secondary-color: #8b5cf6;
-        --accent-color: #06b6d4;
-        --success-color: #10b981;
-        --warning-color: #f59e0b;
-        --danger-color: #ef4444;
-        --dark-bg: #0f172a;
-        --dark-card: #1e293b;
-        --light-bg: #f8fafc;
-        --light-card: #ffffff;
-        --text-primary: #1e293b;
-        --text-secondary: #64748b;
-        --text-light: #94a3b8;
-        --border-color: #e2e8f0;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar with Banner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary-color: #8b5cf6;
+    --accent-color: #06b6d4;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --dark-bg: #0f172a;
+    --dark-card: #1e293b;
+    --light-bg: #f8fafc;
+    --light-card: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-light: #94a3b8;
+    --border-color: #e2e8f0;
+}
 
-    * { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 
-    body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-        color: var(--text-primary);
-        line-height: 1.7;
-        min-height: 100vh;
-        padding-top: 72px; /* ensures topbar/side nav never overlaps content */
-    }
+body {
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+color: var(--text-primary);
+line-height: 1.7;
+min-height: 100vh;
+padding-top: 72px; /* ensures topbar/side nav never overlaps content */
+}
 
-    /* Navigation (top navbar for fallback) */
-    .navbar {
-        background: rgba(255, 255, 255, 0.95) !important;
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--border-color);
-        padding: 1.25rem 0;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    }
-    .navbar-brand {
-        font-weight: 700;
-        font-size: 1.75rem;
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    .nav-link {
-        color: var(--text-primary) !important;
-        font-weight: 500;
-        padding: 0.75rem 1.25rem !important;
-        border-radius: 12px;
-        margin: 0 0.25rem;
-    }
-    .nav-link:hover,
-    .nav-link.active {
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-        color: #fff !important;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
-    }
+/* ============================
+NAVIGATION FALLBACK (DESKTOP)
+=============================== */
+.navbar {
+background: rgba(255, 255, 255, 0.95) !important;
+backdrop-filter: blur(20px);
+border-bottom: 1px solid var(--border-color);
+padding: 1.25rem 0;
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+.navbar-brand {
+font-weight: 700;
+font-size: 1.75rem;
+background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+.nav-link {
+color: var(--text-primary) !important;
+font-weight: 500;
+padding: 0.75rem 1.25rem !important;
+border-radius: 12px;
+margin: 0 0.25rem;
+}
+.nav-link:hover,
+.nav-link.active {
+background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+color: #fff !important;
+transform: translateY(-2px);
+box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+}
 
-    /* ================================
-       BANNER SECTION
-    ================================== */
-    .banner-section {
-        position: relative;
-        width: 100%;
-        background-color: #071028;
-        min-height: 180px;
-        padding-top: 37.5%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: #fff;
-        overflow: hidden;
-        margin-top: 80px;
-    }
+/* ================================
+BANNER SECTION
+================================== */
+.banner-section {
+position: relative;
+width: 100%;
+background-color: #071028;
+min-height: 180px;
+padding-top: 37.5%;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+color: #fff;
+overflow: hidden;
+margin-top: 80px;
+}
+.banner-section::before {
+content: "";
+position: absolute;
+inset: 0;
+background-image: url("https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80");
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+background-attachment: scroll;
+z-index: 0;
+pointer-events: none;
+}
+.banner-overlay {
+position: absolute;
+top: 0; left: 0; right: 0; bottom: 0;
+background: rgba(0, 0, 0, 0.35);
+z-index: 1;
+pointer-events: none;
+}
+.banner-content {
+position: relative;
+z-index: 2;
+padding: 0 18px 10px;
+width: 100%;
+max-width: 1100px;
+box-sizing: border-box;
+}
+.banner-title {
+font-size: clamp(1.3rem, 3.5vw, 2.5rem);
+font-weight: 700;
+margin-bottom: 10px;
+line-height: 1.2;
+color: #e9eefc;
+font-family: 'Orbitron', sans-serif;
+}
+.banner-subtitle {
+font-size: clamp(0.95rem, 2.0vw, 1.2rem);
+margin-bottom: 16px;
+line-height: 1.5;
+color: rgba(230, 235, 255, 0.9);
+max-width: 780px;
+margin-left: auto;
+margin-right: auto;
+}
+@media (max-width: 768px) {
+.banner-section { min-height: 140px; padding-top: 50%; margin-top: 60px; }
+.banner-title { font-size: clamp(1.1rem, 4.5vw, 1.6rem); }
+.banner-subtitle { font-size: clamp(0.9rem, 3vw, 1.1rem); }
+}
+@media (max-width: 480px) {
+.banner-section { min-height: 120px; padding-top: 56.25%; margin-top: 50px; }
+.banner-title { font-size: clamp(1.0rem, 5vw, 1.4rem); }
+.banner-subtitle { font-size: clamp(0.8rem, 3.5vw, 1.0rem); }
+}
 
-    .banner-section::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image: url("banner.png");
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-        background-attachment: scroll;
-        z-index: 0;
-        pointer-events: none;
-    }
+/* ================================
+EZM Sidebar / Topbar (scoped)
+================================== */
+.ezm-topbar {
+position: fixed;
+top: 0; left: 0; right: 0;
+height: 72px;
+display: flex; align-items: center;
+z-index: 1100;
+background: rgba(255,255,255,0.92);
+backdrop-filter: blur(6px);
+border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.ezm-topbar-inner {
+display:flex; align-items:center; justify-content:space-between;
+width:100%; padding:0 1rem;
+}
+.ezm-topbar .navbar-brand {
+font-weight:700; font-size:1.25rem;
+color:var(--text-primary); text-decoration:none;
+}
 
-    .banner-overlay {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0, 0, 0, 0.35);
-        z-index: 1;
-        pointer-events: none;
-    }
+/* Hamburger */
+.ezm-hamburger {
+background: transparent; border:none; padding:8px;
+display:inline-flex; align-items:center; justify-content:center;
+cursor:pointer; width:44px; height:44px;
+}
+.ezm-hamburger:focus {
+outline:3px solid rgba(99,102,241,0.18);
+border-radius:6px;
+}
+.ezm-hamburger-box { display:inline-block; width:22px; height:16px; position:relative; }
+.ezm-hamburger-inner,
+.ezm-hamburger-inner::before,
+.ezm-hamburger-inner::after {
+display:block; background:var(--text-primary);
+height:2px; border-radius:2px; position:absolute;
+left:0; right:0;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ezm-hamburger-inner { top:50%; transform:translateY(-50%); }
+.ezm-hamburger-inner::before { content:''; top:-7px; }
+.ezm-hamburger-inner::after { content:''; top:7px; }
 
-    .banner-content {
-        position: relative;
-        z-index: 2;
-        padding: 0 18px 10px;
-        width: 100%;
-        max-width: 1100px;
-        box-sizing: border-box;
-    }
+/* Hamburger animation when open */
+.ezm-hamburger.active .ezm-hamburger-inner {
+background: transparent;
+}
+.ezm-hamburger.active .ezm-hamburger-inner::before {
+transform: rotate(45deg);
+top: 0;
+}
+.ezm-hamburger.active .ezm-hamburger-inner::after {
+transform: rotate(-45deg);
+top: 0;
+}
 
-    .banner-title {
-        font-size: clamp(1.3rem, 3.5vw, 2.5rem);
-        font-weight: 700;
-        margin-bottom: 10px;
-        line-height: 1.2;
-        color: #e9eefc;
-        font-family: 'Orbitron', sans-serif;
-    }
+/* Sidebar */
+.ezm-sidebar {
+position:fixed; top:0; left:0; width:320px; max-width:92%;
+height:100vh; background:var(--light-card);
+box-shadow:0 20px 60px rgba(2,6,23,0.18);
+transform:translateX(-110%);
+transition:transform 300ms cubic-bezier(0.2,0.8,0.2,1);
+z-index:1200; overflow-y:auto; -webkit-overflow-scrolling:touch;
+}
+.ezm-sidebar.open { transform:translateX(0); }
+.ezm-sidebar-inner { padding:88px 18px 28px; box-sizing:border-box; }
+.ezm-sidebar-close {
+position:absolute; top:12px; right:12px;
+border:none; background:transparent;
+font-size:28px; cursor:pointer; color:var(--text-primary);
+width: 40px; height: 40px;
+display: flex; align-items: center; justify-content: center;
+border-radius: 50%;
+}
+.ezm-sidebar-close:hover {
+background: rgba(0,0,0,0.05);
+}
+.ezm-sidebar-brand { margin-bottom:1rem; text-align:left; }
+.ezm-sidebar-brand a {
+font-weight:800; font-size:1.25rem;
+color:var(--text-primary); text-decoration:none;
+}
 
-    .banner-subtitle {
-        font-size: clamp(0.95rem, 2.0vw, 1.2rem);
-        margin-bottom: 16px;
-        line-height: 1.5;
-        color: rgba(230, 235, 255, 0.9);
-        max-width: 780px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+/* Sidebar nav */
+.ezm-sidebar-nav ul { list-style:none; padding:0; margin:0; }
+.ezm-sidebar-nav li { margin-bottom:6px; }
 
-    @media (max-width: 768px) {
-        .banner-section { min-height: 140px; padding-top: 50%; margin-top: 60px; }
-        .banner-title { font-size: clamp(1.1rem, 4.5vw, 1.6rem); }
-        .banner-subtitle { font-size: clamp(0.9rem, 3vw, 1.1rem); }
-    }
-    @media (max-width: 480px) {
-        .banner-section { min-height: 120px; padding-top: 56.25%; margin-top: 50px; }
-        .banner-title { font-size: clamp(1.0rem, 5vw, 1.4rem); }
-        .banner-subtitle { font-size: clamp(0.8rem, 3.5vw, 1.0rem); }
-    }
+.ezm-btn {
+display:block; width:100%; text-align:left;
+padding:12px 14px; border-radius:10px;
+text-decoration:none; font-weight:600; color:#fff;
+background:linear-gradient(135deg,var(--primary-color),var(--primary-dark));
+box-shadow:0 8px 28px rgba(99,102,241,0.12);
+}
+.ezm-btn:hover {
+box-shadow:0 12px 36px rgba(99,102,241,0.16);
+transform: translateY(-2px);
+}
 
-    /* ===== EZM Sidebar / Topbar (scoped: ezm-*) ===== */
-    .ezm-topbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 72px;
-      display: flex; align-items: center;
-      z-index: 1100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(6px);
-      border-bottom: 1px solid rgba(0,0,0,0.04);
-    }
-    .ezm-topbar-inner { display:flex; align-items:center; justify-content:space-between; width:100%; padding:0 1rem; }
-    .ezm-topbar .navbar-brand { font-weight:700; font-size:1.25rem; color:var(--text-primary); text-decoration:none; }
+/* Submenu */
+.ezm-has-sub .ezm-sub-toggle {
+width:100%; padding:12px 14px;
+border-radius:10px; background:transparent;
+border:1px solid rgba(16,24,40,0.08);
+font-weight:700; cursor:pointer;
+display:flex; justify-content:space-between; align-items:center;
+color: var(--text-primary);
+}
+.ezm-has-sub .ezm-sub-toggle:hover {
+background: rgba(99,102,241,0.05);
+}
+.ezm-has-sub .ezm-sub-toggle .ezm-caret {
+font-size:0.9em;
+transition: transform 0.3s ease;
+}
+.ezm-has-sub.open .ezm-sub-toggle .ezm-caret {
+transform: rotate(180deg);
+}
 
-    .ezm-hamburger {
-      background: transparent; border:none; padding:8px;
-      display:inline-flex; align-items:center; justify-content:center;
-      cursor:pointer; width:44px; height:44px;
-    }
-    .ezm-hamburger:focus { outline:3px solid rgba(99,102,241,0.18); border-radius:6px; }
-    .ezm-hamburger-box { display:inline-block; width:22px; height:16px; position:relative; }
-    .ezm-hamburger-inner,
-    .ezm-hamburger-inner::before,
-    .ezm-hamburger-inner::after {
-      display:block; background:var(--text-primary); height:2px; border-radius:2px;
-      position:absolute; left:0; right:0;
-    }
-    .ezm-hamburger-inner { top:50%; transform:translateY(-50%); }
-    .ezm-hamburger-inner::before { content:''; top:-7px; }
-    .ezm-hamburger-inner::after { content:''; top:7px; }
+.ezm-submenu {
+list-style:none; margin:8px 0 10px 0; padding-left:8px;
+display:none;
+opacity: 0;
+max-height: 0;
+overflow: hidden;
+transition: all 0.3s ease;
+}
+.ezm-submenu.open {
+display: block;
+opacity: 1;
+max-height: 300px;
+}
+.ezm-submenu li a {
+display:block; padding:10px 12px; border-radius:8px;
+background:rgba(2,6,23,0.02); color:var(--text-primary);
+font-weight:600; text-decoration:none; margin-bottom:6px;
+}
+.ezm-submenu li a:hover {
+background:rgba(2,6,23,0.04);
+transform: translateX(4px);
+}
 
-    .ezm-sidebar {
-      position:fixed; top:0; left:0; width:320px; max-width:92%; height:100vh;
-      background:var(--light-card); box-shadow:0 20px 60px rgba(2,6,23,0.18);
-      transform:translateX(-110%); /* Hides sidebar by default */
-      transition:transform 300ms cubic-bezier(0.2,0.8,0.2,1);
-      z-index:1200; overflow-y:auto; -webkit-overflow-scrolling:touch;
-    }
-    .ezm-sidebar.open { transform:translateX(0); }
-    .ezm-sidebar-inner { padding:88px 18px 28px; box-sizing:border-box; }
-    .ezm-sidebar-close { position:absolute; top:12px; right:12px; border:none; background:transparent; font-size:28px; cursor:pointer; color:var(--text-primary); }
-    .ezm-sidebar-brand { margin-bottom:1rem; text-align:left; }
-    .ezm-sidebar-brand a { font-weight:800; font-size:1.25rem; color:var(--text-primary); text-decoration:none; }
-    .ezm-sidebar-nav ul { list-style:none; padding:0; margin:0; }
-    .ezm-sidebar-nav li { margin-bottom:6px; }
+/* Sidebar footer */
+.ezm-sidebar-footer {
+margin-top:18px; padding-top:8px;
+border-top:1px solid rgba(0,0,0,0.04);
+text-align:center;
+}
+.ezm-cta {
+display:inline-block; padding:10px 18px;
+border-radius:10px;
+background:linear-gradient(135deg,var(--primary-color),var(--primary-dark));
+color:#fff; text-decoration:none; font-weight:700;
+}
+.ezm-cta:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+}
 
-    .ezm-btn {
-      display:block; width:100%; text-align:left;
-      padding:12px 14px; border-radius:10px;
-      text-decoration:none; font-weight:600; color:#fff;
-      background:linear-gradient(135deg,var(--primary-color),var(--primary-dark));
-      box-shadow:0 8px 28px rgba(99,102,241,0.12);
-    }
-    .ezm-btn:hover { box-shadow:0 12px 36px rgba(99,102,241,0.16); }
+/* Overlay */
+.ezm-sidebar-overlay {
+position:fixed; inset:0; background:rgba(0,0,0,0.36);
+opacity:0; visibility:hidden;
+transition:opacity 220ms ease;
+z-index:1150;
+}
+.ezm-sidebar-overlay.visible {
+opacity:1; visibility:visible;
+}
 
-    .ezm-has-sub .ezm-sub-toggle {
-      width:100%; padding:12px 14px; border-radius:10px;
-      background:transparent; border:1px solid rgba(16,24,40,0.04);
-      font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center;
-    }
-    .ezm-submenu { list-style:none; margin:8px 0 10px 0; padding-left:8px; display:none; }
-    .ezm-submenu li a {
-      display:block; padding:10px 12px; border-radius:8px;
-      background:rgba(2,6,23,0.02); color:var(--text-primary);
-      font-weight:600; text-decoration:none; margin-bottom:6px;
-    }
-    .ezm-submenu li a:hover { background:rgba(2,6,23,0.04); }
+/* Main content */
+.main-content {
+padding: 2rem;
+max-width: 1200px;
+margin: 0 auto;
+}
 
-    .ezm-sidebar-footer { margin-top:18px; padding-top:8px; border-top:1px solid rgba(0,0,0,0.04); text-align:center; }
-    .ezm-cta { display:inline-block; padding:10px 18px; border-radius:10px; background:linear-gradient(135deg,var(--primary-color),var(--primary-dark)); color:#fff; text-decoration:none; font-weight:700; }
+.content-card {
+background: var(--light-card);
+border-radius: 16px;
+padding: 2rem;
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+margin-bottom: 2rem;
+}
 
-    .ezm-sidebar-overlay {
-      position:fixed; inset:0; background:rgba(0,0,0,0.36);
-      opacity:0; visibility:hidden; transition:opacity 220ms ease;
-      z-index:1150;
-    }
-    .ezm-sidebar-overlay.visible { opacity:1; visibility:visible; }
-
-    @media (max-width:600px) { .ezm-sidebar { width:88%; } }
+@media (max-width:600px) {
+.ezm-sidebar { width:88%; }
+.main-content { padding: 1rem; }
+}
 </style>
+
+</head>
+<body>
+    <!-- EZM Topbar -->
+    <div class="ezm-topbar">
+        <div class="ezm-topbar-inner">
+            <a href="#" class="navbar-brand">YourBrand</a>
+            <button class="ezm-hamburger" id="hamburgerToggle">
+                <div class="ezm-hamburger-box">
+                    <div class="ezm-hamburger-inner"></div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- EZM Sidebar -->
+    <div class="ezm-sidebar" id="sidebar">
+        <div class="ezm-sidebar-inner">
+            <button class="ezm-sidebar-close" id="sidebarClose">&times;</button>
+            
+            <div class="ezm-sidebar-brand">
+                <a href="#">YourBrand</a>
+            </div>
+
+            <nav class="ezm-sidebar-nav">
+                <ul>
+                    <li><a href="#" class="ezm-btn">🏠 Home</a></li>
+                    <li><a href="#" class="ezm-btn">📊 Dashboard</a></li>
+                    
+                    <li class="ezm-has-sub">
+                        <button class="ezm-sub-toggle">
+                            <span>📁 Products</span>
+                            <span class="ezm-caret">▼</span>
+                        </button>
+                        <ul class="ezm-submenu">
+                            <li><a href="#">All Products</a></li>
+                            <li><a href="#">Categories</a></li>
+                            <li><a href="#">Add New</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="ezm-has-sub">
+                        <button class="ezm-sub-toggle">
+                            <span>👥 Users</span>
+                            <span class="ezm-caret">▼</span>
+                        </button>
+                        <ul class="ezm-submenu">
+                            <li><a href="#">All Users</a></li>
+                            <li><a href="#">Admin Panel</a></li>
+                            <li><a href="#">Permissions</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="#" class="ezm-btn">📧 Messages</a></li>
+                    <li><a href="#" class="ezm-btn">⚙️ Settings</a></li>
+                </ul>
+            </nav>
+
+            <div class="ezm-sidebar-footer">
+                <a href="#" class="ezm-cta">Get Premium</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="ezm-sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Banner Section -->
+    <div class="banner-section">
+        <div class="banner-overlay"></div>
+        <div class="banner-content">
+            <h1 class="banner-title">Welcome to Our Platform</h1>
+            <p class="banner-subtitle">Discover amazing features and tools designed to enhance your experience. Join thousands of users who trust our platform for their daily needs.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-card">
+            <h2>Dashboard Overview</h2>
+            <p>This is your main content area. The sidebar is hidden by default and can be toggled using the hamburger menu in the top bar.</p>
+            <p>The banner section displays prominently at the top, and all your content flows naturally below it.</p>
+        </div>
+        
+        <div class="content-card">
+            <h3>Features</h3>
+            <p>✅ Responsive sidebar that slides in from the left</p>
+            <p>✅ Animated hamburger menu with smooth transitions</p>
+            <p>✅ Collapsible submenus with dropdown functionality</p>
+            <p>✅ Overlay background when sidebar is open</p>
+            <p>✅ Beautiful banner section with background image</p>
+            <p>✅ Mobile-friendly design</p>
+        </div>
+    </div>
+
+    <script>
+        // Get elements
+        const hamburger = document.getElementById('hamburgerToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const overlay = document.getElementById('sidebarOverlay');
+        const subMenuToggles = document.querySelectorAll('.ezm-sub-toggle');
+
+        // Toggle sidebar function
+        function toggleSidebar() {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('visible');
+            hamburger.classList.toggle('active');
+        }
+
+        // Close sidebar function
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('visible');
+            hamburger.classList.remove('active');
+        }
+
+        // Event listeners
+        hamburger.addEventListener('click', toggleSidebar);
+        sidebarClose.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+
+        // Handle submenu toggles
+        subMenuToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const parentLi = this.parentElement;
+                const submenu = parentLi.querySelector('.ezm-submenu');
+                
+                // Close other open submenus
+                subMenuToggles.forEach(otherToggle => {
+                    if (otherToggle !== toggle) {
+                        otherToggle.parentElement.classList.remove('open');
+                        otherToggle.parentElement.querySelector('.ezm-submenu').classList.remove('open');
+                    }
+                });
+                
+                // Toggle current submenu
+                parentLi.classList.toggle('open');
+                submenu.classList.toggle('open');
+            });
+        });
+
+        // Close sidebar on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                closeSidebar();
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && sidebar.classList.contains('open')) {
+                closeSidebar();
+            }
+        });
+    </script>
+</body>
+</html>
