@@ -284,57 +284,74 @@
         <small>User requested human support.</small>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-transparent">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">EZM Cyber</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <!-- Top bar (brand + hamburger) -->
+<nav class="ezm-topbar" role="navigation" aria-label="Main navigation">
+  <div class="container ezm-topbar-inner">
+    <a class="navbar-brand" href="index.html">EZM Cyber</a>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <!-- Main pages -->
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="videos.html">Videos</a></li>
+    <!-- hamburger triggers sidebar -->
+    <button id="ezmSidebarToggle" class="ezm-hamburger" aria-controls="ezmSidebar" aria-expanded="false" aria-label="Open main menu">
+      <span class="ezm-hamburger-box"><span class="ezm-hamburger-inner"></span></span>
+    </button>
+  </div>
+</nav>
 
-                    <!-- Fixed styling for privacy & forum -->
-                    <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy</a></li>
-                    <li class="nav-item"><a class="nav-link" href="community-forum.html">Forum</a></li>
+<!-- Sidebar (hidden by default) -->
+<aside id="ezmSidebar" class="ezm-sidebar" role="complementary" aria-hidden="true" aria-labelledby="ezmSidebarToggle">
+  <div class="ezm-sidebar-inner">
+    <button id="ezmSidebarClose" class="ezm-sidebar-close" aria-label="Close menu">&times;</button>
 
-                    <!-- User & Newsletter Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" 
-                            data-bs-toggle="dropdown" aria-expanded="false">Get Involved</a>
-                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
-                            <li><a class="dropdown-item" href="register.html">Register</a></li>
-                            <li><a class="dropdown-item" href="newsletter.html">Newsletter</a></li>
-                        </ul>
-                    </li>
+    <div class="ezm-sidebar-brand">
+      <a href="index.html">EZM Cyber</a>
+    </div>
 
-                    <!-- Tools Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="toolsDropdown" role="button" 
-                            data-bs-toggle="dropdown" aria-expanded="false">Tools</a>
-                        <ul class="dropdown-menu tools-dropdown" aria-labelledby="toolsDropdown">
-                            <li><a class="dropdown-item" href="hash-generator.html">Hash Generator</a></li>
-                            <li><a class="dropdown-item" href="password-tools.html">Password Tools</a></li>
-                            <li><a class="dropdown-item" href="file-scanner.html">File Scanner</a></li>
-                            <li><a class="dropdown-item" href="network-tools.html">Network Tools</a></li>
-                            <li><a class="dropdown-item" href="checker.html">Checker</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <nav class="ezm-sidebar-nav" role="navigation" aria-label="Sidebar navigation">
+      <ul>
+        <!-- Main pages -->
+        <li><a class="ezm-btn" href="index.html">Home</a></li>
+        <li><a class="ezm-btn" href="about.html">About</a></li>
+        <li><a class="ezm-btn" href="services.html">Services</a></li>
+        <li><a class="ezm-btn" href="projects.html">Projects</a></li>
+        <li><a class="ezm-btn" href="blog.html">Blog</a></li>
+        <li><a class="ezm-btn" href="contact.html">Contact</a></li>
+        <li><a class="ezm-btn" href="videos.html">Videos</a></li>
+
+        <!-- Extras -->
+        <li><a class="ezm-btn" href="privacy.html">Privacy</a></li>
+        <li><a class="ezm-btn" href="community-forum.html">Forum</a></li>
+
+        <!-- Get Involved (expandable) -->
+        <li class="ezm-has-sub">
+          <button class="ezm-sub-toggle" aria-expanded="false">Get Involved <span class="ezm-caret">▾</span></button>
+          <ul class="ezm-submenu">
+            <li><a class="ezm-btn" href="signup.html">Sign Up</a></li>
+            <li><a class="ezm-btn" href="register.html">Register</a></li>
+            <li><a class="ezm-btn" href="newsletter.html">Newsletter</a></li>
+          </ul>
+        </li>
+
+        <!-- Tools (expandable) -->
+        <li class="ezm-has-sub">
+          <button class="ezm-sub-toggle" aria-expanded="false">Tools <span class="ezm-caret">▾</span></button>
+          <ul class="ezm-submenu">
+            <li><a class="ezm-btn" href="hash-generator.html">Hash Generator</a></li>
+            <li><a class="ezm-btn" href="password-tools.html">Password Tools</a></li>
+            <li><a class="ezm-btn" href="file-scanner.html">File Scanner</a></li>
+            <li><a class="ezm-btn" href="network-tools.html">Network Tools</a></li>
+            <li><a class="ezm-btn" href="checker.html">Checker</a></li>
+          </ul>
+        </li>
+      </ul>
     </nav>
+
+    <div class="ezm-sidebar-footer">
+      <a class="ezm-cta" href="contact.html">Get In Touch</a>
+    </div>
+  </div>
+</aside>
+
+<!-- overlay -->
+<div id="ezmSidebarOverlay" class="ezm-sidebar-overlay" tabindex="-1" aria-hidden="true"></div>
 
     <!-- Banner -->
     <section class="banner-section d-flex align-items-center justify-content-center">
@@ -630,5 +647,62 @@
         })();
     </script>
     <!-- End of Tawk.to Script -->
+    <script>
+(function(){
+  var toggle = document.getElementById('ezmSidebarToggle');
+  var sidebar = document.getElementById('ezmSidebar');
+  var overlay = document.getElementById('ezmSidebarOverlay');
+  var closeBtn = document.getElementById('ezmSidebarClose');
+  var subToggles = Array.prototype.slice.call(document.querySelectorAll('.ezm-sub-toggle'));
+
+  function openSidebar(){
+    sidebar.classList.add('open');
+    overlay.classList.add('visible');
+    sidebar.setAttribute('aria-hidden','false');
+    toggle.setAttribute('aria-expanded','true');
+    // focus first link for keyboard users
+    var firstLink = sidebar.querySelector('.ezm-btn, .ezm-sub-toggle');
+    if(firstLink) firstLink.focus();
+  }
+
+  function closeSidebar(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    sidebar.setAttribute('aria-hidden','true');
+    toggle.setAttribute('aria-expanded','false');
+    toggle.focus();
+  }
+
+  toggle.addEventListener('click', function(e){
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    if(!expanded) openSidebar(); else closeSidebar();
+  });
+
+  closeBtn.addEventListener('click', closeSidebar);
+  overlay.addEventListener('click', closeSidebar);
+
+  // close on Escape
+  window.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
+  });
+
+  // submenu toggle behavior (accessible)
+  subToggles.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      var parent = btn.parentElement;
+      var menu = parent.querySelector('.ezm-submenu');
+      if(menu){
+        if(!expanded){ menu.style.display = 'block'; }
+        else { menu.style.display = 'none'; }
+      }
+    });
+  });
+
+  // prevent focus from leaving sidebar when open (basic)
+  overlay.addEventListener('focus', function(){ if(sidebar.classList.contains('open')) sidebar.querySelector('.ezm-btn, .ezm-sub-toggle').focus(); });
+})();
+</script>
 </body>
 </html>
