@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checker - EZM Cyber</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Reuse your site CSS -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    section {
+      margin-bottom: 30px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #007bff;
+    }
+    .btn-home {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 14px;
+      margin-top: 20px;
+      background: #28a745;
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      border-radius: 6px;
+    }
+    .btn-home:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>🔎 EZM Cyber Checker</h1>
+
+    <!-- IP Checker -->
+    <section>
+      <h2>Your IP Address</h2>
+      <p id="ip">Loading...</p>
+    </section>
+
+    <!-- Password Strength Checker -->
+    <section>
+      <h2>Password Strength</h2>
+      <input type="password" id="password" placeholder="Enter a password">
+      <p class="result" id="strength">Start typing...</p>
+    </section>
+
+    <!-- Back to Home -->
+    <a href="index.html" class="btn-home">⬅ Back to Home</a>
+  </main>
+
+  <script>
+    // Fetch User IP
+    fetch('https://api64.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("ip").textContent = data.ip;
+      })
+      .catch(() => {
+        document.getElementById("ip").textContent = "Unable to fetch IP.";
+      });
+
+    // Password Strength Checker
+    const passwordInput = document.getElementById("password");
+    const strengthText = document.getElementById("strength");
+
+    passwordInput.addEventListener("input", () => {
+      const value = passwordInput.value;
+      let strength = "Weak";
+
+      if (value.length > 8 && /[A-Z]/.test(value) && /\d/.test(value) && /\W/.test(value)) {
+        strength = "Strong 💪";
+      } else if (value.length > 5) {
+        strength = "Medium ⚡";
+      }
+
+      strengthText.textContent = "Strength: " + strength;
+    });
+  </script>
+</body>
+</html>
