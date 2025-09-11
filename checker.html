@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Suspicious Link Checker - EZM Cyber</title>
-  <link rel="stylesheet" href="styles.css"> <!-- Reuse your global CSS -->
+  <title>Email Breach Checker - EZM Cyber</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,23 +13,23 @@
       padding: 0;
     }
     main {
-      max-width: 600px;
+      max-width: 500px;
       margin: 80px auto;
       padding: 20px;
       background: #fff;
       border-radius: 6px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
     }
     h1 {
-      text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
     form {
       margin-top: 20px;
       display: flex;
       flex-direction: column;
     }
-    input[type="url"] {
+    input[type="email"] {
       padding: 12px;
       font-size: 16px;
       margin-bottom: 15px;
@@ -39,71 +39,73 @@
     button {
       padding: 12px;
       font-size: 16px;
-      background: #dc3545;
+      background: #007bff;
       color: #fff;
       border: none;
       border-radius: 4px;
       cursor: pointer;
     }
     button:hover {
-      background: #a71d2a;
+      background: #0056b3;
     }
-    p {
-      text-align: center;
+    #result {
       margin-top: 20px;
       font-size: 14px;
-      color: #555;
-    }
-    .alert {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 4px;
-    }
-    .alert-danger {
-      background: #f8d7da;
-      color: #842029;
     }
   </style>
 </head>
 <body>
   <main>
-    <h1>Suspicious Link Checker</h1>
-    <p>Verify the safety of any URL using <strong>VirusTotal</strong>'s comprehensive security analysis.</p>
+    <h1>Email Breach Checker</h1>
+    <p>Check if your email has been exposed in a known data breach.</p>
 
-    <!-- Checker Form -->
-    <form id="linkForm">
-      <input type="url" id="linkInput" placeholder="Paste or type a link (e.g., https://example.com)" required>
-      <button type="submit"><strong>Check Link</strong></button>
+    <form id="breachForm" onsubmit="return handleSubmit(event)">
+      <input type="email" id="emailInput" placeholder="Enter your email" required>
+      <button type="submit">Check Now</button>
     </form>
 
     <div id="result"></div>
-
-    <p><small>Secure analysis • Results open in new tab • Powered by VirusTotal</small></p>
-    <p><a href="index.html">⬅ Back to Home</a></p>
   </main>
 
   <script>
-    document.getElementById("linkForm").addEventListener("submit", function (e) {
-      e.preventDefault();
+    async function handleSubmit(event) {
+      event.preventDefault();
+      const email = document.getElementById("emailInput").value;
+      const resultDiv = document.getElementById("result");
 
-      const input = document.getElementById("linkInput").value.trim();
-      if (!input) return;
+      resultDiv.innerHTML = "🔍 Checking...";
 
       try {
-        // Encode URL to Base64 (URL-safe for VT)
-        const base64Url = btoa(input)
-          .replace(/\+/g, "-")
-          .replace(/\//g, "_")
-          .replace(/=+$/, "");
+        // Hash email (k-anonymity model)
+        const encoder = new TextEncoder();
+        const data = encoder.encode(email.trim().toLowerCase());
+        const digest = await crypto.subtle.digest("SHA-1", data);
+        const hash = Array.from(new Uint8Array(digest))
+          .map(b => b.toString(16).padStart(2, "0"))
+          .join("")
+          .toUpperCase();
 
-        // Open VirusTotal analysis page
-        const vtLink = `https://www.virustotal.com/gui/url/${base64Url}`;
-        window.open(vtLink, "_blank");
+        const prefix = hash.substring(0, 5);
+        const suffix = hash.substring(5);
+
+        const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+        const text = await response.text();
+
+        if (text.includes(suffix)) {
+          resultDiv.innerHTML = "⚠️ Your email **may have been found** in a breach. Change your password!";
+        } else {
+          resultDiv.innerHTML = "✅ Your email was **not found** in known breaches.";
+        }
+
+        // Redirect after 5 sec
+        setTimeout(() => {
+          window.location.href = "checker-thankyou.html";
+        }, 5000);
+
       } catch (err) {
-        document.getElementById("result").innerHTML =
-          '<div class="alert alert-danger">Invalid URL format. Please try again.</div>';
+        resultDiv.innerHTML = "❌ Error checking email.";
       }
-    });
+    }
   </script>
 </body>
 </html>
