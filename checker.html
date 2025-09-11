@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checker - EZM Cyber</title>
-  <link rel="stylesheet" href="styles.css"> <!-- Reuse your site CSS -->
+  <title>Suspicious Link Checker - EZM Cyber</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Reuse your global CSS -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -17,93 +17,92 @@
       margin: 80px auto;
       padding: 20px;
       background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     h1 {
       text-align: center;
       margin-bottom: 20px;
     }
-    section {
-      margin-bottom: 30px;
-    }
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
-    }
-    .result {
-      margin-top: 10px;
-      font-weight: bold;
-      color: #007bff;
-    }
-    .btn-home {
-      display: block;
-      width: 100%;
-      text-align: center;
-      padding: 14px;
+    form {
       margin-top: 20px;
-      background: #28a745;
-      color: #fff;
-      text-decoration: none;
-      font-size: 16px;
-      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
     }
-    .btn-home:hover {
-      background: #218838;
+    input[type="url"] {
+      padding: 12px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 12px;
+      font-size: 16px;
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #a71d2a;
+    }
+    p {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+    .alert {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 4px;
+    }
+    .alert-danger {
+      background: #f8d7da;
+      color: #842029;
     }
   </style>
 </head>
 <body>
   <main>
-    <h1>🔎 EZM Cyber Checker</h1>
+    <h1>Suspicious Link Checker</h1>
+    <p>Verify the safety of any URL using <strong>VirusTotal</strong>'s comprehensive security analysis.</p>
 
-    <!-- IP Checker -->
-    <section>
-      <h2>Your IP Address</h2>
-      <p id="ip">Loading...</p>
-    </section>
+    <!-- Checker Form -->
+    <form id="linkForm">
+      <input type="url" id="linkInput" placeholder="Paste or type a link (e.g., https://example.com)" required>
+      <button type="submit"><strong>Check Link</strong></button>
+    </form>
 
-    <!-- Password Strength Checker -->
-    <section>
-      <h2>Password Strength</h2>
-      <input type="password" id="password" placeholder="Enter a password">
-      <p class="result" id="strength">Start typing...</p>
-    </section>
+    <div id="result"></div>
 
-    <!-- Back to Home -->
-    <a href="index.html" class="btn-home">⬅ Back to Home</a>
+    <p><small>Secure analysis • Results open in new tab • Powered by VirusTotal</small></p>
+    <p><a href="index.html">⬅ Back to Home</a></p>
   </main>
 
   <script>
-    // Fetch User IP
-    fetch('https://api64.ipify.org?format=json')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("ip").textContent = data.ip;
-      })
-      .catch(() => {
-        document.getElementById("ip").textContent = "Unable to fetch IP.";
-      });
+    document.getElementById("linkForm").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-    // Password Strength Checker
-    const passwordInput = document.getElementById("password");
-    const strengthText = document.getElementById("strength");
+      const input = document.getElementById("linkInput").value.trim();
+      if (!input) return;
 
-    passwordInput.addEventListener("input", () => {
-      const value = passwordInput.value;
-      let strength = "Weak";
+      try {
+        // Encode URL to Base64 (URL-safe for VT)
+        const base64Url = btoa(input)
+          .replace(/\+/g, "-")
+          .replace(/\//g, "_")
+          .replace(/=+$/, "");
 
-      if (value.length > 8 && /[A-Z]/.test(value) && /\d/.test(value) && /\W/.test(value)) {
-        strength = "Strong 💪";
-      } else if (value.length > 5) {
-        strength = "Medium ⚡";
+        // Open VirusTotal analysis page
+        const vtLink = `https://www.virustotal.com/gui/url/${base64Url}`;
+        window.open(vtLink, "_blank");
+      } catch (err) {
+        document.getElementById("result").innerHTML =
+          '<div class="alert alert-danger">Invalid URL format. Please try again.</div>';
       }
-
-      strengthText.textContent = "Strength: " + strength;
     });
   </script>
 </body>
