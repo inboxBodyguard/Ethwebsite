@@ -852,74 +852,112 @@
     </script>
     <!-- End of Tawk.to Script -->
     <script>
-  <script>
-    // Get elements
-    const hamburger = document.getElementById('hamburgerToggle');
-    const sidebar = document.getElementById('sidebar');
-    const sidebarClose = document.getElementById('sidebarClose');
-    const overlay = document.getElementById('sidebarOverlay');
-    const subMenuToggles = document.querySelectorAll('.ezm-sub-toggle');
+ <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const toggle = document.getElementById('ezmSidebarToggle');
+  const sidebar = document.getElementById('ezmSidebar');
+  const closeBtn = document.getElementById('ezmSidebarClose');
+  const overlay = document.getElementById('ezmSidebarOverlay');
+  const subToggles = document.querySelectorAll('.ezm-sub-toggle');
 
-    // Toggle sidebar function
-    function toggleSidebar() {
-        sidebar.classList.toggle('open');
-        overlay.classList.toggle('visible');
-        hamburger.classList.toggle('active');
+  if (!toggle || !sidebar || !closeBtn || !overlay) {
+    console.warn('Sidebar: required elements not found. Check IDs in markup.');
+    return;
+  }
 
-        // Accessibility toggle
-        const expanded = hamburger.classList.contains('active');
-        hamburger.setAttribute('aria-expanded', expanded);
-        sidebar.setAttribute('aria-hidden', !expanded);
-    }
+  // Ensure sidebar is closed on load (no inline "!important" hacks)
+  sidebar.classList.remove('open');
+  overlay.classList.remove('visible');
+  sidebar.setAttribute('aria-hidden', 'true');
+  toggle.setAttribute('aria-expanded', 'false');
 
-    // Close sidebar function (improved)
-    function closeSidebar() {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('visible');
-        sidebar.setAttribute('aria-hidden','true');
-        hamburger.setAttribute('aria-expanded','false');
-        hamburger.classList.remove('active');
-        hamburger.focus();
-    }
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('visible');
+    sidebar.setAttribute('aria-hidden', 'false');
+    toggle.setAttribute('aria-expanded', 'true');
+    // move focus to first interactive item in sidebar for accessibility
+    const firstLink = sidebar.querySelector('.ezm-btn, .ezm-sub-toggle');
+    if (firstLink) firstLink.focus();
+  }
 
-    // Event listeners
-    hamburger.addEventListener('click', toggleSidebar);
-    sidebarClose.addEventListener('click', closeSidebar);
-    overlay.addEventListener('click', closeSidebar);
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    sidebar.setAttribute('aria-hidden', 'true');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.focus();
+  }
 
-    // Handle submenu toggles
-    subMenuToggles.forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            const parentLi = this.parentElement;
-            const submenu = parentLi.querySelector('.ezm-submenu');
+  // Toggle handler
+  toggle.addEventListener('click', function (e) {
+    e.preventDefault();
+    if (sidebar.classList.contains('open')) closeSidebar();
+    else openSidebar();
+  });
 
-            // Close other open submenus
-            subMenuToggles.forEach(otherToggle => {
-                if (otherToggle !== toggle) {
-                    otherToggle.parentElement.classList.remove('open');
-                    otherToggle.parentElement.querySelector('.ezm-submenu').classList.remove('open');
-                }
-            });
+  // Close handlers
+  closeBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    closeSidebar();
+  });
+  overlay.addEventListener('click', closeSidebar);
 
-            // Toggle current submenu
-            parentLi.classList.toggle('open');
-            submenu.classList.toggle('open');
-        });
-    });
+  // Close on Escape
+  window.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
+  });
 
-    // Close sidebar on escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-            closeSidebar();
+  // Submenu behaviour (keeps other submenus closed)
+  subToggles.forEach(function (btn) {
+    const parent = btn.closest('.ezm-has-sub');
+    const menu = parent ? parent.querySelector('.ezm-submenu') : null;
+
+    // initialize aria states
+    btn.setAttribute('aria-expanded', 'false');
+    if (menu) menu.setAttribute('aria-hidden', 'true');
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+      // close all other submenus
+      subToggles.forEach(function (otherBtn) {
+        if (otherBtn !== btn) {
+          const otherParent = otherBtn.closest('.ezm-has-sub');
+          const otherMenu = otherParent ? otherParent.querySelector('.ezm-submenu') : null;
+          otherBtn.setAttribute('aria-expanded', 'false');
+          if (otherMenu) {
+            otherMenu.style.display = 'none';
+            otherMenu.setAttribute('aria-hidden', 'true');
+            otherParent.classList.remove('open');
+          }
         }
-    });
+      });
 
-    // Handle window resize
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768 && sidebar.classList.contains('open')) {
-            closeSidebar();
+      // toggle this submenu
+      btn.setAttribute('aria-expanded', String(!isExpanded));
+      if (menu) {
+        if (!isExpanded) {
+          menu.style.display = 'block';
+          menu.setAttribute('aria-hidden', 'false');
+          parent.classList.add('open');
+        } else {
+          menu.style.display = 'none';
+          menu.setAttribute('aria-hidden', 'true');
+          parent.classList.remove('open');
         }
+      }
     });
+  });
+
+  // Responsive safeguard: close sidebar when resizing to desktop
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 768 && sidebar.classList.contains('open')) {
+      closeSidebar();
+    }
+  });
+});
 </script>
 </body>
 </html>
