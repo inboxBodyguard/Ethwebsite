@@ -7,55 +7,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   
 <style>
-  :root {
-    --primary-color: #6366f1;
-    --primary-dark: #4f46e5;
-    --secondary-color: #8b5cf6;
-    --accent-color: #06b6d4;
-    --success-color: #10b981;
-    --warning-color: #f59e0b;
-    --danger-color: #ef4444;
-    --dark-bg: #0f172a;
-    --dark-card: #1e293b;
-    --light-bg: #f8fafc;
-    --light-card: #ffffff;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --text-light: #94a3b8;
-    --border-color: #e2e8f0;
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    color: var(--text-primary);
-    line-height: 1.7;
-    min-height: 100vh;
-    padding-top: 72px;
-  }
-
   /* Sidebar / Submenu - Enhanced */
   .ezm-submenu {
     list-style: none;
     margin: 8px 0 10px 0;
     padding-left: 8px;
-    display: none;
     opacity: 0;
     max-height: 0;
     overflow: hidden;
     transition: all 0.3s ease;
   }
   .ezm-has-sub.open .ezm-submenu {
-    display: block;
     opacity: 1;
-    max-height: 500px; /* Increased for multiple items */
+    max-height: 500px;
   }
   .ezm-sub-toggle {
     background: none;
@@ -98,28 +62,16 @@
     }
 
     if (hamburger) hamburger.addEventListener('click', toggleSidebar);
-    sidebarClose.addEventListener('click', closeSidebar);
-    overlay.addEventListener('click', closeSidebar);
+    if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+    if (overlay) overlay.addEventListener('click', closeSidebar);
 
     subMenuToggles.forEach(toggle => {
       toggle.addEventListener('click', function(e) {
-        e.preventDefault(); // Prevent default button behavior
-        const parentLi = this.parentElement;
-        const submenu = parentLi.querySelector('.ezm-submenu');
-
-        // Close other submenus
-        subMenuToggles.forEach(other => {
-          if (other !== toggle) {
-            const otherParent = other.parentElement;
-            const otherMenu = otherParent.querySelector('.ezm-submenu');
-            otherParent.classList.remove('open');
-            if (otherMenu) otherMenu.classList.remove('open');
-          }
-        });
+        e.preventDefault();
+        const parentLi = this.closest('.ezm-has-sub');
 
         // Toggle current submenu
-        const isOpen = parentLi.classList.toggle('open');
-        if (submenu) submenu.classList.toggle('open');
+        parentLi.classList.toggle('open');
       });
     });
 
