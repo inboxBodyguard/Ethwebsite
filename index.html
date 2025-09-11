@@ -469,82 +469,81 @@
     </div>
 
     <!-- Top bar (brand + hamburger) -->
-    <nav class="ezm-topbar" role="navigation" aria-label="Main navigation">
-      <div class="container ezm-topbar-inner">
-        <a class="navbar-brand" href="index.html">EZM Cyber</a>
+<nav class="ezm-topbar" role="navigation" aria-label="Main navigation">
+  <div class="container ezm-topbar-inner">
+    <a class="navbar-brand" href="index.html">EZM Cyber</a>
 
-        <!-- hamburger triggers sidebar -->
-        <button id="ezmSidebarToggle" class="ezm-hamburger" aria-controls="ezmSidebar" aria-expanded="false" aria-label="Open main menu">
-          <span class="ezm-hamburger-box"><span class="ezm-hamburger-inner"></span></span>
-        </button>
-      </div>
+    <!-- hamburger triggers sidebar -->
+    <button id="ezmSidebarToggle" class="ezm-hamburger" aria-controls="ezmSidebar" aria-expanded="false" aria-label="Open main menu">
+      <span class="ezm-hamburger-box"><span class="ezm-hamburger-inner"></span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Sidebar (hidden by default) -->
+<aside id="ezmSidebar" class="ezm-sidebar" role="complementary" aria-hidden="true" aria-labelledby="ezmSidebarToggle">
+  <div class="ezm-sidebar-inner">
+    <button id="ezmSidebarClose" class="ezm-sidebar-close" aria-label="Close menu">&times;</button>
+
+    <div class="ezm-sidebar-brand">
+      <a href="index.html">EZM Cyber</a>
+    </div>
+
+    <nav class="ezm-sidebar-nav" role="navigation" aria-label="Sidebar navigation">
+      <ul>
+        <!-- Main pages -->
+        <li><a class="ezm-btn" href="index.html">🏠 Home</a></li>
+        <li><a class="ezm-btn" href="about.html">About</a></li>
+        <li><a class="ezm-btn" href="services.html">Services</a></li>
+        <li><a class="ezm-btn" href="projects.html">Projects</a></li>
+        <li><a class="ezm-btn" href="blog.html">Blog</a></li>
+        <li><a class="ezm-btn" href="contact.html">Contact</a></li>
+        <li><a class="ezm-btn" href="videos.html">Videos</a></li>
+
+        <!-- Extras -->
+        <li><a class="ezm-btn" href="privacy.html">Privacy</a></li>
+        <li><a class="ezm-btn" href="community-forum.html">Forum</a></li>
+
+        <!-- Get Involved (expandable) -->
+        <li class="ezm-has-sub">
+          <button class="ezm-sub-toggle" aria-expanded="false">Get Involved <span class="ezm-caret">▾</span></button>
+          <ul class="ezm-submenu">
+            <li><a class="ezm-btn" href="signup.html">Sign Up</a></li>
+            <li><a class="ezm-btn" href="register.html">Register</a></li>
+            <li><a class="ezm-btn" href="newsletter.html">Newsletter</a></li>
+          </ul>
+        </li>
+
+        <!-- Tools (expandable) -->
+        <li class="ezm-has-sub">
+          <button class="ezm-sub-toggle" aria-expanded="false">Tools <span class="ezm-caret">▾</span></button>
+          <ul class="ezm-submenu">
+            <li><a class="ezm-btn" href="hash-generator.html">Hash Generator</a></li>
+            <li><a class="ezm-btn" href="password-tools.html">Password Tools</a></li>
+            <li><a class="ezm-btn" href="file-scanner.html">File Scanner</a></li>
+            <li><a class="ezm-btn" href="network-tools.html">Network Tools</a></li>
+            <li><a class="ezm-btn" href="checker.html">Checker</a></li>
+          </ul>
+        </li>
+      </ul>
     </nav>
 
-    <!-- Sidebar (hidden by default) -->
-    <aside id="ezmSidebar" class="ezm-sidebar" role="complementary" aria-hidden="true" aria-labelledby="ezmSidebarToggle">
-      <div class="ezm-sidebar-inner">
-        <button id="ezmSidebarClose" class="ezm-sidebar-close" aria-label="Close menu">&times;</button>
+    <div class="ezm-sidebar-footer">
+      <a class="ezm-cta" href="contact.html">Get In Touch</a>
+    </div>
+  </div>
+</aside>
 
-        <div class="ezm-sidebar-brand">
-          <a href="index.html">EZM Cyber</a>
-        </div>
+<!-- overlay -->
+<div id="ezmSidebarOverlay" class="ezm-sidebar-overlay" tabindex="-1" aria-hidden="true"></div>
 
-        <nav class="ezm-sidebar-nav" role="navigation" aria-label="Sidebar navigation">
-          <ul>
-            <!-- Main pages -->
-            <li><a class="ezm-btn" href="index.html">🏠 Home</a></li>
-            <li><a class="ezm-btn" href="about.html">About</a></li>
-            <li><a class="ezm-btn" href="services.html">Services</a></li>
-            <li><a class="ezm-btn" href="projects.html">Projects</a></li>
-            <li><a class="ezm-btn" href="blog.html">Blog</a></li>
-            <li><a class="ezm-btn" href="contact.html">Contact</a></li>
-            <li><a class="ezm-btn" href="videos.html">Videos</a></li>
-
-            <!-- Extras -->
-            <li><a class="ezm-btn" href="privacy.html">Privacy</a></li>
-            <li><a class="ezm-btn" href="community-forum.html">Forum</a></li>
-
-            <!-- Get Involved (expandable) -->
-            <li class="ezm-has-sub">
-              <button class="ezm-sub-toggle" aria-expanded="false">Get Involved <span class="ezm-caret">▾</span></button>
-              <ul class="ezm-submenu">
-                <li><a class="ezm-btn" href="signup.html">Sign Up</a></li>
-                <li><a class="ezm-btn" href="register.html">Register</a></li>
-                <li><a class="ezm-btn" href="newsletter.html">Newsletter</a></li>
-              </ul>
-            </li>
-
-            <!-- Tools (expandable) -->
-            <li class="ezm-has-sub">
-              <button class="ezm-sub-toggle" aria-expanded="false">Tools <span class="ezm-caret">▾</span></button>
-              <ul class="ezm-submenu">
-                <li><a class="ezm-btn" href="hash-generator.html">Hash Generator</a></li>
-                <li><a class="ezm-btn" href="password-tools.html">Password Tools</a></li>
-                <li><a class="ezm-btn" href="file-scanner.html">File Scanner</a></li>
-                <li><a class="ezm-btn" href="network-tools.html">Network Tools</a></li>
-                <li><a class="ezm-btn" href="checker.html">Checker</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-
-        <div class="ezm-sidebar-footer">
-          <a class="ezm-cta" href="contact.html">Get In Touch</a>
-        </div>
-      </div>
-    </aside>
-
-    <!-- overlay -->
-    <div id="ezmSidebarOverlay" class="ezm-sidebar-overlay" tabindex="-1" aria-hidden="true"></div>
-
+    
     <!-- Banner -->
-    <section class="banner-section d-flex align-items-center justify-content-center">
-        <div class="banner-overlay"></div>
-        <div class="banner-content">
-            <h1 class="banner-title">SYSTEM DEFENDER | THREAT ANALYSIS</h1>
-            <p class="banner-subtitle">Secure. Protect. Respond.</p>
-        </div>
-    </section>
+<section class="banner-section d-flex align-items-center justify-content-center">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+    </div>
+</section>
 
     <!-- Welcome Section -->
     <section class="py-5 scroll-fade">
@@ -853,77 +852,74 @@
     </script>
     <!-- End of Tawk.to Script -->
     <script>
-    (function(){
-      var toggle = document.getElementById('ezmSidebarToggle');
-      var sidebar = document.getElementById('ezmSidebar');
-      var overlay = document.getElementById('ezmSidebarOverlay');
-      var closeBtn = document.getElementById('ezmSidebarClose');
-      var subToggles = Array.prototype.slice.call(document.querySelectorAll('.ezm-has-sub'));
+  <script>
+    // Get elements
+    const hamburger = document.getElementById('hamburgerToggle');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarClose = document.getElementById('sidebarClose');
+    const overlay = document.getElementById('sidebarOverlay');
+    const subMenuToggles = document.querySelectorAll('.ezm-sub-toggle');
 
-      function openSidebar(){
-        sidebar.classList.add('open');
-        overlay.classList.add('visible');
-        sidebar.setAttribute('aria-hidden','false');
-        toggle.setAttribute('aria-expanded','true');
-        // focus first link for keyboard users
-        var firstLink = sidebar.querySelector('.ezm-btn, .ezm-sub-toggle');
-        if(firstLink) firstLink.focus();
-      }
+    // Toggle sidebar function
+    function toggleSidebar() {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('visible');
+        hamburger.classList.toggle('active');
 
-      function closeSidebar(){
+        // Accessibility toggle
+        const expanded = hamburger.classList.contains('active');
+        hamburger.setAttribute('aria-expanded', expanded);
+        sidebar.setAttribute('aria-hidden', !expanded);
+    }
+
+    // Close sidebar function (improved)
+    function closeSidebar() {
         sidebar.classList.remove('open');
         overlay.classList.remove('visible');
         sidebar.setAttribute('aria-hidden','true');
-        toggle.setAttribute('aria-expanded','false');
-        toggle.focus();
-      }
+        hamburger.setAttribute('aria-expanded','false');
+        hamburger.classList.remove('active');
+        hamburger.focus();
+    }
 
-      toggle.addEventListener('click', function(e){
-        e.preventDefault();
-        var expanded = toggle.getAttribute('aria-expanded') === 'true';
-        if(!expanded) openSidebar(); else closeSidebar();
-      });
+    // Event listeners
+    hamburger.addEventListener('click', toggleSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    overlay.addEventListener('click', closeSidebar);
 
-      closeBtn.addEventListener('click', closeSidebar);
-      overlay.addEventListener('click', closeSidebar);
+    // Handle submenu toggles
+    subMenuToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const parentLi = this.parentElement;
+            const submenu = parentLi.querySelector('.ezm-submenu');
 
-      // close on Escape
-      window.addEventListener('keydown', function(e){
-        if(e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
-      });
+            // Close other open submenus
+            subMenuToggles.forEach(otherToggle => {
+                if (otherToggle !== toggle) {
+                    otherToggle.parentElement.classList.remove('open');
+                    otherToggle.parentElement.querySelector('.ezm-submenu').classList.remove('open');
+                }
+            });
 
-      // submenu toggle behavior (accessible)
-      subToggles.forEach(function(parent){
-        var btn = parent.querySelector('.ezm-sub-toggle');
-        var menu = parent.querySelector('.ezm-submenu');
-        btn.addEventListener('click', function(e){
-          e.preventDefault();
-          var expanded = btn.getAttribute('aria-expanded') === 'true';
-          btn.setAttribute('aria-expanded', String(!expanded));
-          parent.setAttribute('aria-expanded', String(!expanded));
-          if(!expanded){ 
-            menu.style.display = 'block'; 
-            menu.setAttribute('aria-hidden', 'false');
-          }
-          else { 
-            menu.style.display = 'none'; 
-            menu.setAttribute('aria-hidden', 'true');
-          }
+            // Toggle current submenu
+            parentLi.classList.toggle('open');
+            submenu.classList.toggle('open');
         });
-      });
+    });
 
-      // prevent focus from leaving sidebar when open (basic)
-      overlay.addEventListener('focus', function(){ 
-        if(sidebar.classList.contains('open')) sidebar.querySelector('.ezm-btn, .ezm-sub-toggle').focus(); 
-      });
-
-      // Handle window resize - close on desktop
-      window.addEventListener('resize', function() {
-        if (window.innerWidth > 768 && sidebar.classList.contains('open')) {
-          closeSidebar();
+    // Close sidebar on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+            closeSidebar();
         }
-      });
-    })();
-    </script>
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && sidebar.classList.contains('open')) {
+            closeSidebar();
+        }
+    });
+</script>
 </body>
 </html>
