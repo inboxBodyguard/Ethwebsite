@@ -42,6 +42,7 @@
             color: var(--text-primary);
             line-height: 1.7;
             min-height: 100vh;
+            padding-top: 72px; /* ensures topbar/side nav never overlaps content */
         }
 
         /* Navigation */
@@ -90,7 +91,6 @@
             text-align: center;
             color: #fff;
             overflow: hidden;
-            margin-top: 80px; /* Offset for fixed-top navbar (~70-80px) */
         }
 
         .banner-section::before {
@@ -130,16 +130,16 @@
             .banner-section {
                 min-height: 140px;
                 padding-top: 50%; /* Adjusted for tablet aspect ratio */
-                margin-top: 60px; /* Reduced navbar offset for mobile */
             }
+            body { padding-top: 60px; }
         }
 
         @media (max-width: 480px) {
             .banner-section {
                 min-height: 120px;
                 padding-top: 56.25%; /* 9/16 for mobile aspect ratio */
-                margin-top: 50px; /* Further reduced for smaller screens */
             }
+            body { padding-top: 50px; }
         }
 
         /* Sections */
@@ -188,7 +188,7 @@
         .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.12); }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), --primary-dark));
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: #fff;
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
@@ -275,6 +275,190 @@
             .btn-lg { font-size: 0.95rem; }
             .input-group-lg .form-control { font-size: 0.95rem; min-height: 55px; }
         }
+
+        /* ================================
+           EZM Sidebar / Topbar (scoped)
+        =================================== */
+        .ezm-topbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 72px;
+            display: flex; align-items: center;
+            z-index: 1100;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(6px);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+        }
+        .ezm-topbar .container {
+            display:flex; align-items:center; justify-content:space-between;
+            width:100%; padding:0 1rem;
+        }
+        .ezm-topbar .navbar-brand {
+            font-weight:700; font-size:1.25rem;
+            color:var(--text-primary); text-decoration:none;
+        }
+
+        /* Hamburger */
+        .ezm-hamburger {
+            background: transparent; border:none; padding:8px;
+            display:inline-flex; align-items:center; justify-content:center;
+            cursor:pointer; width:44px; height:44px;
+        }
+        .ezm-hamburger:focus {
+            outline:3px solid rgba(99,102,241,0.18);
+            border-radius:6px;
+        }
+        .ezm-hamburger-box { display:inline-block; width:22px; height:16px; position:relative; }
+        .ezm-hamburger-inner,
+        .ezm-hamburger-inner::before,
+        .ezm-hamburger-inner::after {
+            display:block; background:var(--text-primary);
+            height:2px; border-radius:2px; position:absolute;
+            left:0; right:0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ezm-hamburger-inner { top:50%; transform:translateY(-50%); }
+        .ezm-hamburger-inner::before { content:''; top:-7px; }
+        .ezm-hamburger-inner::after { content:''; top:7px; }
+
+        /* Hamburger animation when open */
+        .ezm-hamburger[aria-expanded="true"] .ezm-hamburger-inner {
+            background: transparent;
+        }
+        .ezm-hamburger[aria-expanded="true"] .ezm-hamburger-inner::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+        .ezm-hamburger[aria-expanded="true"] .ezm-hamburger-inner::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        /* Sidebar - BULLETPROOF HIDE */
+        .ezm-sidebar {
+            position:fixed !important; top:0 !important; left:0 !important; width:320px; max-width:92%;
+            height:100vh !important; background:var(--light-card);
+            box-shadow:0 20px 60px rgba(2,6,23,0.18);
+            transform:translateX(-100%) !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            transition:transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0.3s, opacity 300ms ease !important;
+            z-index:1200; overflow-y:auto; -webkit-overflow-scrolling:touch;
+        }
+        .ezm-sidebar.open { 
+            transform:translateX(0) !important; 
+            visibility: visible !important; 
+            opacity: 1 !important;
+            transition:transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0s, opacity 300ms ease !important;
+        }
+        .ezm-sidebar-inner { padding:88px 18px 28px; box-sizing:border-box; }
+        .ezm-sidebar-close {
+            position:absolute; top:12px; right:12px;
+            border:none; background:transparent;
+            font-size:28px; cursor:pointer; color:var(--text-primary);
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+        }
+        .ezm-sidebar-close:hover {
+            background: rgba(0,0,0,0.05);
+        }
+        .ezm-sidebar-brand { margin-bottom:1rem; text-align:left; }
+        .ezm-sidebar-brand a {
+            font-weight:800; font-size:1.25rem;
+            color:var(--text-primary); text-decoration:none;
+        }
+
+        /* Sidebar nav */
+        .ezm-sidebar-nav ul { list-style:none; padding:0; margin:0; }
+        .ezm-sidebar-nav li { margin-bottom:6px; }
+
+        .ezm-btn {
+            display:block; width:100%; text-align:left;
+            padding:12px 14px; border-radius:10px;
+            text-decoration:none; font-weight:600; color:#fff;
+            background:linear-gradient(135deg,var(--primary-color),var(--primary-dark));
+            box-shadow:0 8px 28px rgba(99,102,241,0.12);
+        }
+        .ezm-btn:hover {
+            box-shadow:0 12px 36px rgba(99,102,241,0.16);
+            transform: translateY(-2px);
+        }
+
+        /* Submenu */
+        .ezm-has-sub .ezm-sub-toggle {
+            width:100%; padding:12px 14px;
+            border-radius:10px; background:transparent;
+            border:1px solid rgba(16,24,40,0.08);
+            font-weight:700; cursor:pointer;
+            display:flex; justify-content:space-between; align-items:center;
+            color: var(--text-primary);
+        }
+        .ezm-has-sub .ezm-sub-toggle:hover {
+            background: rgba(99,102,241,0.05);
+        }
+        .ezm-has-sub .ezm-sub-toggle .ezm-caret {
+            font-size:0.9em;
+            transition: transform 0.3s ease;
+        }
+        .ezm-has-sub[aria-expanded="true"] .ezm-sub-toggle .ezm-caret {
+            transform: rotate(180deg);
+        }
+
+        .ezm-submenu {
+            list-style:none; margin:8px 0 10px 0; padding-left:8px;
+            display:none;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .ezm-submenu[aria-expanded="true"] {
+            display: block;
+            opacity: 1;
+            max-height: 300px;
+        }
+        .ezm-submenu li a {
+            display:block; padding:10px 12px; border-radius:8px;
+            background:rgba(2,6,23,0.02); color:var(--text-primary);
+            font-weight:600; text-decoration:none; margin-bottom:6px;
+        }
+        .ezm-submenu li a:hover {
+            background:rgba(2,6,23,0.04);
+            transform: translateX(4px);
+        }
+
+        /* Sidebar footer */
+        .ezm-sidebar-footer {
+            margin-top:18px; padding-top:8px;
+            border-top:1px solid rgba(0,0,0,0.04);
+            text-align:center;
+        }
+        .ezm-cta {
+            display:inline-block; padding:10px 18px;
+            border-radius:10px;
+            background:linear-gradient(135deg,var(--primary-color),var(--primary-dark));
+            color:#fff; text-decoration:none; font-weight:700;
+        }
+        .ezm-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Overlay */
+        .ezm-sidebar-overlay {
+            position:fixed; inset:0; background:rgba(0,0,0,0.36);
+            opacity:0; visibility:hidden;
+            transition:opacity 220ms ease;
+            z-index:1150;
+        }
+        .ezm-sidebar-overlay.visible {
+            opacity:1; visibility:visible;
+        }
+
+        @media (max-width:600px) {
+            .ezm-sidebar { width:88%; }
+        }
     </style>
 </head>
 <body>
@@ -285,77 +469,80 @@
     </div>
 
     <!-- Top bar (brand + hamburger) -->
-<nav class="ezm-topbar" role="navigation" aria-label="Main navigation">
-  <div class="container ezm-topbar-inner">
-    <a class="navbar-brand" href="index.html">EZM Cyber</a>
+    <nav class="ezm-topbar" role="navigation" aria-label="Main navigation">
+      <div class="container ezm-topbar-inner">
+        <a class="navbar-brand" href="index.html">EZM Cyber</a>
 
-    <!-- hamburger triggers sidebar -->
-    <button id="ezmSidebarToggle" class="ezm-hamburger" aria-controls="ezmSidebar" aria-expanded="false" aria-label="Open main menu">
-      <span class="ezm-hamburger-box"><span class="ezm-hamburger-inner"></span></span>
-    </button>
-  </div>
-</nav>
-
-<!-- Sidebar (hidden by default) -->
-<aside id="ezmSidebar" class="ezm-sidebar" role="complementary" aria-hidden="true" aria-labelledby="ezmSidebarToggle">
-  <div class="ezm-sidebar-inner">
-    <button id="ezmSidebarClose" class="ezm-sidebar-close" aria-label="Close menu">&times;</button>
-
-    <div class="ezm-sidebar-brand">
-      <a href="index.html">EZM Cyber</a>
-    </div>
-
-    <nav class="ezm-sidebar-nav" role="navigation" aria-label="Sidebar navigation">
-      <ul>
-        <!-- Main pages -->
-        <li><a class="ezm-btn" href="index.html">Home</a></li>
-        <li><a class="ezm-btn" href="about.html">About</a></li>
-        <li><a class="ezm-btn" href="services.html">Services</a></li>
-        <li><a class="ezm-btn" href="projects.html">Projects</a></li>
-        <li><a class="ezm-btn" href="blog.html">Blog</a></li>
-        <li><a class="ezm-btn" href="contact.html">Contact</a></li>
-        <li><a class="ezm-btn" href="videos.html">Videos</a></li>
-
-        <!-- Extras -->
-        <li><a class="ezm-btn" href="privacy.html">Privacy</a></li>
-        <li><a class="ezm-btn" href="community-forum.html">Forum</a></li>
-
-        <!-- Get Involved (expandable) -->
-        <li class="ezm-has-sub">
-          <button class="ezm-sub-toggle" aria-expanded="false">Get Involved <span class="ezm-caret">▾</span></button>
-          <ul class="ezm-submenu">
-            <li><a class="ezm-btn" href="signup.html">Sign Up</a></li>
-            <li><a class="ezm-btn" href="register.html">Register</a></li>
-            <li><a class="ezm-btn" href="newsletter.html">Newsletter</a></li>
-          </ul>
-        </li>
-
-        <!-- Tools (expandable) -->
-        <li class="ezm-has-sub">
-          <button class="ezm-sub-toggle" aria-expanded="false">Tools <span class="ezm-caret">▾</span></button>
-          <ul class="ezm-submenu">
-            <li><a class="ezm-btn" href="hash-generator.html">Hash Generator</a></li>
-            <li><a class="ezm-btn" href="password-tools.html">Password Tools</a></li>
-            <li><a class="ezm-btn" href="file-scanner.html">File Scanner</a></li>
-            <li><a class="ezm-btn" href="network-tools.html">Network Tools</a></li>
-            <li><a class="ezm-btn" href="checker.html">Checker</a></li>
-          </ul>
-        </li>
-      </ul>
+        <!-- hamburger triggers sidebar -->
+        <button id="ezmSidebarToggle" class="ezm-hamburger" aria-controls="ezmSidebar" aria-expanded="false" aria-label="Open main menu">
+          <span class="ezm-hamburger-box"><span class="ezm-hamburger-inner"></span></span>
+        </button>
+      </div>
     </nav>
 
-    <div class="ezm-sidebar-footer">
-      <a class="ezm-cta" href="contact.html">Get In Touch</a>
-    </div>
-  </div>
-</aside>
+    <!-- Sidebar (hidden by default) -->
+    <aside id="ezmSidebar" class="ezm-sidebar" role="complementary" aria-hidden="true" aria-labelledby="ezmSidebarToggle">
+      <div class="ezm-sidebar-inner">
+        <button id="ezmSidebarClose" class="ezm-sidebar-close" aria-label="Close menu">&times;</button>
 
-<!-- overlay -->
-<div id="ezmSidebarOverlay" class="ezm-sidebar-overlay" tabindex="-1" aria-hidden="true"></div>
+        <div class="ezm-sidebar-brand">
+          <a href="index.html">EZM Cyber</a>
+        </div>
+
+        <nav class="ezm-sidebar-nav" role="navigation" aria-label="Sidebar navigation">
+          <ul>
+            <!-- Main pages -->
+            <li><a class="ezm-btn" href="index.html">🏠 Home</a></li>
+            <li><a class="ezm-btn" href="about.html">About</a></li>
+            <li><a class="ezm-btn" href="services.html">Services</a></li>
+            <li><a class="ezm-btn" href="projects.html">Projects</a></li>
+            <li><a class="ezm-btn" href="blog.html">Blog</a></li>
+            <li><a class="ezm-btn" href="contact.html">Contact</a></li>
+            <li><a class="ezm-btn" href="videos.html">Videos</a></li>
+
+            <!-- Extras -->
+            <li><a class="ezm-btn" href="privacy.html">Privacy</a></li>
+            <li><a class="ezm-btn" href="community-forum.html">Forum</a></li>
+
+            <!-- Get Involved (expandable) -->
+            <li class="ezm-has-sub">
+              <button class="ezm-sub-toggle" aria-expanded="false">Get Involved <span class="ezm-caret">▾</span></button>
+              <ul class="ezm-submenu">
+                <li><a class="ezm-btn" href="signup.html">Sign Up</a></li>
+                <li><a class="ezm-btn" href="register.html">Register</a></li>
+                <li><a class="ezm-btn" href="newsletter.html">Newsletter</a></li>
+              </ul>
+            </li>
+
+            <!-- Tools (expandable) -->
+            <li class="ezm-has-sub">
+              <button class="ezm-sub-toggle" aria-expanded="false">Tools <span class="ezm-caret">▾</span></button>
+              <ul class="ezm-submenu">
+                <li><a class="ezm-btn" href="hash-generator.html">Hash Generator</a></li>
+                <li><a class="ezm-btn" href="password-tools.html">Password Tools</a></li>
+                <li><a class="ezm-btn" href="file-scanner.html">File Scanner</a></li>
+                <li><a class="ezm-btn" href="network-tools.html">Network Tools</a></li>
+                <li><a class="ezm-btn" href="checker.html">Checker</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="ezm-sidebar-footer">
+          <a class="ezm-cta" href="contact.html">Get In Touch</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- overlay -->
+    <div id="ezmSidebarOverlay" class="ezm-sidebar-overlay" tabindex="-1" aria-hidden="true"></div>
 
     <!-- Banner -->
     <section class="banner-section d-flex align-items-center justify-content-center">
+        <div class="banner-overlay"></div>
         <div class="banner-content">
+            <h1 class="banner-title">SYSTEM DEFENDER | THREAT ANALYSIS</h1>
+            <p class="banner-subtitle">Secure. Protect. Respond.</p>
         </div>
     </section>
 
@@ -364,7 +551,7 @@
         <div class="container text-center">
             <h2 class="mb-4">Welcome to EZM Cyber</h2>
             <p class="lead mb-5">Your trusted source for cybersecurity insights, tools, and guidance.</p>
-            <a href="#" class="btn btn-primary btn-lg">Watch Video</a>
+            <a href="videos.html" class="btn btn-primary btn-lg">Watch Video</a>
         </div>
     </section>
 
@@ -376,7 +563,7 @@
                 We help businesses stay secure with expert guidance, modern tools, 
                 and proven cybersecurity strategies—empowering you to focus on growth with confidence.
             </p>
-            <a href="#" class="btn btn-primary btn-lg">Learn More</a>
+            <a href="about.html" class="btn btn-primary btn-lg">Learn More</a>
         </div>
     </section>
 
@@ -385,7 +572,7 @@
         <div class="container text-center">
             <h2 class="mb-4">Our Services</h2>
             <p class="lead mb-4">Pen testing, incident response, cloud security, training, and more.</p>
-            <a href="services.html" class="btn btn-services">Explore Services</a>
+            <a href="services.html" class="btn btn-primary btn-lg">Explore Services</a>
         </div>
     </section>
 
@@ -480,7 +667,7 @@
                     <h3 class="mb-4 text-white">Stay Updated with EZM Cyber</h3>
                     <p class="mb-5" style="color: rgba(255,255,255,0.8);">Join our newsletter to receive exclusive cybersecurity tips, threat alerts, and industry insights.</p>
                     <div class="mb-4">
-                        <a href="#" class="btn btn-accent btn-lg me-3 mb-3">Quick Sign Up</a>
+                        <a href="newsletter.html" class="btn btn-accent btn-lg me-3 mb-3">Quick Sign Up</a>
                     </div>
                     <form class="d-flex flex-column flex-md-row justify-content-center gap-3">
                         <input type="email" class="form-control flex-grow-1" placeholder="Enter your email address" required style="max-width: 400px;" />
@@ -547,7 +734,7 @@
                     <p class="mb-3 fw-bold">&copy; 2025 EZM Cyber. All rights reserved.</p>
                     <div class="d-flex justify-content-center gap-4 flex-wrap">
                         <a href="privacy.html">Privacy Policy</a>
-                        <a href="#">Community</a>
+                        <a href="community-forum.html">Community</a>
                     </div>
                 </div>
             </div>
@@ -558,6 +745,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        // BULLETPROOF: Wait for DOM load, then force hide sidebar
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('ezmSidebar');
+            // FORCE HIDE ON LOAD
+            sidebar.classList.remove('open');
+            sidebar.style.transform = 'translateX(-100%) !important';
+            sidebar.style.visibility = 'hidden !important';
+            sidebar.style.opacity = '0 !important';
+
+            // FALLBACK: Re-hide after 100ms if something interferes
+            setTimeout(() => {
+                sidebar.classList.remove('open');
+                sidebar.style.transform = 'translateX(-100%) !important';
+                sidebar.style.visibility = 'hidden !important';
+                sidebar.style.opacity = '0 !important';
+            }, 100);
+        });
+
         // Timestamp
         document.getElementById("last-updated").textContent = new Date().toLocaleString();
 
@@ -648,61 +853,77 @@
     </script>
     <!-- End of Tawk.to Script -->
     <script>
-(function(){
-  var toggle = document.getElementById('ezmSidebarToggle');
-  var sidebar = document.getElementById('ezmSidebar');
-  var overlay = document.getElementById('ezmSidebarOverlay');
-  var closeBtn = document.getElementById('ezmSidebarClose');
-  var subToggles = Array.prototype.slice.call(document.querySelectorAll('.ezm-sub-toggle'));
+    (function(){
+      var toggle = document.getElementById('ezmSidebarToggle');
+      var sidebar = document.getElementById('ezmSidebar');
+      var overlay = document.getElementById('ezmSidebarOverlay');
+      var closeBtn = document.getElementById('ezmSidebarClose');
+      var subToggles = Array.prototype.slice.call(document.querySelectorAll('.ezm-has-sub'));
 
-  function openSidebar(){
-    sidebar.classList.add('open');
-    overlay.classList.add('visible');
-    sidebar.setAttribute('aria-hidden','false');
-    toggle.setAttribute('aria-expanded','true');
-    // focus first link for keyboard users
-    var firstLink = sidebar.querySelector('.ezm-btn, .ezm-sub-toggle');
-    if(firstLink) firstLink.focus();
-  }
-
-  function closeSidebar(){
-    sidebar.classList.remove('open');
-    overlay.classList.remove('visible');
-    sidebar.setAttribute('aria-hidden','true');
-    toggle.setAttribute('aria-expanded','false');
-    toggle.focus();
-  }
-
-  toggle.addEventListener('click', function(e){
-    var expanded = toggle.getAttribute('aria-expanded') === 'true';
-    if(!expanded) openSidebar(); else closeSidebar();
-  });
-
-  closeBtn.addEventListener('click', closeSidebar);
-  overlay.addEventListener('click', closeSidebar);
-
-  // close on Escape
-  window.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
-  });
-
-  // submenu toggle behavior (accessible)
-  subToggles.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      var parent = btn.parentElement;
-      var menu = parent.querySelector('.ezm-submenu');
-      if(menu){
-        if(!expanded){ menu.style.display = 'block'; }
-        else { menu.style.display = 'none'; }
+      function openSidebar(){
+        sidebar.classList.add('open');
+        overlay.classList.add('visible');
+        sidebar.setAttribute('aria-hidden','false');
+        toggle.setAttribute('aria-expanded','true');
+        // focus first link for keyboard users
+        var firstLink = sidebar.querySelector('.ezm-btn, .ezm-sub-toggle');
+        if(firstLink) firstLink.focus();
       }
-    });
-  });
 
-  // prevent focus from leaving sidebar when open (basic)
-  overlay.addEventListener('focus', function(){ if(sidebar.classList.contains('open')) sidebar.querySelector('.ezm-btn, .ezm-sub-toggle').focus(); });
-})();
-</script>
+      function closeSidebar(){
+        sidebar.classList.remove('open');
+        overlay.classList.remove('visible');
+        sidebar.setAttribute('aria-hidden','true');
+        toggle.setAttribute('aria-expanded','false');
+        toggle.focus();
+      }
+
+      toggle.addEventListener('click', function(e){
+        e.preventDefault();
+        var expanded = toggle.getAttribute('aria-expanded') === 'true';
+        if(!expanded) openSidebar(); else closeSidebar();
+      });
+
+      closeBtn.addEventListener('click', closeSidebar);
+      overlay.addEventListener('click', closeSidebar);
+
+      // close on Escape
+      window.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && sidebar.classList.contains('open')) closeSidebar();
+      });
+
+      // submenu toggle behavior (accessible)
+      subToggles.forEach(function(parent){
+        var btn = parent.querySelector('.ezm-sub-toggle');
+        var menu = parent.querySelector('.ezm-submenu');
+        btn.addEventListener('click', function(e){
+          e.preventDefault();
+          var expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!expanded));
+          parent.setAttribute('aria-expanded', String(!expanded));
+          if(!expanded){ 
+            menu.style.display = 'block'; 
+            menu.setAttribute('aria-hidden', 'false');
+          }
+          else { 
+            menu.style.display = 'none'; 
+            menu.setAttribute('aria-hidden', 'true');
+          }
+        });
+      });
+
+      // prevent focus from leaving sidebar when open (basic)
+      overlay.addEventListener('focus', function(){ 
+        if(sidebar.classList.contains('open')) sidebar.querySelector('.ezm-btn, .ezm-sub-toggle').focus(); 
+      });
+
+      // Handle window resize - close on desktop
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && sidebar.classList.contains('open')) {
+          closeSidebar();
+        }
+      });
+    })();
+    </script>
 </body>
 </html>
