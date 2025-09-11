@@ -6,262 +6,133 @@
   <title>Sidebar with Banner</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   
-  <style>
-    :root {
-      --primary-color: #6366f1;
-      --primary-dark: #4f46e5;
-      --secondary-color: #8b5cf6;
-      --accent-color: #06b6d4;
-      --success-color: #10b981;
-      --warning-color: #f59e0b;
-      --danger-color: #ef4444;
-      --dark-bg: #0f172a;
-      --dark-card: #1e293b;
-      --light-bg: #f8fafc;
-      --light-card: #ffffff;
-      --text-primary: #1e293b;
-      --text-secondary: #64748b;
-      --text-light: #94a3b8;
-      --border-color: #e2e8f0;
+<style>
+  :root {
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary-color: #8b5cf6;
+    --accent-color: #06b6d4;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --dark-bg: #0f172a;
+    --dark-card: #1e293b;
+    --light-bg: #f8fafc;
+    --light-card: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-light: #94a3b8;
+    --border-color: #e2e8f0;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    color: var(--text-primary);
+    line-height: 1.7;
+    min-height: 100vh;
+    padding-top: 72px;
+  }
+
+  /* Sidebar / Submenu - Enhanced */
+  .ezm-submenu {
+    list-style: none;
+    margin: 8px 0 10px 0;
+    padding-left: 8px;
+    display: none;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .ezm-has-sub.open .ezm-submenu {
+    display: block;
+    opacity: 1;
+    max-height: 500px; /* Increased for multiple items */
+  }
+  .ezm-sub-toggle {
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    padding: 8px 12px;
+    text-align: left;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ezm-sub-toggle .ezm-caret {
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+  }
+  .ezm-has-sub.open .ezm-sub-toggle .ezm-caret {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sidebar = document.getElementById('sidebar');
+    const hamburger = document.getElementById('hamburgerToggle');
+    const sidebarClose = document.getElementById('sidebarClose');
+    const overlay = document.getElementById('sidebarOverlay');
+    const subMenuToggles = document.querySelectorAll('.ezm-sub-toggle');
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('visible');
+      if (hamburger) hamburger.classList.toggle('active');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('visible');
+      if (hamburger) hamburger.classList.remove('active');
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    if (hamburger) hamburger.addEventListener('click', toggleSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    overlay.addEventListener('click', closeSidebar);
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-      color: var(--text-primary);
-      line-height: 1.7;
-      min-height: 100vh;
-      padding-top: 72px;
-    }
+    subMenuToggles.forEach(toggle => {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default button behavior
+        const parentLi = this.parentElement;
+        const submenu = parentLi.querySelector('.ezm-submenu');
 
-    /* Navbar */
-    .navbar {
-      background: rgba(255, 255, 255, 0.95) !important;
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border-color);
-      padding: 1.25rem 0;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    }
-    .navbar-brand {
-      font-weight: 700;
-      font-size: 1.75rem;
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .nav-link {
-      color: var(--text-primary) !important;
-      font-weight: 500;
-      padding: 0.75rem 1.25rem !important;
-      border-radius: 12px;
-      margin: 0 0.25rem;
-    }
-    .nav-link:hover,
-    .nav-link.active {
-      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-      color: #fff !important;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
-    }
-
-    /* Banner */
-    .banner-section {
-      position: relative;
-      width: 100%;
-      background-color: #071028;
-      min-height: 180px;
-      padding-top: 37.5%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #fff;
-      overflow: hidden;
-      margin-top: 80px;
-    }
-    .banner-section::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: url("https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80");
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .banner-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.35);
-      z-index: 1;
-      pointer-events: none;
-    }
-    .banner-content {
-      position: relative;
-      z-index: 2;
-      padding: 0 18px 10px;
-      width: 100%;
-      max-width: 1100px;
-      box-sizing: border-box;
-    }
-    .banner-title {
-      font-size: clamp(1.3rem, 3.5vw, 2.5rem);
-      font-weight: 700;
-      margin-bottom: 10px;
-      line-height: 1.2;
-      color: #e9eefc;
-      font-family: 'Orbitron', sans-serif;
-    }
-    .banner-subtitle {
-      font-size: clamp(0.95rem, 2.0vw, 1.2rem);
-      margin-bottom: 16px;
-      line-height: 1.5;
-      color: rgba(230, 235, 255, 0.9);
-      max-width: 780px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Sidebar / Topbar */
-    .ezm-topbar { /* ... (unchanged) */ }
-    .ezm-hamburger { /* ... (unchanged) */ }
-    .ezm-sidebar { /* ... (unchanged) */ }
-    .ezm-submenu {
-      list-style:none; margin:8px 0 10px 0; padding-left:8px;
-      display:none;
-      opacity: 0;
-      max-height: 0;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-    .ezm-submenu.open {
-      display: block;
-      opacity: 1;
-      max-height: 300px;
-    }
-    /* keep all your other CSS as-is */
-  </style>
-</head>
-<body>
-  <!-- Topbar -->
-  <div class="ezm-topbar">
-    <div class="ezm-topbar-inner">
-      <a href="#" class="navbar-brand">YourBrand</a>
-      <button class="ezm-hamburger" id="hamburgerToggle">
-        <div class="ezm-hamburger-box">
-          <div class="ezm-hamburger-inner"></div>
-        </div>
-      </button>
-    </div>
-  </div>
-
-  <!-- Sidebar -->
-  <div class="ezm-sidebar" id="sidebar">
-    <div class="ezm-sidebar-inner">
-      <button class="ezm-sidebar-close" id="sidebarClose">&times;</button>
-      <div class="ezm-sidebar-brand"><a href="#">YourBrand</a></div>
-      <nav class="ezm-sidebar-nav">
-        <ul>
-          <li><a href="#" class="ezm-btn">🏠 Home</a></li>
-          <li><a href="#" class="ezm-btn">📊 Dashboard</a></li>
-          <li class="ezm-has-sub">
-            <button class="ezm-sub-toggle"><span>📁 Products</span><span class="ezm-caret">▼</span></button>
-            <ul class="ezm-submenu">
-              <li><a href="#">All Products</a></li>
-              <li><a href="#">Categories</a></li>
-              <li><a href="#">Add New</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      <div class="ezm-sidebar-footer">
-        <a href="#" class="ezm-cta">Get Premium</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="ezm-sidebar-overlay" id="sidebarOverlay"></div>
-
-  <!-- Banner -->
-  <div class="banner-section">
-    <div class="banner-overlay"></div>
-    <div class="banner-content">
-      <h1 class="banner-title">Welcome to Our Platform</h1>
-      <p class="banner-subtitle">Discover amazing features and tools designed to enhance your experience.</p>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <div class="main-content">
-    <div class="content-card">
-      <h2>Dashboard Overview</h2>
-      <p>Your main content goes here.</p>
-    </div>
-  </div>
-
-  <!-- JavaScript -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const sidebar = document.getElementById('sidebar');
-      const hamburger = document.getElementById('hamburgerToggle');
-      const sidebarClose = document.getElementById('sidebarClose');
-      const overlay = document.getElementById('sidebarOverlay');
-      const subMenuToggles = document.querySelectorAll('.ezm-sub-toggle');
-
-      function toggleSidebar() {
-        sidebar.classList.toggle('open');
-        overlay.classList.toggle('visible');
-        hamburger.classList.toggle('active');
-      }
-      function closeSidebar() {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('visible');
-        hamburger.classList.remove('active');
-      }
-
-      hamburger.addEventListener('click', toggleSidebar);
-      sidebarClose.addEventListener('click', closeSidebar);
-      overlay.addEventListener('click', closeSidebar);
-
-      subMenuToggles.forEach(toggle => {
-        toggle.addEventListener('click', function() {
-          const parentLi = this.parentElement;
-          const submenu = parentLi.querySelector('.ezm-submenu');
-
-          subMenuToggles.forEach(otherToggle => {
-            if (otherToggle !== toggle) {
-              otherToggle.parentElement.classList.remove('open');
-              const otherMenu = otherToggle.parentElement.querySelector('.ezm-submenu');
-              if (otherMenu) otherMenu.classList.remove('open');
-            }
-          });
-
-          parentLi.classList.toggle('open');
-          submenu.classList.toggle('open');
+        // Close other submenus
+        subMenuToggles.forEach(other => {
+          if (other !== toggle) {
+            const otherParent = other.parentElement;
+            const otherMenu = otherParent.querySelector('.ezm-submenu');
+            otherParent.classList.remove('open');
+            if (otherMenu) otherMenu.classList.remove('open');
+          }
         });
-      });
 
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-          closeSidebar();
-        }
-      });
-
-      window.addEventListener('resize', function() {
-        if (window.innerWidth > 768 && sidebar.classList.contains('open')) {
-          closeSidebar();
-        }
+        // Toggle current submenu
+        const isOpen = parentLi.classList.toggle('open');
+        if (submenu) submenu.classList.toggle('open');
       });
     });
-  </script>
-</body>
-</html>
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+        closeSidebar();
+      }
+    });
+
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768 && sidebar.classList.contains('open')) {
+        closeSidebar();
+      }
+    });
+  });
+</script>
