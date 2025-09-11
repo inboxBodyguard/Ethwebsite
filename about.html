@@ -6,348 +6,848 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Learn more about EzmCyber - a mission-driven cybersecurity platform led by Niffy.">
   <title>About | EzmCyber</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="assets/favicon.png" type="image/png" />
   <style>
-    body { font-family: 'Roboto', sans-serif; margin:0; padding:0; background:#fff; color:#111; line-height:1.7; }
-    .container { width:90%; max-width:1200px; margin:0 auto; padding:2rem 0; }
-    nav.navbar { display:flex; justify-content:space-between; align-items:center; padding:1rem 0; background:#007BFF; color:#fff; }
-    nav.navbar .nav-links { list-style:none; display:flex; gap:1rem; margin:0; }
-    nav.navbar .nav-links li a { color:#fff; text-decoration:none; font-weight:500; }
-    nav.navbar .nav-links li a.active { text-decoration:underline; text-underline-offset:4px; }
-    .hero-banner { background:#f9f9f9; padding:6rem 0; text-align:center; }
-    .hero-banner h1 { font-size:2.8rem; margin-bottom:1rem; }
-    .hero-banner .highlight { color:#007BFF; }
-    .hero-banner .subtitle { font-size:1.2rem; color:#555; margin-top:1rem; }
-    .about-section { padding:4rem 0; }
-    .about-section.bg-dark { background:#f0f0f0; }
-    .about-section h2 { font-size:2rem; margin-bottom:1.5rem; color:#007BFF; }
-    .about-section h3 { font-size:1.5rem; margin-bottom:1rem; color:#333; margin-top:2rem; }
-    .about-section p { margin-bottom:1.2rem; }
-    .features-list { list-style:none; padding:0; margin:1rem 0 2rem 0; }
-    .features-list li { margin-bottom:0.8rem; padding-left:1.5rem; position:relative; }
-    .features-list li::before { content:"✔"; position:absolute; left:0; color:#28a745; font-weight:bold; }
-    .center-btn { text-align:center; margin-top:2rem; }
-    .btn { background:#007BFF; color:#fff; padding:0.7rem 1.5rem; text-decoration:none; border-radius:5px; transition:0.3s; }
-    .btn:hover { background:#0056b3; }
-    .toc-section { background:#f8f9fa; padding:3rem 0; border-left:4px solid #007BFF; }
-    .toc-list { list-style:none; padding:0; margin:1rem 0; }
-    .toc-list li { margin-bottom:0.5rem; }
-    .toc-list li a { color:#007BFF; text-decoration:none; font-weight:500; }
-    .toc-list li a:hover { text-decoration:underline; }
-    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:2rem; margin:2rem 0; }
-    .stat-card { background:#fff; padding:1.5rem; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.1); text-align:center; }
-    .stat-number { font-size:2rem; font-weight:bold; color:#007BFF; }
-    .stat-label { font-size:0.9rem; color:#666; margin-top:0.5rem; }
-    footer { background:#007BFF; color:#fff; text-align:center; padding:1.5rem 0; margin-top:3rem; }
-    .policy-update { margin-top:1.5rem; padding:1rem; background:#f8f9fa; border-left:4px solid #007BFF; }
-    .policy-update a { color:#007BFF; font-weight:500; text-decoration:none; }
-    .policy-update a:hover { text-decoration:underline; }
+    :root {
+      --primary-color: #007BFF;
+      --primary-dark: #0056b3;
+      --primary-light: #4da3ff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4a4a4a;
+      --text-muted: #6c6c6c;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --bg-tertiary: #e9ecef;
+      --success-color: #28a745;
+      --border-radius: 12px;
+      --shadow-soft: 0 4px 20px rgba(0, 123, 255, 0.08);
+      --shadow-hover: 0 8px 30px rgba(0, 123, 255, 0.15);
+      --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+```
+* {
+  box-sizing: border-box;
+}
+
+body { 
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+  margin: 0; 
+  padding: 0; 
+  background: var(--bg-primary); 
+  color: var(--text-primary); 
+  line-height: 1.7; 
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+.container { 
+  width: 90%; 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 2rem 0; 
+}
+
+/* Enhanced Navigation */
+nav.navbar { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 1.2rem 0; 
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); 
+  color: white; 
+  box-shadow: var(--shadow-soft);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+nav.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+nav.navbar .logo {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+nav.navbar .logo:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+nav.navbar .nav-links { 
+  list-style: none; 
+  display: flex; 
+  gap: 2rem; 
+  margin: 0; 
+  padding: 0;
+}
+
+nav.navbar .nav-links li a { 
+  color: white; 
+  text-decoration: none; 
+  font-weight: 500; 
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+nav.navbar .nav-links li a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+nav.navbar .nav-links li a.active { 
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav.navbar .nav-links li a:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Enhanced Hero Section */
+.hero-banner { 
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, #f1f5f9 100%); 
+  padding: 8rem 0; 
+  text-align: center; 
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(0, 123, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-banner .container {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-banner h1 { 
+  font-size: clamp(2.2rem, 5vw, 3.5rem); 
+  margin-bottom: 1.5rem; 
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.hero-banner .highlight { 
+  color: var(--primary-color); 
+  position: relative;
+}
+
+.hero-banner .highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+  border-radius: 2px;
+}
+
+.hero-banner .subtitle { 
+  font-size: 1.25rem; 
+  color: var(--text-secondary); 
+  margin-top: 1.5rem; 
+  font-weight: 400;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Enhanced Sections */
+.about-section { 
+  padding: 5rem 0; 
+  position: relative;
+}
+
+.about-section.bg-dark { 
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, #f1f5f9 100%);
+  position: relative;
+}
+
+.about-section h2 { 
+  font-size: clamp(1.8rem, 4vw, 2.5rem); 
+  margin-bottom: 2rem; 
+  color: var(--primary-color); 
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.about-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+  border-radius: 2px;
+}
+
+.about-section h3 { 
+  font-size: 1.5rem; 
+  margin-bottom: 1.2rem; 
+  color: var(--text-primary); 
+  margin-top: 2.5rem; 
+  font-weight: 600;
+}
+
+.about-section p { 
+  margin-bottom: 1.5rem; 
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  max-width: 800px;
+}
+
+/* Enhanced Features List */
+.features-list { 
+  list-style: none; 
+  padding: 0; 
+  margin: 2rem 0; 
+  display: grid;
+  gap: 1rem;
+}
+
+.features-list li { 
+  padding: 1rem 1rem 1rem 3rem; 
+  position: relative; 
+  background: var(--bg-primary);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition-smooth);
+  border-left: 4px solid var(--primary-color);
+}
+
+.features-list li:hover {
+  transform: translateX(8px);
+  box-shadow: var(--shadow-hover);
+}
+
+.features-list li::before { 
+  content: "✓"; 
+  position: absolute; 
+  left: 1rem; 
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--success-color); 
+  font-weight: bold; 
+  font-size: 1.2rem;
+  width: 24px;
+  height: 24px;
+  background: rgba(40, 167, 69, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Enhanced Stats Grid */
+.stats-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+  gap: 2rem; 
+  margin: 3rem 0; 
+}
+
+.stat-card { 
+  background: var(--bg-primary); 
+  padding: 2.5rem 1.5rem; 
+  border-radius: var(--border-radius); 
+  box-shadow: var(--shadow-soft); 
+  text-align: center; 
+  transition: var(--transition-smooth);
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+}
+
+.stat-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--primary-color);
+}
+
+.stat-number { 
+  font-size: 2.5rem; 
+  font-weight: 700; 
+  color: var(--primary-color); 
+  margin-bottom: 0.5rem;
+}
+
+.stat-label { 
+  font-size: 1rem; 
+  color: var(--text-muted); 
+  font-weight: 500;
+}
+
+/* Enhanced TOC Section */
+.toc-section { 
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, #f1f5f9 100%); 
+  padding: 4rem 0; 
+  border-left: 6px solid var(--primary-color);
+  position: relative;
+}
+
+.toc-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--primary-color), var(--primary-light));
+}
+
+.toc-list { 
+  list-style: none; 
+  padding: 0; 
+  margin: 2rem 0; 
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.toc-list li { 
+  margin: 0;
+}
+
+.toc-list li a { 
+  color: var(--primary-color); 
+  text-decoration: none; 
+  font-weight: 500; 
+  padding: 0.8rem 1.2rem;
+  display: block;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  transition: var(--transition-smooth);
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.08);
+}
+
+.toc-list li a:hover { 
+  background: var(--primary-color);
+  color: white;
+  transform: translateX(4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.toc-list li a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Enhanced Buttons */
+.btn { 
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); 
+  color: white; 
+  padding: 1rem 2rem; 
+  text-decoration: none; 
+  border-radius: var(--border-radius); 
+  transition: var(--transition-smooth); 
+  font-weight: 500;
+  font-size: 1.05rem;
+  display: inline-block;
+  box-shadow: var(--shadow-soft);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:hover { 
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn:focus {
+  outline: 2px solid var(--primary-light);
+  outline-offset: 3px;
+}
+
+.center-btn { 
+  text-align: center; 
+  margin-top: 3rem; 
+}
+
+/* Enhanced Policy Update */
+.policy-update { 
+  margin-top: 2rem; 
+  padding: 1.5rem; 
+  background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%); 
+  border-left: 6px solid var(--primary-color);
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  box-shadow: var(--shadow-soft);
+}
+
+.policy-update a { 
+  color: var(--primary-color); 
+  font-weight: 600; 
+  text-decoration: none; 
+  transition: var(--transition-smooth);
+}
+
+.policy-update a:hover { 
+  color: var(--primary-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Enhanced Footer */
+footer { 
+  background: linear-gradient(135deg, var(--text-primary) 0%, #2c3e50 100%); 
+  color: white; 
+  text-align: center; 
+  padding: 3rem 0; 
+  margin-top: 4rem; 
+}
+
+/* Skip Link for Accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--primary-color);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 0 0 8px 8px;
+  z-index: 1000;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Enhanced Sign Up/In Buttons */
+.auth-buttons {
+  text-align: center;
+  margin: 3rem 0;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, #f8fafc 100%);
+  border-radius: var(--border-radius);
+}
+
+.auth-buttons .btn {
+  margin: 0 0.5rem;
+  min-width: 120px;
+}
+
+.btn-outline-primary {
+  background: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 1rem 0;
+  }
+
+  nav.navbar {
+    padding: 1rem 0;
+  }
+
+  nav.navbar .container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  nav.navbar .nav-links {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav.navbar .nav-links li a {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .hero-banner {
+    padding: 4rem 0;
+  }
+
+  .about-section {
+    padding: 3rem 0;
+  }
+
+  .toc-list {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    padding: 2rem 1rem;
+  }
+
+  .auth-buttons {
+    margin: 2rem 0;
+    padding: 1.5rem;
+  }
+
+  .auth-buttons .btn {
+    display: block;
+    margin: 0.5rem auto;
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-banner h1 {
+    font-size: 2rem;
+  }
+
+  .hero-banner .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .about-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .features-list li {
+    padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+  }
+}
+
+/* Focus Management */
+*:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  outline-style: solid;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --shadow-soft: 0 4px 8px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.4);
+  }
+}
+```
+
   </style>
 </head>
 <body>
+  <!-- Skip to main content link for screen readers -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Navbar -->
 
-  <header>
-    <nav class="navbar">
+  <header role="banner">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="container">
-        <a href="index.html" class="logo">EZM Cyber</a>
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html" class="active">About</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="projects.html">Portfolio</a></li>
-          <li><a href="contact.html">Contact</a></li>
+        <a href="index.html" class="logo" aria-label="EZM Cyber Home">EZM Cyber</a>
+        <ul class="nav-links" role="menubar">
+          <li role="none"><a href="index.html" role="menuitem">Home</a></li>
+          <li role="none"><a href="about.html" class="active" role="menuitem" aria-current="page">About</a></li>
+          <li role="none"><a href="services.html" role="menuitem">Services</a></li>
+          <li role="none"><a href="projects.html" role="menuitem">Portfolio</a></li>
+          <li role="none"><a href="contact.html" role="menuitem">Contact</a></li>
         </ul>
       </div>
     </nav>
   </header>
 
-  <!-- Hero Banner -->
-
-  <section class="hero-banner">
-    <div class="container">
-      <h1>About <span class="highlight">EzmCyber</span></h1>
-      <p class="subtitle">Driven by purpose. Focused on defense. Built for impact.</p>
-    </div>
-  </section>
-
-  <!-- Table of Contents -->
-
-  <section class="toc-section">
-    <div class="container">
-      <h2>Table of Contents</h2>
-      <ul class="toc-list">
-        <li><a href="#introduction">Introduction</a></li>
-        <li><a href="#who-we-are">Who We Are</a></li>
-        <li><a href="#our-mission">Our Mission & Vision</a></li>
-        <li><a href="#expertise">Our Expertise & Experience</a></li>
-        <li><a href="#approach">Our Approach</a></li>
-        <li><a href="#why-choose-us">Why Choose EzmCyber</a></li>
-        <li><a href="#commitment">Our Commitment</a></li>
-        <li><a href="#contact-info">Get In Touch</a></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Introduction -->
-
-  <section id="introduction" class="about-section">
-    <div class="container">
-      <h2>Introduction</h2>
-      <p>
-        EzmCyber represents a new paradigm in cybersecurity education and defense, built on the foundation of practical experience, ethical practices, and community-driven knowledge sharing. We understand the critical importance of protecting digital assets in an increasingly connected world, and we're dedicated to making cybersecurity accessible, understandable, and actionable for everyone.
-      </p>
-      <p>
-        This platform serves as your comprehensive resource for cybersecurity guidance, tools, and insights, whether you're an individual looking to secure your personal devices, a small business owner protecting your company's data, or an enterprise seeking advanced security solutions. Our approach combines real-world experience with cutting-edge research to deliver practical, effective cybersecurity solutions.
-      </p>
+  <main id="main-content" role="main">
+    <!-- Hero Banner -->
+    <section class="hero-banner" role="banner">
+      <div class="container">
+        <h1>About <span class="highlight">EzmCyber</span></h1>
+        <p class="subtitle">Driven by purpose. Focused on defense. Built for impact.</p>
+      </div>
+    </section>
 
 ```
-  <!-- Privacy Policy Update Note -->
-  <div class="policy-update">
-    <p>📢 We've updated our Privacy Policy. <a href="privacy.html">Read here</a>.</p>
+<!-- Table of Contents -->
+<nav class="toc-section" aria-label="Page contents">
+  <div class="container">
+    <h2>Table of Contents</h2>
+    <ul class="toc-list">
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#who-we-are">Who We Are</a></li>
+      <li><a href="#our-mission">Our Mission & Vision</a></li>
+      <li><a href="#expertise">Our Expertise & Experience</a></li>
+      <li><a href="#approach">Our Approach</a></li>
+      <li><a href="#why-choose-us">Why Choose EzmCyber</a></li>
+      <li><a href="#commitment">Our Commitment</a></li>
+      <li><a href="#contact-info">Get In Touch</a></li>
+    </ul>
   </div>
-</div>
-```
+</nav>
 
-  </section>
+<!-- Introduction -->
+<section id="introduction" class="about-section">
+  <div class="container">
+    <h2>Introduction</h2>
+    <p>
+      EzmCyber represents a new paradigm in cybersecurity education and defense, built on the foundation of practical experience, ethical practices, and community-driven knowledge sharing. We understand the critical importance of protecting digital assets in an increasingly connected world, and we're dedicated to making cybersecurity accessible, understandable, and actionable for everyone.
+    </p>
+    <p>
+      This platform serves as your comprehensive resource for cybersecurity guidance, tools, and insights, whether you're an individual looking to secure your personal devices, a small business owner protecting your company's data, or an enterprise seeking advanced security solutions. Our approach combines real-world experience with cutting-edge research to deliver practical, effective cybersecurity solutions.
+    </p>
 
-  <!-- Who We Are -->
-
-  <section id="who-we-are" class="about-section bg-dark">
-    <div class="container">
-      <h2>Who We Are</h2>
-      <p>
-        EzmCyber is the brainchild of <span class="highlight">Niffy</span>, a dedicated cybersecurity analyst with extensive hands-on experience in ethical hacking, penetration testing, and network defense. As a human-driven platform, we bring passion, authenticity, and genuine expertise to every aspect of cybersecurity education and implementation.
-      </p>
-
-```
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-number">1+</div>
-      <div class="stat-label">Years of Experience</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number">100%</div>
-      <div class="stat-label">Ethical Approach</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number">24/7</div>
-      <div class="stat-label">Threat Monitoring</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number">∞</div>
-      <div class="stat-label">Learning Commitment</div>
+    <!-- Privacy Policy Update Note -->
+    <div class="policy-update">
+      <p>📢 We've updated our Privacy Policy. <a href="privacy.html">Read here</a>.</p>
     </div>
   </div>
+</section>
 
-  <p>
-    We operate at the intersection of research, practice, and community engagement. Every tool, tutorial, and insight we provide undergoes rigorous testing in real-world environments to ensure maximum effectiveness and practical applicability. Our commitment extends beyond just providing information – we're building a community of informed defenders.
-  </p>
-</div>
-```
+<!-- Who We Are -->
+<section id="who-we-are" class="about-section bg-dark">
+  <div class="container">
+    <h2>Who We Are</h2>
+    <p>
+      EzmCyber is the brainchild of <strong class="highlight">Niffy</strong>, a dedicated cybersecurity analyst with extensive hands-on experience in ethical hacking, penetration testing, and network defense. As a human-driven platform, we bring passion, authenticity, and genuine expertise to every aspect of cybersecurity education and implementation.
+    </p>
 
-  </section>
-
-  <!-- Mission & Vision -->
-
-  <section id="our-mission" class="about-section">
-    <div class="container">
-      <h2>Our Mission & Vision</h2>
-
-```
-  <h3>Mission Statement</h3>
-  <p>
-    To empower individuals, startups, and organizations with practical, accessible, and effective cybersecurity solutions through education, tools, and community-driven defense strategies. We believe that strong cybersecurity should not be a privilege reserved for large corporations, but a fundamental right accessible to everyone.
-  </p>
-
-  <h3>Our Vision</h3>
-  <p>
-    To create a world where cybersecurity knowledge is democratized, where every person and organization has the tools and understanding necessary to protect their digital assets effectively. We envision a future where cyber threats are met with informed, prepared, and confident defenders at every level.
-  </p>
-
-  <h3>Core Values</h3>
-  <ul class="features-list">
-    <li>Transparency in all our methods and recommendations</li>
-    <li>Ethical practices in all cybersecurity activities</li>
-    <li>Community-first approach to knowledge sharing</li>
-    <li>Practical, actionable solutions over theoretical concepts</li>
-    <li>Continuous learning and adaptation to emerging threats</li>
-    <li>Accessibility of cybersecurity for all skill levels</li>
-  </ul>
-</div>
-```
-
-  </section>
-
-  <!-- Expertise -->
-
-  <section id="expertise" class="about-section bg-dark">
-    <div class="container">
-      <h2>Our Expertise & Experience</h2>
-
-```
-  <h3>Technical Specializations</h3>
-  <ul class="features-list">
-    <li>Ethical Hacking & Penetration Testing</li>
-    <li>Network Security & Defense Architecture</li>
-    <li>Vulnerability Assessment & Management</li>
-    <li>Incident Response & Digital Forensics</li>
-    <li>Security Awareness Training & Education</li>
-    <li>Compliance & Risk Management</li>
-    <li>Threat Intelligence & Analysis</li>
-    <li>Security Tool Development & Implementation</li>
-  </ul>
-
-  <h3>Industry Experience</h3>
-  <p>
-    Our experience spans across multiple industries and security scenarios, from securing personal devices and home networks to protecting enterprise-level infrastructures. We've encountered and addressed a wide range of security challenges, giving us unique insights into both common vulnerabilities and sophisticated attack vectors.
-  </p>
-
-  <p>
-    Every recommendation we make, every tool we develop, and every strategy we share is grounded in real-world application and testing. We don't just theorize about cybersecurity – we live it, breathe it, and continuously refine our approach based on the evolving threat landscape.
-  </p>
-</div>
-```
-
-  </section>
-
-  <!-- Our Approach -->
-
-  <section id="approach" class="about-section">
-    <div class="container">
-      <h2>Our Approach</h2>
-
-```
-  <h3>Human-Centric Cybersecurity</h3>
-  <p>
-    At EzmCyber, we recognize that the human element is both the greatest vulnerability and the strongest defense in cybersecurity. Our approach prioritizes understanding, education, and empowerment over complex technical jargon and intimidating security protocols.
-  </p>
-
-  <h3>Practical Over Theoretical</h3>
-  <p>
-    Security is never just theoretical at EzmCyber. Every solution we provide is measurable, accessible, and effective. We focus on practical implementations that work in real-world scenarios, not just in controlled laboratory environments.
-  </p>
-
-  <h3>Community-Driven Learning</h3>
-  <p>
-    We believe in the power of community learning and knowledge sharing. Our platform serves as a hub for cybersecurity enthusiasts, professionals, and anyone interested in improving their security posture. We foster an environment of collaborative learning and mutual support.
-  </p>
-
-  <h3>Continuous Innovation</h3>
-  <p>
-    The cybersecurity landscape evolves rapidly, and so do we. We continuously research emerging threats, test new defense strategies, and adapt our methodologies to stay ahead of the curve. Innovation isn't just about new tools – it's about new ways of thinking about security challenges.
-  </p>
-</div>
-```
-
-  </section>
-
-  <!-- Why Choose Us -->
-
-  <section id="why-choose-us" class="about-section bg-dark">
-    <div class="container">
-      <h2>Why Choose EzmCyber</h2>
-      <ul class="features-list">
-        <li>Human-led cybersecurity guidance with practical, hands-on experience</li>
-        <li>Real-world tested tools and tutorials — no theoretical fluff or generic automation</li>
-        <li>Passion-driven community collaboration and knowledge sharing</li>
-        <li>Rapid response strategies with measurable security improvements</li>
-        <li>Transparent and trustworthy insights from a dedicated cybersecurity professional</li>
-        <li>Comprehensive coverage from personal security to enterprise defense</li>
-        <li>Accessible learning materials for all skill levels</li>
-        <li>Ethical approach to all cybersecurity practices</li>
-        <li>Continuous support and guidance for your security journey</li>
-        <li>Cost-effective solutions without compromising on quality</li>
-      </ul>
-
-```
-  <h3>What Sets Us Apart</h3>
-  <p>
-    Unlike automated security platforms or purely theoretical educational resources, EzmCyber combines the authenticity of human expertise with the accessibility of digital education. We provide personalized guidance that adapts to your specific needs, whether you're just starting your cybersecurity journey or looking to advance your existing knowledge.
-  </p>
-</div>
-```
-
-  </section>
-
-  <!-- Our Commitment -->
-
-  <section id="commitment" class="about-section">
-    <div class="container">
-      <h2>Our Commitment</h2>
-
-```
-  <h3>To Our Community</h3>
-  <p>
-    We are committed to fostering a supportive, inclusive, and educational community where cybersecurity knowledge is freely shared and continuously expanded. Every member of our community, regardless of their current skill level, contributes to our collective defense against cyber threats.
-  </p>
-
-  <h3>To Quality & Excellence</h3>
-  <p>
-    Every piece of content, every tool, and every recommendation we provide undergoes rigorous quality assurance. We maintain high standards because we understand that in cybersecurity, mediocrity can be dangerous. Our reputation is built on reliability, accuracy, and effectiveness.
-  </p>
-
-  <h3>To Ethical Practices</h3>
-  <p>
-    We operate under strict ethical guidelines, ensuring that all our cybersecurity activities are conducted responsibly and legally. We promote ethical hacking, responsible disclosure, and defensive security practices that protect rather than exploit vulnerabilities.
-  </p>
-
-  <h3>To Continuous Improvement</h3>
-  <p>
-    The cybersecurity field never stands still, and neither do we. We are committed to continuous learning, adaptation, and improvement. We regularly update our knowledge base, refine our methodologies, and expand our capabilities to serve our community better.
-  </p>
-</div>
-```
-
-  </section>
-
-  <!-- Get In Touch -->
-
-  <section id="contact-info" class="about-section bg-dark">
-    <div class="container">
-      <h2>Get In Touch</h2>
-      <p>
-        Ready to strengthen your cybersecurity posture? Whether you're looking for personalized guidance, have questions about our services, or want to join our community of cybersecurity defenders, we're here to help. Your security journey starts with a single step, and we're honored to be part of that journey.
-      </p>
-
-```
-  <div class="center-btn">
-    <a href="contact.html" class="btn">Contact Us Today</a>
-    <a href="services.html" class="btn" style="margin-left:1rem;">Explore Our Services</a>
-  </div>
-  
-  <p style="text-align:center; margin-top:2rem; font-style:italic;">
-    "Security is not a product, but a process. Let's build that process together."
-  </p>
-</div>
-```
-
-  </section>
-
-  <!-- Footer -->
-
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 EzmCyber by Niffy. All rights reserved.</p>
+    <div class="stats-grid">
+      <article class="stat-card">
+        <div class="stat-number">1+</div>
+        <div class="stat-label">Years of Experience</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Ethical Approach</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">Threat Monitoring</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Learning Commitment</div>
+      </article>
     </div>
-  </footer>
-<!-- Sign Up / Sign In Buttons -->
-<div class="text-center mt-4">
-  <a href="signup.html" class="btn btn-primary mx-2 btn-lg" 
-     style="transition: transform 0.2s;" 
-     onmouseover="this.style.transform='scale(1.05)'" 
-     onmouseout="this.style.transform='scale(1)'">
-    Sign Up
-  </a>
-  <a href="signup.html" class="btn btn-outline-primary mx-2 btn-lg" 
-     style="transition: transform 0.2s;" 
-     onmouseover="this.style.transform='scale(1.05)'" 
-     onmouseout="this.style.transform='scale(1)'">
-    Sign In
-  </a>
-</div>
+
+    <p>
+      We operate at the intersection of research, practice, and community engagement. Every tool, tutorial, and insight we provide undergoes rigorous testing in real-world environments to ensure maximum effectiveness and practical applicability. Our commitment extends beyond just providing information – we're building a community of informed defenders.
+    </p>
+  </div>
+</section>
+
+<!-- Mission & Vision -->
+<section id="our-mission" class="about-section">
+  <div class="container">
+    <h2>Our Mission & Vision</h2>
+
+    <h3>Mission Statement</h3>
+    <p>
+      To empower individuals, startups, and organizations with practical, accessible, and effective cybersecurity solutions through education, tools, and community-driven defense strategies. We believe that strong cybersecurity should not be a privilege reserved for large corporations, but a fundamental right accessible to everyone.
+    </p>
+
+    <h3>Our Vision</h3>
+    <p>
+      To create a world where cybersecurity knowledge is democratized, where every person and organization has the tools and understanding necessary to protect their digital assets effectively. We envision a future where cyber threats are met with informed, prepared, and confident defenders at every level.
+    </p>
+
+    <h3>Core Values</h3>
+    <ul class="features-list">
+      <li>Transparency in all our methods and recommendations</li>
+      <li>Ethical practices in all cybersecurity activities</li>
+      <li>Community-first approach to knowledge sharing</li>
+      <li>Practical, actionable solutions over theoretical concepts</li>
+      <li>Continuous learning and adaptation to emerging threats</li>
+      <li>Accessibility of cybersecurity for all skill levels</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Expertise -->
+<section id="expertise" class="about-section bg-dark">
+  <div class="container">
+    <h2>Our Expertise & Experience</h2>
+
+    <h3>Technical Specializations</h3>
+    <ul class="features-list">
+      <li>Ethical Hacking & Penetration Testing</li>
+      <li>Network Security & Defense Architecture</li>
+      <li>Vulnerability Assessment & Management</li>
+      <li>Incident Response & Digital Forensics</li>
+      <li>Security Awareness Training & Education</li>
+      <li>Compliance & Risk Management</li>
+      <li>Threat Intelligence & Analysis</li>
+      <li>Security Tool Development & Implementation</li>
+    </ul>
+
+    <h3>Industry Experience</h3>
+    <p>
+      Our experience spans across multiple industries and security scenarios, from securing personal devices and home networks to protecting enterprise-level infrastructures. We've encountered and addressed a wide range of security challenges, giving us unique insights into both common vulnerabilities and sophisticated attack vectors.
+    </p>
+
+    <p>
+      Every recommendation we make, every tool we develop, and every strategy we share is grounded in real-world application and testing. We don't just theorize about cybersecurity – we live it, breathe it, and continuously refine our approach based on the evolving threat landscape.
+    </p>
+  </div>
+</section>
+
+<!-- Our Approach -->
+<section id="approach" class="about-section">
+  <div class="container">
+    <h2>Our Approach</h2>
+
+    <h3>Human-Centric Cybersecurity</h3>
+    <p>
+      At EzmCyber, we recognize that the human element is both the greatest vulnerability and the strongest defense in cybersecurity. Our approach prioritizes understanding, education, and empowerment over complex technical jargon and intimidating security protocols.
+    </p>
+
+    <h3>Practical Over Theoretical</h3>
+    <p>
+      Security is never just theoretical at EzmCyber. Every solution we provide is measurable, accessible, and effective. We focus on practical implementations that work in real-world scenarios, not just in controlled laboratory environments.
+    </p>
+
+    <h3>Community-Driven Learning</h3>
+    <p>
+      We believe in the power of community learning and knowledge sharing. Our platform serves as a hub for cybersecurity enthusiasts, professionals, and anyone interested in improving their security posture. We foster an environment of collaborative learning and mutual support.
+    </p>
+
+    <h3>Continuous Innovation</h3>
+    <p>
+      The cybersecurity landscape evolves rapidly, and so do we. We continuously research emerging threats, test new defense strategies, and adapt our methodologies to stay ahead of the curve. Innovation isn't just about new tools – it's about new ways of thinking about security challenges.
+    </p>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section id="why-choose-us" class="about-section bg-dark">
+  <div class="container">
+    <h2>Why Choose EzmCyber</h2>
+    <ul class="features-list">
+      <li>Human-led cybersecurity guidance with practical, hands-on experience</li>
+      <li>Real-world tested tools and tutorials — no theoretical fluff or generic automation</li>
+      <li>Passion-driven community collaboration and knowledge sharing</li>
+      <li>Rapid response strategies with measurable security improvements</li>
+      <li>Transparent and trustworthy insights from a dedicated cybersecurity professional</li>
+      <li>Comprehensive coverage from personal security to enterprise defense</li>
+      <li>Accessible learning materials for all skill levels</li>
+      <li>Ethical approach to all cybersecurity practices</li>
+      <li>Continuous support and guidance for your security journey</li>
+      <li>Cost-effective solutions without compromising on quality</li>
+    </ul>
+
+    <h3>What Sets Us Apart</h3>
+    <p>
+      Unlike automated security platforms or purely theoretical educational resources, EzmCyber combines the authenticity of human expertise with the accessibility of digital education. We provide personalized guidance that adapts to your specific needs, whether you're just starting your cybersecurity journey or looking to advance your existing knowledge.
+    </p>
+  </div>
+</section>
+
+<!-- Our Commitment -->
+<section id="commitment" class="about-section">
+  <div class="container">
+    <h2>Our Commitment</h2>
+
+    <h3>To Our Community</h3>
+    <p>
+      We are committed to fostering a supportive, inclusive, and educational community where cybersecurity knowledge is freely shared and continuously expanded. Every member of our community, regardless of their current skill level, contributes to our collective defense against cyber threats.
+    </p>
+
+    <h3>To Quality & Excellence</h3>
+    <p>
+      Every piece of content, every tool, and every recommendation we provide undergoes rigorous quality assurance. We maintain high standards because we understand that in cybersecurity, mediocrity can be dangerous. Our reputation is built on reliability, accuracy, and effectiveness.
+    </p>
+        <h3>To Innovation & Growth</h3>
+    <p>
+      Cybersecurity never stands still, and neither do we. EzmCyber is committed to evolving alongside the threat landscape—continuously learning, innovating, and sharing so our community always stays one step ahead.
+    </p>
+  </div>
+</section>
+
+<!-- Contact Info -->
+<section id="contact-info" class="about-section bg-dark">
+  <div class="container">
+    <h2>Get In Touch</h2>
+    <p>
+      Have questions, ideas, or want to collaborate? Reach out to us—we’d love to hear from you.
+    </p>
+    <div class="center-btn">
+      <a href="contact.html" class="btn">Contact Us</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- Footer -->
+<footer role="contentinfo">
+  <div class="container">
+    <p>&copy; 2025 EzmCyber. All rights reserved.</p>
+    <p>Built with ❤️ by Niffy</p>
+  </div>
+</footer>
+
 </body>
 </html>
