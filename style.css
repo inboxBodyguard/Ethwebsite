@@ -203,16 +203,22 @@ transform: rotate(-45deg);
 top: 0;
 }
 
-/* Sidebar */
+/* Sidebar - FIXED: Force hidden by default with visibility and adjusted translate */
 .ezm-sidebar {
 position:fixed; top:0; left:0; width:320px; max-width:92%;
 height:100vh; background:var(--light-card);
 box-shadow:0 20px 60px rgba(2,6,23,0.18);
-transform:translateX(-110%);
-transition:transform 300ms cubic-bezier(0.2,0.8,0.2,1);
+/* CHANGE: Adjusted to -100% for full hide, added visibility hidden */
+transform:translateX(-100%);
+visibility: hidden; /* NEW: Ensures it's not visible even if transform fails */
+transition:transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0.3s; /* NEW: Delayed visibility show */
 z-index:1200; overflow-y:auto; -webkit-overflow-scrolling:touch;
 }
-.ezm-sidebar.open { transform:translateX(0); }
+.ezm-sidebar.open { 
+transform:translateX(0); 
+visibility: visible; /* NEW: Show on open */
+transition:transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0s; /* NEW: Immediate visibility on open */
+}
 .ezm-sidebar-inner { padding:88px 18px 28px; box-sizing:border-box; }
 .ezm-sidebar-close {
 position:absolute; top:12px; right:12px;
@@ -329,170 +335,4 @@ margin: 0 auto;
 background: var(--light-card);
 border-radius: 16px;
 padding: 2rem;
-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-margin-bottom: 2rem;
-}
-
-@media (max-width:600px) {
-.ezm-sidebar { width:88%; }
-.main-content { padding: 1rem; }
-}
-</style>
-
-</head>
-<body>
-    <!-- EZM Topbar -->
-    <div class="ezm-topbar">
-        <div class="ezm-topbar-inner">
-            <a href="#" class="navbar-brand">YourBrand</a>
-            <button class="ezm-hamburger" id="hamburgerToggle">
-                <div class="ezm-hamburger-box">
-                    <div class="ezm-hamburger-inner"></div>
-                </div>
-            </button>
-        </div>
-    </div>
-
-    <!-- EZM Sidebar -->
-    <div class="ezm-sidebar" id="sidebar">
-        <div class="ezm-sidebar-inner">
-            <button class="ezm-sidebar-close" id="sidebarClose">&times;</button>
-            
-            <div class="ezm-sidebar-brand">
-                <a href="#">YourBrand</a>
-            </div>
-
-            <nav class="ezm-sidebar-nav">
-                <ul>
-                    <li><a href="#" class="ezm-btn">🏠 Home</a></li>
-                    <li><a href="#" class="ezm-btn">📊 Dashboard</a></li>
-                    
-                    <li class="ezm-has-sub">
-                        <button class="ezm-sub-toggle">
-                            <span>📁 Products</span>
-                            <span class="ezm-caret">▼</span>
-                        </button>
-                        <ul class="ezm-submenu">
-                            <li><a href="#">All Products</a></li>
-                            <li><a href="#">Categories</a></li>
-                            <li><a href="#">Add New</a></li>
-                        </ul>
-                    </li>
-                    
-                    <li class="ezm-has-sub">
-                        <button class="ezm-sub-toggle">
-                            <span>👥 Users</span>
-                            <span class="ezm-caret">▼</span>
-                        </button>
-                        <ul class="ezm-submenu">
-                            <li><a href="#">All Users</a></li>
-                            <li><a href="#">Admin Panel</a></li>
-                            <li><a href="#">Permissions</a></li>
-                        </ul>
-                    </li>
-                    
-                    <li><a href="#" class="ezm-btn">📧 Messages</a></li>
-                    <li><a href="#" class="ezm-btn">⚙️ Settings</a></li>
-                </ul>
-            </nav>
-
-            <div class="ezm-sidebar-footer">
-                <a href="#" class="ezm-cta">Get Premium</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Sidebar Overlay -->
-    <div class="ezm-sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- Banner Section -->
-    <div class="banner-section">
-        <div class="banner-overlay"></div>
-        <div class="banner-content">
-            <h1 class="banner-title">Welcome to Our Platform</h1>
-            <p class="banner-subtitle">Discover amazing features and tools designed to enhance your experience. Join thousands of users who trust our platform for their daily needs.</p>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="content-card">
-            <h2>Dashboard Overview</h2>
-            <p>This is your main content area. The sidebar is hidden by default and can be toggled using the hamburger menu in the top bar.</p>
-            <p>The banner section displays prominently at the top, and all your content flows naturally below it.</p>
-        </div>
-        
-        <div class="content-card">
-            <h3>Features</h3>
-            <p>✅ Responsive sidebar that slides in from the left</p>
-            <p>✅ Animated hamburger menu with smooth transitions</p>
-            <p>✅ Collapsible submenus with dropdown functionality</p>
-            <p>✅ Overlay background when sidebar is open</p>
-            <p>✅ Beautiful banner section with background image</p>
-            <p>✅ Mobile-friendly design</p>
-        </div>
-    </div>
-
-    <script>
-        // Get elements
-        const hamburger = document.getElementById('hamburgerToggle');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarClose = document.getElementById('sidebarClose');
-        const overlay = document.getElementById('sidebarOverlay');
-        const subMenuToggles = document.querySelectorAll('.ezm-sub-toggle');
-
-        // Toggle sidebar function
-        function toggleSidebar() {
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('visible');
-            hamburger.classList.toggle('active');
-        }
-
-        // Close sidebar function
-        function closeSidebar() {
-            sidebar.classList.remove('open');
-            overlay.classList.remove('visible');
-            hamburger.classList.remove('active');
-        }
-
-        // Event listeners
-        hamburger.addEventListener('click', toggleSidebar);
-        sidebarClose.addEventListener('click', closeSidebar);
-        overlay.addEventListener('click', closeSidebar);
-
-        // Handle submenu toggles
-        subMenuToggles.forEach(toggle => {
-            toggle.addEventListener('click', function() {
-                const parentLi = this.parentElement;
-                const submenu = parentLi.querySelector('.ezm-submenu');
-                
-                // Close other open submenus
-                subMenuToggles.forEach(otherToggle => {
-                    if (otherToggle !== toggle) {
-                        otherToggle.parentElement.classList.remove('open');
-                        otherToggle.parentElement.querySelector('.ezm-submenu').classList.remove('open');
-                    }
-                });
-                
-                // Toggle current submenu
-                parentLi.classList.toggle('open');
-                submenu.classList.toggle('open');
-            });
-        });
-
-        // Close sidebar on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-                closeSidebar();
-            }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768 && sidebar.classList.contains('open')) {
-                closeSidebar();
-            }
-        });
-    </script>
-</body>
-</html>
+box-shadow: 0 4px 20px rgba(
