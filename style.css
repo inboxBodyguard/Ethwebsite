@@ -345,4 +345,23 @@
         .btn-lg { font-size: 0.95rem; }
         .input-group-lg .form-control { font-size: 0.95rem; min-height: 55px; }
     }
+    /* Reduce unnecessary space above sections */
+.section {
+  margin-top: 0; 
+  padding-top: 2rem; /* adjust as needed */
+}
+
+/* Make sure buttons are visible and clickable */
+button, .btn, a {
+  position: relative;
+  z-index: 10; /* keeps them on top of any white overlay */
+}
+
+/* Optional: Add soft background separation for clarity */
+.section-header {
+  background: linear-gradient(to bottom, #f9f9f9, #ffffff);
+  padding: 3rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
 </style>
