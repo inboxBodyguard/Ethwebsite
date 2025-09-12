@@ -997,5 +997,31 @@ document.addEventListener('DOMContentLoaded', function () {
     Follow us on X
   </a>
 </div>
+<form id="signupForm">
+  <h2>Join EZM Cyber</h2>
+  <input type="text" id="name" placeholder="Your Name" required />
+  <input type="email" id="email" placeholder="Your Email" required />
+  <button type="submit">Sign Up</button>
+</form>
+
+<p id="status"></p>
+
+<script>
+document.getElementById("signupForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+
+  const response = await fetch("https://e4ea3339-b0bb-474d-b03c-758fd0ece917-00-d5p6pubo8oyi.janeway.replit.dev/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email })
+  });
+
+  const result = await response.json();
+  document.getElementById("status").textContent = result.message;
+});
+</script>
 </body>
 </html>
