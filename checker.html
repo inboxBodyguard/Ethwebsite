@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Email Breach Checker - EZM Cyber</title>
+  <title>Email Tools - EZM Cyber</title>
   <link rel="stylesheet" href="styles.css">
   <style>
     body {
@@ -13,28 +13,36 @@
       padding: 0;
     }
     main {
-      max-width: 500px;
-      margin: 80px auto;
+      max-width: 700px;
+      margin: 40px auto;
       padding: 20px;
       background: #fff;
       border-radius: 6px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      text-align: center;
     }
-    h1 {
+    h1, h2 {
+      text-align: center;
       margin-bottom: 10px;
+    }
+    p {
+      text-align: center;
+      color: #555;
     }
     form {
       margin-top: 20px;
       display: flex;
       flex-direction: column;
     }
-    input[type="email"] {
+    input[type="email"], textarea {
       padding: 12px;
       font-size: 16px;
       margin-bottom: 15px;
       border: 1px solid #ccc;
       border-radius: 4px;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 120px;
     }
     button {
       padding: 12px;
@@ -48,27 +56,48 @@
     button:hover {
       background: #0056b3;
     }
-    #result {
+    #result, #headerResult {
       margin-top: 20px;
       font-size: 14px;
+      text-align: center;
+    }
+    hr {
+      margin: 40px 0;
+      border: none;
+      border-top: 1px solid #ddd;
     }
   </style>
 </head>
 <body>
   <main>
+    <!-- Email Breach Checker -->
     <h1>Email Breach Checker</h1>
     <p>Check if your email has been exposed in a known data breach.</p>
 
-    <form id="breachForm" onsubmit="return handleSubmit(event)">
+    <form id="breachForm" onsubmit="return handleBreachCheck(event)">
       <input type="email" id="emailInput" placeholder="Enter your email" required>
       <button type="submit">Check Now</button>
     </form>
 
     <div id="result"></div>
+
+    <hr>
+
+    <!-- Email Header Analyzer -->
+    <h2>Email Header Analyzer</h2>
+    <p>Paste raw email headers to extract key details for quick analysis.</p>
+
+    <form id="headerForm" onsubmit="return handleHeaderCheck(event)">
+      <textarea id="headerInput" placeholder="Paste raw email headers here..." required></textarea>
+      <button type="submit">Analyze Headers</button>
+    </form>
+
+    <div id="headerResult"></div>
   </main>
 
   <script>
-    async function handleSubmit(event) {
+    // === Email Breach Checker ===
+    async function handleBreachCheck(event) {
       event.preventDefault();
       const email = document.getElementById("emailInput").value;
       const resultDiv = document.getElementById("result");
@@ -76,7 +105,6 @@
       resultDiv.innerHTML = "🔍 Checking...";
 
       try {
-        // Hash email (k-anonymity model)
         const encoder = new TextEncoder();
         const data = encoder.encode(email.trim().toLowerCase());
         const digest = await crypto.subtle.digest("SHA-1", data);
@@ -92,12 +120,11 @@
         const text = await response.text();
 
         if (text.includes(suffix)) {
-          resultDiv.innerHTML = "⚠️ Your email **may have been found** in a breach. Change your password!";
+          resultDiv.innerHTML = "⚠️ Your email <b>may have been found</b> in a breach. Change your password!";
         } else {
-          resultDiv.innerHTML = "✅ Your email was **not found** in known breaches.";
+          resultDiv.innerHTML = "✅ Your email was <b>not found</b> in known breaches.";
         }
 
-        // Redirect after 5 sec
         setTimeout(() => {
           window.location.href = "checker-thankyou.html";
         }, 5000);
@@ -105,6 +132,33 @@
       } catch (err) {
         resultDiv.innerHTML = "❌ Error checking email.";
       }
+    }
+
+    // === Email Header Analyzer ===
+    function handleHeaderCheck(event) {
+      event.preventDefault();
+      const input = document.getElementById("headerInput").value;
+      const output = document.getElementById("headerResult");
+
+      const headers = input.split(/\r?\n/);
+      let from = "", to = "", subject = "", received = [];
+
+      headers.forEach(line => {
+        if (line.toLowerCase().startsWith("from:")) from = line;
+        if (line.toLowerCase().startsWith("to:")) to = line;
+        if (line.toLowerCase().startsWith("subject:")) subject = line;
+        if (line.toLowerCase().startsWith("received:")) received.push(line);
+      });
+
+      output.innerHTML = `
+        <strong>Extracted Header Info:</strong><br>
+        ${from || "From: (not found)"}<br>
+        ${to || "To: (not found)"}<br>
+        ${subject || "Subject: (not found)"}<br>
+        <br>
+        <strong>First Received Hop:</strong><br>
+        ${received[0] || "(none found)"}
+      `;
     }
   </script>
 </body>
