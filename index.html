@@ -963,23 +963,25 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       // Toggle this submenu
-      btn.setAttribute('aria-expanded', String(!isExpanded));
-      if (menu) {
-        if (!isExpanded) {
-          menu.style.display = 'block';
-          menu.setAttribute('aria-hidden', 'false');
-          parent.classList.add('open');
-        } else {
-          menu.style.display = 'none';
-          menu.setAttribute('aria-hidden', 'true');
-          parent.classList.remove('open');
-        }
-      }
-    
-  // Close on resize when switching to desktop width
-  window.addEventListener('resize', function () {
-    if (window.innerWidth > 768 && sidebar.classList.contains('open')) closeSidebar();
-  });
+btn.setAttribute('aria-expanded', String(!isExpanded));
+if (menu) {
+  if (!isExpanded) {
+    menu.style.display = 'block';
+    menu.setAttribute('aria-hidden', 'false');
+    parent.classList.add('open');
+  } else {
+    menu.style.display = 'none';
+    menu.setAttribute('aria-hidden', 'true');
+    parent.classList.remove('open');
+  }
+}
+
+// Close on resize when switching to desktop width
+window.addEventListener('resize', function () {
+  if (window.innerWidth > 768 && sidebar.classList.contains('open')) closeSidebar();
+});
+</script>
+
 <!-- Social Link: X -->
 <div style="text-align:center; margin-top:30px;">
   <a href="https://x.com/ezmcyberhq?s=21" target="_blank" rel="noopener noreferrer" 
@@ -991,6 +993,5 @@ document.addEventListener('DOMContentLoaded', function () {
     Follow us on X
   </a>
 </div>
-</script>
 </body>
 </html>
