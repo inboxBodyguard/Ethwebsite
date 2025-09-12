@@ -315,6 +315,44 @@
       });
     });
   </script>
+<form id="signupForm">
+  <h2>Join EZM Cyber</h2>
+  <input type="text" id="name" placeholder="Your Name" required />
+  <input type="email" id="email" placeholder="Your Email" required />
+  <input type="password" id="password" placeholder="Your Password" required />
+  <button type="submit">Sign Up</button>
+</form>
 
+<p id="status"></p>
+
+<script>
+document.getElementById("signupForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const statusEl = document.getElementById("status");
+
+  statusEl.textContent = "Signing you up...";
+
+  try {
+    const response = await fetch("/api/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password })
+    });
+
+    if (!response.ok) {
+      throw new Error("Server error: " + response.status);
+    }
+
+    const result = await response.json();
+    statusEl.textContent = result.message || "Signup successful!";
+  } catch (error) {
+    statusEl.textContent = "❌ Error: " + error.message;
+  }
+});
+</script>
 </body>
 </html>
