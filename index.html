@@ -879,7 +879,7 @@
     </script>
     <!-- End of Tawk.to Script -->
     
- <script>
+<script>
 document.addEventListener('DOMContentLoaded', function () {
   const toggle = document.getElementById('ezmSidebarToggle');
   const sidebar = document.getElementById('ezmSidebar');
@@ -963,22 +963,26 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       // Toggle this submenu
-btn.setAttribute('aria-expanded', String(!isExpanded));
-if (menu) {
-  if (!isExpanded) {
-    menu.style.display = 'block';
-    menu.setAttribute('aria-hidden', 'false');
-    parent.classList.add('open');
-  } else {
-    menu.style.display = 'none';
-    menu.setAttribute('aria-hidden', 'true');
-    parent.classList.remove('open');
-  }
-}
+      btn.setAttribute('aria-expanded', String(!isExpanded));
+      if (menu) {
+        if (!isExpanded) {
+          menu.style.display = 'block';
+          menu.setAttribute('aria-hidden', 'false');
+          parent.classList.add('open');
+        } else {
+          menu.style.display = 'none';
+          menu.setAttribute('aria-hidden', 'true');
+          parent.classList.remove('open');
+        }
+      }
+    }); // <-- closes btn.addEventListener
 
-// Close on resize when switching to desktop width
-window.addEventListener('resize', function () {
-  if (window.innerWidth > 768 && sidebar.classList.contains('open')) closeSidebar();
+  }); // <-- closes subToggles.forEach
+
+  // Close on resize when switching to desktop width
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 768 && sidebar.classList.contains('open')) closeSidebar();
+  });
 });
 </script>
 
