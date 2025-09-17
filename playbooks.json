@@ -1,1 +1,38 @@
-playbooks.json
+{
+  "Phishing Email": [
+    "Disconnect affected device from the network.",
+    "Collect and preserve the suspicious email headers.",
+    "Verify links/domains using VirusTotal or analyzer tools.",
+    "Notify IT or security response team immediately.",
+    "Force password reset for affected accounts.",
+    "Report incident to regulators if sensitive data is involved."
+  ],
+  "Ransomware Infection": [
+    "Isolate infected systems from the network.",
+    "Do not pay ransom — contact law enforcement.",
+    "Restore from clean backups.",
+    "Scan all machines with updated AV tools.",
+    "Communicate incident to staff and customers."
+  ],
+  "Lost Laptop/Phone": [
+    "Report loss immediately to IT/security team.",
+    "Trigger remote wipe if available (MDM tools).",
+    "Reset credentials linked to the device.",
+    "File police report if sensitive data was stored.",
+    "Notify compliance officer if required."
+  ],
+  "Insider Threat": [
+    "Identify suspicious user activity and disable access.",
+    "Preserve system and access logs for investigation.",
+    "Escalate to HR/legal team as required.",
+    "Communicate with affected departments.",
+    "Update policies to prevent recurrence."
+  ],
+  "DDoS Attack": [
+    "Alert hosting provider or ISP for mitigation.",
+    "Enable web application firewall (WAF) protections.",
+    "Rate-limit traffic and block offending IPs.",
+    "Keep stakeholders updated on downtime.",
+    "Plan for scaling defenses if attack persists."
+  ]
+}
