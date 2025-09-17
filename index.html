@@ -1031,6 +1031,159 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
-</script>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Playbook Button</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+
+
+    .playbook-container {
+        text-align: center;
+        margin: 2rem 0;
+    }
+    
+    .playbook-button {
+        display: inline-block;
+        background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+        color: #fff;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        border: none;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .playbook-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+    
+    .playbook-button:hover {
+        background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+        box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+        transform: translateY(-2px);
+    }
+    
+    .playbook-button:hover::before {
+        left: 100%;
+    }
+    
+    .playbook-button:active {
+        transform: translateY(0);
+        box-shadow: 0 3px 10px rgba(211, 47, 47, 0.3);
+    }
+    
+    .playbook-button .icon {
+        margin-right: 8px;
+        font-size: 1.2em;
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+    
+    .playbook-button .text {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+        .playbook-button {
+            padding: 0.9rem 1.5rem;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+
+</head>
+<body>
+    <div class="playbook-container">
+        <a href="playbook.html" class="playbook-button">
+            <span class="icon">🚨</span>
+            <span class="text">Get Free Incident Playbook</span>
+        </a>
+    </div>
+
+<!-- Alternative versions for comparison -->
+<div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #ddd;">
+    <h3 style="text-align: center; color: #666;">Alternative Styles:</h3>
+    
+    <!-- Rounded pill version -->
+    <div style="text-align: center; margin: 1rem 0;">
+        <a href="playbook.html" style="
+            display: inline-block;
+            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(211, 47, 47, 0.4)'" 
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(211, 47, 47, 0.3)'">
+            🚨 Get Free Incident Playbook
+        </a>
+    </div>
+    
+    <!-- Glowing version -->
+    <div style="text-align: center; margin: 1rem 0;">
+        <a href="playbook.html" style="
+            display: inline-block;
+            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(211, 47, 47, 0.5), 0 4px 15px rgba(211, 47, 47, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: glow 2s ease-in-out infinite alternate;
+        " onmouseover="this.style.transform='scale(1.05)'" 
+           onmouseout="this.style.transform='scale(1)'">
+            🚨 Get Free Incident Playbook
+        </a>
+    </div>
+</div>
+
+<style>
+    @keyframes glow {
+        from { box-shadow: 0 0 20px rgba(211, 47, 47, 0.5), 0 4px 15px rgba(211, 47, 47, 0.3); }
+        to { box-shadow: 0 0 30px rgba(211, 47, 47, 0.8), 0 4px 15px rgba(211, 47, 47, 0.3); }
+    }
+</style>
 </body>
 </html>
