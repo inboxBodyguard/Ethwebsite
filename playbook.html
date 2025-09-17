@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🚨 Incident Playbook Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 { color: #d32f2f; }
+    select, button {
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #output { margin-top: 20px; }
+    ol { padding-left: 20px; }
+  </style>
+</head>
+<body>
+  <h1>🚨 Incident Playbook Generator</h1>
+
+  <label for="incident">Choose an incident type:</label>
+  <select id="incident"></select>
+  <button onclick="generatePlaybook()">Generate</button>
+  <button onclick="downloadPDF()">Download as PDF</button>
+
+  <div id="output"></div>
+
+  <!-- Load jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    // Incident templates
+    const playbooks = {
+      "Phishing Email": [
+        "Disconnect affected device from the network.",
+        "Collect and preserve the suspicious email headers.",
+        "Verify links/domains using VirusTotal or analyzer tools.",
+        "Notify IT or security response team immediately.",
+        "Force password reset for affected accounts.",
+        "Report incident to regulators if sensitive data is involved."
+      ],
+      "Ransomware Infection": [
+        "Isolate infected systems from the network.",
+        "Do not pay ransom — contact law enforcement.",
+        "Restore from clean backups.",
+        "Scan all machines with updated AV tools.",
+        "Communicate incident to staff and customers."
+      ],
+      "Lost Laptop/Phone": [
+        "Report loss immediately to IT/security team.",
+        "Trigger remote wipe if available (MDM tools).",
+        "Reset credentials linked to the device.",
+        "File police report if sensitive data was stored.",
+        "Notify compliance officer if required."
+      ]
+    };
+
+    // Populate dropdown
+    const dropdown = document.getElementById("incident");
+    Object.keys(playbooks).forEach(key => {
+      const option = document.createElement("option");
+      option.value = key;
+      option.textContent = key;
+      dropdown.appendChild(option);
+    });
+
+    // Generate playbook
+    function generatePlaybook() {
+      const type = dropdown.value;
+      const steps = playbooks[type];
+      const output = document.getElementById("output");
+      output.innerHTML = `<h2>${type} Response Steps</h2>`;
+      let list = "<ol>";
+      steps.forEach(step => { list += `<li>${step}</li>`; });
+      list += "</ol>";
+      output.innerHTML += list;
+    }
+
+    // Download as PDF
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.text(document.getElementById("output").innerText, 10, 10);
+      doc.save("incident-playbook.pdf");
+    }
+  </script>
+</body>
+</html>
