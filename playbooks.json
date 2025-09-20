@@ -1,38 +1,86 @@
 {
   "Phishing Email": [
-    "Disconnect affected device from the network.",
-    "Collect and preserve the suspicious email headers.",
-    "Verify links/domains using VirusTotal or analyzer tools.",
-    "Notify IT or security response team immediately.",
-    "Force password reset for affected accounts.",
-    "Report incident to regulators if sensitive data is involved."
+    "🚨 Immediately disconnect affected device from the network to prevent lateral movement.",
+    "📧 Collect and preserve complete email headers, attachments, and metadata for forensic analysis.",
+    "🔍 Analyze suspicious links/domains using VirusTotal, URLVoid, and threat intelligence platforms.",
+    "📞 Notify IT security team and incident response coordinator within 15 minutes of detection.",
+    "🔐 Force immediate password reset for affected accounts and enable MFA if not already active.",
+    "⚠️ Check for signs of credential harvesting - monitor login attempts and account activity.",
+    "📋 Document all affected users and systems in incident tracking system.",
+    "🏢 Report incident to compliance team and regulators if PII/PHI data may be compromised.",
+    "📧 Send organization-wide security awareness alert with phishing indicators.",
+    "🔄 Review and update email security filters based on attack patterns identified."
   ],
   "Ransomware Infection": [
-    "Isolate infected systems from the network.",
-    "Do not pay ransom — contact law enforcement.",
-    "Restore from clean backups.",
-    "Scan all machines with updated AV tools.",
-    "Communicate incident to staff and customers."
+    "🔌 Immediately isolate infected systems - disconnect network cables and disable WiFi.",
+    "🚫 DO NOT pay ransom - contact FBI's IC3 and local law enforcement immediately.",
+    "💾 Identify and verify integrity of latest clean backups before restoration begins.",
+    "🖥️ Boot infected systems from external antivirus rescue disks for deep scanning.",
+    "🔍 Conduct forensic analysis to determine attack vector and scope of compromise.",
+    "📢 Activate crisis communication plan - notify staff, customers, and stakeholders.",
+    "⚖️ Engage legal counsel and cyber insurance provider for guidance and coverage.",
+    "🛡️ Implement additional network segmentation to prevent future lateral movement.",
+    "📊 Document ransom demands, attack timeline, and recovery efforts for investigation.",
+    "🔄 Test restored systems thoroughly before returning to production environment."
   ],
   "Lost Laptop/Phone": [
-    "Report loss immediately to IT/security team.",
-    "Trigger remote wipe if available (MDM tools).",
-    "Reset credentials linked to the device.",
-    "File police report if sensitive data was stored.",
-    "Notify compliance officer if required."
+    "📞 Report device loss to IT security team within 1 hour of discovery.",
+    "📱 Trigger immediate remote wipe using MDM tools (Intune, JAMF, etc.) if available.",
+    "🔐 Reset all passwords and revoke certificates associated with the lost device.",
+    "🗂️ Identify what sensitive data was stored locally vs. cloud-synced applications.",
+    "👮 File police report if device contained regulated data (HIPAA, PCI, etc.).",
+    "📋 Complete data breach assessment form and notify compliance officer immediately.",
+    "🔍 Monitor for unauthorized access attempts using device credentials or certificates.",
+    "📧 Alert affected clients/customers if their data may have been on the device.",
+    "🛡️ Review and strengthen device encryption and remote management policies.",
+    "📝 Update asset inventory and insurance claims if applicable."
   ],
   "Insider Threat": [
-    "Identify suspicious user activity and disable access.",
-    "Preserve system and access logs for investigation.",
-    "Escalate to HR/legal team as required.",
-    "Communicate with affected departments.",
-    "Update policies to prevent recurrence."
+    "🔍 Document suspicious behavior patterns and preserve digital evidence immediately.",
+    "🚪 Disable user accounts and revoke all access privileges without alerting the individual.",
+    "💾 Preserve and secure system logs, email records, and file access history.",
+    "👥 Coordinate with HR, legal, and security teams for proper investigation protocol.",
+    "🎥 Review physical access logs, security camera footage, and badge entry records.",
+    "🔐 Audit all systems and data the individual had access to for unauthorized changes.",
+    "📞 Interview colleagues and supervisors to gather additional context and evidence.",
+    "⚖️ Engage legal counsel before taking any disciplinary or termination actions.",
+    "🛡️ Implement additional monitoring and access controls for high-risk positions.",
+    "📚 Review and update insider threat detection policies and employee training."
   ],
   "DDoS Attack": [
-    "Alert hosting provider or ISP for mitigation.",
-    "Enable web application firewall (WAF) protections.",
-    "Rate-limit traffic and block offending IPs.",
-    "Keep stakeholders updated on downtime.",
-    "Plan for scaling defenses if attack persists."
+    "🚨 Immediately alert hosting provider, CDN, and ISP for upstream mitigation support.",
+    "🛡️ Activate Web Application Firewall (WAF) and enable DDoS protection services.",
+    "🚫 Implement rate limiting, geo-blocking, and IP blacklisting for attacking sources.",
+    "📊 Monitor real-time traffic analytics to identify attack patterns and adjust defenses.",
+    "📢 Keep stakeholders informed with regular updates on service availability and ETR.",
+    "☁️ Scale infrastructure resources and activate failover systems if available.",
+    "🔍 Analyze attack vectors - volumetric, protocol, or application layer attacks.",
+    "📞 Contact cyber insurance provider and consider engaging DDoS mitigation specialists.",
+    "📝 Document attack timeline, impact metrics, and response actions for post-incident review.",
+    "🔄 Develop long-term DDoS preparedness plan including detection and response automation."
+  ],
+  "Data Breach": [
+    "🔒 Immediately contain the breach by isolating affected systems and revoking access.",
+    "📋 Activate incident response team and establish secure communication channels.",
+    "🔍 Conduct forensic analysis to determine scope, timeline, and root cause of breach.",
+    "📞 Notify legal counsel, cyber insurance carrier, and law enforcement within required timeframes.",
+    "📊 Assess what types of data were accessed (PII, PHI, payment card data, etc.).",
+    "⏰ Comply with breach notification laws (GDPR 72-hour rule, state requirements).",
+    "📧 Prepare customer/client notifications with clear, transparent communication.",
+    "🛡️ Implement additional security controls to prevent similar future incidents.",
+    "💳 Offer credit monitoring services to affected individuals if appropriate.",
+    "📝 Document entire incident response for regulatory reporting and lessons learned."
+  ],
+  "Malware Infection": [
+    "🖥️ Isolate infected systems immediately to prevent network spread.",
+    "🔍 Identify malware type using sandbox analysis and threat intelligence tools.",
+    "💾 Create forensic images of infected systems before attempting removal.",
+    "🧹 Use multiple antivirus engines and specialized removal tools for thorough cleaning.",
+    "🔐 Reset all passwords and certificates that may have been compromised.",
+    "📊 Scan all network-connected devices and servers for lateral movement indicators.",
+    "📧 Analyze email logs and web traffic to determine initial infection vector.",
+    "🛡️ Update security controls and patch vulnerabilities that enabled the infection.",
+    "👥 Educate users about the infection method to prevent future occurrences.",
+    "📝 Update incident response procedures based on lessons learned from this event."
   ]
 }
