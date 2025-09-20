@@ -1,38 +1,167 @@
-{
+<div id="playbook"></div>
+<button id="downloadPDF">📄 Download My Playbook</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const playbookData = {
   "Phishing Email": [
-    "Disconnect affected device from the network.",
-    "Collect and preserve the suspicious email headers.",
-    "Verify links/domains using VirusTotal or analyzer tools.",
-    "Notify IT or security response team immediately.",
-    "Force password reset for affected accounts.",
-    "Report incident to regulators if sensitive data is involved."
+    { text: "Disconnect affected device from the network." },
+    { text: "Collect and preserve the suspicious email headers.", tool: "https://ezmcyber.xyz/header-analyzer" },
+    { text: "Verify links/domains.", tool: "https://ezmcyber.xyz/checker.html" },
+    { text: "Notify IT or security response team immediately." },
+    { text: "Force password reset for affected accounts." },
+    { text: "Report incident to regulators if sensitive data is involved." }
   ],
   "Ransomware Infection": [
-    "Isolate infected systems from the network.",
-    "Do not pay ransom — contact law enforcement.",
-    "Restore from clean backups.",
-    "Scan all machines with updated AV tools.",
-    "Communicate incident to staff and customers."
+    { text: "Isolate infected systems from the network." },
+    { text: "Do not pay ransom — contact law enforcement." },
+    { text: "Restore from clean backups." },
+    { text: "Scan all machines with updated AV tools." },
+    { text: "Communicate incident to staff and customers." }
   ],
   "Lost Laptop/Phone": [
-    "Report loss immediately to IT/security team.",
-    "Trigger remote wipe if available (MDM tools).",
-    "Reset credentials linked to the device.",
-    "File police report if sensitive data was stored.",
-    "Notify compliance officer if required."
+    { text: "Report loss immediately to IT/security team." },
+    { text: "Trigger remote wipe if available (MDM tools)." },
+    { text: "Reset credentials linked to the device." },
+    { text: "File police report if sensitive data was stored." },
+    { text: "Notify compliance officer if required." }
   ],
   "Insider Threat": [
-    "Identify suspicious user activity and disable access.",
-    "Preserve system and access logs for investigation.",
-    "Escalate to HR/legal team as required.",
-    "Communicate with affected departments.",
-    "Update policies to prevent recurrence."
+    { text: "Identify suspicious user activity and disable access." },
+    { text: "Preserve system and access logs for investigation." },
+    { text: "Escalate to HR/legal team as required." },
+    { text: "Communicate with affected departments." },
+    { text: "Update policies to prevent recurrence." }
   ],
   "DDoS Attack": [
-    "Alert hosting provider or ISP for mitigation.",
-    "Enable web application firewall (WAF) protections.",
-    "Rate-limit traffic and block offending IPs.",
-    "Keep stakeholders updated on downtime.",
-    "Plan for scaling defenses if attack persists."
+    { text: "Alert hosting provider or ISP for mitigation." },
+    { text: "Enable web application firewall (WAF) protections." },
+    { text: "Rate-limit traffic and block offending IPs." },
+    { text: "Keep stakeholders updated on downtime." },
+    { text: "Plan for scaling defenses if attack persists." }
   ]
+};
+
+// Render playbook
+const container = document.getElementById("playbook");
+for (const [incident, steps] of Object.entries(playbookData)) {
+  const section = document.createElement("div");
+  section.className = "incident";
+
+  const header = document.createElement("h3");
+  header.textContent = incident;
+  header.onclick = () => section.classList.toggle("open");
+
+  const list = document.createElement("ul");
+  steps.forEach(step => {
+    const li = document.createElement("li");
+
+    // Checkbox
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    li.appendChild(checkbox);
+
+    // Step text
+    const span = document.createElement("span");
+    span.textContent = " " + step.text;
+    li.appendChild(span);
+
+    // Tool button if exists
+    if (step.tool) {
+      const toolBtn = document.createElement("a");
+      toolBtn.href = step.tool;
+      toolBtn.target = "_blank";
+      toolBtn.textContent = " 🔗 Open Tool";
+      toolBtn.className = "tool-btn";
+      li.appendChild(toolBtn);
+    }
+
+    list.appendChild(li);
+  });
+
+  section.appendChild(header);
+  section.appendChild(list);
+  container.appendChild(section);
 }
+
+// PDF Export
+document.getElementById("downloadPDF").onclick = () => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  let y = 10;
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(16);
+  doc.text("My Incident Playbook", 10, y);
+  y += 10;
+
+  for (const [incident, steps] of Object.entries(playbookData)) {
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text(incident, 10, y);
+    y += 8;
+
+    steps.forEach(step => {
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(12);
+      doc.text("- " + step.text, 14, y);
+      y += 6;
+    });
+
+    y += 4;
+  }
+
+  doc.save("incident-playbook.pdf");
+};
+</script>
+
+<style>
+#playbook {
+  margin-top: 2rem;
+}
+.incident {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  background: #fff;
+}
+.incident h3 {
+  margin: 0;
+  cursor: pointer;
+  color: #0a2540;
+}
+.incident ul {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding-left: 0;
+  display: none;
+}
+.incident.open ul {
+  display: block;
+}
+.incident li {
+  margin: 0.4rem 0;
+}
+.tool-btn {
+  margin-left: 8px;
+  font-size: 0.85rem;
+  background: #0a2540;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+#downloadPDF {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: #0a2540;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#downloadPDF:hover {
+  background: #163d66;
+}
+</style>
