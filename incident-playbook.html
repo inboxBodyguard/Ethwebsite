@@ -1,121 +1,506 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free SMB Cyber Incident Playbook | ezmcyber.xyz</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Interactive Incident Playbook</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f9fafc;
-      color: #333;
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#16a34a; --muted:#94a3b8; --danger:#dc2626;
+      --glass: rgba(255,255,255,0.03);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
-    header {
-      background: #0a2540;
-      color: white;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-    header p {
-      margin: 0.5rem 0 0;
-      font-size: 1.1rem;
-    }
-    .container {
-      max-width: 700px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    .benefits {
-      margin: 2rem 0;
-    }
-    .benefits li {
-      margin: 0.5rem 0;
-    }
-    form {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    form input[type="text"], form input[type="email"] {
-      width: 100%;
-      padding: 0.75rem;
-      margin: 0.5rem 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
-    form button {
-      background: #0a2540;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      margin-top: 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 1rem;
-      width: 100%;
-    }
-    form button:hover {
-      background: #163d66;
-    }
-    .social-proof {
-      margin-top: 2rem;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      font-size: 0.85rem;
-      color: #666;
-    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071028 0%, #071426 100%);color:#e6eef8;}
+    .wrap{max-width:1100px;margin:28px auto;padding:20px;}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    header h1{font-size:20px;margin:0}
+    .meta{color:var(--muted);font-size:13px}
+    .top-actions{display:flex;gap:8px}
+    button, .btn {background:var(--accent);border:0;color:#041017;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-weight:600}
+    .btn.danger{background:var(--danger);color:white}
+    .layout{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    .step{border:1px solid rgba(255,255,255,0.03);padding:12px;border-radius:10px;margin-bottom:10px;display:flex;gap:12px;align-items:start}
+    .step .left{width:28px;height:28px;border-radius:6px;background:var(--glass);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700}
+    .step h3{margin:0;font-size:15px}
+    .step p{margin:6px 0;color:var(--muted);font-size:13px}
+    .progress{height:10px;background:rgba(255,255,255,0.04);border-radius:10px;overflow:hidden;margin-top:8px}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent), #34d399);width:0%}
+    .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .tools a, .tools button{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:6px 8px;border-radius:8px;text-decoration:none}
+    .templates{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+    .small{font-size:13px;color:var(--muted)}
+    label.checkbox{display:flex;align-items:center;gap:8px;cursor:pointer}
+    input[type="checkbox"]{width:18px;height:18px}
+    textarea{width:100%;min-height:100px;border-radius:8px;padding:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    .log-entries{max-height:260px;overflow:auto;margin-top:8px}
+    .log-item{border-bottom:1px dashed rgba(255,255,255,0.03);padding:8px 0}
+    footer{margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:center}
+    .kbd{background:#071426;border:1px solid rgba(255,255,255,0.03);padding:6px 8px;border-radius:6px}
+    .pill{display:inline-block;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);font-weight:700}
+    /* responsive */
+    @media(max-width:980px){ .layout{grid-template-columns:1fr} .wrap{padding:12px} }
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(1,6,12,0.6);z-index:50}
+    .modal.open{display:flex}
+    .modal .box{width:720px;max-width:96%;background:#071424;padding:16px;border-radius:10px}
+    .row{display:flex;gap:8px}
+    .row > *{flex:1}
+    .muted{color:var(--muted)}
+    .tiny{font-size:12px;color:var(--muted)}
   </style>
 </head>
 <body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Interactive Incident Playbook — Live Response Hub</h1>
+        <div class="meta">Phishing • Ransomware • Lost device — Turn steps into actions</div>
+      </div>
+      <div class="top-actions">
+        <button id="saveStateBtn" title="Save progress locally">Save</button>
+        <button id="exportJsonBtn" class="btn secondary">Export JSON</button>
+        <button id="exportCsvBtn" class="btn secondary">Export CSV</button>
+        <button id="printBtn" class="btn secondary">Printable</button>
+      </div>
+    </header>
 
-<header>
-  <h1>Free SMB Cyber Incident Playbook</h1>
-  <p>Practical, jargon-free steps to detect, respond, and recover from phishing attacks</p>
-</header>
+    <div class="layout">
+      <!-- MAIN -->
+      <main class="card" id="mainCard">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="small">Active incident: <span id="incidentId" class="pill">new</span></div>
+          <div class="small">Progress: <span id="percentText">0%</span></div>
+        </div>
+        <div class="progress" aria-hidden="true">
+          <i id="progressBar"></i>
+        </div>
 
-<div class="container">
-  <p><strong>Running a business with 10–50 employees?</strong> One phishing email can throw everything off track. This free playbook gives you a step-by-step framework your team can actually follow — without enterprise-level complexity.</p>
-  
-  <ul class="benefits">
-    <li>✔ Detect threats early with simple checks</li>
-    <li>✔ Contain incidents before they spread</li>
-    <li>✔ Eradicate malware and backdoors safely</li>
-    <li>✔ Recover quickly with minimal downtime</li>
-    <li>✔ Use ready-made templates for alerts & logs</li>
-  </ul>
+        <!-- Steps -->
+        <section id="stepsSection" style="margin-top:14px">
+          <!-- Step template repeated by HTML below -->
+          <div class="step" data-step="1">
+            <div class="left"><input type="checkbox" data-step-check="1" /></div>
+            <div style="flex:1">
+              <h3>Detect — initial intake</h3>
+              <p class="muted">Collect initial details: who, when, what, screenshots, and scope.</p>
+              <div class="tools">
+                <button class="btn secondary" data-action="addLog" data-msg="Intake recorded">Add to incident log</button>
+                <button class="btn" data-action="openTool" data-tool="ticket">Open Ticket Tool</button>
+                <button class="btn secondary" data-action="analyzeHeader">Analyze Email Header</button>
+              </div>
+            </div>
+          </div>
 
-  <form action="formsubmit.io" method="POST">
-    <label for="name">Full Name</label>
-    <input type="text" id="name" name="name" placeholder="John Doe" required>
-    
-    <label for="email">Work Email</label>
-    <input type="email" id="email" name="email" placeholder="you@company.com" required>
-    
-    <button type="submit">Get My Free Playbook</button>
-  </form>
+          <div class="step" data-step="2">
+            <div class="left"><input type="checkbox" data-step-check="2" /></div>
+            <div style="flex:1">
+              <h3>Contain — limit spread</h3>
+              <p class="muted">Isolate affected systems, force password resets, block malicious sender domains/IPs.</p>
+              <div class="tools">
+                <button class="btn" data-action="openTool" data-tool="blockIp">Block IP / Domain</button>
+                <button class="btn secondary" data-action="addLog" data-msg="Containment actions started">Log action</button>
+                <button class="btn secondary" data-action="runMultiChecker">Run Multi-Checker</button>
+              </div>
+            </div>
+          </div>
 
-  <div class="social-proof">
-    <p>Trusted by small businesses securing their first defense against phishing threats.</p>
-    <!-- Placeholder: logos or testimonials -->
+          <div class="step" data-step="3">
+            <div class="left"><input type="checkbox" data-step-check="3" /></div>
+            <div style="flex:1">
+              <h3>Eradicate — remove threat</h3>
+              <p class="muted">Remove malware, revoke credentials, clean systems, scan backups.</p>
+              <div class="tools">
+                <button class="btn secondary" data-action="addLog" data-msg="Eradication started">Log</button>
+                <button class="btn" data-action="openTool" data-tool="malwareScan">Start Scan</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="step" data-step="4">
+            <div class="left"><input type="checkbox" data-step-check="4" /></div>
+            <div style="flex:1">
+              <h3>Recover — restore services</h3>
+              <p class="muted">Restore systems from known good backups, monitor closely for re-infection.</p>
+              <div class="tools">
+                <button class="btn secondary" data-action="addLog" data-msg="Recovery actions initiated">Log</button>
+                <button class="btn" data-action="openTool" data-tool="monitor">Open Monitoring</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="step" data-step="5">
+            <div class="left"><input type="checkbox" data-step-check="5" /></div>
+            <div style="flex:1">
+              <h3>Lessons Learned</h3>
+              <p class="muted">Capture timeline, root cause, actions, and improvement plan.</p>
+              <div class="tools">
+                <button class="btn secondary" data-action="addLog" data-msg="Post-incident review started">Log</button>
+                <button class="btn" data-action="openTemplate" data-template="postmortem">Open Postmortem Template</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Incident log and notes -->
+        <section style="margin-top:14px">
+          <div style="display:flex;gap:8px;align-items:center">
+            <input id="noteInput" placeholder="Add a quick note or action (type and press Enter)" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+            <button id="addNoteBtn" class="btn secondary">Add</button>
+          </div>
+
+          <div class="log-entries" id="logEntries" aria-live="polite"></div>
+        </section>
+      </main>
+
+      <!-- SIDEBAR -->
+      <aside class="card">
+        <div>
+          <h3 style="margin:0 0 6px 0">Quick Actions</h3>
+          <div class="small muted">One-click tool access — replace placeholders with real links</div>
+
+          <div style="margin-top:10px" class="tools">
+            <a href="#" id="tool_ticket" data-url="#" target="_blank">Open Ticket Tool</a>
+            <a href="#" id="tool_multichecker" data-url="#" target="_blank">Multi-Checker</a>
+            <a href="#" id="tool_header" data-url="#" target="_blank">Email Header Analyzer</a>
+            <a href="#" id="tool_vt" data-url="#" target="_blank">VirusTotal Search</a>
+            <a href="#" id="tool_blockip" data-url="#" target="_blank">Block IP / Firewall</a>
+          </div>
+        </div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
+
+        <div>
+          <h3 style="margin:0 0 6px 0">Templates</h3>
+          <div class="tiny muted">Click to copy or send</div>
+          <div class="templates" style="margin-top:8px">
+            <button class="btn secondary" data-template="phish_notify">Notify Employees</button>
+            <button class="btn secondary" data-template="cust_notify">Customer Notice</button>
+            <button class="btn secondary" data-template="exec_brief">Exec Brief</button>
+            <button class="btn secondary" data-template="postmortem">Postmortem</button>
+          </div>
+        </div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
+
+        <div>
+          <h3 style="margin:0 0 6px 0">Incident Export / Submit</h3>
+          <div class="muted tiny">Save locally, export as JSON/CSV or submit to your webhook</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button id="submitWebhookBtn" class="btn">Submit to webhook</button>
+            <button id="clearBtn" class="btn secondary">Clear</button>
+          </div>
+        </div>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
+        <div class="tiny muted">Tip: replace tool links and the webhook in the script with your real endpoints.</div>
+      </aside>
+    </div>
+
+    <footer>
+      <div class="muted">Designed for SMB incident response — integrate your tools, templates, and automation.</div>
+      <div class="tiny muted">Local save • Export • Webhook</div>
+    </footer>
   </div>
+
+  <!-- Email header modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="box">
+      <h3>Analyze Email Header</h3>
+      <p class="tiny muted">Paste raw email headers below and click Analyze. This will open your analyzer tool (or POST to API).</p>
+      <textarea id="headerText" placeholder="Paste full email headers here..."></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px;justify-content:flex-end">
+        <button id="analyzeOpenBtn" class="btn">Open in Analyzer</button>
+        <button id="analyzePostBtn" class="btn secondary">Send to Analyzer (API)</button>
+        <button id="closeModal" class="btn secondary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /************************************************************************
+     * CONFIGURE THESE VALUES:
+     * Replace the placeholder URLs below with your real tool endpoints.
+     ************************************************************************/
+    const CONFIG = {
+      tool_ticket: "https://your-ticket-system.example/new?incidentId={incidentId}",
+      tool_multichecker: "https://yourdomain.example/multichecker?url={target}",
+      tool_header: "https://yourheaderanalyzer.example?data={encoded}",
+      tool_vt: "https://www.virustotal.com/gui/search/{target}",
+      tool_blockip: "https://your-firewall.example/block?ip={target}",
+      webhook_submit: "https://your-automation-endpoint.example/webhook", // POST incident JSON here
+    };
+
+    // Utility: simple element selector
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+
+    // State
+    const state = {
+      id: "incident-" + Date.now(),
+      steps: {1:false,2:false,3:false,4:false,5:false},
+      logs: [],
+      meta: {title:"Untitled Incident", created: new Date().toISOString()}
+    };
+
+    // Init: set incident id UI
+    $('#incidentId').textContent = state.id;
+
+    // Helpers: save / load to localStorage
+    function saveState(){
+      try{
+        localStorage.setItem("incident_playbook_state", JSON.stringify(state));
+        flash("Saved locally");
+      }catch(e){
+        console.error(e);
+        flash("Save failed", true);
+      }
+    }
+    function loadState(){
+      const raw = localStorage.getItem("incident_playbook_state");
+      if(!raw) return;
+      try{
+        const saved = JSON.parse(raw);
+        Object.assign(state, saved);
+        $('#incidentId').textContent = state.id || state.meta.title || "incident";
+        // rehydrate UI
+        for(const k of Object.keys(state.steps)) {
+          const cb = document.querySelector(`input[data-step-check="${k}"]`);
+          if(cb) cb.checked = !!state.steps[k];
+        }
+        renderLogs();
+        updateProgress();
+      }catch(e){ console.warn("load error", e) }
+    }
+
+    // Log functions
+    function addLog(message, level="info"){
+      const entry = {ts:new Date().toISOString(), message, level};
+      state.logs.push(entry);
+      renderLogs();
+      saveState();
+    }
+    function renderLogs(){
+      const container = $('#logEntries');
+      container.innerHTML = "";
+      state.logs.slice().reverse().forEach(l=>{
+        const div = document.createElement('div');
+        div.className = 'log-item';
+        div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><div><strong class="tiny">${new Date(l.ts).toLocaleString()}</strong></div><div class="tiny muted">${l.level}</div></div><div style="margin-top:6px;color:var(--muted)">${escapeHtml(l.message)}</div>`;
+        container.appendChild(div);
+      });
+    }
+
+    // UI feedback
+    function flash(msg, err=false){
+      const toast = document.createElement('div');
+      toast.textContent = msg;
+      toast.style.position="fixed";
+      toast.style.right="18px";
+      toast.style.bottom="18px";
+      toast.style.padding="10px 12px";
+      toast.style.background = err ? "rgba(220,60,60,0.95)" : "rgba(20,120,70,0.95)";
+      toast.style.color="#001214";
+      toast.style.borderRadius="8px";
+      toast.style.zIndex=9999;
+      document.body.appendChild(toast);
+      setTimeout(()=>toast.remove(), 2200);
+    }
+
+    // Update progress bar (based on checkboxes)
+    function updateProgress(){
+      const total = Object.keys(state.steps).length;
+      const done = Object.values(state.steps).filter(Boolean).length;
+      const pct = Math.round((done/total)*100);
+      $('#progressBar').style.width = pct + "%";
+      $('#percentText').textContent = pct + "%";
+    }
+
+    // Event bindings
+    document.addEventListener('click', (ev)=>{
+      const t = ev.target;
+
+      // Step checkboxes
+      if(t.matches('input[data-step-check]')){
+        const id = t.getAttribute('data-step-check');
+        state.steps[id] = t.checked;
+        addLog(`Step ${id} ${t.checked ? "completed" : "reopened"}`);
+        updateProgress();
+        saveState();
+        return;
+      }
+
+      // Buttons with data-action
+      if(t.matches('[data-action]')){
+        const action = t.getAttribute('data-action');
+        if(action === "addLog"){
+          addLog(t.getAttribute('data-msg') || "Action logged");
+        } else if(action === "openTool"){
+          const tool = t.getAttribute('data-tool');
+          openTool(tool);
+        } else if(action === "analyzeHeader"){
+          openModal();
+        } else if(action === "runMultiChecker"){
+          // Example: open multi-checker with empty placeholder
+          openTool('multichecker', "");
+        }
+      }
+
+      // Template buttons
+      if(t.matches('[data-template]')){
+        const name = t.getAttribute('data-template');
+        const txt = getTemplate(name);
+        navigator.clipboard.writeText(txt).then(()=>flash("Template copied to clipboard"));
+      }
+    });
+
+    // Top actions
+    $('#saveStateBtn').addEventListener('click', saveState);
+    $('#addNoteBtn').addEventListener('click', ()=>{
+      const val = $('#noteInput').value.trim();
+      if(!val) return flash("Type a note first", true);
+      addLog(val);
+      $('#noteInput').value = "";
+    });
+    $('#noteInput').addEventListener('keydown', (e)=>{ if(e.key === "Enter") { e.preventDefault(); $('#addNoteBtn').click(); } });
+
+    // Export JSON
+    $('#exportJsonBtn').addEventListener('click', ()=>{
+      const data = JSON.stringify(state, null, 2);
+      downloadFile(data, state.id + ".json", "application/json");
+    });
+
+    // Export CSV (simple conversion of logs)
+    $('#exportCsvBtn').addEventListener('click', ()=>{
+      const rows = [["timestamp","level","message"]];
+      state.logs.forEach(l => rows.push([l.ts,l.level, l.message.replace(/\n/g," ") ]));
+      const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(",")).join("\n");
+      downloadFile(csv, state.id + ".csv", "text/csv");
+    });
+
+    // Print (print-friendly)
+    $('#printBtn').addEventListener('click', ()=>{
+      window.print();
+    });
+
+    // Clear
+    $('#clearBtn').addEventListener('click', ()=>{
+      if(!confirm("Clear local incident progress? This cannot be undone.")) return;
+      localStorage.removeItem("incident_playbook_state");
+      location.reload();
+    });
+
+    // Submit to webhook
+    $('#submitWebhookBtn').addEventListener('click', async ()=>{
+      const url = CONFIG.webhook_submit;
+      if(!url){ flash("Webhook not configured", true); return; }
+      try{
+        const res = await fetch(url, {method:"POST",headers:{"Content-Type":"application/json"},body: JSON.stringify(state)});
+        if(res.ok){ flash("Submitted to webhook"); addLog("Submitted to webhook"); } else { flash("Webhook error", true); addLog("Webhook failed: " + res.status); }
+      }catch(err){ console.error(err); flash("Submit failed", true); addLog("Webhook submit error"); }
+    });
+
+    <!-- Tool Action Buttons -->
+<div class="tools">
+  <a href="https://ezmcyber.xyz/checker.html" target="_blank">🔍 Run URL & File Checker</a>
+  <a href="https://ezmcyber.xyz/header-analyzer" target="_blank">📧 Open Email Header Analyzer</a>
+  <a href="https://ezmcyber.xyz/base64-encoder" target="_blank">🔑 Base64 URL Encoder</a>
 </div>
 
-<footer>
-  &copy; 2025 ezmcyber.xyz — All rights reserved.
-</footer>
+    // Sidebar link anchors: set hrefs from config
+    function seedToolLinks(){
+      const map = {tool_ticket:"tool_ticket", tool_multichecker:"tool_multichecker", tool_header:"tool_header", tool_vt:"tool_vt", tool_blockip:"tool_blockip"};
+      for(const k in map){
+        const el = document.getElementById(map[k]);
+        if(!el) continue;
+        const cfgKey = k.replace("tool_","");
+        const url = CONFIG[k] || "#";
+        el.href = url.replace("{incidentId}", encodeURIComponent(state.id));
+      }
+    }
 
+    // Modal handling for header analysis
+    function openModal(){ $('#modal').classList.add('open'); $('#modal').setAttribute('aria-hidden','false'); }
+    function closeModal(){ $('#modal').classList.remove('open'); $('#modal').setAttribute('aria-hidden','true'); }
+    $('#closeModal').addEventListener('click', closeModal);
+    $('#analyzeOpenBtn').addEventListener('click', ()=>{
+      const raw = $('#headerText').value.trim();
+      if(!raw) return flash("Paste headers first", true);
+      // Encode header and open tool URL (replace {encoded})
+      const encoded = encodeURIComponent(btoa(unescape(encodeURIComponent(raw))));
+      const url = (CONFIG.tool_header || "#").replace("{encoded}", encoded).replace("{incidentId}", encodeURIComponent(state.id));
+      window.open(url, "_blank");
+      addLog("Opened header analyzer (browser)");
+      closeModal();
+    });
+
+    $('#analyzePostBtn').addEventListener('click', async ()=>{
+      // Optional: POST raw header to your API analyzer endpoint. Replace below with your analyzer URL
+      const analyzerApi = (CONFIG.tool_header_api || null); // set in CONFIG if you want POST behaviour
+      if(!analyzerApi){ flash("API analyzer not configured. Using open mode instead.", true); $('#analyzeOpenBtn').click(); return; }
+      const raw = $('#headerText').value.trim();
+      if(!raw) return flash("Paste headers first", true);
+      try{
+        const res = await fetch(analyzerApi, {method:'POST',headers:{"Content-Type":"text/plain"},body: raw});
+        const data = await res.json();
+        addLog("Header analysis POSTed to API");
+        // Optionally show results in new window or insert into log
+        addLog("Analyzer response: " + JSON.stringify(data).slice(0,200));
+        closeModal();
+      }catch(e){ console.error(e); flash("Analyzer API failed", true); }
+    });
+
+    // Helper: one-click templates
+    function getTemplate(name){
+      const templates = {
+        phish_notify: `Subject: Possible phishing attempt — immediate action required\n\nTeam,\nWe detected a suspected phishing email targeting employees. Do not click links or open attachments. IT will enforce password resets for affected accounts. Please report any suspicious activity to security@example.com.\n\n- Security Team`,
+        cust_notify: `Subject: Service Notice: Potential Account Compromise\n\nDear Customer,\nWe are investigating unusual activity affecting some accounts. We recommend you change your password immediately and enable MFA. We will update you within 24 hours.\n\n- Support`,
+        exec_brief: `Executive Summary:\n- Incident: Phishing attempt targeting staff\n- Scope: 4 accounts possibly compromised\n- Impact: Temporary service disruption\n- Next steps: Containment, password resets, monitor\n\nContact: security@example.com`,
+        postmortem: `Postmortem Template\n1) Summary:\n2) Timeline:\n3) Root cause:\n4) Actions taken:\n5) Remediation & follow-ups:\n6) Lessons learned:`
+      };
+      return templates[name] || "Template not found";
+    }
+
+    // Utilities
+    function downloadFile(content, filename, mime){
+      const blob = new Blob([content], {type: mime || "application/octet-stream"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 3000);
+    }
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    // small helpers on load
+    seedToolLinks();
+    loadState();
+    updateProgress();
+    renderLogs();
+
+    // Allow opening tools directly from "openTool" when data-tool attr matches
+    document.querySelectorAll('[data-action="openTool"]').forEach(b=>{
+      b.addEventListener('click', (e)=> {
+        const tool = b.getAttribute('data-tool');
+        openTool(tool);
+      });
+    });
+
+    // If user clicks sidebar quick links, open config URL
+    ['tool_ticket','tool_multichecker','tool_header','tool_vt','tool_blockip'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener('click', (ev)=>{
+        const href = el.getAttribute('data-url') || el.href;
+        if(!href || href === "#"){ ev.preventDefault(); const cfg = CONFIG[id]; if(cfg) window.open(cfg.replace("{incidentId}", encodeURIComponent(state.id)), "_blank"); else flash("Configure this tool in CONFIG"); }
+      });
+    });
+
+    // Accessibility: close modal on ESC
+    document.addEventListener('keydown', (e)=>{ if(e.key === "Escape") closeModal(); });
+
+    // initial sample log entry
+    if(state.logs.length===0) addLog("Incident created");
+  </script>
 </body>
 </html>
