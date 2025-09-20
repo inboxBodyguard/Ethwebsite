@@ -1,5 +1,121 @@
-<div id="playbook"></div>
-<button id="downloadPDF">📄 Download My Playbook</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Free SMB Cyber Incident Playbook | ezmcyber.xyz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9fafc;
+      color: #333;
+    }
+    header {
+      background: #0a2540;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    header p {
+      margin: 0.5rem 0 0;
+      font-size: 1.1rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .social-proof {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+    /* Playbook styles */
+    #playbook {
+      margin-top: 2rem;
+    }
+    .incident {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin: 1rem 0;
+      padding: 0.5rem 1rem;
+      background: #fff;
+    }
+    .incident h3 {
+      margin: 0;
+      cursor: pointer;
+      color: #0a2540;
+    }
+    .incident ul {
+      list-style: none;
+      margin: 0.5rem 0 0;
+      padding-left: 0;
+      display: none;
+    }
+    .incident.open ul {
+      display: block;
+    }
+    .incident li {
+      margin: 0.4rem 0;
+    }
+    .tool-btn {
+      margin-left: 8px;
+      font-size: 0.85rem;
+      background: #0a2540;
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    #downloadPDF {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: #0a2540;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #downloadPDF:hover {
+      background: #163d66;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Free SMB Cyber Incident Playbook</h1>
+  <p>Interactive steps to detect, respond, and recover from cyber threats</p>
+</header>
+
+<div class="container">
+  <p><strong>Running a business with 10–50 employees?</strong> One phishing email or ransomware attack can throw everything off track. This playbook gives you actionable steps your team can actually follow — plus built-in tools to help.</p>
+
+  <!-- Interactive Playbook -->
+  <div id="playbook"></div>
+  <button id="downloadPDF">📄 Download My Playbook</button>
+
+  <div class="social-proof">
+    <p>Trusted by small businesses building their first line of defense against phishing and cyber threats.</p>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 ezmcyber.xyz — All rights reserved.
+</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
@@ -115,53 +231,5 @@ document.getElementById("downloadPDF").onclick = () => {
 };
 </script>
 
-<style>
-#playbook {
-  margin-top: 2rem;
-}
-.incident {
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin: 1rem 0;
-  padding: 0.5rem 1rem;
-  background: #fff;
-}
-.incident h3 {
-  margin: 0;
-  cursor: pointer;
-  color: #0a2540;
-}
-.incident ul {
-  list-style: none;
-  margin: 0.5rem 0 0;
-  padding-left: 0;
-  display: none;
-}
-.incident.open ul {
-  display: block;
-}
-.incident li {
-  margin: 0.4rem 0;
-}
-.tool-btn {
-  margin-left: 8px;
-  font-size: 0.85rem;
-  background: #0a2540;
-  color: #fff;
-  padding: 2px 6px;
-  border-radius: 4px;
-  text-decoration: none;
-}
-#downloadPDF {
-  margin-top: 1rem;
-  padding: 0.6rem 1.2rem;
-  background: #0a2540;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-#downloadPDF:hover {
-  background: #163d66;
-}
-</style>
+</body>
+</html>
