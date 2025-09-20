@@ -1,245 +1,38 @@
 {
-“Phishing Email”: {
-“severity”: “medium-high”,
-“immediate_actions”: [
-“Disconnect affected device from the network immediately”,
-“Do not click any links or download attachments”,
-“Take screenshots of the email for evidence”
-],
-“investigation”: [
-“Collect and preserve suspicious email headers and metadata”,
-“Verify links/domains using VirusTotal, URLVoid, or similar tools”,
-“Check if other users received similar emails”,
-“Analyze sender reputation and SPF/DKIM records”
-],
-“containment”: [
-“Block sender domain/IP at email gateway”,
-“Search and quarantine similar emails across organization”,
-“Force password reset for potentially affected accounts”,
-“Enable MFA if not already active”
-],
-“communication”: [
-“Notify IT or security response team immediately”,
-“Alert all users about the phishing campaign”,
-“Report incident to regulators if PII/PHI is involved”,
-“Document timeline and impact assessment”
-],
-“recovery”: [
-“Monitor accounts for suspicious activity”,
-“Review and update email security policies”,
-“Conduct phishing awareness training”
-]
-},
-“Ransomware Infection”: {
-“severity”: “critical”,
-“immediate_actions”: [
-“Isolate infected systems from network immediately”,
-“Power down affected machines if encryption is in progress”,
-“Do not pay ransom — document and contact law enforcement”
-],
-“investigation”: [
-“Identify ransomware variant and infection vector”,
-“Determine scope of affected systems and data”,
-“Preserve forensic images before cleanup”,
-“Check for lateral movement indicators”
-],
-“containment”: [
-“Segment network to prevent further spread”,
-“Reset all user credentials and service accounts”,
-“Patch vulnerabilities used for initial access”,
-“Implement additional monitoring controls”
-],
-“communication”: [
-“Notify executive leadership and legal team”,
-“Communicate incident to staff and customers transparently”,
-“Report to FBI/IC3 and relevant authorities”,
-“Coordinate with cyber insurance provider”
-],
-“recovery”: [
-“Restore from clean, tested backups”,
-“Rebuild compromised systems from scratch”,
-“Scan all restored systems with updated AV tools”,
-“Gradually reconnect systems with enhanced monitoring”
-]
-},
-“Lost Laptop/Phone”: {
-“severity”: “medium”,
-“immediate_actions”: [
-“Report loss immediately to IT/security team”,
-“Change all passwords accessible from the device”,
-“Revoke stored certificates and VPN access”
-],
-“investigation”: [
-“Determine what data was stored locally”,
-“Check last known location and access logs”,
-“Assess encryption status of the device”,
-“Review recent file access and sync activity”
-],
-“containment”: [
-“Trigger remote wipe if available (MDM tools)”,
-“Disable associated user accounts temporarily”,
-“Block device certificates and access tokens”,
-“Monitor for unauthorized access attempts”
-],
-“communication”: [
-“File police report if sensitive data was stored”,
-“Notify compliance officer and legal team if required”,
-“Inform affected customers if their data was at risk”,
-“Document incident for insurance claims”
-],
-“recovery”: [
-“Issue replacement device with enhanced security”,
-“Restore data from backups to new device”,
-“Update device management policies”,
-“Provide additional security training to user”
-]
-},
-“Insider Threat”: {
-“severity”: “high”,
-“immediate_actions”: [
-“Identify and document suspicious user activity”,
-“Disable user access immediately but discreetly”,
-“Preserve all system and access logs”
-],
-“investigation”: [
-“Conduct forensic analysis of user activities”,
-“Review file access, downloads, and email history”,
-“Interview colleagues and supervisors carefully”,
-“Check for policy violations and unusual patterns”
-],
-“containment”: [
-“Revoke all system access and credentials”,
-“Secure physical access to facilities”,
-“Preserve digital evidence following legal requirements”,
-“Monitor for external data exfiltration”
-],
-“communication”: [
-“Escalate to HR and legal teams immediately”,
-“Coordinate with law enforcement if criminal activity suspected”,
-“Communicate carefully with affected departments”,
-“Maintain confidentiality during investigation”
-],
-“recovery”: [
-“Update access controls and monitoring systems”,
-“Review and strengthen insider threat policies”,
-“Conduct security awareness training”,
-“Implement additional behavioral monitoring tools”
-]
-},
-“DDoS Attack”: {
-“severity”: “high”,
-“immediate_actions”: [
-“Alert hosting provider or ISP for immediate mitigation”,
-“Activate incident response team”,
-“Document attack characteristics and timeline”
-],
-“investigation”: [
-“Analyze traffic patterns and attack vectors”,
-“Identify targeted services and infrastructure”,
-“Determine if attack is smokescreen for other activities”,
-“Check for signs of application-layer attacks”
-],
-“containment”: [
-“Enable web application firewall (WAF) protections”,
-“Implement rate limiting and traffic shaping”,
-“Block identified malicious IP ranges”,
-“Activate CDN and load balancing protections”
-],
-“communication”: [
-“Keep stakeholders updated on service status”,
-“Maintain external communication channels”,
-“Coordinate with third-party security services”,
-“Update customers on expected resolution times”
-],
-“recovery”: [
-“Gradually restore services with monitoring”,
-“Plan for scaling defenses if attack persists”,
-“Review and update DDoS response procedures”,
-“Conduct post-incident analysis and lessons learned”
-]
-},
-“Data Breach”: {
-“severity”: “critical”,
-“immediate_actions”: [
-“Stop the data exfiltration if still occurring”,
-“Secure and isolate affected systems”,
-“Preserve forensic evidence”
-],
-“investigation”: [
-“Determine scope and type of compromised data”,
-“Identify breach timeline and root cause”,
-“Assess number of affected individuals”,
-“Review access logs and system activities”
-],
-“containment”: [
-“Patch vulnerabilities used for breach”,
-“Reset all potentially compromised credentials”,
-“Implement additional access controls”,
-“Monitor for continued unauthorized access”
-],
-“communication”: [
-“Notify legal and compliance teams immediately”,
-“Report to regulators within required timeframes”,
-“Prepare customer and public notifications”,
-“Coordinate with law enforcement if required”
-],
-“recovery”: [
-“Implement credit monitoring for affected individuals”,
-“Strengthen data protection controls”,
-“Update privacy policies and procedures”,
-“Conduct comprehensive security assessment”
-]
-},
-“Malware Infection”: {
-“severity”: “medium-high”,
-“immediate_actions”: [
-“Isolate infected system from network”,
-“Stop malware processes if safely possible”,
-“Collect initial forensic evidence”
-],
-“investigation”: [
-“Identify malware type and capabilities”,
-“Determine infection vector and timeline”,
-“Check for lateral movement to other systems”,
-“Analyze potential data compromise”
-],
-“containment”: [
-“Remove malware using appropriate tools”,
-“Patch vulnerabilities exploited by malware”,
-“Update antivirus signatures organization-wide”,
-“Monitor network for similar infections”
-],
-“communication”: [
-“Notify security team and system administrators”,
-“Alert users about potential threats”,
-“Report to management if significant impact”,
-“Document incident for trend analysis”
-],
-“recovery”: [
-“Rebuild infected systems if necessary”,
-“Restore data from clean backups”,
-“Implement additional endpoint protection”,
-“Update security policies and training”
-]
-},
-“general_guidelines”: {
-“documentation”: [
-“Maintain detailed incident logs with timestamps”,
-“Preserve chain of custody for evidence”,
-“Document all actions taken and decisions made”,
-“Record communication with external parties”
-],
-“legal_considerations”: [
-“Involve legal counsel early in process”,
-“Follow data retention and privacy requirements”,
-“Consider attorney-client privilege for communications”,
-“Understand regulatory reporting obligations”
-],
-“post_incident”: [
-“Conduct thorough lessons learned session”,
-“Update incident response procedures”,
-“Provide additional training based on findings”,
-“Implement preventive controls to avoid recurrence”
-]
-}
+  "Phishing Email": [
+    "Disconnect affected device from the network.",
+    "Collect and preserve the suspicious email headers.",
+    "Verify links/domains using VirusTotal or analyzer tools.",
+    "Notify IT or security response team immediately.",
+    "Force password reset for affected accounts.",
+    "Report incident to regulators if sensitive data is involved."
+  ],
+  "Ransomware Infection": [
+    "Isolate infected systems from the network.",
+    "Do not pay ransom — contact law enforcement.",
+    "Restore from clean backups.",
+    "Scan all machines with updated AV tools.",
+    "Communicate incident to staff and customers."
+  ],
+  "Lost Laptop/Phone": [
+    "Report loss immediately to IT/security team.",
+    "Trigger remote wipe if available (MDM tools).",
+    "Reset credentials linked to the device.",
+    "File police report if sensitive data was stored.",
+    "Notify compliance officer if required."
+  ],
+  "Insider Threat": [
+    "Identify suspicious user activity and disable access.",
+    "Preserve system and access logs for investigation.",
+    "Escalate to HR/legal team as required.",
+    "Communicate with affected departments.",
+    "Update policies to prevent recurrence."
+  ],
+  "DDoS Attack": [
+    "Alert hosting provider or ISP for mitigation.",
+    "Enable web application firewall (WAF) protections.",
+    "Rate-limit traffic and block offending IPs.",
+    "Keep stakeholders updated on downtime.",
+    "Plan for scaling defenses if attack persists."
+  ]
 }
