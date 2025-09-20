@@ -1,235 +1,245 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Free SMB Cyber Incident Playbook | ezmcyber.xyz</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f9fafc;
-      color: #333;
-    }
-    header {
-      background: #0a2540;
-      color: white;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-    header p {
-      margin: 0.5rem 0 0;
-      font-size: 1.1rem;
-    }
-    .container {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    .social-proof {
-      margin-top: 2rem;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      font-size: 0.85rem;
-      color: #666;
-    }
-    /* Playbook styles */
-    #playbook {
-      margin-top: 2rem;
-    }
-    .incident {
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      margin: 1rem 0;
-      padding: 0.5rem 1rem;
-      background: #fff;
-    }
-    .incident h3 {
-      margin: 0;
-      cursor: pointer;
-      color: #0a2540;
-    }
-    .incident ul {
-      list-style: none;
-      margin: 0.5rem 0 0;
-      padding-left: 0;
-      display: none;
-    }
-    .incident.open ul {
-      display: block;
-    }
-    .incident li {
-      margin: 0.4rem 0;
-    }
-    .tool-btn {
-      margin-left: 8px;
-      font-size: 0.85rem;
-      background: #0a2540;
-      color: #fff;
-      padding: 2px 6px;
-      border-radius: 4px;
-      text-decoration: none;
-    }
-    #downloadPDF {
-      margin-top: 1rem;
-      padding: 0.6rem 1.2rem;
-      background: #0a2540;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    #downloadPDF:hover {
-      background: #163d66;
-    }
-  </style>
-</head>
-<body>
-
-<header>
-  <h1>Free SMB Cyber Incident Playbook</h1>
-  <p>Interactive steps to detect, respond, and recover from cyber threats</p>
-</header>
-
-<div class="container">
-  <p><strong>Running a business with 10–50 employees?</strong> One phishing email or ransomware attack can throw everything off track. This playbook gives you actionable steps your team can actually follow — plus built-in tools to help.</p>
-
-  <!-- Interactive Playbook -->
-  <div id="playbook"></div>
-  <button id="downloadPDF">📄 Download My Playbook</button>
-
-  <div class="social-proof">
-    <p>Trusted by small businesses building their first line of defense against phishing and cyber threats.</p>
-  </div>
-</div>
-
-<footer>
-  &copy; 2025 ezmcyber.xyz — All rights reserved.
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-const playbookData = {
-  "Phishing Email": [
-    { text: "Disconnect affected device from the network." },
-    { text: "Collect and preserve the suspicious email headers.", tool: "https://ezmcyber.xyz/header-analyzer" },
-    { text: "Verify links/domains.", tool: "https://ezmcyber.xyz/checker.html" },
-    { text: "Notify IT or security response team immediately." },
-    { text: "Force password reset for affected accounts." },
-    { text: "Report incident to regulators if sensitive data is involved." }
-  ],
-  "Ransomware Infection": [
-    { text: "Isolate infected systems from the network." },
-    { text: "Do not pay ransom — contact law enforcement." },
-    { text: "Restore from clean backups." },
-    { text: "Scan all machines with updated AV tools." },
-    { text: "Communicate incident to staff and customers." }
-  ],
-  "Lost Laptop/Phone": [
-    { text: "Report loss immediately to IT/security team." },
-    { text: "Trigger remote wipe if available (MDM tools)." },
-    { text: "Reset credentials linked to the device." },
-    { text: "File police report if sensitive data was stored." },
-    { text: "Notify compliance officer if required." }
-  ],
-  "Insider Threat": [
-    { text: "Identify suspicious user activity and disable access." },
-    { text: "Preserve system and access logs for investigation." },
-    { text: "Escalate to HR/legal team as required." },
-    { text: "Communicate with affected departments." },
-    { text: "Update policies to prevent recurrence." }
-  ],
-  "DDoS Attack": [
-    { text: "Alert hosting provider or ISP for mitigation." },
-    { text: "Enable web application firewall (WAF) protections." },
-    { text: "Rate-limit traffic and block offending IPs." },
-    { text: "Keep stakeholders updated on downtime." },
-    { text: "Plan for scaling defenses if attack persists." }
-  ]
-};
-
-// Render playbook
-const container = document.getElementById("playbook");
-for (const [incident, steps] of Object.entries(playbookData)) {
-  const section = document.createElement("div");
-  section.className = "incident";
-
-  const header = document.createElement("h3");
-  header.textContent = incident;
-  header.onclick = () => section.classList.toggle("open");
-
-  const list = document.createElement("ul");
-  steps.forEach(step => {
-    const li = document.createElement("li");
-
-    // Checkbox
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    li.appendChild(checkbox);
-
-    // Step text
-    const span = document.createElement("span");
-    span.textContent = " " + step.text;
-    li.appendChild(span);
-
-    // Tool button if exists
-    if (step.tool) {
-      const toolBtn = document.createElement("a");
-      toolBtn.href = step.tool;
-      toolBtn.target = "_blank";
-      toolBtn.textContent = " 🔗 Open Tool";
-      toolBtn.className = "tool-btn";
-      li.appendChild(toolBtn);
-    }
-
-    list.appendChild(li);
-  });
-
-  section.appendChild(header);
-  section.appendChild(list);
-  container.appendChild(section);
+{
+“Phishing Email”: {
+“severity”: “medium-high”,
+“immediate_actions”: [
+“Disconnect affected device from the network immediately”,
+“Do not click any links or download attachments”,
+“Take screenshots of the email for evidence”
+],
+“investigation”: [
+“Collect and preserve suspicious email headers and metadata”,
+“Verify links/domains using VirusTotal, URLVoid, or similar tools”,
+“Check if other users received similar emails”,
+“Analyze sender reputation and SPF/DKIM records”
+],
+“containment”: [
+“Block sender domain/IP at email gateway”,
+“Search and quarantine similar emails across organization”,
+“Force password reset for potentially affected accounts”,
+“Enable MFA if not already active”
+],
+“communication”: [
+“Notify IT or security response team immediately”,
+“Alert all users about the phishing campaign”,
+“Report incident to regulators if PII/PHI is involved”,
+“Document timeline and impact assessment”
+],
+“recovery”: [
+“Monitor accounts for suspicious activity”,
+“Review and update email security policies”,
+“Conduct phishing awareness training”
+]
+},
+“Ransomware Infection”: {
+“severity”: “critical”,
+“immediate_actions”: [
+“Isolate infected systems from network immediately”,
+“Power down affected machines if encryption is in progress”,
+“Do not pay ransom — document and contact law enforcement”
+],
+“investigation”: [
+“Identify ransomware variant and infection vector”,
+“Determine scope of affected systems and data”,
+“Preserve forensic images before cleanup”,
+“Check for lateral movement indicators”
+],
+“containment”: [
+“Segment network to prevent further spread”,
+“Reset all user credentials and service accounts”,
+“Patch vulnerabilities used for initial access”,
+“Implement additional monitoring controls”
+],
+“communication”: [
+“Notify executive leadership and legal team”,
+“Communicate incident to staff and customers transparently”,
+“Report to FBI/IC3 and relevant authorities”,
+“Coordinate with cyber insurance provider”
+],
+“recovery”: [
+“Restore from clean, tested backups”,
+“Rebuild compromised systems from scratch”,
+“Scan all restored systems with updated AV tools”,
+“Gradually reconnect systems with enhanced monitoring”
+]
+},
+“Lost Laptop/Phone”: {
+“severity”: “medium”,
+“immediate_actions”: [
+“Report loss immediately to IT/security team”,
+“Change all passwords accessible from the device”,
+“Revoke stored certificates and VPN access”
+],
+“investigation”: [
+“Determine what data was stored locally”,
+“Check last known location and access logs”,
+“Assess encryption status of the device”,
+“Review recent file access and sync activity”
+],
+“containment”: [
+“Trigger remote wipe if available (MDM tools)”,
+“Disable associated user accounts temporarily”,
+“Block device certificates and access tokens”,
+“Monitor for unauthorized access attempts”
+],
+“communication”: [
+“File police report if sensitive data was stored”,
+“Notify compliance officer and legal team if required”,
+“Inform affected customers if their data was at risk”,
+“Document incident for insurance claims”
+],
+“recovery”: [
+“Issue replacement device with enhanced security”,
+“Restore data from backups to new device”,
+“Update device management policies”,
+“Provide additional security training to user”
+]
+},
+“Insider Threat”: {
+“severity”: “high”,
+“immediate_actions”: [
+“Identify and document suspicious user activity”,
+“Disable user access immediately but discreetly”,
+“Preserve all system and access logs”
+],
+“investigation”: [
+“Conduct forensic analysis of user activities”,
+“Review file access, downloads, and email history”,
+“Interview colleagues and supervisors carefully”,
+“Check for policy violations and unusual patterns”
+],
+“containment”: [
+“Revoke all system access and credentials”,
+“Secure physical access to facilities”,
+“Preserve digital evidence following legal requirements”,
+“Monitor for external data exfiltration”
+],
+“communication”: [
+“Escalate to HR and legal teams immediately”,
+“Coordinate with law enforcement if criminal activity suspected”,
+“Communicate carefully with affected departments”,
+“Maintain confidentiality during investigation”
+],
+“recovery”: [
+“Update access controls and monitoring systems”,
+“Review and strengthen insider threat policies”,
+“Conduct security awareness training”,
+“Implement additional behavioral monitoring tools”
+]
+},
+“DDoS Attack”: {
+“severity”: “high”,
+“immediate_actions”: [
+“Alert hosting provider or ISP for immediate mitigation”,
+“Activate incident response team”,
+“Document attack characteristics and timeline”
+],
+“investigation”: [
+“Analyze traffic patterns and attack vectors”,
+“Identify targeted services and infrastructure”,
+“Determine if attack is smokescreen for other activities”,
+“Check for signs of application-layer attacks”
+],
+“containment”: [
+“Enable web application firewall (WAF) protections”,
+“Implement rate limiting and traffic shaping”,
+“Block identified malicious IP ranges”,
+“Activate CDN and load balancing protections”
+],
+“communication”: [
+“Keep stakeholders updated on service status”,
+“Maintain external communication channels”,
+“Coordinate with third-party security services”,
+“Update customers on expected resolution times”
+],
+“recovery”: [
+“Gradually restore services with monitoring”,
+“Plan for scaling defenses if attack persists”,
+“Review and update DDoS response procedures”,
+“Conduct post-incident analysis and lessons learned”
+]
+},
+“Data Breach”: {
+“severity”: “critical”,
+“immediate_actions”: [
+“Stop the data exfiltration if still occurring”,
+“Secure and isolate affected systems”,
+“Preserve forensic evidence”
+],
+“investigation”: [
+“Determine scope and type of compromised data”,
+“Identify breach timeline and root cause”,
+“Assess number of affected individuals”,
+“Review access logs and system activities”
+],
+“containment”: [
+“Patch vulnerabilities used for breach”,
+“Reset all potentially compromised credentials”,
+“Implement additional access controls”,
+“Monitor for continued unauthorized access”
+],
+“communication”: [
+“Notify legal and compliance teams immediately”,
+“Report to regulators within required timeframes”,
+“Prepare customer and public notifications”,
+“Coordinate with law enforcement if required”
+],
+“recovery”: [
+“Implement credit monitoring for affected individuals”,
+“Strengthen data protection controls”,
+“Update privacy policies and procedures”,
+“Conduct comprehensive security assessment”
+]
+},
+“Malware Infection”: {
+“severity”: “medium-high”,
+“immediate_actions”: [
+“Isolate infected system from network”,
+“Stop malware processes if safely possible”,
+“Collect initial forensic evidence”
+],
+“investigation”: [
+“Identify malware type and capabilities”,
+“Determine infection vector and timeline”,
+“Check for lateral movement to other systems”,
+“Analyze potential data compromise”
+],
+“containment”: [
+“Remove malware using appropriate tools”,
+“Patch vulnerabilities exploited by malware”,
+“Update antivirus signatures organization-wide”,
+“Monitor network for similar infections”
+],
+“communication”: [
+“Notify security team and system administrators”,
+“Alert users about potential threats”,
+“Report to management if significant impact”,
+“Document incident for trend analysis”
+],
+“recovery”: [
+“Rebuild infected systems if necessary”,
+“Restore data from clean backups”,
+“Implement additional endpoint protection”,
+“Update security policies and training”
+]
+},
+“general_guidelines”: {
+“documentation”: [
+“Maintain detailed incident logs with timestamps”,
+“Preserve chain of custody for evidence”,
+“Document all actions taken and decisions made”,
+“Record communication with external parties”
+],
+“legal_considerations”: [
+“Involve legal counsel early in process”,
+“Follow data retention and privacy requirements”,
+“Consider attorney-client privilege for communications”,
+“Understand regulatory reporting obligations”
+],
+“post_incident”: [
+“Conduct thorough lessons learned session”,
+“Update incident response procedures”,
+“Provide additional training based on findings”,
+“Implement preventive controls to avoid recurrence”
+]
 }
-
-// PDF Export
-document.getElementById("downloadPDF").onclick = () => {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  let y = 10;
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(16);
-  doc.text("My Incident Playbook", 10, y);
-  y += 10;
-
-  for (const [incident, steps] of Object.entries(playbookData)) {
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(14);
-    doc.text(incident, 10, y);
-    y += 8;
-
-    steps.forEach(step => {
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(12);
-      doc.text("- " + step.text, 14, y);
-      y += 6;
-    });
-
-    y += 4;
-  }
-
-  doc.save("incident-playbook.pdf");
-};
-</script>
-
-</body>
-</html>
+}
