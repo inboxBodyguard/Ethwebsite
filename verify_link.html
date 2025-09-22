@@ -46,6 +46,19 @@
       font-size: 1.2em;
       font-weight: bold;
     }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #00ffcc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #111;
+    }
   </style>
 </head>
 <body>
@@ -60,24 +73,56 @@
 
   <div id="result"></div>
 
+  <h2>Scan History</h2>
+  <table id="historyTable">
+    <thead>
+      <tr>
+        <th>URL</th>
+        <th>Status</th>
+        <th>Detections</th>
+        <th>Scan Date</th>
+        <th>Report</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
   <script>
     const form = document.getElementById('linkForm');
     const result = document.getElementById('result');
     const checkBtn = document.getElementById('checkBtn');
+    const historyTbody = document.querySelector('#historyTable tbody');
     const API_KEY = 'aae37bf314798b0edf335b4818114280a268aaf936bd7d4b0e695b81870f08a8'; // REGENERATE THIS!
 
     // Initial keyword filtering
     const suspiciousKeywords = ["free-gift", "login-now", "verify-account", "bit.ly", "tinyurl", "short.ly"];
 
+    async function getUrlId(url) {
+      return btoa(url).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
     async function scanWithVirusTotal(url) {
       try {
-        // Step 1: Submit URL for scanning
-        const scanResponse = await fetch('https://www.virustotal.com/vtapi/v2/url/scan', {
+        const urlId = await getUrlId(url);
+
+        // Step 0: Try to get existing URL report
+        let reportResponse = await fetch(`https://www.virustotal.com/api/v3/urls/${urlId}`, {
+          headers: { 'x-apikey': API_KEY }
+        });
+
+        let reportData;
+        if (reportResponse.ok) {
+          reportData = await reportResponse.json();
+          displayResults(reportData.data.attributes, url, urlId);
+          return;
+        } else if (reportResponse.status !== 404) {
+          throw new Error(`HTTP ${reportResponse.status}: ${reportResponse.statusText}`);
+        }
+
+        // Step 1: Submit URL for scanning if not found
+        const scanResponse = await fetch('https://www.virustotal.com/api/v3/urls', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'apikey': API_KEY
-          },
+          headers: { 'x-apikey': API_KEY },
           body: new URLSearchParams({ url: url })
         });
 
@@ -86,7 +131,7 @@
         }
 
         const scanData = await scanResponse.json();
-        const resourceId = scanData.resource;
+        const analysisId = scanData.data.id;
 
         // Step 2: Poll for scan results (wait up to 30 seconds)
         result.innerHTML = '<div class="loading">🔄 Scanning with VirusTotal... Please wait.</div>';
@@ -94,134 +139,9 @@
         checkBtn.textContent = 'Scanning...';
 
         let attempts = 0;
-        const maxAttempts = 15; // 15 seconds * 2 = 30 seconds total
+        const maxAttempts = 15; // 15 * 2s = 30s
 
         while (attempts < maxAttempts) {
           await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
-          
-          const reportResponse = await fetch(`https://www.virustotal.com/vtapi/v2/url/report?apikey=${API_KEY}&resource=${resourceId}`);
-          if (!reportResponse.ok) {
-            throw new Error(`HTTP ${reportResponse.status}: ${reportResponse.statusText}`);
-          }
 
-          const reportData = await reportResponse.json();
-          
-          if (reportData.response_code === 1) {
-            // Scan completed
-            displayResults(reportData, url);
-            return;
-          } else if (reportData.response_code === -2) {
-            // Still queued
-            attempts++;
-            if (attempts >= maxAttempts) {
-              showTimeoutResult(url);
-            }
-          } else {
-            throw new Error('Unknown response code');
-          }
-        }
-      } catch (error) {
-        console.error('VirusTotal API Error:', error);
-        result.innerHTML = `
-          <div style="color: orange;">
-            ⚠️ Error connecting to VirusTotal. 
-            <br><small>Opening manual scan...</small>
-          </div>
-        `;
-        setTimeout(() => {
-          const encodedUrl = encodeURIComponent(url);
-          window.open(`https://www.virustotal.com/gui/home/url?url=${encodedUrl}`, "_blank");
-        }, 1500);
-      } finally {
-        checkBtn.disabled = false;
-        checkBtn.textContent = 'Check';
-      }
-    }
-
-    function displayResults(data, originalUrl) {
-      const total = data.total || 0;
-      const positives = data.positives || 0;
-      const permalink = data.permalink || '';
-      const scanDate = data.scan_date || '';
-      const urlDetails = data.url || originalUrl;
-
-      const detectionRate = total > 0 ? Math.round((positives / total) * 100) : 0;
-      let status, color, message;
-
-      if (positives === 0) {
-        status = "✅ CLEAN";
-        color = "lightgreen";
-        message = "No security vendors detected threats.";
-      } else if (positives <= 2) {
-        status = "⚠️ LOW RISK";
-        color = "yellow";
-        message = `${positives}/${total} security vendors flagged potential issues.`;
-      } else {
-        status = "🚨 MALICIOUS";
-        color = "red";
-        message = `${positives}/${total} security vendors detected malware/phishing.`;
-      }
-
-      result.innerHTML = `
-        <div style="color: ${color};">
-          <strong>${status}</strong><br>
-          ${message}
-        </div>
-        <div class="scan-details">
-          <strong>URL:</strong> <a href="${urlDetails}" target="_blank" style="color: #00ffcc;">${urlDetails}</a><br>
-          <strong>Detections:</strong> <span class="detection-ratio" style="color: ${color};">${positives}/${total}</span><br>
-          <strong>Scanned:</strong> ${new Date(scanDate).toLocaleString()}<br>
-          <a href="${permalink}" target="_blank" style="color: #00ffcc; text-decoration: underline;">
-            🔍 View Full VirusTotal Report
-          </a>
-        </div>
-      `;
-    }
-
-    function showTimeoutResult(url) {
-      result.innerHTML = `
-        <div style="color: orange;">
-          ⏱️ Scan still processing (took longer than expected)
-          <br><small>Opening VirusTotal for manual review...</small>
-        </div>
-      `;
-     setTimeout(() => {
-  // base64 encode with VT-safe format
-  const encodedUrl = btoa(url)
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '');
-  window.open(`https://www.virustotal.com/gui/url/${encodedUrl}`, "_blank");
-}, 1500);
-
-    // ✅ Properly outside of functions now
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
-      const url = document.getElementById('urlInput').value.trim();
-      result.innerHTML = '';
-
-      // Basic validation
-      if (!url.startsWith("https://") && !url.startsWith("http://")) {
-        result.innerHTML = '<div style="color: yellow;">⚠️ Please include http:// or https://</div>';
-        return;
-      }
-
-      // Keyword filtering (preliminary check)
-      const isSuspicious = suspiciousKeywords.some(keyword => url.includes(keyword));
-      
-      if (isSuspicious) {
-        result.innerHTML = `
-          <div style="color: red;">
-            🚨 Warning: This link contains suspicious keywords and may be part of a phishing scheme.
-            <br><small>Still scanning with VirusTotal for confirmation...</small>
-          </div>
-        `;
-        setTimeout(() => scanWithVirusTotal(url), 500);
-      } else {
-        scanWithVirusTotal(url);
-      }
-    });
-  </script>
-
-</body>
-</html>
+          reportResponse = await fetch(`https://www.virustotal.com/api/v3
