@@ -1,42 +1,537 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome | EZM Cyber</title>
+  <title>Welcome | EZM Cyber - Your Digital Security Partner</title>
   <style>
-    body {
-      background: #0a0a0a;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .btn {
-      padding: 14px 28px;
-      margin: 10px;
-      background: #00ffcc;
-      color: #000;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 18px;
-      border-radius: 6px;
-    }
-    .btn:hover {
-      background: #00ccaa;
-    }
+
+```
+body {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #e0e6ed;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Navigation */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1rem 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #00ffcc;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  text-shadow: 0 0 20px #00ffcc;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: #e0e6ed;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.nav-links a:hover {
+  color: #00ffcc;
+  background: rgba(0, 255, 204, 0.1);
+}
+
+/* Hero Section */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(0, 255, 204, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(22, 33, 62, 0.3) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-content {
+  max-width: 800px;
+  z-index: 2;
+  position: relative;
+}
+
+.greeting {
+  font-size: 1.2rem;
+  color: #00ffcc;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards 0.2s;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #fff, #00ffcc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards 0.4s;
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  color: #b8c6db;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards 0.6s;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  color: #8a94a6;
+  margin-bottom: 3rem;
+  font-style: italic;
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards 0.8s;
+}
+
+/* Buttons */
+.cta-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards 1s;
+}
+
+.btn {
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #00ffcc, #00ccaa);
+  color: #000;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 255, 204, 0.3);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 255, 204, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #00ffcc;
+  border: 2px solid #00ffcc;
+  box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
+}
+
+.btn-secondary:hover {
+  background: #00ffcc;
+  color: #000;
+}
+
+/* Features Section */
+.features {
+  padding: 6rem 2rem;
+  background: rgba(16, 21, 30, 0.8);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.section-title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.feature-card {
+  background: rgba(22, 33, 62, 0.6);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  text-align: center;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.feature-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  border-color: #00ffcc;
+  box-shadow: 0 10px 30px rgba(0, 255, 204, 0.2);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #00ffcc;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.feature-card p {
+  color: #b8c6db;
+}
+
+/* Testimonials Section */
+.testimonials {
+  padding: 6rem 2rem;
+  background: rgba(10, 10, 10, 0.9);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.testimonial {
+  background: rgba(22, 33, 62, 0.4);
+  padding: 2rem;
+  border-radius: 12px;
+  border-left: 4px solid #00ffcc;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.testimonial.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.testimonial:hover {
+  transform: translateX(10px);
+  background: rgba(22, 33, 62, 0.6);
+}
+
+.testimonial-text {
+  font-style: italic;
+  color: #e0e6ed;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.testimonial-author {
+  color: #00ffcc;
+  font-weight: 600;
+}
+
+/* Footer */
+footer {
+  padding: 3rem 2rem;
+  background: #0a0a0a;
+  text-align: center;
+  border-top: 1px solid rgba(0, 255, 204, 0.2);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 1rem;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    padding: 1rem;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 280px;
+    margin: 0.5rem 0;
+  }
+
+  .features, .testimonials {
+    padding: 4rem 1rem;
+  }
+
+  .features-grid, .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .btn {
+    padding: 14px 24px;
+    font-size: 1rem;
+  }
+}
+```
+
   </style>
 </head>
 <body>
-  <div>
-    <h1>Welcome to EZM Cyber</h1>
-    <p>Select how you’d like to get started:</p>
-    <button class="btn" onclick="window.location.href='signup.html'">Sign Up / Login</button>
-    <button class="btn" onclick="window.location.href='newsletter.html'">Join Newsletter</button>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="logo">EZM Cyber</a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <p class="greeting">Welcome to EZM Cyber</p>
+      <h1>Protecting You From Online Threats</h1>
+      <p class="hero-subtitle">Your trusted partner in cybersecurity</p>
+      <p class="tagline">"Security isn't a product, it's a process we perfect together"</p>
+
+```
+  <div class="cta-buttons">
+    <a href="signup.html" class="btn">Get Started</a>
+    <a href="#" class="btn btn-secondary">Check a Link</a>
+    <a href="newsletter.html" class="btn btn-secondary">Join Newsletter</a>
   </div>
+</div>
+```
+
+  </section>
+
+  <!-- Features Section -->
+
+  <section class="features" id="services">
+    <div class="container">
+      <h2 class="section-title">Why Choose EZM Cyber?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>Advanced Protection</h3>
+          <p>State-of-the-art security solutions that adapt to emerging threats in real-time.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>Threat Detection</h3>
+          <p>AI-powered monitoring systems that identify and neutralize threats before they impact you.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Rapid Response</h3>
+          <p>24/7 security team ready to respond to incidents within minutes, not hours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="section-title">What Our Clients Say</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <p class="testimonial-text">"EZM Cyber transformed our security posture completely. Their proactive approach saved us from multiple potential breaches."</p>
+          <p class="testimonial-author">— Sarah Johnson, CTO at TechStart</p>
+        </div>
+        <div class="testimonial">
+          <p class="testimonial-text">"The peace of mind that comes with EZM Cyber's protection is invaluable. Their team is responsive and incredibly knowledgeable."</p>
+          <p class="testimonial-author">— Michael Chen, IT Director</p>
+        </div>
+        <div class="testimonial">
+          <p class="testimonial-text">"Finally, a cybersecurity partner that explains everything in plain English. Professional, reliable, and always available."</p>
+          <p class="testimonial-author">— Lisa Rodriguez, Small Business Owner</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2024 EZM Cyber. All rights reserved. Your security is our priority.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll animations
+    function observeElements() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      document.querySelectorAll('.section-title, .feature-card, .testimonial').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Initialize animations when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      observeElements();
+    });
+
+    // Add scroll effect to navigation
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 100) {
+        nav.style.background = 'rgba(10, 10, 10, 0.98)';
+      } else {
+        nav.style.background = 'rgba(10, 10, 10, 0.95)';
+      }
+    });
+  </script>
+
 </body>
 </html>
