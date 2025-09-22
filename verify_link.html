@@ -99,14 +99,7 @@
         while (attempts < maxAttempts) {
           await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
           
-          const reportResponse = await fetch(`https://www.virustotal.com/vtapi/v2/url/report`, {
-            method: 'GET',
-            headers: {
-              'apikey': API_KEY
-            },
-            body: new URLSearchParams({ resource: resourceId })
-          });
-
+          const reportResponse = await fetch(`https://www.virustotal.com/vtapi/v2/url/report?apikey=${API_KEY}&resource=${resourceId}`);
           if (!reportResponse.ok) {
             throw new Error(`HTTP ${reportResponse.status}: ${reportResponse.statusText}`);
           }
@@ -192,12 +185,14 @@
           <br><small>Opening VirusTotal for manual review...</small>
         </div>
       `;
-     setTimeout(() => {
-  // base64 encode the URL according to VirusTotal requirements
-  const encodedUrl = btoa(url).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-  window.open(`https://www.virustotal.com/gui/url/${encodedUrl}`, "_blank");
-}, 1500);
+      setTimeout(() => {
+        // base64 encode the URL according to VirusTotal requirements
+        const encodedUrl = btoa(url).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        window.open(`https://www.virustotal.com/gui/url/${encodedUrl}`, "_blank");
+      }, 1500);
+    }
 
+    // ✅ Properly outside of functions now
     form.addEventListener('submit', function(event) {
       event.preventDefault();
       const url = document.getElementById('urlInput').value.trim();
@@ -219,7 +214,6 @@
             <br><small>Still scanning with VirusTotal for confirmation...</small>
           </div>
         `;
-        // Continue with API scan anyway
         setTimeout(() => scanWithVirusTotal(url), 500);
       } else {
         scanWithVirusTotal(url);
