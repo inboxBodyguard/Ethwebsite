@@ -609,27 +609,25 @@
 
 <!-- VirusTotal Script -->
 <script>
-  document.getElementById("linkForm").addEventListener("submit", function (e) {
-    e.preventDefault();
+document.getElementById("linkForm").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    const input = document.getElementById("linkInput").value.trim();
-    if (!input) return;
+  const input = document.getElementById("linkInput").value.trim();
+  if (!input) return;
 
-    try {
-      // Encode URL to Base64 (VirusTotal requires it without '=' padding, using URL-safe encoding)
-      const base64Url = btoa(input)
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")
-        .replace(/=+$/, "");
+  try {
+    // Open VirusTotal analysis page using encodeURIComponent (reliable for all URLs)
+    const vtLink = `https://www.virustotal.com/gui/home/url?url=${encodeURIComponent(input)}`;
+    window.open(vtLink, "_blank");
 
-      // Open VirusTotal analysis page in a new tab
-      const vtLink = `https://www.virustotal.com/gui/url/${base64Url}`;
-      window.open(vtLink, "_blank");
-    } catch (err) {
-      document.getElementById("result").innerHTML =
-        '<div class="alert alert-danger">Invalid URL format. Please try again.</div>';
-    }
-  });
+    // Optional: show temporary result message
+    document.getElementById("result").innerHTML =
+      '<div class="alert alert-success">✅ Link submitted to VirusTotal. Results opened in a new tab.</div>';
+  } catch (err) {
+    document.getElementById("result").innerHTML =
+      '<div class="alert alert-danger">❌ Invalid URL format. Please try again.</div>';
+  }
+});
 </script>
 
     <!-- Additional Tools -->
