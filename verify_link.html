@@ -30,7 +30,22 @@
       font-weight: bold;
     }
     button:hover { background-color: #00ccaa; }
+    button:disabled {
+      background-color: #666;
+      cursor: not-allowed;
+    }
     #result { margin-top: 20px; font-weight: bold; }
+    .loading { color: #00ffcc; }
+    .scan-details {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #111;
+      border-left: 3px solid #00ffcc;
+    }
+    .detection-ratio {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -40,7 +55,7 @@
 
   <form id="linkForm">
     <input type="url" id="urlInput" placeholder="Paste suspicious URL here..." required />
-    <button type="submit">Check</button>
+    <button type="submit" id="checkBtn">Check</button>
   </form>
 
   <div id="result"></div>
@@ -48,32 +63,166 @@
   <script>
     const form = document.getElementById('linkForm');
     const result = document.getElementById('result');
+    const checkBtn = document.getElementById('checkBtn');
+    const API_KEY = 'aae37bf314798b0edf335b4818114280a268aaf936bd7d4b0e695b81870f08a8'; // REGENERATE THIS!
+
+    // Initial keyword filtering
+    const suspiciousKeywords = ["free-gift", "login-now", "verify-account", "bit.ly", "tinyurl", "short.ly"];
+
+    async function scanWithVirusTotal(url) {
+      try {
+        // Step 1: Submit URL for scanning
+        const scanResponse = await fetch('https://www.virustotal.com/vtapi/v2/url/scan', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'apikey': API_KEY
+          },
+          body: new URLSearchParams({ url: url })
+        });
+
+        if (!scanResponse.ok) {
+          throw new Error(`HTTP ${scanResponse.status}: ${scanResponse.statusText}`);
+        }
+
+        const scanData = await scanResponse.json();
+        const resourceId = scanData.resource;
+
+        // Step 2: Poll for scan results (wait up to 30 seconds)
+        result.innerHTML = '<div class="loading">🔄 Scanning with VirusTotal... Please wait.</div>';
+        checkBtn.disabled = true;
+        checkBtn.textContent = 'Scanning...';
+
+        let attempts = 0;
+        const maxAttempts = 15; // 15 seconds * 2 = 30 seconds total
+
+        while (attempts < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+          
+          const reportResponse = await fetch(`https://www.virustotal.com/vtapi/v2/url/report`, {
+            method: 'GET',
+            headers: {
+              'apikey': API_KEY
+            },
+            body: new URLSearchParams({ resource: resourceId })
+          });
+
+          if (!reportResponse.ok) {
+            throw new Error(`HTTP ${reportResponse.status}: ${reportResponse.statusText}`);
+          }
+
+          const reportData = await reportResponse.json();
+          
+          if (reportData.response_code === 1) {
+            // Scan completed
+            displayResults(reportData, url);
+            return;
+          } else if (reportData.response_code === -2) {
+            // Still queued
+            attempts++;
+            if (attempts >= maxAttempts) {
+              showTimeoutResult(url);
+            }
+          } else {
+            throw new Error('Unknown response code');
+          }
+        }
+      } catch (error) {
+        console.error('VirusTotal API Error:', error);
+        result.innerHTML = `
+          <div style="color: orange;">
+            ⚠️ Error connecting to VirusTotal. 
+            <br><small>Opening manual scan...</small>
+          </div>
+        `;
+        setTimeout(() => {
+          const encodedUrl = encodeURIComponent(url);
+          window.open(`https://www.virustotal.com/gui/home/url?url=${encodedUrl}`, "_blank");
+        }, 1500);
+      } finally {
+        checkBtn.disabled = false;
+        checkBtn.textContent = 'Check';
+      }
+    }
+
+    function displayResults(data, originalUrl) {
+      const total = data.total || 0;
+      const positives = data.positives || 0;
+      const permalink = data.permalink || '';
+      const scanDate = data.scan_date || '';
+      const urlDetails = data.url || originalUrl;
+
+      const detectionRate = total > 0 ? Math.round((positives / total) * 100) : 0;
+      let status, color, message;
+
+      if (positives === 0) {
+        status = "✅ CLEAN";
+        color = "lightgreen";
+        message = "No security vendors detected threats.";
+      } else if (positives <= 2) {
+        status = "⚠️ LOW RISK";
+        color = "yellow";
+        message = `${positives}/${total} security vendors flagged potential issues.`;
+      } else {
+        status = "🚨 MALICIOUS";
+        color = "red";
+        message = `${positives}/${total} security vendors detected malware/phishing.`;
+      }
+
+      result.innerHTML = `
+        <div style="color: ${color};">
+          <strong>${status}</strong><br>
+          ${message}
+        </div>
+        <div class="scan-details">
+          <strong>URL:</strong> <a href="${urlDetails}" target="_blank" style="color: #00ffcc;">${urlDetails}</a><br>
+          <strong>Detections:</strong> <span class="detection-ratio" style="color: ${color};">${positives}/${total}</span><br>
+          <strong>Scanned:</strong> ${new Date(scanDate).toLocaleString()}<br>
+          <a href="${permalink}" target="_blank" style="color: #00ffcc; text-decoration: underline;">
+            🔍 View Full VirusTotal Report
+          </a>
+        </div>
+      `;
+    }
+
+    function showTimeoutResult(url) {
+      result.innerHTML = `
+        <div style="color: orange;">
+          ⏱️ Scan still processing (took longer than expected)
+          <br><small>Opening VirusTotal for manual review...</small>
+        </div>
+      `;
+      setTimeout(() => {
+        const encodedUrl = encodeURIComponent(url);
+        window.open(`https://www.virustotal.com/gui/home/url?url=${encodedUrl}`, "_blank");
+      }, 1500);
+    }
 
     form.addEventListener('submit', function(event) {
       event.preventDefault();
       const url = document.getElementById('urlInput').value.trim();
+      result.innerHTML = '';
 
+      // Basic validation
       if (!url.startsWith("https://") && !url.startsWith("http://")) {
-        result.textContent = "⚠️ Please include http:// or https://";
-        result.style.color = "yellow";
+        result.innerHTML = '<div style="color: yellow;">⚠️ Please include http:// or https://</div>';
         return;
       }
 
-      const suspiciousKeywords = ["free-gift", "login-now", "verify-account", "bit.ly", "tinyurl"];
-      let isSuspicious = suspiciousKeywords.some(keyword => url.includes(keyword));
-
+      // Keyword filtering (preliminary check)
+      const isSuspicious = suspiciousKeywords.some(keyword => url.includes(keyword));
+      
       if (isSuspicious) {
-        result.textContent = "🚨 Warning: This link may be unsafe or part of a phishing scheme.";
-        result.style.color = "red";
+        result.innerHTML = `
+          <div style="color: red;">
+            🚨 Warning: This link contains suspicious keywords and may be part of a phishing scheme.
+            <br><small>Still scanning with VirusTotal for confirmation...</small>
+          </div>
+        `;
+        // Continue with API scan anyway
+        setTimeout(() => scanWithVirusTotal(url), 500);
       } else {
-        result.textContent = "✅ Link looks safe. Opening VirusTotal...";
-        result.style.color = "lightgreen";
-
-        // Open VirusTotal with correct URL
-        const encodedUrl = encodeURIComponent(url);
-        setTimeout(() => {
-          window.open(`https://www.virustotal.com/gui/home/url?url=${encodedUrl}`, "_blank");
-        }, 1000);
+        scanWithVirusTotal(url);
       }
     });
   </script>
