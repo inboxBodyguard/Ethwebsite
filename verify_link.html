@@ -192,11 +192,11 @@
           <br><small>Opening VirusTotal for manual review...</small>
         </div>
       `;
-      setTimeout(() => {
-        const encodedUrl = encodeURIComponent(url);
-        window.open(`https://www.virustotal.com/gui/home/url?url=${encodedUrl}`, "_blank");
-      }, 1500);
-    }
+     setTimeout(() => {
+  // base64 encode the URL according to VirusTotal requirements
+  const encodedUrl = btoa(url).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  window.open(`https://www.virustotal.com/gui/url/${encodedUrl}`, "_blank");
+}, 1500);
 
     form.addEventListener('submit', function(event) {
       event.preventDefault();
