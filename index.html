@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Welcome | EZM Cyber - Your Digital Security Partner</title>
+  <!-- Bootstrap 5 CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <style>
     * {
       margin: 0;
@@ -12,477 +13,525 @@
       box-sizing: border-box;
     }
 
-```
-body {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-  color: #e0e6ed;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
+    body {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      color: #e0e6ed;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-/* Navigation */
-nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: rgba(10, 10, 10, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 1rem 0;
-  z-index: 1000;
-  transition: all 0.3s ease;
-}
+    /* Navigation enhancements */
+    .navbar {
+      background: rgba(10, 10, 10, 0.95) !important;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
 
-.nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 2rem;
-}
+    .navbar-brand {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #00ffcc !important;
+      transition: all 0.3s ease;
+    }
 
-.logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #00ffcc;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
+    .navbar-brand:hover {
+      text-shadow: 0 0 20px #00ffcc;
+    }
 
-.logo:hover {
-  text-shadow: 0 0 20px #00ffcc;
-}
+    .nav-link {
+      color: #e0e6ed !important;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem !important;
+      border-radius: 4px;
+    }
 
-.nav-links {
-  display: flex;
-  list-style: none;
-  gap: 2rem;
-}
+    .nav-link:hover {
+      color: #00ffcc !important;
+      background: rgba(0, 255, 204, 0.1);
+    }
 
-.nav-links a {
-  color: #e0e6ed;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-}
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+    }
 
-.nav-links a:hover {
-  color: #00ffcc;
-  background: rgba(0, 255, 204, 0.1);
-}
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 255, 204, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(22, 33, 62, 0.3) 0%, transparent 50%);
+      pointer-events: none;
+    }
 
-/* Hero Section */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 2rem;
-  position: relative;
-}
+    .hero-content {
+      max-width: 800px;
+      z-index: 2;
+      position: relative;
+    }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(0, 255, 204, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(22, 33, 62, 0.3) 0%, transparent 50%);
-  pointer-events: none;
-}
+    .greeting {
+      font-size: 1.2rem;
+      color: #00ffcc;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards 0.2s;
+    }
 
-.hero-content {
-  max-width: 800px;
-  z-index: 2;
-  position: relative;
-}
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #fff, #00ffcc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards 0.4s;
+    }
 
-.greeting {
-  font-size: 1.2rem;
-  color: #00ffcc;
-  margin-bottom: 1rem;
-  opacity: 0;
-  animation: fadeInUp 1s ease forwards 0.2s;
-}
+    .hero-subtitle {
+      font-size: 1.3rem;
+      color: #b8c6db;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards 0.6s;
+    }
 
-.hero h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #fff, #00ffcc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  opacity: 0;
-  animation: fadeInUp 1s ease forwards 0.4s;
-}
+    .tagline {
+      font-size: 1.1rem;
+      color: #8a94a6;
+      margin-bottom: 3rem;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards 0.8s;
+    }
 
-.hero-subtitle {
-  font-size: 1.3rem;
-  color: #b8c6db;
-  margin-bottom: 2rem;
-  opacity: 0;
-  animation: fadeInUp 1s ease forwards 0.6s;
-}
+    /* Buttons */
+    .cta-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards 1s;
+    }
 
-.tagline {
-  font-size: 1.1rem;
-  color: #8a94a6;
-  margin-bottom: 3rem;
-  font-style: italic;
-  opacity: 0;
-  animation: fadeInUp 1s ease forwards 0.8s;
-}
+    .btn-custom {
+      padding: 16px 32px;
+      background: linear-gradient(135deg, #00ffcc, #00ccaa);
+      color: #000;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 255, 204, 0.3);
+    }
 
-/* Buttons */
-.cta-buttons {
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  opacity: 0;
-  animation: fadeInUp 1s ease forwards 1s;
-}
+    .btn-custom::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
 
-.btn {
-  padding: 16px 32px;
-  background: linear-gradient(135deg, #00ffcc, #00ccaa);
-  color: #000;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 1.1rem;
-  border-radius: 8px;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 255, 204, 0.3);
-}
+    .btn-custom:hover::before {
+      left: 100%;
+    }
 
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s ease;
-}
+    .btn-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 255, 204, 0.4);
+    }
 
-.btn:hover::before {
-  left: 100%;
-}
+    .btn-secondary {
+      background: transparent;
+      color: #00ffcc;
+      border: 2px solid #00ffcc;
+      box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
+    }
 
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 255, 204, 0.4);
-}
+    .btn-secondary:hover {
+      background: #00ffcc;
+      color: #000;
+    }
 
-.btn-secondary {
-  background: transparent;
-  color: #00ffcc;
-  border: 2px solid #00ffcc;
-  box-shadow: 0 4px 15px rgba(0, 255, 204, 0.1);
-}
+    /* Sections */
+    .section {
+      padding: 6rem 0;
+      background: rgba(16, 21, 30, 0.8);
+    }
 
-.btn-secondary:hover {
-  background: #00ffcc;
-  color: #000;
-}
+    .section-dark {
+      background: rgba(10, 10, 10, 0.9);
+    }
 
-/* Features Section */
-.features {
-  padding: 6rem 2rem;
-  background: rgba(16, 21, 30, 0.8);
-}
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
+    .section-title.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-.section-title {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-  color: #fff;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
-}
+    /* Feature Cards */
+    .feature-card {
+      background: rgba(22, 33, 62, 0.6);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 204, 0.2);
+      text-align: center;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      height: 100%;
+    }
 
-.section-title.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+    .feature-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-}
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: #00ffcc;
+      box-shadow: 0 10px 30px rgba(0, 255, 204, 0.2);
+    }
 
-.feature-card {
-  background: rgba(22, 33, 62, 0.6);
-  padding: 2rem;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 255, 204, 0.2);
-  text-align: center;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateY(30px);
-}
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #00ffcc;
+    }
 
-.feature-card.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
 
-.feature-card:hover {
-  transform: translateY(-5px);
-  border-color: #00ffcc;
-  box-shadow: 0 10px 30px rgba(0, 255, 204, 0.2);
-}
+    .feature-card p {
+      color: #b8c6db;
+    }
 
-.feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: #00ffcc;
-}
+    /* Testimonials */
+    .testimonial {
+      background: rgba(22, 33, 62, 0.4);
+      padding: 2rem;
+      border-radius: 12px;
+      border-left: 4px solid #00ffcc;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateX(-30px);
+      height: 100%;
+    }
 
-.feature-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #fff;
-}
+    .testimonial.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
 
-.feature-card p {
-  color: #b8c6db;
-}
+    .testimonial:hover {
+      transform: translateX(10px);
+      background: rgba(22, 33, 62, 0.6);
+    }
 
-/* Testimonials Section */
-.testimonials {
-  padding: 6rem 2rem;
-  background: rgba(10, 10, 10, 0.9);
-}
+    .testimonial-text {
+      font-style: italic;
+      color: #e0e6ed;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
 
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-}
+    .testimonial-author {
+      color: #00ffcc;
+      font-weight: 600;
+    }
 
-.testimonial {
-  background: rgba(22, 33, 62, 0.4);
-  padding: 2rem;
-  border-radius: 12px;
-  border-left: 4px solid #00ffcc;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateX(-30px);
-}
+    /* About Section */
+    .about p {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      color: #b8c6db;
+    }
 
-.testimonial.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
+    /* Contact Section */
+    .contact-form .form-control {
+      background-color: #111;
+      border: 1px solid #00ffcc;
+      color: #fff;
+    }
 
-.testimonial:hover {
-  transform: translateX(10px);
-  background: rgba(22, 33, 62, 0.6);
-}
+    .contact-form .form-control:focus {
+      border-color: #00ccaa;
+      box-shadow: 0 0 0 0.25rem rgba(0, 255, 204, 0.25);
+    }
 
-.testimonial-text {
-  font-style: italic;
-  color: #e0e6ed;
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-}
+    .contact-form .btn-custom {
+      width: 100%;
+    }
 
-.testimonial-author {
-  color: #00ffcc;
-  font-weight: 600;
-}
+    /* Footer */
+    footer {
+      padding: 3rem 0;
+      background: #0a0a0a;
+      text-align: center;
+      border-top: 1px solid rgba(0, 255, 204, 0.2);
+    }
 
-/* Footer */
-footer {
-  padding: 3rem 2rem;
-  background: #0a0a0a;
-  text-align: center;
-  border-top: 1px solid rgba(0, 255, 204, 0.2);
-}
+    .footer-links {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1rem;
+    }
 
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-}
+    .footer-links a {
+      color: #e0e6ed;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+    .footer-links a:hover {
+      color: #00ffcc;
+    }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .nav-container {
-    padding: 0 1rem;
-  }
-  
-  .nav-links {
-    display: none;
-  }
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-  .hero {
-    padding: 1rem;
-  }
+    /* Responsive adjustments (Bootstrap handles most) */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
 
-  .hero h1 {
-    font-size: 2.5rem;
-  }
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
 
-  .cta-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
+      .btn-custom {
+        width: 100%;
+        max-width: 280px;
+        margin: 0.5rem 0;
+      }
+    }
 
-  .btn {
-    width: 280px;
-    margin: 0.5rem 0;
-  }
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
 
-  .features, .testimonials {
-    padding: 4rem 1rem;
-  }
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
 
-  .features-grid, .testimonials-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero h1 {
-    font-size: 2rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.1rem;
-  }
-
-  .btn {
-    padding: 14px 24px;
-    font-size: 1rem;
-  }
-}
-```
-
+      .btn-custom {
+        padding: 14px 24px;
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav>
-    <div class="nav-container">
-      <a href="#" class="logo">EZM Cyber</a>
-      <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+  <!-- Navigation (Enhanced with Bootstrap Navbar) -->
+  <nav class="navbar navbar-expand-lg fixed-top" aria-label="Main navigation">
+    <div class="container">
+      <a class="navbar-brand" href="#">EZM Cyber</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-
+  <!-- Hero Section (Enhanced with stronger welcome message) -->
   <section class="hero" id="home">
     <div class="hero-content">
-      <p class="greeting">Welcome to EZM Cyber</p>
-      <h1>Protecting You From Online Threats</h1>
-      <p class="hero-subtitle">Your trusted partner in cybersecurity</p>
-      <p class="tagline">"Security isn't a product, it's a process we perfect together"</p>
+      <p class="greeting">Secure Your Digital World Today</p>
+      <h1>Empowering You Against Cyber Threats</h1>
+      <p class="hero-subtitle">Expert cybersecurity solutions tailored for individuals and businesses</p>
+      <p class="tagline">"In the digital age, security is not optional—it's essential. Let us safeguard your future."</p>
+      <div class="cta-buttons">
+        <a href="signup.html" class="btn-custom">Get Started</a>
+        <a href="verify_link.html" class="btn-custom btn-secondary">Check a Link</a>
+        <a href="newsletter.html" class="btn-custom btn-secondary">Join Newsletter</a>
+      </div>
+    </div>
+  </section>
 
-<div class="cta-buttons">
-  <a href="signup.html" class="btn">Get Started</a>
-  <a href="verify_link.html" class="btn btn-secondary">Check a Link</a>
-  <a href="newsletter.html" class="btn btn-secondary">Join Newsletter</a>
-</div>
-</div>
-</section>
-
-  <!-- Features Section -->
-
-  <section class="features" id="services">
+  <!-- About Section (New) -->
+  <section class="section about" id="about">
     <div class="container">
-      <h2 class="section-title">Why Choose EZM Cyber?</h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">🛡️</div>
-          <h3>Advanced Protection</h3>
-          <p>State-of-the-art security solutions that adapt to emerging threats in real-time.</p>
+      <h2 class="section-title">About EZM Cyber</h2>
+      <p>EZM Cyber is a premier cybersecurity firm committed to protecting your online presence from evolving digital threats. With a team of certified experts and cutting-edge technology, we offer comprehensive services including vulnerability assessments, real-time monitoring, and educational resources. Our mission is to make cybersecurity accessible, effective, and effortless for everyone—from small businesses to large enterprises.</p>
+    </div>
+  </section>
+
+  <!-- Key Features Section (Enhanced with tools, threat reports, tutorials) -->
+  <section class="section" id="services">
+    <div class="container">
+      <h2 class="section-title">Key Features & Services</h2>
+      <div class="row g-4 features-grid">
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <h3>Advanced Protection</h3>
+            <p>State-of-the-art security solutions that adapt to emerging threats in real-time, ensuring your data remains secure.</p>
+          </div>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">🔍</div>
-          <h3>Threat Detection</h3>
-          <p>AI-powered monitoring systems that identify and neutralize threats before they impact you.</p>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3>Threat Detection Tools</h3>
+            <p>Utilize our free tools like the Suspicious Link Checker to identify and verify potential phishing or malware links instantly.</p>
+          </div>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">⚡</div>
-          <h3>Rapid Response</h3>
-          <p>24/7 security team ready to respond to incidents within minutes, not hours.</p>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Threat Reports</h3>
+            <p>Access detailed, up-to-date reports on the latest cyber threats, vulnerabilities, and industry trends to stay informed.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3>Security Tutorials</h3>
+            <p>Step-by-step guides and tutorials on best practices for online safety, password management, and more.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Rapid Response</h3>
+            <p>24/7 security team ready to respond to incidents within minutes, minimizing downtime and damage.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon">🤝</div>
+            <h3>Custom Consultations</h3>
+            <p>Personalized cybersecurity strategies tailored to your specific needs and risk profile.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Testimonials Section -->
-
-  <section class="testimonials">
+  <section class="section section-dark testimonials" id="testimonials">
     <div class="container">
       <h2 class="section-title">What Our Clients Say</h2>
-      <div class="testimonials-grid">
-        <div class="testimonial">
-          <p class="testimonial-text">"EZM Cyber transformed our security posture completely. Their proactive approach saved us from multiple potential breaches."</p>
-          <p class="testimonial-author">— Sarah Johnson, CTO at TechStart</p>
+      <div class="row g-4 testimonials-grid">
+        <div class="col-md-4">
+          <div class="testimonial">
+            <p class="testimonial-text">"EZM Cyber transformed our security posture completely. Their proactive approach saved us from multiple potential breaches."</p>
+            <p class="testimonial-author">— Sarah Johnson, CTO at TechStart</p>
+          </div>
         </div>
-        <div class="testimonial">
-          <p class="testimonial-text">"The peace of mind that comes with EZM Cyber's protection is invaluable. Their team is responsive and incredibly knowledgeable."</p>
-          <p class="testimonial-author">— Michael Chen, IT Director</p>
+        <div class="col-md-4">
+          <div class="testimonial">
+            <p class="testimonial-text">"The peace of mind that comes with EZM Cyber's protection is invaluable. Their team is responsive and incredibly knowledgeable."</p>
+            <p class="testimonial-author">— Michael Chen, IT Director</p>
+          </div>
         </div>
-        <div class="testimonial">
-          <p class="testimonial-text">"Finally, a cybersecurity partner that explains everything in plain English. Professional, reliable, and always available."</p>
-          <p class="testimonial-author">— Lisa Rodriguez, Small Business Owner</p>
+        <div class="col-md-4">
+          <div class="testimonial">
+            <p class="testimonial-text">"Finally, a cybersecurity partner that explains everything in plain English. Professional, reliable, and always available."</p>
+            <p class="testimonial-author">— Lisa Rodriguez, Small Business Owner</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Contact Section (Added for nav link) -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <h2 class="section-title">Get in Touch</h2>
+      <form class="contact-form" aria-label="Contact form">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Your name" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="Your email" required>
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea class="form-control" id="message" rows="4" placeholder="How can we help?" required></textarea>
+        </div>
+        <button type="submit" class="btn-custom">Send Message</button>
+      </form>
+    </div>
+  </section>
 
+  <!-- Footer (Enhanced with navigation links) -->
   <footer>
-    <div class="footer-content">
+    <div class="container footer-content">
+      <ul class="footer-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
       <p>&copy; 2024 EZM Cyber. All rights reserved. Your security is our priority.</p>
     </div>
   </footer>
 
+  <!-- Scripts -->
+  <!-- Bootstrap 5 JS Bundle CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script>
-    // Scroll animations
+    // Scroll animations (kept and enhanced)
     function observeElements() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -500,7 +549,7 @@ footer {
       });
     }
 
-    // Smooth scroll for navigation
+    // Smooth scroll for navigation (kept)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -514,21 +563,31 @@ footer {
       });
     });
 
-    // Initialize animations when page loads
+    // Initialize animations when page loads (kept)
     document.addEventListener('DOMContentLoaded', () => {
       observeElements();
     });
 
-    // Add scroll effect to navigation
+    // Add scroll effect to navigation (kept)
     window.addEventListener('scroll', () => {
-      const nav = document.querySelector('nav');
+      const nav = document.querySelector('.navbar');
       if (window.scrollY > 100) {
         nav.style.background = 'rgba(10, 10, 10, 0.98)';
       } else {
         nav.style.background = 'rgba(10, 10, 10, 0.95)';
       }
     });
-  </script>
 
+    // Simple form submission handler (added for engagement)
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Placeholder for form submission logic (e.g., AJAX)
+        alert('Thank you for your message! We will get back to you soon.');
+        contactForm.reset();
+      });
+    }
+  </script>
 </body>
 </html>
