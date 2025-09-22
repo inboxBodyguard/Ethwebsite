@@ -1,204 +1,780 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact Us - Ezmcyber</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
   <style>
-    body {
-      background-color: #0a0a0a;
-      color: #ffffff;
-      font-family: 'Segoe UI', sans-serif;
+    :root {
+      --primary-color: #00bfff;
+      --primary-dark: #009acc;
+      --bg-dark: #0a0a0a;
+      --bg-lighter: #1a1a1a;
+      --border-color: #333333;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0b0;
+      --success-color: #28a745;
+      --error-color: #dc3545;
+      --warning-color: #ffc107;
     }
-    .contact-section {
-      padding: 80px 0;
-    }
-    .form-control, .form-label {
-      background-color: #1a1a1a;
-      color: #ffffff;
-      border-color: #333333;
-      border-radius: 6px;
-    }
-    .form-control:focus {
-      background-color: #1a1a1a;
-      color: #ffffff;
-      border-color: #00bfff;
-      box-shadow: 0 0 0 0.2rem rgba(0, 191, 255, 0.25);
-    }
-    .btn-primary {
-      background-color: #00bfff;
-      border: none;
-      transition: all 0.2s;
-    }
-    .btn-primary:hover {
-      background-color: #009acc;
-      transform: scale(1.05);
-    }
-    /* Responsive spacing */
-    @media (max-width: 768px) {
-      .contact-section {
-        padding: 50px 15px;
-      }
-    }
-    /* Dropdown styles */
-    .dropdown {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-    }
-    .dropdown-toggle {
-      width: 100%;
-      text-align: left;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .dropdown-menu {
-      position: absolute;
-      width: 100%;
-      max-height: 200px;
-      overflow-y: auto;
-      background-color: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 6px;
-      display: none;
-      z-index: 1000;
-      padding: 0;
-    }
-    .dropdown-menu.show {
-      display: block;
-    }
-    .dropdown-item {
-      padding: 10px 15px;
-      cursor: pointer;
-      color: #fff;
-      transition: background 0.2s;
-    }
-    .dropdown-item:hover,
-    .dropdown-item.active {
-      background-color: #00bfff;
-      color: #000;
-    }
+
+```
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  color: var(--text-primary);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Enhanced navbar */
+.navbar {
+  backdrop-filter: blur(10px);
+  background: rgba(26, 26, 26, 0.95) !important;
+  border-bottom: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: linear-gradient(45deg, var(--primary-color), #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-link {
+  position: relative;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem !important;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 80%;
+}
+
+/* Contact section */
+.contact-section {
+  padding: 100px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, rgba(0, 191, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.contact-container {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.contact-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, var(--primary-color), #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.contact-header p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Form styling */
+.contact-form {
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 3rem;
+  border: 1px solid rgba(51, 51, 51, 0.5);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.form-group {
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.form-label {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.form-label i {
+  color: var(--primary-color);
+  width: 16px;
+}
+
+.form-control {
+  background: rgba(26, 26, 26, 0.9);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.form-control::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.form-control:focus {
+  background: rgba(26, 26, 26, 0.95);
+  color: var(--text-primary);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 191, 255, 0.25);
+  outline: none;
+}
+
+.form-control.is-valid {
+  border-color: var(--success-color);
+}
+
+.form-control.is-invalid {
+  border-color: var(--error-color);
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-toggle {
+  width: 100%;
+  text-align: left;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.dropdown-toggle::after {
+  content: '\f078';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  border: none;
+  margin: 0;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-toggle[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(15px);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  display: none;
+  z-index: 1000;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-menu.show {
+  display: block;
+  animation: dropdownSlide 0.3s ease;
+}
+
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dropdown-item:hover,
+.dropdown-item.active {
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+  color: #000;
+  transform: translateX(5px);
+}
+
+.dropdown-item::before {
+  content: '\f0c1';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  opacity: 0.7;
+  width: 16px;
+}
+
+.dropdown-item[data-service="Website Design"]::before { content: '\f5b0'; }
+.dropdown-item[data-service="Mobile App Design"]::before { content: '\f3cd'; }
+.dropdown-item[data-service="Logo Design"]::before { content: '\f53f'; }
+.dropdown-item[data-service="Threat Analysis"]::before { content: '\f21e'; }
+.dropdown-item[data-service="Penetration Testing"]::before { content: '\f6ff'; }
+.dropdown-item[data-service="Network Security"]::before { content: '\f57e'; }
+.dropdown-item[data-service="Cybersecurity Consultation"]::before { content: '\f0e7'; }
+
+/* Submit button */
+.btn-submit {
+  background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #000;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 191, 255, 0.3);
+}
+
+.btn-submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 191, 255, 0.4);
+}
+
+.btn-submit:hover::before {
+  left: 100%;
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-submit .spinner {
+  display: none;
+}
+
+.btn-submit.loading .spinner {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.btn-submit.loading .btn-text {
+  display: none;
+}
+
+/* Validation messages */
+.invalid-feedback {
+  display: block;
+  color: var(--error-color);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+  animation: shake 0.5s ease-in-out;
+}
+
+.valid-feedback {
+  display: block;
+  color: var(--success-color);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Success/Error alerts */
+.alert {
+  border-radius: 12px;
+  border: none;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: alertSlide 0.5s ease;
+}
+
+@keyframes alertSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-success {
+  background: rgba(40, 167, 69, 0.2);
+  color: var(--success-color);
+  border-left: 4px solid var(--success-color);
+}
+
+.alert-danger {
+  background: rgba(220, 53, 69, 0.2);
+  color: var(--error-color);
+  border-left: 4px solid var(--error-color);
+}
+
+.alert-dismissible .btn-close {
+  color: inherit;
+  opacity: 0.8;
+}
+
+/* Footer */
+footer {
+  background: rgba(26, 26, 26, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border-color);
+  margin-top: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .contact-section {
+    padding: 60px 0;
+  }
+
+  .contact-form {
+    margin: 0 1rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .contact-header h2 {
+    font-size: 2rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .contact-form {
+    padding: 1.5rem 1rem;
+    margin: 0 0.5rem;
+  }
+
+  .contact-header h2 {
+    font-size: 1.75rem;
+  }
+
+  .btn-submit {
+    font-size: 1rem;
+    padding: 0.875rem 1.5rem;
+  }
+}
+
+/* Custom scrollbar for dropdown */
+.dropdown-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+  background: rgba(51, 51, 51, 0.3);
+  border-radius: 3px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 3px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+```
+
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Ezmcyber</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-shield-alt me-2"></i>Ezmcyber
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="fas fa-home me-1"></i>Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">
+              <i class="fas fa-info-circle me-1"></i>About
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="contact.html">
+              <i class="fas fa-envelope me-1"></i>Contact
+            </a>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
 
   <!-- Contact Form -->
+
   <section class="contact-section">
     <div class="container">
-      <div class="row justify-content-center text-center">
-        <div class="col-lg-8">
-          <h2 class="mb-4">Contact Us</h2>
-          <p class="mb-5">Have a question or want to work with us? Send a message below and we'll get back to you shortly.</p>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-lg-8">
+      <div class="contact-container">
 
-          <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="https://ezmcyber.xyz/thank-you.html">
-
-            <!-- Name -->
-            <div class="mb-3">
-              <label for="name" class="form-label">Full Name</label>
-              <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-
-            <!-- Email -->
-            <div class="mb-3">
-              <label for="email" class="form-label">Your Email</label>
-              <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-
-            <!-- Services Dropdown -->
-            <div class="mb-3">
-              <label for="service" class="form-label">Service</label>
-              <div class="dropdown">
-                <button type="button" class="form-control dropdown-toggle" id="dropdownButton" aria-expanded="false">
-                  Select a service
-                </button>
-                <ul class="dropdown-menu" id="dropdownMenu">
-                  <li class="dropdown-item">Website Design</li>
-                  <li class="dropdown-item">Mobile App Design</li>
-                  <li class="dropdown-item">Logo Design</li>
-                  <li class="dropdown-item">Threat Analysis</li>
-                  <li class="dropdown-item">Penetration Testing</li>
-                  <li class="dropdown-item">Network Security</li>
-                  <li class="dropdown-item">Cybersecurity Consultation</li>
-                </ul>
-              </div>
-              <input type="hidden" id="serviceInput" name="service" required>
-            </div>
-
-            <!-- Message -->
-            <div class="mb-3">
-              <label for="message" class="form-label">Message</label>
-              <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
-            </div>
-
-            <!-- Submit -->
-            <button type="submit" class="btn btn-primary w-100">Send Message</button>
-          </form>
-
-        </div>
-      </div>
+```
+    <!-- Header -->
+    <div class="contact-header">
+      <h2>Get In Touch</h2>
+      <p>Ready to secure your digital future? We're here to help. Send us a message and we'll get back to you within 24 hours.</p>
     </div>
+
+    <!-- Alert container -->
+    <div id="alertContainer"></div>
+
+    <!-- Contact Form -->
+    <div class="contact-form">
+      <form action="https://formsubmit.co/ethanmiller189@aol.com" method="POST" id="contactForm" novalidate>
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://ezmcyber.xyz/thank-you.html">
+
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name" class="form-label">
+            <i class="fas fa-user"></i>
+            Full Name
+          </label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="name" 
+            name="name" 
+            placeholder="Enter your full name"
+            required
+            aria-describedby="nameError"
+          >
+          <div class="invalid-feedback" id="nameError"></div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email" class="form-label">
+            <i class="fas fa-envelope"></i>
+            Email Address
+          </label>
+          <input 
+            type="email" 
+            class="form-control" 
+            id="email" 
+            name="email" 
+            placeholder="your.email@example.com"
+            required
+            aria-describedby="emailError"
+          >
+          <div class="invalid-feedback" id="emailError"></div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+        <!-- Services Dropdown -->
+        <div class="form-group">
+          <label for="service" class="form-label">
+            <i class="fas fa-cogs"></i>
+            Service Required
+          </label>
+          <div class="dropdown">
+            <button 
+              type="button" 
+              class="form-control dropdown-toggle" 
+              id="dropdownButton" 
+              aria-expanded="false"
+              aria-describedby="serviceError"
+            >
+              Select a service
+            </button>
+            <ul class="dropdown-menu" id="dropdownMenu">
+              <li class="dropdown-item" data-service="Website Design">Website Design</li>
+              <li class="dropdown-item" data-service="Mobile App Design">Mobile App Design</li>
+              <li class="dropdown-item" data-service="Logo Design">Logo Design</li>
+              <li class="dropdown-item" data-service="Threat Analysis">Threat Analysis</li>
+              <li class="dropdown-item" data-service="Penetration Testing">Penetration Testing</li>
+              <li class="dropdown-item" data-service="Network Security">Network Security</li>
+              <li class="dropdown-item" data-service="Cybersecurity Consultation">Cybersecurity Consultation</li>
+            </ul>
+          </div>
+          <input type="hidden" id="serviceInput" name="service" required>
+          <div class="invalid-feedback" id="serviceError"></div>
+          <div class="valid-feedback">Great choice!</div>
+        </div>
+
+        <!-- Message -->
+        <div class="form-group">
+          <label for="message" class="form-label">
+            <i class="fas fa-comment-dots"></i>
+            Message
+          </label>
+          <textarea 
+            class="form-control" 
+            id="message" 
+            name="message" 
+            rows="5" 
+            placeholder="Tell us about your project requirements, timeline, or any questions you have..."
+            required
+            aria-describedby="messageError"
+          ></textarea>
+          <div class="invalid-feedback" id="messageError"></div>
+          <div class="valid-feedback">Perfect!</div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-submit w-100">
+          <span class="spinner-border spinner-border-sm spinner" role="status" aria-hidden="true"></span>
+          <span class="btn-text">
+            <i class="fas fa-paper-plane me-2"></i>
+            Send Message
+          </span>
+          <span class="loading-text" style="display: none;">Sending...</span>
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>
+```
+
   </section>
 
   <!-- Footer -->
-  <footer class="bg-dark text-center text-white py-3">
+
+  <footer class="text-center text-white py-4">
     <div class="container">
-      &copy; 2025 Ezmcyber. All rights reserved.
+      <p class="mb-0">
+        <i class="fas fa-copyright me-1"></i>
+        2025 Ezmcyber. All rights reserved.
+      </p>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
   <script>
+    // DOM elements
+    const form = document.getElementById('contactForm');
     const dropdownButton = document.getElementById('dropdownButton');
     const dropdownMenu = document.getElementById('dropdownMenu');
     const serviceInput = document.getElementById('serviceInput');
+    const alertContainer = document.getElementById('alertContainer');
+    const submitBtn = form.querySelector('.btn-submit');
+    
     let items = Array.from(dropdownMenu.querySelectorAll('.dropdown-item'));
     let currentIndex = -1;
 
-    // Toggle dropdown
-    dropdownButton.addEventListener('click', () => {
+    // Validation patterns
+    const validationRules = {
+      name: {
+        pattern: /^[a-zA-Z\s]{2,50}$/,
+        message: 'Name must be 2-50 characters and contain only letters and spaces'
+      },
+      email: {
+        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: 'Please enter a valid email address'
+      },
+      message: {
+        pattern: /^.{10,500}$/,
+        message: 'Message must be between 10-500 characters'
+      }
+    };
+
+    // Show alert function
+    function showAlert(type, message) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `alert alert-${type} alert-dismissible`;
+      alertDiv.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+        <span>${message}</span>
+        <button type="button" class="btn-close" aria-label="Close"></button>
+      `;
+      
+      alertContainer.innerHTML = '';
+      alertContainer.appendChild(alertDiv);
+      
+      // Auto dismiss after 5 seconds
+      setTimeout(() => {
+        if (alertDiv.parentNode) {
+          alertDiv.remove();
+        }
+      }, 5000);
+      
+      // Manual dismiss
+      alertDiv.querySelector('.btn-close').addEventListener('click', () => {
+        alertDiv.remove();
+      });
+    }
+
+    // Validate field function
+    function validateField(field) {
+      const value = field.value.trim();
+      const fieldName = field.name;
+      const rule = validationRules[fieldName];
+      
+      if (!value) {
+        setFieldInvalid(field, `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} is required`);
+        return false;
+      }
+      
+      if (rule && !rule.pattern.test(value)) {
+        setFieldInvalid(field, rule.message);
+        return false;
+      }
+      
+      setFieldValid(field);
+      return true;
+    }
+
+    // Set field as invalid
+    function setFieldInvalid(field, message) {
+      field.classList.remove('is-valid');
+      field.classList.add('is-invalid');
+      const errorDiv = document.getElementById(field.name + 'Error');
+      if (errorDiv) {
+        errorDiv.textContent = message;
+      }
+    }
+
+    // Set field as valid
+    function setFieldValid(field) {
+      field.classList.remove('is-invalid');
+      field.classList.add('is-valid');
+    }
+
+    // Real-time validation
+    ['name', 'email', 'message'].forEach(fieldName => {
+      const field = document.getElementById(fieldName);
+      field.addEventListener('blur', () => validateField(field));
+      field.addEventListener('input', () => {
+        if (field.classList.contains('is-invalid')) {
+          validateField(field);
+        }
+      });
+    });
+
+    // Dropdown functionality
+    dropdownButton.addEventListener('click', (e) => {
+      e.preventDefault();
       dropdownMenu.classList.toggle('show');
       dropdownButton.setAttribute('aria-expanded', dropdownMenu.classList.contains('show'));
     });
 
-    // Click selection
+    // Dropdown item selection
     items.forEach((item, index) => {
       item.addEventListener('click', () => {
-        dropdownButton.textContent = item.textContent;
-        serviceInput.value = item.textContent;
+        const service = item.getAttribute('data-service');
+        dropdownButton.textContent = service;
+        serviceInput.value = service;
         dropdownMenu.classList.remove('show');
+        dropdownButton.setAttribute('aria-expanded', 'false');
         currentIndex = index;
+        
+        // Validate service selection
+        setFieldValid(dropdownButton);
       });
     });
 
-    // Keyboard navigation
+    // Keyboard navigation for dropdown
     dropdownButton.addEventListener('keydown', (e) => {
-      if (!dropdownMenu.classList.contains('show')) {
+      if (!dropdownMenu.classList.contains('show') && (e.key === 'ArrowDown' || e.key === 'Enter')) {
         dropdownMenu.classList.add('show');
-        dropdownButton.setAttribute('aria-expanded', true);
+        dropdownButton.setAttribute('aria-expanded', 'true');
+        e.preventDefault();
+        return;
       }
 
       if (e.key === 'ArrowDown') {
@@ -211,32 +787,79 @@
         e.preventDefault();
       } else if (e.key === 'Enter') {
         if (currentIndex >= 0) {
-          dropdownButton.textContent = items[currentIndex].textContent;
-          serviceInput.value = items[currentIndex].textContent;
+          const service = items[currentIndex].getAttribute('data-service');
+          dropdownButton.textContent = service;
+          serviceInput.value = service;
+          setFieldValid(dropdownButton);
         }
         dropdownMenu.classList.remove('show');
-        dropdownButton.setAttribute('aria-expanded', false);
+        dropdownButton.setAttribute('aria-expanded', 'false');
         e.preventDefault();
       } else if (e.key === 'Escape') {
         dropdownMenu.classList.remove('show');
-        dropdownButton.setAttribute('aria-expanded', false);
+        dropdownButton.setAttribute('aria-expanded', 'false');
       }
     });
 
     function updateActive() {
       items.forEach((item, i) => {
         item.classList.toggle('active', i === currentIndex);
-        item.scrollIntoView({block: "nearest"});
+        if (i === currentIndex) {
+          item.scrollIntoView({block: "nearest"});
+        }
       });
     }
 
-    // Close dropdown if clicked outside
+    // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
       if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
         dropdownMenu.classList.remove('show');
-        dropdownButton.setAttribute('aria-expanded', false);
+        dropdownButton.setAttribute('aria-expanded', 'false');
       }
     });
+
+    // Form submission
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Validate all fields
+      let isValid = true;
+      
+      // Validate text fields
+      ['name', 'email', 'message'].forEach(fieldName => {
+        const field = document.getElementById(fieldName);
+        if (!validateField(field)) {
+          isValid = false;
+        }
+      });
+      
+      // Validate service selection
+      if (!serviceInput.value) {
+        setFieldInvalid(dropdownButton, 'Please select a service');
+        document.getElementById('serviceError').textContent = 'Please select a service';
+        isValid = false;
+      }
+      
+      if (!isValid) {
+        showAlert('danger', 'Please correct the errors above before submitting.');
+        return;
+      }
+      
+      // Show loading state
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      
+      // Submit form (since we're using FormSubmit, we'll submit normally after validation)
+      setTimeout(() => {
+        form.submit();
+      }, 1000);
+    });
+
+    // Initialize tooltips and other Bootstrap components
+    document.addEventListener('DOMContentLoaded', function() {
+      // Any additional initialization can go here
+    });
   </script>
+
 </body>
 </html>
