@@ -185,12 +185,14 @@
           <br><small>Opening VirusTotal for manual review...</small>
         </div>
       `;
-      setTimeout(() => {
-        // base64 encode the URL according to VirusTotal requirements
-        const encodedUrl = btoa(url).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-        window.open(`https://www.virustotal.com/gui/url/${encodedUrl}`, "_blank");
-      }, 1500);
-    }
+     setTimeout(() => {
+  // base64 encode with VT-safe format
+  const encodedUrl = btoa(url)
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+  window.open(`https://www.virustotal.com/gui/url/${encodedUrl}`, "_blank");
+}, 1500);
 
     // ✅ Properly outside of functions now
     form.addEventListener('submit', function(event) {
