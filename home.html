@@ -1538,6 +1538,13 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
 </div>
 }
+<button id="logoutBtn">Logout</button>
+<script>
+document.getElementById('logoutBtn').addEventListener('click', function() {
+    localStorage.removeItem('signedUp'); // Clear signup status
+    window.location.href = 'signup.html'; // Redirect to signup
+});
+</script>
 </style>
 </body>
 </html>
