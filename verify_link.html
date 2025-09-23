@@ -97,52 +97,153 @@
     // Initial keyword filtering
     const suspiciousKeywords = ["free-gift", "login-now", "verify-account", "bit.ly", "tinyurl", "short.ly"];
 
-    async function getUrlId(url) {
+    function getUrlId(url) {
       return btoa(url).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
     }
 
-    async function scanWithVirusTotal(url) {
-      try {
-        const urlId = await getUrlId(url);
+    function displayResults(attributes, url, urlId) {
+      const stats = attributes.last_analysis_stats || attributes.stats || {};
+      const results = attributes.last_analysis_results || attributes.results || {};
 
-        // Step 0: Try to get existing URL report
-        let reportResponse = await fetch(`https://www.virustotal.com/api/v3/urls/${urlId}`, {
+      const harmless = stats.harmless || 0;
+      const malicious = stats.malicious || 0;
+      const suspicious = stats.suspicious || 0;
+      const undetected = stats.undetected || 0;
+      const timeout = stats.timeout || 0;
+      const total = harmless + malicious + suspicious + undetected + timeout;
+
+      let html = `<div class="detection-ratio">${malicious} / ${total} detections</div>`;
+      html += '<div class="scan-details">';
+
+      Object.keys(results).forEach(engine => {
+        const res = results[engine];
+        if (res.category === 'malicious' || res.result === 'malicious') {
+          html += `<div>${engine}: ${res.result || res.category}</div>`;
+        }
+      });
+
+      html += '</div>';
+
+      result.innerHTML = html;
+
+      const status = malicious > 0 ? 'Suspicious' : 'Safe';
+      const detections = `${malicious}/${total}`;
+      const date = new Date().toLocaleString();
+      const reportLink = `https://www.virustotal.com/gui/url/${urlId}`;
+
+      addToHistory(url, status, detections, date, reportLink);
+    }
+
+    function addToHistory(url, status, detections, date, reportLink) {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${url}</td>
+        <td>${status}</td>
+        <td>${detections}</td>
+        <td>${date}</td>
+        <td><a href="${reportLink}" target="_blank" style="color: #00ffcc;">View Report</a></td>
+      `;
+      historyTbody.appendChild(row);
+    }
+
+    async function scanWithVirusTotal(url) {
+      result.innerHTML = '<div class="loading">🔄 Checking...</div>';
+      checkBtn.disabled = true;
+      checkBtn.textContent = 'Checking...';
+
+      // Optional keyword check
+      let keywordWarnings = '';
+      suspiciousKeywords.forEach(kw => {
+        if (url.toLowerCase().includes(kw)) {
+          keywordWarnings += `<div style="color: yellow;">Warning: URL contains suspicious keyword "${kw}"</div>`;
+        }
+      });
+      if (keywordWarnings) {
+        result.innerHTML += keywordWarnings;
+      }
+
+      const urlId = getUrlId(url);
+
+      // Step 0: Try to get existing URL report
+      let reportResponse = await fetch(`https://www.virustotal.com/api/v3/urls/${urlId}`, {
+        headers: { 'x-apikey': API_KEY }
+      });
+
+      if (reportResponse.ok) {
+        const reportData = await reportResponse.json();
+        displayResults(reportData.data.attributes, url, urlId);
+        return;
+      } else if (reportResponse.status !== 404) {
+        if (reportResponse.status === 429) {
+          throw new Error('API rate limit exceeded. Please try again later.');
+        }
+        throw new Error(`HTTP ${reportResponse.status}: ${await reportResponse.text()}`);
+      }
+
+      // Step 1: Submit URL for scanning if not found
+      const scanResponse = await fetch('https://www.virustotal.com/api/v3/urls', {
+        method: 'POST',
+        headers: { 'x-apikey': API_KEY },
+        body: new URLSearchParams({ url: url })
+      });
+
+      if (!scanResponse.ok) {
+        if (scanResponse.status === 429) {
+          throw new Error('API rate limit exceeded. Please try again later.');
+        }
+        throw new Error(`HTTP ${scanResponse.status}: ${await scanResponse.text()}`);
+      }
+
+      const scanData = await scanResponse.json();
+      const analysisId = scanData.data.id;
+
+      // Step 2: Poll for scan results (wait up to 30 seconds)
+      result.innerHTML = '<div class="loading">🔄 Scanning with VirusTotal... Please wait.</div>';
+
+      let attempts = 0;
+      const maxAttempts = 15; // 15 * 2s = 30s
+
+      while (attempts < maxAttempts) {
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+
+        reportResponse = await fetch(`https://www.virustotal.com/api/v3/analyses/${analysisId}`, {
           headers: { 'x-apikey': API_KEY }
         });
 
-        let reportData;
-        if (reportResponse.ok) {
-          reportData = await reportResponse.json();
+        if (!reportResponse.ok) {
+          if (reportResponse.status === 429) {
+            throw new Error('API rate limit exceeded. Please try again later.');
+          }
+          throw new Error(`HTTP ${reportResponse.status}: ${await reportResponse.text()}`);
+        }
+
+        const reportData = await reportResponse.json();
+
+        if (reportData.data.attributes.status === 'completed') {
           displayResults(reportData.data.attributes, url, urlId);
           return;
-        } else if (reportResponse.status !== 404) {
-          throw new Error(`HTTP ${reportResponse.status}: ${reportResponse.statusText}`);
         }
 
-        // Step 1: Submit URL for scanning if not found
-        const scanResponse = await fetch('https://www.virustotal.com/api/v3/urls', {
-          method: 'POST',
-          headers: { 'x-apikey': API_KEY },
-          body: new URLSearchParams({ url: url })
-        });
+        attempts++;
+      }
 
-        if (!scanResponse.ok) {
-          throw new Error(`HTTP ${scanResponse.status}: ${scanResponse.statusText}`);
-        }
+      throw new Error('Scan timed out after 30 seconds. Please try again.');
+    }
 
-        const scanData = await scanResponse.json();
-        const analysisId = scanData.data.id;
-
-        // Step 2: Poll for scan results (wait up to 30 seconds)
-        result.innerHTML = '<div class="loading">🔄 Scanning with VirusTotal... Please wait.</div>';
-        checkBtn.disabled = true;
-        checkBtn.textContent = 'Scanning...';
-
-        let attempts = 0;
-        const maxAttempts = 15; // 15 * 2s = 30s
-
-        while (attempts < maxAttempts) {
-          await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
-
-          reportResponse = await fetch(`https://www.virustotal.com/api/v3
-           <script>
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = document.getElementById('urlInput').value.trim();
+      if (!url) return;
+      result.innerHTML = '';
+      try {
+        await scanWithVirusTotal(url);
+      } catch (err) {
+        result.innerHTML = `<div style="color: red;">Error: ${err.message}</div>`;
+      } finally {
+        checkBtn.disabled = false;
+        checkBtn.textContent = 'Check';
+      }
+    });
+  </script>
+</body>
+</html>
