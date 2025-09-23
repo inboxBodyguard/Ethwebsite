@@ -1,14 +1,14 @@
-import OpenAI from '@ai-sdk/openai';
+import { GatewayClient } from 'ai-gateway';
 
 export default async function handler(req, res) {
-  const openaiKey = process.env.OPENAI_API_KEY;
+  const gatewayKey = process.env.AI_GATEWAY_KEY;
   const { prompt } = req.body;
 
-  const client = new OpenAI({ apiKey: openaiKey });
+  const client = new GatewayClient({ apiKey: gatewayKey });
 
-  const response = await client.chat.completions.create({
-    model: 'gpt-4o',
-    messages: [{ role: 'user', content: prompt }]
+  const response = await client.complete({
+    model: 'gpt-4o', // or switch to another model supported by AI Gateway
+    prompt
   });
 
   res.status(200).json(response);
