@@ -180,8 +180,9 @@
     <div id="error-message" class="error-message"></div>
     <div id="success-message" class="success-message"></div>
 
+    <!-- Google Sign-In -->
     <div id="g_id_onload"
-         data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+         data-client_id="328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com"
          data-context="signin"
          data-ux_mode="popup"
          data-callback="handleCredentialResponse"
@@ -195,6 +196,7 @@
 
     <div class="divider"><span>or</span></div>
 
+    <!-- Traditional login -->
     <form id="login-form">
       <div class="form-group">
         <label for="email" class="form-label">Email Address</label>
@@ -222,7 +224,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
   <script>
-    const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+    const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com';
 
     document.addEventListener('DOMContentLoaded', function() {
       const onloadDiv = document.getElementById('g_id_onload');
@@ -251,7 +253,7 @@
       btn.disabled = true;
 
       google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleCredentialResponse });
-      google.accounts.id.prompt((notification) => {const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com'
+      google.accounts.id.prompt((notification) => {
         if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
           btnText.textContent = 'Continue with Google';
           btn.disabled = false;
