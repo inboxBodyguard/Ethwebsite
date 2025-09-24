@@ -63,18 +63,16 @@
 </head>
 <body>
 
-  <h1>Suspicious Link Checker</h1>
-  <p>Enter a link below to verify its safety:</p>
-
+ <!-- Suspicious Link Checker Section -->
+<section id="link-checker" style="margin-top:30px;">
+  <h2>Suspicious Link Checker</h2>
   <form id="linkForm">
-    <input type="url" id="urlInput" placeholder="Paste suspicious URL here..." required />
-    <button type="submit" id="checkBtn">Check</button>
+    <input type="url" id="urlInput" placeholder="Paste URL here..." required style="width:100%; padding:10px; margin:10px 0;"/>
+    <button type="submit" id="checkBtn" style="padding:10px 20px; background:#00ffcc; border:none; cursor:pointer; font-weight:bold;">Check</button>
   </form>
-
-  <div id="result"></div>
-
-  <h2>Scan History</h2>
-  <table id="historyTable">
+  <div id="result" style="margin-top:20px; font-weight:bold;"></div>
+  <h3>Scan History</h3>
+  <table id="historyTable" style="width:100%; border-collapse:collapse;">
     <thead>
       <tr>
         <th>URL</th>
@@ -86,190 +84,58 @@
     </thead>
     <tbody></tbody>
   </table>
-<div>
-<script>
-const form = document.getElementById('linkForm');
-const result = document.getElementById('result');
-const aiDiv = document.getElementById('ai-result');
-const checkBtn = document.getElementById('checkBtn');
-const historyTbody = document.querySelector('#historyTable tbody');
-const API_KEY = 'aae37bf314798b0edf335b4818114280a268aaf936bd7d4b0e695b81870f08a8'; // REGENERATE THIS!
-
-// Suspicious keyword filter
-const suspiciousKeywords = ["free-gift","login-now","verify-account","bit.ly","tinyurl","short.ly"];
-
-function getUrlId(url) {
-  return btoa(url).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-}
-
-function displayResults(attributes, url, urlId) {
-  const stats = attributes.last_analysis_stats || attributes.stats || {};
-  const results = attributes.last_analysis_results || attributes.results || {};
-  const harmless = stats.harmless || 0;
-  const malicious = stats.malicious || 0;
-  const suspicious = stats.suspicious || 0;
-  const undetected = stats.undetected || 0;
-  const timeout = stats.timeout || 0;
-  const total = harmless + malicious + suspicious + undetected + timeout;
-
-  let html = `<div class="detection-ratio">${malicious} / ${total} detections</div><div class="scan-details">`;
-  Object.keys(results).forEach(engine => {
-    const res = results[engine];
-    if(res.category==='malicious'||res.result==='malicious'){
-      html += `<div>${engine}: ${res.result||res.category}</div>`;
-    }
-  });
-  html += '</div>';
-  result.innerHTML = html;
-
-  const status = malicious>0 ? 'Suspicious':'Safe';
-  const detections = `${malicious}/${total}`;
-  const date = new Date().toLocaleString();
-  const reportLink = `https://www.virustotal.com/gui/url/${urlId}`;
-  addToHistory(url,status,detections,date,reportLink);
-}
-
-function addToHistory(url,status,detections,date,reportLink){
-  const row = document.createElement('tr');
-  row.innerHTML = `<td>${url}</td><td>${status}</td><td>${detections}</td><td>${date}</td><td><a href="${reportLink}" target="_blank" style="color:#00ffcc;">View Report</a></td>`;
-  historyTbody.appendChild(row);
-}
-
-async function scanWithVirusTotal(url){
-  result.innerHTML = '<div class="loading">🔄 Checking...</div>';
-  checkBtn.disabled = true;
-  checkBtn.textContent = 'Checking...';
-
-  // Keyword warnings
-  suspiciousKeywords.forEach(kw=>{
-    if(url.toLowerCase().includes(kw)){
-      result.innerHTML += `<div style="color: yellow;">Warning: URL contains suspicious keyword "${kw}"</div>`;
-    }
-  });
-
-  const urlId = getUrlId(url);
-
-  // Try existing report first
-  let reportResponse = await fetch(`https://www.virustotal.com/api/v3/urls/${urlId}`,{
-    headers:{'x-apikey':API_KEY}
-  });
-
-  if(reportResponse.ok){
-    const reportData = await reportResponse.json();
-    displayResults(reportData.data.attributes,url,urlId);
-  } else if(reportResponse.status === 404){
-    // Submit for new scan
-    const scanResponse = await fetch('https://www.virustotal.com/api/v3/urls',{
-      method:'POST',
-      headers:{'x-apikey':API_KEY},
-      body:new URLSearchParams({url})
-    });
-
-    if(!scanResponse.ok){
-      throw new Error(`HTTP ${scanResponse.status}: ${await scanResponse.text()}`);
-    }
-
-    const scanData = await scanResponse.json();
-    const analysisId = scanData.data.id;
-
-    result.innerHTML = '<div class="loading">🔄 Scanning with VirusTotal... Please wait.</div>';
-
-    let attempts = 0, maxAttempts = 15;
-    while(attempts < maxAttempts){
-      await new Promise(r=>setTimeout(r,2000));
-      reportResponse = await fetch(`https://www.virustotal.com/api/v3/analyses/${analysisId}`,{
-        headers:{'x-apikey':API_KEY}
-      });
-      if(!reportResponse.ok){
-        throw new Error(`HTTP ${reportResponse.status}: ${await reportResponse.text()}`);
-      }
-      const reportData = await reportResponse.json();
-      if(reportData.data.attributes.status==='completed'){
-        displayResults(reportData.data.attributes,url,urlId);
-        break;
-      }
-      attempts++;
-    }
-  } else {
-    throw new Error(`HTTP ${reportResponse.status}: ${await reportResponse.text()}`);
-  }
-
-  // Call AI after VT scan
-  await askAI(`Analyze this website: ${url}`);
-}
-
-async function askAI(prompt){
-  const res = await fetch('/api/openai-chat',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({prompt})
-  });
-  const data = await res.json();
-  aiDiv.innerHTML = `<div style="color: lightcyan;">💡 AI Analysis:<br>${JSON.stringify(data,null,2)}</div>`;
-}
-
-form.addEventListener('submit', async e=>{
-  e.preventDefault();
-  const url = document.getElementById('urlInput').value.trim();
-  if(!url) return;
-  result.innerHTML = '';
-  aiDiv.innerHTML = '';
-  try{ await scanWithVirusTotal(url); }
-  catch(err){ result.innerHTML=`<div style="color: red;">Error: ${err.message}</div>`; }
-  finally{ checkBtn.disabled = false; checkBtn.textContent = 'Check'; }
-});
-</script>
-<!-- Suspicious Link Checker Section -->
-<section id="link-checker" style="margin-top:30px;">
-  <h2>Suspicious Link Checker</h2>
-  <form id="linkForm">
-    <input type="url" id="urlInput" placeholder="Paste URL here..." required style="width:100%; padding:10px; margin:10px 0;"/>
-    <button type="submit" id="checkBtn" style="padding:10px 20px; background:#00ffcc; border:none; cursor:pointer; font-weight:bold;">Check</button>
-  </form>
-  <div id="result" style="margin-top:20px; font-weight:bold;"></div>
 </section>
 
 <script>
-// Grab elements
 const form = document.getElementById('linkForm');
 const result = document.getElementById('result');
 const checkBtn = document.getElementById('checkBtn');
+const historyTbody = document.querySelector('#historyTable tbody');
 
-// Encode URL helper
 function getUrlId(url){
   return btoa(url).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
 
-// Display VirusTotal results
-function displayResults(data,url){
-  const stats = data.last_analysis_stats || {};
+function displayResults(attributes, url) {
+  const stats = attributes.last_analysis_stats || {};
   const malicious = stats.malicious || 0;
   const total = Object.values(stats).reduce((a,b)=>a+b,0);
+
   result.innerHTML = `<div>${malicious} / ${total} detections</div>`;
+
+  // Add to history
+  const row = document.createElement('tr');
+  const status = malicious>0 ? 'Suspicious':'Safe';
+  const date = new Date().toLocaleString();
+  const reportLink = `https://www.virustotal.com/gui/url/${getUrlId(url)}`;
+  row.innerHTML = `<td>${url}</td><td>${status}</td><td>${malicious}/${total}</td><td>${date}</td><td><a href="${reportLink}" target="_blank" style="color:#00ffcc;">View Report</a></td>`;
+  historyTbody.appendChild(row);
 }
 
-// Handle form submit
 form.addEventListener('submit', async e=>{
   e.preventDefault();
   const url = document.getElementById('urlInput').value.trim();
   if(!url) return;
+
   result.innerHTML = 'Checking...';
   checkBtn.disabled = true;
 
-  try{
-    const res = await fetch('/api/virustotal',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({ url })
+  try {
+    // **No API key in frontend** — call your server endpoint
+    const res = await fetch('/api/virustotal', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ url })
     });
     const data = await res.json();
-    displayResults(data,url);
-  }catch(err){
+    displayResults(data, url);
+  } catch(err) {
     result.innerHTML = `<div style="color:red;">Error: ${err.message}</div>`;
-  }finally{
-    checkBtn.disabled=false;
+  } finally {
+    checkBtn.disabled = false;
   }
 });
+
 </script>
 </body>
 </html>
