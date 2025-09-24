@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, ''))); // Serve from current folder
+app.use(express.static(path.join(__dirname, ''))); // Serve everything in current folder
 
 // Endpoint to call VirusTotal
 app.post('/api/virustotal', async (req, res) => {
@@ -18,16 +18,13 @@ app.post('/api/virustotal', async (req, res) => {
   const apiKey = process.env.VT_API_KEY;
 
   try {
-    // Encode URL
     const urlId = Buffer.from(url).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 
-    // Check existing report
     let response = await fetch(`https://www.virustotal.com/api/v3/urls/${urlId}`, {
       headers: { 'x-apikey': apiKey }
     });
 
     if (response.status === 404) {
-      // Submit new scan
       response = await fetch('https://www.virustotal.com/api/v3/urls', {
         method: 'POST',
         headers: { 'x-apikey': apiKey, 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -37,7 +34,6 @@ app.post('/api/virustotal', async (req, res) => {
       const scanData = await response.json();
       const analysisId = scanData.data.id;
 
-      // Poll for completion
       let completed = false, attempts = 0;
       while (!completed && attempts < 15) {
         await new Promise(r => setTimeout(r, 2000));
@@ -63,7 +59,7 @@ app.post('/api/virustotal', async (req, res) => {
   }
 });
 
-// Serve home.html by default
+// Serve home.html
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'home.html')));
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
