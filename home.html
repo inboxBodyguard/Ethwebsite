@@ -1146,63 +1146,25 @@
         </div>
         <p id="status"></p>
 
-    <!-- Playbook Button -->
-        <div class="playbook-container">
-            <a href="playbook.html" class="playbook-button">
-                <span class="icon">🚨</span>
-                <span class="text">Get Free Incident Playbook</span>
-            </a>
-        </div>
+    <!-- Place this anywhere inside <body> where you want the button -->
+<button id="logoutBtn" style="padding:10px 20px; border:none; border-radius:8px; background:#00ffcc; color:#000; font-weight:600; cursor:pointer;">
+  Logout
+</button>
 
-    <!-- Alternative versions for comparison -->
-    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #ddd;">
-        <h3 style="text-align: center; color: #666;">Alternative Styles:</h3>
-        
-        <!-- Rounded pill version -->
-        <div style="text-align: center; margin: 1rem 0;">
-            <a href="playbook.html" style="
-                display: inline-block;
-                background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
-                color: #fff;
-                padding: 1rem 2.5rem;
-                border-radius: 50px;
-                font-size: 1.1rem;
-                font-weight: bold;
-                text-decoration: none;
-                box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
-                transition: all 0.3s ease;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(211, 47, 47, 0.4)'" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(211, 47, 47, 0.3)'">
-                🚨 Get Free Incident Playbook
-            </a>
-        </div>
-        
-        <!-- Glowing version -->
-        <div style="text-align: center; margin: 1rem 0;">
-            <a href="playbook.html" style="
-                display: inline-block;
-                background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
-                color: #fff;
-                padding: 1rem 2rem;
-                border-radius: 8px;
-                font-size: 1.1rem;
-                font-weight: bold;
-                text-decoration: none;
-                box-shadow: 0 0 20px rgba(211, 47, 47, 0.5), 0 4px 15px rgba(211, 47, 47, 0.3);
-                transition: all 0.3s ease;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                animation: glow 2s ease-in-out infinite alternate;
-            " onmouseover="this.style.transform='scale(1.05)'" 
-               onmouseout="this.style.transform='scale(1)'">
-                🚨 Get Free Incident Playbook
-            </a>
-        </div>
-    </div>
+<script>
+  // Redirect to login if no user is in session
+  const user = sessionStorage.getItem('user');
+  if (!user) {
+    window.location.href = 'login.html';
+  }
 
-    <button id="logoutBtn">Logout</button>
+  // Logout button functionality
+  const logoutBtn = document.getElementById('logoutBtn');
+  logoutBtn.addEventListener('click', () => {
+    sessionStorage.removeItem('user');  // Clear session
+    window.location.href = 'login.html'; // Redirect to login page
+  });
+</script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
