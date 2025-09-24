@@ -312,5 +312,17 @@
       else if (email) showError('Please enter a valid email address');
     }
   </script>
+  <div id="verification-step">
+  <h2>One More Step Before You Continue</h2>
+  <p>Please verify that you are human to proceed.</p>
+  <div id="captcha-container">
+    <form id="signup-verification-form" action="/verify" method="POST">
+      <div class="g-recaptcha" data-sitekey="6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG"></div>
+      <button type="submit">Verify & Continue</button>
+    </form>
+  </div>
+</div>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 </html>
