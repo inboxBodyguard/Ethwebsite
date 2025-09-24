@@ -1,15 +1,14 @@
-import express from 'express';
-import fetch from 'node-fetch';
-import path from 'path';
-import dotenv from 'dotenv';
+// server.js
+const express = require('express');
+const fetch = require('node-fetch'); // v2.6.7
+const path = require('path');
+require('dotenv').config();
 
-dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
-const __dirname = path.resolve();
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, ''))); // Serve from current folder
 
 // Endpoint to call VirusTotal
 app.post('/api/virustotal', async (req, res) => {
@@ -21,7 +20,7 @@ app.post('/api/virustotal', async (req, res) => {
   try {
     // Encode URL
     const urlId = Buffer.from(url).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-    
+
     // Check existing report
     let response = await fetch(`https://www.virustotal.com/api/v3/urls/${urlId}`, {
       headers: { 'x-apikey': apiKey }
@@ -52,6 +51,7 @@ app.post('/api/virustotal', async (req, res) => {
         }
         attempts++;
       }
+
       return res.status(202).json({ message: 'Analysis pending, try again shortly.' });
     }
 
@@ -62,5 +62,8 @@ app.post('/api/virustotal', async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 });
+
+// Serve home.html by default
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'home.html')));
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
