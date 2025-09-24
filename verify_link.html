@@ -219,6 +219,57 @@ form.addEventListener('submit', async e=>{
   finally{ checkBtn.disabled = false; checkBtn.textContent = 'Check'; }
 });
 </script>
+<!-- Suspicious Link Checker Section -->
+<section id="link-checker" style="margin-top:30px;">
+  <h2>Suspicious Link Checker</h2>
+  <form id="linkForm">
+    <input type="url" id="urlInput" placeholder="Paste URL here..." required style="width:100%; padding:10px; margin:10px 0;"/>
+    <button type="submit" id="checkBtn" style="padding:10px 20px; background:#00ffcc; border:none; cursor:pointer; font-weight:bold;">Check</button>
+  </form>
+  <div id="result" style="margin-top:20px; font-weight:bold;"></div>
+</section>
 
+<script>
+// Grab elements
+const form = document.getElementById('linkForm');
+const result = document.getElementById('result');
+const checkBtn = document.getElementById('checkBtn');
+
+// Encode URL helper
+function getUrlId(url){
+  return btoa(url).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+
+// Display VirusTotal results
+function displayResults(data,url){
+  const stats = data.last_analysis_stats || {};
+  const malicious = stats.malicious || 0;
+  const total = Object.values(stats).reduce((a,b)=>a+b,0);
+  result.innerHTML = `<div>${malicious} / ${total} detections</div>`;
+}
+
+// Handle form submit
+form.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const url = document.getElementById('urlInput').value.trim();
+  if(!url) return;
+  result.innerHTML = 'Checking...';
+  checkBtn.disabled = true;
+
+  try{
+    const res = await fetch('/api/virustotal',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ url })
+    });
+    const data = await res.json();
+    displayResults(data,url);
+  }catch(err){
+    result.innerHTML = `<div style="color:red;">Error: ${err.message}</div>`;
+  }finally{
+    checkBtn.disabled=false;
+  }
+});
+</script>
 </body>
 </html>
