@@ -312,5 +312,84 @@
       else if (email) showError('Please enter a valid email address');
     }
   </script>
+  <!-- Email and Password Inputs (assuming you have these already) -->
+<input type="email" id="email" placeholder="Email" required>
+<input type="password" id="password" placeholder="Password" required>
+
+<!-- Hidden reCAPTCHA container -->
+<div id="recaptcha-container" style="display:none; margin-top:1rem;"></div>
+
+<!-- Verify button -->
+<button id="verify-btn" class="btn-primary" style="display:none; margin-top:0.5rem;">
+  Verify & Continue
+</button>
+
+<script>
+  const RECAPTCHA_SITE_KEY ='6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG'; // Replace with your site key
+  let recaptchaWidgetId = null;
+  let recaptchaReady = false;
+
+  // reCAPTCHA onload callback
+  function onRecaptchaLoad() {
+    recaptchaReady = true;
+    renderRecaptcha();
+  }
+
+  // Render reCAPTCHA
+  function renderRecaptcha() {
+    if (!recaptchaReady) return;
+    if (recaptchaWidgetId === null) {
+      recaptchaWidgetId = grecaptcha.render('recaptcha-container', {
+        sitekey: RECAPTCHA_SITE_KEY,
+        theme: 'light'
+      });
+    }
+    document.getElementById('recaptcha-container').style.display = 'block';
+    document.getElementById('verify-btn').style.display = 'block';
+  }
+
+  // Verify token and proceed (example: mock login; integrate with backend below)
+  function verifyRecaptchaThenLogin(callback) {
+    if (typeof grecaptcha === 'undefined') {
+      alert('reCAPTCHA not loaded');
+      return;
+    }
+    const token = grecaptcha.getResponse(recaptchaWidgetId);
+    if (!token) {
+      alert('Please complete the reCAPTCHA');
+      return;
+    }
+    callback(token);
+  }
+
+  // Button click to verify and continue
+  document.getElementById('verify-btn').addEventListener('click', () => {
+    verifyRecaptchaThenLogin(async (token) => {
+      // Integrate with backend: POST token to /verify
+      try {
+        const response = await fetch('/verify', {  // Change to your backend URL if hosted separately
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `g-recaptcha-response=${encodeURIComponent(token)}`
+        });
+        if (response.ok) {
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          sessionStorage.setItem('user', JSON.stringify({ email, loginMethod: 'email' }));
+          showSuccess('Successfully signed in!');  // Assume showSuccess is defined elsewhere
+          setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+        } else {
+          alert('Verification failed');
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        alert('Server error');
+      }
+    });
+  });
+</script>
+
+<!-- Load reCAPTCHA API -->
+<script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 </body>
 </html>
