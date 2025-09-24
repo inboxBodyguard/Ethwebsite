@@ -1,65 +1,52 @@
 // server.js
-const express = require('express');
-const fetch = require('node-fetch'); // v2.6.7
-const path = require('path');
 require('dotenv').config();
+const express = require('express');
+const fetch = require('node-fetch');
+const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, ''))); // Serve everything in current folder
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Endpoint to call VirusTotal
 app.post('/api/virustotal', async (req, res) => {
   const { url } = req.body;
-  if (!url) return res.status(400).json({ error: 'Missing URL' });
-
-  const apiKey = process.env.VT_API_KEY;
+  if (!url) {
+    return res.status(400).json({ error: 'URL is required' });
+  }
 
   try {
-    const urlId = Buffer.from(url).toString('base64').replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    const apiKey = process.env.VT_API_KEY;
+    if (!apiKey) {
+      return res.status(500).json({ error: 'API key not configured' });
+    }
 
-    let response = await fetch(`https://www.virustotal.com/api/v3/urls/${urlId}`, {
-      headers: { 'x-apikey': apiKey }
+    const response = await fetch('https://www.virustotal.com/api/v3/urls', {
+      method: 'POST',
+      headers: {
+        'x-apikey': apiKey,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `url=${encodeURIComponent(url)}`
     });
 
-    if (response.status === 404) {
-      response = await fetch('https://www.virustotal.com/api/v3/urls', {
-        method: 'POST',
-        headers: { 'x-apikey': apiKey, 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ url })
-      });
-
-      const scanData = await response.json();
-      const analysisId = scanData.data.id;
-
-      let completed = false, attempts = 0;
-      while (!completed && attempts < 15) {
-        await new Promise(r => setTimeout(r, 2000));
-        response = await fetch(`https://www.virustotal.com/api/v3/analyses/${analysisId}`, {
-          headers: { 'x-apikey': apiKey }
-        });
-        const reportData = await response.json();
-        if (reportData.data.attributes.status === 'completed') {
-          completed = true;
-          return res.json(reportData.data.attributes);
-        }
-        attempts++;
-      }
-
-      return res.status(202).json({ message: 'Analysis pending, try again shortly.' });
+    if (!response.ok) {
+      throw new Error(`VirusTotal API error: ${response.status}`);
     }
 
     const data = await response.json();
-    return res.json(data.data.attributes);
-
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to submit URL to VirusTotal' });
   }
 });
 
-// Serve home.html
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'home.html')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'home.html'));
+});
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
