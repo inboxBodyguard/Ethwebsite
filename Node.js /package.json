@@ -2,10 +2,11 @@
   "name": "ezmcyber-express",
   "version": "1.0.0",
   "description": "EZM Cyber signup/login with Google and reCAPTCHA",
-  "main": "Nord.js",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "node Nord.js",
-    "dev": "nodemon Nord.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "build": "echo 'No build step needed'"
   },
   "dependencies": {
