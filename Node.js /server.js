@@ -1,52 +1,40 @@
-// server.js
-require('dotenv').config();
-const express = require('express');
-const fetch = require('node-fetch');
-const path = require('path');
+import express from "express";
+import fetch from "node-fetch";
+import dotenv from "dotenv";
+import bodyParser from "body-parser";
+
+dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); // in case you need JSON parsing
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.post('/api/virustotal', async (req, res) => {
-  const { url } = req.body;
-  if (!url) {
-    return res.status(400).json({ error: 'URL is required' });
+app.post("/verify", async (req, res) => {
+  const token = req.body["g-recaptcha-response"];
+  if (!token) {
+    return res.status(400).send("Captcha missing");
   }
+
+  const secret = process.env.RECAPTCHA_SECRET;
+  if (!secret) {
+    return res.status(500).send("Server configuration error");
+  }
+
+  const verifyURL = `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${token}`;
 
   try {
-    const apiKey = process.env.VT_API_KEY;
-    if (!apiKey) {
-      return res.status(500).json({ error: 'API key not configured' });
-    }
-
-    const response = await fetch('https://www.virustotal.com/api/v3/urls', {
-      method: 'POST',
-      headers: {
-        'x-apikey': apiKey,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: `url=${encodeURIComponent(url)}`
-    });
-
-    if (!response.ok) {
-      throw new Error(`VirusTotal API error: ${response.status}`);
-    }
-
+    const response = await fetch(verifyURL, { method: "POST" });
     const data = await response.json();
-    res.json(data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to submit URL to VirusTotal' });
+    if (data.success) {
+      return res.status(200).send("Verified");
+    } else {
+      return res.status(400).send("Captcha failed");
+    }
+  } catch (err) {
+    console.error("Verification error:", err);
+    return res.status(500).send("Server error");
   }
 });
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'home.html'));
-});
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server running on port ${port}`));
