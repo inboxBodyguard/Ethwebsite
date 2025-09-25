@@ -39,6 +39,7 @@
     line-height: 1.7;
     min-height: 100vh;
     padding-top: 72px;
+    overflow-x: hidden;
   }
 
   .banner {
@@ -51,6 +52,8 @@
     font-weight: 700;
     box-shadow: var(--neon-glow);
     text-transform: uppercase;
+    position: relative;
+    z-index: 10;
   }
 
   nav#sidebar {
@@ -179,6 +182,35 @@
     margin: 20px 0;
     font-weight: 600;
   }
+
+  /* === Falling Text Effect === */
+  .falling-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .falling-text {
+    position: absolute;
+    top: -50px;
+    font-size: 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--accent-color);
+    text-shadow: var(--neon-glow);
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-50px); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(110vh); opacity: 0; }
+  }
 </style>
 </head>
 <body>
@@ -206,6 +238,9 @@
   </ul>
   <button id="sidebarClose">Close</button>
 </nav>
+
+<!-- Falling Text Layer -->
+<div class="falling-container" id="fallingContainer"></div>
 
 <div id="liveFeed"></div>
 <div id="loading">Loading...</div>
@@ -265,6 +300,23 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   loadFeed();
+
+  // === Falling Text Script ===
+  const fallingContainer = document.getElementById("fallingContainer");
+  const phrases = ["Ezmcyber.", "Secure.", "Protect.", "Respond."];
+
+  function createFallingText() {
+    const text = document.createElement("div");
+    text.className = "falling-text";
+    text.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+    text.style.left = Math.random() * 100 + "vw";
+    text.style.animationDuration = (4 + Math.random() * 4) + "s";
+    text.style.fontSize = (0.8 + Math.random() * 1.2) + "rem";
+    fallingContainer.appendChild(text);
+    setTimeout(() => text.remove(), 8000);
+  }
+
+  setInterval(createFallingText, 600);
 });
 </script>
 
