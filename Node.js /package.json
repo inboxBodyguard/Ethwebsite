@@ -1,26 +1,17 @@
 {
-  "name": "ezmcyber-express",
-  "version": "1.0.0",
-  "description": "EZM Cyber signup/login with Google and reCAPTCHA",
-  "main": "server.js",
-  "type": "module",
+  "name": "firebase-backend",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "build": "echo 'No build step needed'"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "node-fetch": "^3.3.2",
-    "dotenv": "^16.3.1",
-    "body-parser": "^1.20.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.2"
+    "start": "node index.js",
+    "serve": "firebase emulators:start",
+    "deploy": "firebase deploy --only functions"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "18"
   },
-  "author": "InboxBodyguard",
-  "license": "MIT"
+  "dependencies": {
+    "express": "^4.19.2",
+    "firebase-functions": "^4.9.0",
+    "firebase-admin": "^12.6.0"
+  }
 }
