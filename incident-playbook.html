@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Interactive Incident Playbook</title>
+  <title>Interactive Incident Playbook — Live Response Hub</title>
   <style>
     :root{
       --bg:#0f1724; --card:#0b1220; --accent:#16a34a; --muted:#94a3b8; --danger:#dc2626;
@@ -39,9 +39,7 @@
     footer{margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:center}
     .kbd{background:#071426;border:1px solid rgba(255,255,255,0.03);padding:6px 8px;border-radius:6px}
     .pill{display:inline-block;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);font-weight:700}
-    /* responsive */
     @media(max-width:980px){ .layout{grid-template-columns:1fr} .wrap{padding:12px} }
-    /* modal */
     .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(1,6,12,0.6);z-index:50}
     .modal.open{display:flex}
     .modal .box{width:720px;max-width:96%;background:#071424;padding:16px;border-radius:10px}
@@ -49,6 +47,8 @@
     .row > *{flex:1}
     .muted{color:var(--muted)}
     .tiny{font-size:12px;color:var(--muted)}
+    .step-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .step .left input{width:18px;height:18px}
   </style>
 </head>
 <body>
@@ -77,71 +77,8 @@
           <i id="progressBar"></i>
         </div>
 
-        <!-- Steps -->
-        <section id="stepsSection" style="margin-top:14px">
-          <!-- Step template repeated by HTML below -->
-          <div class="step" data-step="1">
-            <div class="left"><input type="checkbox" data-step-check="1" /></div>
-            <div style="flex:1">
-              <h3>Detect — initial intake</h3>
-              <p class="muted">Collect initial details: who, when, what, screenshots, and scope.</p>
-              <div class="tools">
-                <button class="btn secondary" data-action="addLog" data-msg="Intake recorded">Add to incident log</button>
-                <button class="btn" data-action="openTool" data-tool="ticket">Open Ticket Tool</button>
-                <button class="btn secondary" data-action="analyzeHeader">Analyze Email Header</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="step" data-step="2">
-            <div class="left"><input type="checkbox" data-step-check="2" /></div>
-            <div style="flex:1">
-              <h3>Contain — limit spread</h3>
-              <p class="muted">Isolate affected systems, force password resets, block malicious sender domains/IPs.</p>
-              <div class="tools">
-                <button class="btn" data-action="openTool" data-tool="blockIp">Block IP / Domain</button>
-                <button class="btn secondary" data-action="addLog" data-msg="Containment actions started">Log action</button>
-                <button class="btn secondary" data-action="runMultiChecker">Run Multi-Checker</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="step" data-step="3">
-            <div class="left"><input type="checkbox" data-step-check="3" /></div>
-            <div style="flex:1">
-              <h3>Eradicate — remove threat</h3>
-              <p class="muted">Remove malware, revoke credentials, clean systems, scan backups.</p>
-              <div class="tools">
-                <button class="btn secondary" data-action="addLog" data-msg="Eradication started">Log</button>
-                <button class="btn" data-action="openTool" data-tool="malwareScan">Start Scan</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="step" data-step="4">
-            <div class="left"><input type="checkbox" data-step-check="4" /></div>
-            <div style="flex:1">
-              <h3>Recover — restore services</h3>
-              <p class="muted">Restore systems from known good backups, monitor closely for re-infection.</p>
-              <div class="tools">
-                <button class="btn secondary" data-action="addLog" data-msg="Recovery actions initiated">Log</button>
-                <button class="btn" data-action="openTool" data-tool="monitor">Open Monitoring</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="step" data-step="5">
-            <div class="left"><input type="checkbox" data-step-check="5" /></div>
-            <div style="flex:1">
-              <h3>Lessons Learned</h3>
-              <p class="muted">Capture timeline, root cause, actions, and improvement plan.</p>
-              <div class="tools">
-                <button class="btn secondary" data-action="addLog" data-msg="Post-incident review started">Log</button>
-                <button class="btn" data-action="openTemplate" data-template="postmortem">Open Postmortem Template</button>
-              </div>
-            </div>
-          </div>
-        </section>
+        <!-- Steps (rendered from JSON) -->
+        <section id="stepsSection" style="margin-top:14px"></section>
 
         <!-- Incident log and notes -->
         <section style="margin-top:14px">
@@ -218,6 +155,9 @@
     </div>
   </div>
 
+  <!-- jsPDF for PDF export (optional) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <script>
     /************************************************************************
      * CONFIGURE THESE VALUES:
@@ -225,62 +165,143 @@
      ************************************************************************/
     const CONFIG = {
       tool_ticket: "https://your-ticket-system.example/new?incidentId={incidentId}",
-      tool_multichecker: "https://yourdomain.example/multichecker?url={target}",
-      tool_header: "https://yourheaderanalyzer.example?data={encoded}",
+      tool_multichecker: "https://ezmcyber.xyz/checker.html?target={target}",
+      tool_header: "https://ezmcyber.xyz/header-analyzer?data={encoded}",
       tool_vt: "https://www.virustotal.com/gui/search/{target}",
       tool_blockip: "https://your-firewall.example/block?ip={target}",
-      webhook_submit: "https://your-automation-endpoint.example/webhook", // POST incident JSON here
+      webhook_submit: "" // set your webhook here
     };
 
-    // Utility: simple element selector
+    // Utility selectors
     const $ = s => document.querySelector(s);
     const $$ = s => Array.from(document.querySelectorAll(s));
 
-    // State
+    /************************************************************************
+     * STATE: incident state, steps are driven by playbook JSON
+     ************************************************************************/
     const state = {
       id: "incident-" + Date.now(),
-      steps: {1:false,2:false,3:false,4:false,5:false},
+      playbookType: "phishing",
+      stepsState: {}, // keyed by step id
       logs: [],
       meta: {title:"Untitled Incident", created: new Date().toISOString()}
     };
 
-    // Init: set incident id UI
+    // Playbooks (JSON-driven). Expand as needed.
+    const PLAYBOOKS = {
+      phishing: {
+        title: "Phishing Email",
+        steps: [
+          { id: "detect", title: "Detect — initial intake", desc: "Collect details: who, when, what, screenshots, sender headers and scope.", actions: ["Analyze headers","Quarantine email","Identify affected users"] },
+          { id: "contain", title: "Contain — limit spread", desc: "Isolate affected systems, block malicious sender domains/IPs, force password reset for impacted users.", actions: ["Block sender domain","Revoke sessions","Notify users"] },
+          { id: "eradicate", title: "Eradicate — remove threat", desc: "Remove malicious payloads, revoke compromised credentials, scan for indicators of compromise.", actions: ["Run AV scan","Reset credentials","Clean attachments"] },
+          { id: "recover", title: "Recover — restore services", desc: "Restore mailboxes/systems from verified backups and monitor closely for suspicious activity.", actions: ["Restore from backup","Confirm integrity","Monitor logs"] },
+          { id: "lessons", title: "Lessons Learned", desc: "Capture timeline, root cause, actions, and improvement plan.", actions: ["Postmortem","Awareness training","Update filters"] }
+        ]
+      },
+      ransomware: {
+        title: "Ransomware Infection",
+        steps: [
+          { id: "detect", title: "Detect", desc: "Identify encryption activity, ransom note, or unusual file changes.", actions: ["Identify infected hosts","Collect samples"] },
+          { id: "contain", title: "Contain", desc: "Isolate infected hosts, disable SMB/CIFS and shared drives.", actions: ["Network isolation","Disable accounts"] },
+          { id: "eradicate", title: "Eradicate", desc: "Remove ransomware binaries, rebuild compromised hosts from clean images.", actions: ["Reimage hosts","Change credentials"] },
+          { id: "recover", title: "Recover", desc: "Restore from verified backups, validate restored systems.", actions: ["Restore backups","Validate restores"] },
+          { id: "lessons", title: "Lessons Learned", desc: "Perform root-cause analysis and patch exploited vectors.", actions: ["Patch vulnerabilities","Improve backup cadence"] }
+        ]
+      },
+      lost_device: {
+        title: "Lost Laptop/Phone",
+        steps: [
+          { id: "report", title: "Immediate", desc: "Report device loss to IT within 1 hour and identify last known activity.", actions: ["Report lost device","Identify last activity"] },
+          { id: "remote", title: "Remote Wipe", desc: "Trigger device wipe via MDM and revoke tokens.", actions: ["Trigger MDM wipe","Revoke sessions"] },
+          { id: "credentials", title: "Credentials", desc: "Reset passwords for linked accounts and enforce MFA.", actions: ["Reset passwords","Enforce MFA"] },
+          { id: "legal", title: "Legal", desc: "File police report if required and notify compliance", actions: ["File police report","Notify compliance"] },
+          { id: "lessons", title: "Lessons Learned", desc: "Document incident and adjust device policy.", actions: ["Update device policy","User training"] }
+        ]
+      }
+    };
+
+    // Initialize UI
     $('#incidentId').textContent = state.id;
 
-    // Helpers: save / load to localStorage
+    /************************************************************************
+     * RENDER: generate steps UI from PLAYBOOKS
+     ************************************************************************/
+    function generateSteps(playbookKey = state.playbookType) {
+      const section = $('#stepsSection');
+      section.innerHTML = "";
+      const pb = PLAYBOOKS[playbookKey];
+      if(!pb) { section.innerHTML = `<div class="step"><h3>No playbook for ${playbookKey}</h3></div>`; return; }
+
+      // ensure step states exist
+      pb.steps.forEach((s, i) => {
+        if(typeof state.stepsState[s.id] === "undefined") state.stepsState[s.id] = false;
+      });
+
+      pb.steps.forEach((s, idx) => {
+        const step = document.createElement('div');
+        step.className = 'step';
+        step.dataset.step = s.id;
+        step.innerHTML = `
+          <div class="left"><input type="checkbox" data-step-check="${s.id}" ${state.stepsState[s.id] ? "checked" : ""} /></div>
+          <div style="flex:1">
+            <h3>${s.title}</h3>
+            <p class="muted">${s.desc}</p>
+            <div class="step-actions" aria-hidden="false">
+              ${s.actions.map(a => `<button class="btn secondary" data-action="addLog" data-msg="${escapeAttr(a)}">${escapeHtml(a)}</button>`).join('')}
+              <button class="btn" data-action="openTool" data-tool="multichecker">Run Multi-Checker</button>
+              <button class="btn secondary" data-action="analyzeHeader">Analyze Header</button>
+            </div>
+          </div>
+        `;
+        section.appendChild(step);
+      });
+
+      updateProgress();
+      seedToolLinks();
+    }
+
+    /************************************************************************
+     * SAVE / LOAD / LOGS / EXPORTS
+     ************************************************************************/
     function saveState(){
       try{
-        localStorage.setItem("incident_playbook_state", JSON.stringify(state));
+        const payload = {
+          id: state.id,
+          playbookType: state.playbookType,
+          stepsState: state.stepsState,
+          logs: state.logs,
+          meta: state.meta
+        };
+        localStorage.setItem("incident_playbook_state", JSON.stringify(payload));
         flash("Saved locally");
-      }catch(e){
-        console.error(e);
-        flash("Save failed", true);
-      }
+      }catch(e){ console.error(e); flash("Save failed", true); }
     }
+
     function loadState(){
       const raw = localStorage.getItem("incident_playbook_state");
       if(!raw) return;
       try{
         const saved = JSON.parse(raw);
-        Object.assign(state, saved);
-        $('#incidentId').textContent = state.id || state.meta.title || "incident";
-        // rehydrate UI
-        for(const k of Object.keys(state.steps)) {
-          const cb = document.querySelector(`input[data-step-check="${k}"]`);
-          if(cb) cb.checked = !!state.steps[k];
-        }
+        state.id = saved.id || state.id;
+        state.playbookType = saved.playbookType || state.playbookType;
+        state.stepsState = saved.stepsState || state.stepsState;
+        state.logs = saved.logs || state.logs;
+        state.meta = saved.meta || state.meta;
+        $('#incidentId').textContent = state.id;
+        generateSteps(state.playbookType);
         renderLogs();
         updateProgress();
-      }catch(e){ console.warn("load error", e) }
+      }catch(e){ console.warn("load error", e); }
     }
 
-    // Log functions
     function addLog(message, level="info"){
       const entry = {ts:new Date().toISOString(), message, level};
       state.logs.push(entry);
       renderLogs();
       saveState();
     }
+
     function renderLogs(){
       const container = $('#logEntries');
       container.innerHTML = "";
@@ -292,7 +313,17 @@
       });
     }
 
-    // UI feedback
+    function downloadFile(content, filename, mime){
+      const blob = new Blob([content], {type: mime || "application/octet-stream"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 3000);
+    }
+
+    /************************************************************************
+     * UI FEEDBACK, PROGRESS, and HELPERS
+     ************************************************************************/
     function flash(msg, err=false){
       const toast = document.createElement('div');
       toast.textContent = msg;
@@ -308,30 +339,35 @@
       setTimeout(()=>toast.remove(), 2200);
     }
 
-    // Update progress bar (based on checkboxes)
     function updateProgress(){
-      const total = Object.keys(state.steps).length;
-      const done = Object.values(state.steps).filter(Boolean).length;
-      const pct = Math.round((done/total)*100);
+      const stepKeys = Object.keys(PLAYBOOKS[state.playbookType].steps).map(i => PLAYBOOKS[state.playbookType].steps[i].id);
+      const total = stepKeys.length;
+      const done = stepKeys.filter(k => !!state.stepsState[k]).length;
+      const pct = Math.round((done / total) * 100);
       $('#progressBar').style.width = pct + "%";
       $('#percentText').textContent = pct + "%";
     }
 
-    // Event bindings
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    function escapeAttr(s){ return String(s).replace(/"/g, '&quot;'); }
+
+    /************************************************************************
+     * EVENT BINDINGS (delegated)
+     ************************************************************************/
     document.addEventListener('click', (ev)=>{
       const t = ev.target;
 
-      // Step checkboxes
+      // checkbox toggles
       if(t.matches('input[data-step-check]')){
         const id = t.getAttribute('data-step-check');
-        state.steps[id] = t.checked;
+        state.stepsState[id] = t.checked;
         addLog(`Step ${id} ${t.checked ? "completed" : "reopened"}`);
         updateProgress();
         saveState();
         return;
       }
 
-      // Buttons with data-action
+      // data-action buttons in steps
       if(t.matches('[data-action]')){
         const action = t.getAttribute('data-action');
         if(action === "addLog"){
@@ -341,13 +377,10 @@
           openTool(tool);
         } else if(action === "analyzeHeader"){
           openModal();
-        } else if(action === "runMultiChecker"){
-          // Example: open multi-checker with empty placeholder
-          openTool('multichecker', "");
         }
       }
 
-      // Template buttons
+      // template copy
       if(t.matches('[data-template]')){
         const name = t.getAttribute('data-template');
         const txt = getTemplate(name);
@@ -355,7 +388,7 @@
       }
     });
 
-    // Top actions
+    // top action buttons
     $('#saveStateBtn').addEventListener('click', saveState);
     $('#addNoteBtn').addEventListener('click', ()=>{
       const val = $('#noteInput').value.trim();
@@ -365,13 +398,11 @@
     });
     $('#noteInput').addEventListener('keydown', (e)=>{ if(e.key === "Enter") { e.preventDefault(); $('#addNoteBtn').click(); } });
 
-    // Export JSON
     $('#exportJsonBtn').addEventListener('click', ()=>{
-      const data = JSON.stringify(state, null, 2);
+      const data = JSON.stringify({id:state.id, playbookType: state.playbookType, stepsState: state.stepsState, logs: state.logs, meta: state.meta}, null, 2);
       downloadFile(data, state.id + ".json", "application/json");
     });
 
-    // Export CSV (simple conversion of logs)
     $('#exportCsvBtn').addEventListener('click', ()=>{
       const rows = [["timestamp","level","message"]];
       state.logs.forEach(l => rows.push([l.ts,l.level, l.message.replace(/\n/g," ") ]));
@@ -379,55 +410,52 @@
       downloadFile(csv, state.id + ".csv", "text/csv");
     });
 
-    // Print (print-friendly)
-    $('#printBtn').addEventListener('click', ()=>{
-      window.print();
-    });
+    $('#printBtn').addEventListener('click', ()=> window.print());
 
-    // Clear
     $('#clearBtn').addEventListener('click', ()=>{
       if(!confirm("Clear local incident progress? This cannot be undone.")) return;
       localStorage.removeItem("incident_playbook_state");
       location.reload();
     });
 
-    // Submit to webhook
     $('#submitWebhookBtn').addEventListener('click', async ()=>{
       const url = CONFIG.webhook_submit;
       if(!url){ flash("Webhook not configured", true); return; }
       try{
-        const res = await fetch(url, {method:"POST",headers:{"Content-Type":"application/json"},body: JSON.stringify(state)});
+        const res = await fetch(url, {method:"POST",headers:{"Content-Type":"application/json"},body: JSON.stringify({id:state.id, playbookType: state.playbookType, stepsState: state.stepsState, logs: state.logs, meta: state.meta})});
         if(res.ok){ flash("Submitted to webhook"); addLog("Submitted to webhook"); } else { flash("Webhook error", true); addLog("Webhook failed: " + res.status); }
       }catch(err){ console.error(err); flash("Submit failed", true); addLog("Webhook submit error"); }
     });
 
-    <!-- Tool Action Buttons -->
-<div class="tools">
-  <a href="https://ezmcyber.xyz/checker.html" target="_blank">🔍 Run URL & File Checker</a>
-  <a href="https://ezmcyber.xyz/header-analyzer" target="_blank">📧 Open Email Header Analyzer</a>
-  <a href="https://ezmcyber.xyz/base64-encoder" target="_blank">🔑 Base64 URL Encoder</a>
-</div>
-
-    // Sidebar link anchors: set hrefs from config
+    /************************************************************************
+     * TOOL LINKS AND MODAL
+     ************************************************************************/
     function seedToolLinks(){
       const map = {tool_ticket:"tool_ticket", tool_multichecker:"tool_multichecker", tool_header:"tool_header", tool_vt:"tool_vt", tool_blockip:"tool_blockip"};
       for(const k in map){
         const el = document.getElementById(map[k]);
         if(!el) continue;
-        const cfgKey = k.replace("tool_","");
         const url = CONFIG[k] || "#";
-        el.href = url.replace("{incidentId}", encodeURIComponent(state.id));
+        el.href = url.replace("{incidentId}", encodeURIComponent(state.id)).replace("{target}", "");
       }
     }
 
-    // Modal handling for header analysis
+    function openTool(name, target=""){
+      const cfgKey = "tool_" + name;
+      const urlTemplate = CONFIG[cfgKey];
+      if(!urlTemplate){ flash("Tool not configured", true); return; }
+      const url = urlTemplate.replace("{incidentId}", encodeURIComponent(state.id)).replace("{target}", encodeURIComponent(target));
+      window.open(url, "_blank");
+      addLog(`Opened tool: ${name}`);
+    }
+
     function openModal(){ $('#modal').classList.add('open'); $('#modal').setAttribute('aria-hidden','false'); }
     function closeModal(){ $('#modal').classList.remove('open'); $('#modal').setAttribute('aria-hidden','true'); }
     $('#closeModal').addEventListener('click', closeModal);
+
     $('#analyzeOpenBtn').addEventListener('click', ()=>{
       const raw = $('#headerText').value.trim();
       if(!raw) return flash("Paste headers first", true);
-      // Encode header and open tool URL (replace {encoded})
       const encoded = encodeURIComponent(btoa(unescape(encodeURIComponent(raw))));
       const url = (CONFIG.tool_header || "#").replace("{encoded}", encoded).replace("{incidentId}", encodeURIComponent(state.id));
       window.open(url, "_blank");
@@ -436,8 +464,7 @@
     });
 
     $('#analyzePostBtn').addEventListener('click', async ()=>{
-      // Optional: POST raw header to your API analyzer endpoint. Replace below with your analyzer URL
-      const analyzerApi = (CONFIG.tool_header_api || null); // set in CONFIG if you want POST behaviour
+      const analyzerApi = (CONFIG.tool_header_api || null);
       if(!analyzerApi){ flash("API analyzer not configured. Using open mode instead.", true); $('#analyzeOpenBtn').click(); return; }
       const raw = $('#headerText').value.trim();
       if(!raw) return flash("Paste headers first", true);
@@ -445,48 +472,12 @@
         const res = await fetch(analyzerApi, {method:'POST',headers:{"Content-Type":"text/plain"},body: raw});
         const data = await res.json();
         addLog("Header analysis POSTed to API");
-        // Optionally show results in new window or insert into log
         addLog("Analyzer response: " + JSON.stringify(data).slice(0,200));
         closeModal();
       }catch(e){ console.error(e); flash("Analyzer API failed", true); }
     });
 
-    // Helper: one-click templates
-    function getTemplate(name){
-      const templates = {
-        phish_notify: `Subject: Possible phishing attempt — immediate action required\n\nTeam,\nWe detected a suspected phishing email targeting employees. Do not click links or open attachments. IT will enforce password resets for affected accounts. Please report any suspicious activity to security@example.com.\n\n- Security Team`,
-        cust_notify: `Subject: Service Notice: Potential Account Compromise\n\nDear Customer,\nWe are investigating unusual activity affecting some accounts. We recommend you change your password immediately and enable MFA. We will update you within 24 hours.\n\n- Support`,
-        exec_brief: `Executive Summary:\n- Incident: Phishing attempt targeting staff\n- Scope: 4 accounts possibly compromised\n- Impact: Temporary service disruption\n- Next steps: Containment, password resets, monitor\n\nContact: security@example.com`,
-        postmortem: `Postmortem Template\n1) Summary:\n2) Timeline:\n3) Root cause:\n4) Actions taken:\n5) Remediation & follow-ups:\n6) Lessons learned:`
-      };
-      return templates[name] || "Template not found";
-    }
-
-    // Utilities
-    function downloadFile(content, filename, mime){
-      const blob = new Blob([content], {type: mime || "application/octet-stream"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(()=>URL.revokeObjectURL(url), 3000);
-    }
-    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-    // small helpers on load
-    seedToolLinks();
-    loadState();
-    updateProgress();
-    renderLogs();
-
-    // Allow opening tools directly from "openTool" when data-tool attr matches
-    document.querySelectorAll('[data-action="openTool"]').forEach(b=>{
-      b.addEventListener('click', (e)=> {
-        const tool = b.getAttribute('data-tool');
-        openTool(tool);
-      });
-    });
-
-    // If user clicks sidebar quick links, open config URL
+    // Sidebar quick-link behavior: open CONFIG or show flash if not set
     ['tool_ticket','tool_multichecker','tool_header','tool_vt','tool_blockip'].forEach(id=>{
       const el = document.getElementById(id);
       if(!el) return;
@@ -496,11 +487,41 @@
       });
     });
 
-    // Accessibility: close modal on ESC
+    // Close modal on ESC
     document.addEventListener('keydown', (e)=>{ if(e.key === "Escape") closeModal(); });
 
-    // initial sample log entry
-    if(state.logs.length===0) addLog("Incident created");
+    /************************************************************************
+     * TEMPLATES
+     ************************************************************************/
+    function getTemplate(name){
+      const templates = {
+        phish_notify: `Subject: Possible phishing attempt — immediate action required\n\nTeam,\nWe detected a suspected phishing email targeting employees. Do not click links or open attachments. IT will enforce password resets for affected accounts. Please report any suspicious activity to security@example.com.\n\n- Security Team`,
+        cust_notify: `Subject: Service Notice: Potential Account Compromise\n\nDear Customer,\nWe are investigating unusual activity affecting some accounts. We recommend you change your password immediately and enable MFA. We will update you within 24 hours.\n\n- Support`,
+        exec_brief: `Executive Summary:\n- Incident: [Type]\n- Scope: [# affected]\n- Impact: [impact]\n- Next steps: Containment, recovery, monitoring\n\nContact: security@example.com`,
+        postmortem: `Postmortem Template\n1) Summary:\n2) Timeline:\n3) Root cause:\n4) Actions taken:\n5) Remediation & follow-ups:\n6) Lessons learned:`
+      };
+      return templates[name] || "Template not found";
+    }
+
+    /************************************************************************
+     * BOOTSTRAP: initial state & render
+     ************************************************************************/
+    // ensure seed links & initial render
+    seedToolLinks();
+    loadState();
+    if(!localStorage.getItem("incident_playbook_state")){
+      // no saved state — initialize steps for default playbook
+      generateSteps(state.playbookType);
+      addLog("Incident created");
+      saveState();
+    }
+
+    // Allow dynamic playbook switching (optional dev helper)
+    // Example: change playbookType via JS console then call generateSteps('ransomware')
+    window.setPlaybook = (key) => { if(PLAYBOOKS[key]) { state.playbookType = key; generateSteps(key); saveState(); flash(`Playbook switched to ${key}`); } else flash("Playbook not found", true); };
+
+    // expose state for debugging: window.__INCIDENT_STATE
+    window.__INCIDENT_STATE = state;
   </script>
 </body>
 </html>
