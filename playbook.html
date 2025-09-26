@@ -1,62 +1,393 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>🚨 Incident Playbook Generator</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 20px;
-      line-height: 1.6;
-    }
-    h1 { color: #d32f2f; }
-    select, button {
-      margin: 10px 0;
-      padding: 10px;
-      font-size: 16px;
-    }
-    #output { margin-top: 20px; }
-    ol { padding-left: 20px; }
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Source+Code+Pro:wght@300;400;600&display=swap');
+
+```
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Source Code Pro', monospace;
+  background: #000;
+  color: #00ff41;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Matrix Rain Effect */
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.15;
+}
+
+.matrix-column {
+  position: absolute;
+  top: -100px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px;
+  color: #00ff41;
+  text-shadow: 0 0 5px #00ff41;
+  animation: matrix-fall linear infinite;
+}
+
+@keyframes matrix-fall {
+  0% { transform: translateY(-100vh); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Main Container */
+.container {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  border-radius: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+}
+
+h1 {
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  font-size: 2.5rem;
+  color: #ff0040;
+  text-align: center;
+  text-shadow: 0 0 20px #ff0040, 0 0 40px #ff0040;
+  margin-bottom: 40px;
+  animation: pulse-red 2s infinite alternate;
+}
+
+@keyframes pulse-red {
+  0% { text-shadow: 0 0 20px #ff0040, 0 0 40px #ff0040; }
+  100% { text-shadow: 0 0 30px #ff0040, 0 0 60px #ff0040, 0 0 80px #ff0040; }
+}
+
+.form-group {
+  margin: 25px 0;
+}
+
+label {
+  display: block;
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  color: #00ff41;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  text-shadow: 0 0 10px #00ff41;
+}
+
+select {
+  width: 100%;
+  padding: 15px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 16px;
+  background: rgba(0, 20, 0, 0.8);
+  color: #00ff41;
+  border: 2px solid #00ff41;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 10px rgba(0, 255, 65, 0.1);
+}
+
+select:focus {
+  border-color: #ff0040;
+  box-shadow: 0 0 20px rgba(255, 0, 64, 0.5), inset 0 0 10px rgba(0, 255, 65, 0.2);
+  text-shadow: 0 0 5px #00ff41;
+}
+
+select option {
+  background: #001100;
+  color: #00ff41;
+  padding: 10px;
+}
+
+.button-group {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+
+button {
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  padding: 15px 30px;
+  font-size: 16px;
+  background: linear-gradient(45deg, rgba(0, 255, 65, 0.1), rgba(0, 255, 65, 0.2));
+  color: #00ff41;
+  border: 2px solid #00ff41;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+button:hover:before {
+  left: 100%;
+}
+
+button:hover {
+  background: linear-gradient(45deg, rgba(0, 255, 65, 0.2), rgba(0, 255, 65, 0.3));
+  box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
+  text-shadow: 0 0 10px #00ff41;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+#output {
+  margin-top: 40px;
+  padding: 30px;
+  background: rgba(0, 20, 0, 0.6);
+  border: 1px solid rgba(0, 255, 65, 0.4);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  min-height: 100px;
+  box-shadow: inset 0 0 20px rgba(0, 255, 65, 0.1);
+}
+
+#output h2 {
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  color: #ff0040;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  text-align: center;
+  text-shadow: 0 0 15px #ff0040;
+  border-bottom: 2px solid rgba(255, 0, 64, 0.3);
+  padding-bottom: 15px;
+}
+
+#output ol {
+  padding-left: 30px;
+  line-height: 2;
+}
+
+#output li {
+  margin: 15px 0;
+  padding: 15px;
+  background: rgba(0, 255, 65, 0.05);
+  border-left: 4px solid #00ff41;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+#output li:hover {
+  background: rgba(0, 255, 65, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 255, 65, 0.2);
+  transform: translateX(5px);
+}
+
+#output li:before {
+  content: '>';
+  position: absolute;
+  left: -20px;
+  color: #00ff41;
+  font-weight: bold;
+  text-shadow: 0 0 5px #00ff41;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    margin: 10px;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* Loading Animation */
+.loading {
+  display: inline-block;
+  animation: loading-dots 1.5s infinite;
+}
+
+@keyframes loading-dots {
+  0%, 20% { content: ''; }
+  40% { content: '.'; }
+  60% { content: '..'; }
+  80%, 100% { content: '...'; }
+}
+
+/* Cyber Grid Effect */
+body:before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 2;
+}
+```
+
   </style>
 </head>
 <body>
-  <h1>🚨 Incident Playbook Generator</h1>
+  <!-- Matrix Rain Background -->
+  <div class="matrix-bg" id="matrixBg"></div>
 
-  <label for="incident">Choose an incident type:</label>
+  <div class="container">
+    <h1>🚨 Incident Playbook Generator</h1>
+
+```
+<div class="form-group">
+  <label for="incident">[ SELECT INCIDENT TYPE ]</label>
   <select id="incident"></select>
-  <button onclick="generatePlaybook()">Generate</button>
-  <button onclick="downloadPDF()">Download as PDF</button>
+</div>
 
-  <div id="output"></div>
+<div class="button-group">
+  <button onclick="generatePlaybook()">[ GENERATE PLAYBOOK ]</button>
+  <button onclick="downloadPDF()">[ DOWNLOAD PDF ]</button>
+</div>
+
+<div id="output"></div>
+```
+
+  </div>
 
   <!-- Load jsPDF -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <script>
+    // Matrix Rain Effect
+    function createMatrixRain() {
+      const matrixBg = document.getElementById('matrixBg');
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*(){}[]<>?/\\|`~+=_-';
+      const numColumns = Math.floor(window.innerWidth / 20);
+      
+      for (let i = 0; i < numColumns; i++) {
+        const column = document.createElement('div');
+        column.className = 'matrix-column';
+        column.style.left = `${i * 20}px`;
+        column.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        column.style.animationDelay = `${Math.random() * 2}s`;
+        
+        // Create falling characters
+        let columnText = '';
+        for (let j = 0; j < 20; j++) {
+          columnText += chars[Math.floor(Math.random() * chars.length)] + '<br>';
+        }
+        column.innerHTML = columnText;
+        
+        matrixBg.appendChild(column);
+      }
+    }
+    
+    // Initialize matrix rain
+    createMatrixRain();
+    
+    // Refresh matrix rain on resize
+    window.addEventListener('resize', () => {
+      document.getElementById('matrixBg').innerHTML = '';
+      createMatrixRain();
+    });
+
     // Incident templates
     const playbooks = {
       "Phishing Email": [
-        "Disconnect affected device from the network.",
-        "Collect and preserve the suspicious email headers.",
-        "Verify links/domains using VirusTotal or analyzer tools.",
-        "Notify IT or security response team immediately.",
-        "Force password reset for affected accounts.",
-        "Report incident to regulators if sensitive data is involved."
+        "IMMEDIATE: Disconnect affected device from network infrastructure",
+        "EVIDENCE: Collect and preserve suspicious email headers and metadata", 
+        "ANALYSIS: Verify malicious links/domains using VirusTotal or sandbox tools",
+        "ESCALATION: Notify IT security response team with incident details",
+        "SECURITY: Force immediate password reset for all affected user accounts",
+        "COMPLIANCE: Report incident to regulatory bodies if sensitive data compromised"
       ],
       "Ransomware Infection": [
-        "Isolate infected systems from the network.",
-        "Do not pay ransom — contact law enforcement.",
-        "Restore from clean backups.",
-        "Scan all machines with updated AV tools.",
-        "Communicate incident to staff and customers."
+        "CONTAINMENT: Immediately isolate infected systems from network",
+        "POLICY: Do NOT pay ransom - contact law enforcement immediately",
+        "RECOVERY: Restore systems from verified clean backup sources",
+        "SCANNING: Deploy updated antivirus tools across entire infrastructure",
+        "COMMUNICATION: Notify all stakeholders and customers of incident status"
       ],
       "Lost Laptop/Phone": [
-        "Report loss immediately to IT/security team.",
-        "Trigger remote wipe if available (MDM tools).",
-        "Reset credentials linked to the device.",
-        "File police report if sensitive data was stored.",
-        "Notify compliance officer if required."
+        "IMMEDIATE: Report device loss to IT/security team within 1 hour",
+        "REMOTE: Trigger device wipe using Mobile Device Management (MDM) tools",
+        "CREDENTIALS: Reset all account passwords linked to compromised device",
+        "LEGAL: File police report if device contains sensitive/classified data",
+        "COMPLIANCE: Notify data protection officer if regulatory reporting required"
+      ],
+      "Data Breach": [
+        "CONTAINMENT: Immediately isolate affected systems and databases",
+        "ASSESSMENT: Determine scope, type, and volume of compromised data",
+        "EVIDENCE: Preserve all logs and forensic evidence for investigation",
+        "LEGAL: Engage legal counsel and notify cyber insurance provider",
+        "NOTIFICATION: Prepare breach notifications per regulatory requirements",
+        "MONITORING: Implement enhanced monitoring for affected data subjects"
+      ],
+      "Malware Infection": [
+        "ISOLATION: Disconnect infected endpoint from network immediately",
+        "IDENTIFICATION: Analyze malware type using sandbox environment",
+        "ERADICATION: Deploy specialized removal tools and updated signatures",
+        "VALIDATION: Verify complete malware removal through multiple scans",
+        "HARDENING: Apply security patches and configuration updates",
+        "MONITORING: Implement continuous monitoring for reinfection indicators"
+      ],
+      "Social Engineering Attack": [
+        "IMMEDIATE: Document all details of the social engineering attempt",
+        "VERIFICATION: Confirm identity of person/organization making request",
+        "CONTAINMENT: Revoke any access or information already provided",
+        "EDUCATION: Brief affected personnel on attack methodology",
+        "REPORTING: File incident report with security awareness team",
+        "PREVENTION: Review and strengthen social engineering defenses"
       ]
     };
 
@@ -69,26 +400,61 @@
       dropdown.appendChild(option);
     });
 
-    // Generate playbook
+    // Generate playbook with animation
     function generatePlaybook() {
       const type = dropdown.value;
       const steps = playbooks[type];
       const output = document.getElementById("output");
-      output.innerHTML = `<h2>${type} Response Steps</h2>`;
-      let list = "<ol>";
-      steps.forEach(step => { list += `<li>${step}</li>`; });
-      list += "</ol>";
-      output.innerHTML += list;
+      
+      // Show loading animation
+      output.innerHTML = `<h2>[ GENERATING ${type.toUpperCase()} PLAYBOOK<span class="loading"></span> ]</h2>`;
+      
+      setTimeout(() => {
+        output.innerHTML = `<h2>[ ${type.toUpperCase()} RESPONSE PROTOCOL ]</h2>`;
+        let list = "<ol>";
+        steps.forEach((step, index) => {
+          setTimeout(() => {
+            list += `<li>${step}</li>`;
+            if (index === steps.length - 1) {
+              list += "</ol>";
+              output.innerHTML += list;
+            }
+          }, index * 200);
+        });
+      }, 1000);
     }
 
-    // Download as PDF
+    // Enhanced PDF download
     function downloadPDF() {
+      const outputContent = document.getElementById("output");
+      if (!outputContent.innerHTML.trim()) {
+        alert("Please generate a playbook first!");
+        return;
+      }
+      
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-      doc.text(document.getElementById("output").innerText, 10, 10);
-      doc.save("incident-playbook.pdf");
+      
+      // Add title
+      doc.setFontSize(20);
+      doc.setTextColor(255, 0, 64);
+      doc.text("CYBER INCIDENT PLAYBOOK", 20, 30);
+      
+      // Add content
+      doc.setFontSize(12);
+      doc.setTextColor(0, 0, 0);
+      const text = outputContent.innerText;
+      const splitText = doc.splitTextToSize(text, 170);
+      doc.text(splitText, 20, 50);
+      
+      doc.save(`${dropdown.value.replace(/\s+/g, '-').toLowerCase()}-playbook.pdf`);
     }
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="script.js"></script>
+
+    // Auto-select first option
+    if (dropdown.children.length > 0) {
+      dropdown.selectedIndex = 0;
+    }
+  </script>
+
 </body>
 </html>
