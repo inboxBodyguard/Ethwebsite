@@ -1,157 +1,254 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>🚨 Incident Playbook Generator</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Incident Playbook — Enriched</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Source+Code+Pro:wght@300;400;600&display=swap');
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Source Code Pro', monospace;
-      background: #000; color: #00ff41; overflow-x: hidden;
-      position: relative; min-height: 100vh;
-    }
-    .matrix-bg { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1; opacity:0.15; }
-    .matrix-column { position:absolute; top:-100px; font-size:14px; color:#00ff41; text-shadow:0 0 5px #00ff41; animation: matrix-fall linear infinite; }
-    @keyframes matrix-fall { 0%{ transform:translateY(-100vh);} 100%{ transform:translateY(100vh);} }
-    .container {
-      position: relative; z-index: 10; max-width: 900px; margin: 20px auto;
-      padding: 40px 20px; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
-      border: 1px solid rgba(0,255,65,0.3); border-radius: 15px;
-      box-shadow: 0 0 30px rgba(0,255,65,0.2);
-    }
-    h1 {
-      font-family:'Orbitron', monospace; font-weight:900; font-size:2.5rem;
-      color:#ff0040; text-align:center; text-shadow:0 0 20px #ff0040,0 0 40px #ff0040;
-      margin-bottom:40px; animation:pulse-red 2s infinite alternate;
-    }
-    @keyframes pulse-red { 0%{ text-shadow:0 0 20px #ff0040,0 0 40px #ff0040; } 100%{ text-shadow:0 0 30px #ff0040,0 0 60px #ff0040,0 0 80px #ff0040; } }
-    .form-group { margin:25px 0; }
-    label { display:block; font-family:'Orbitron'; font-weight:700; color:#00ff41; margin-bottom:10px; }
-    select {
-      width:100%; padding:15px; font-size:16px; background:rgba(0,20,0,0.8); color:#00ff41;
-      border:2px solid #00ff41; border-radius:8px; outline:none;
-    }
-    .button-group { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin:30px 0; }
-    button {
-      font-family:'Orbitron'; font-weight:700; padding:15px 30px; font-size:16px;
-      background:linear-gradient(45deg, rgba(0,255,65,0.1), rgba(0,255,65,0.2));
-      color:#00ff41; border:2px solid #00ff41; border-radius:8px; cursor:pointer;
-    }
-    #output { margin-top:40px; padding:30px; background:rgba(0,20,0,0.6); border:1px solid rgba(0,255,65,0.4); border-radius:10px; min-height:100px; }
-    #output h2 { font-family:'Orbitron'; font-weight:700; color:#ff0040; font-size:1.8rem; margin-bottom:25px; text-align:center; }
-    #output ol { padding-left:30px; line-height:2; }
-    #output li { margin:15px 0; padding:15px; background:rgba(0,255,65,0.05); border-left:4px solid #00ff41; border-radius:5px; }
+    :root{ --bg:#071426; --card:#0b1220; --accent:#16a34a; --muted:#94a3b8; --danger:#dc2626; color-scheme: dark; }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071028 0%, #071426 100%);color:#e6eef8;font-family:Inter,system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+    .wrap{max-width:1100px;margin:28px auto;padding:20px;}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    header h1{font-size:18px;margin:0}
+    .meta{color:var(--muted);font-size:13px}
+    select, button { font-family:inherit; }
+    .container{display:block}
+    .controls{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+    .btn {background:var(--accent);border:0;color:#041017;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-weight:600}
+    .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    #output{margin-top:14px}
+    .step-item{border:1px solid rgba(255,255,255,0.04);padding:12px;border-radius:10px;margin-bottom:10px}
+    .step-h{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .step-h h3{margin:0;font-size:15px}
+    .muted{color:var(--muted)}
+    .details{margin-top:10px;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;display:none}
+    .details pre{background:rgba(0,0,0,0.2);padding:8px;border-radius:6px;overflow:auto;color:#d3f9d8}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .tiny{font-size:12px;color:var(--muted)}
   </style>
 </head>
 <body>
-  <div class="matrix-bg" id="matrixBg"></div>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Incident Playbook — Enriched Defensive Intelligence</h1>
+        <div class="meta">Loads playbooks.json → enriches steps with MITRE, SIEM, forensic tips, automation payloads</div>
+      </div>
+      <div class="controls">
+        <select id="incident"></select>
+        <button id="genBtn" class="btn">Generate</button>
+        <button id="pdfBtn" class="btn secondary">Export PDF</button>
+        <button id="saveBtn" class="btn secondary">Save</button>
+      </div>
+    </header>
 
-  <div class="container">
-    <h1>🚨 Incident Playbook Generator</h1>
-    <div class="form-group">
-      <label for="incident">[ SELECT INCIDENT TYPE ]</label>
-      <select id="incident"></select>
-    </div>
-    <div class="button-group">
-      <button onclick="generatePlaybook()">[ GENERATE PLAYBOOK ]</button>
-      <button onclick="downloadPDF()">[ DOWNLOAD PDF ]</button>
-    </div>
-    <div id="output"></div>
+    <div id="output" class="card"></div>
   </div>
 
-  <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
   <script>
-    // Matrix Rain Effect
-    function createMatrixRain() {
-      const matrixBg = document.getElementById('matrixBg');
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*(){}[]<>?/\\|`~+=_-';
-      const numColumns = Math.floor(window.innerWidth / 20);
-      for (let i = 0; i < numColumns; i++) {
-        const column = document.createElement('div');
-        column.className = 'matrix-column';
-        column.style.left = `${i * 20}px`;
-        column.style.animationDuration = `${Math.random() * 3 + 2}s`;
-        column.style.animationDelay = `${Math.random() * 2}s`;
-        let columnText = '';
-        for (let j = 0; j < 20; j++) columnText += chars[Math.floor(Math.random() * chars.length)] + '<br>';
-        column.innerHTML = columnText;
-        matrixBg.appendChild(column);
-      }
-    }
-    createMatrixRain();
-
-    // Default playbooks (fallback if JSON fails)
-    const defaultPlaybooks = {
-      "Phishing Email": ["Disconnect affected device","Collect email headers","Verify malicious links"],
-      "Ransomware Infection": ["Isolate infected systems","Do NOT pay ransom","Restore from backups"],
-      "Data Breach": ["Isolate systems","Assess compromised data","Notify authorities"]
+    /************************************************************************
+     * CONFIG — set webhook_endpoint if you want automation send
+     ************************************************************************/
+    const CONFIG = {
+      webhook_submit: "" // example: "https://your-soar.example/webhook"
     };
 
-    // Load playbooks.json
-    function loadPlaybooks() {
-      fetch('playbooks.json')
-        .then(res => {
-          if (!res.ok) throw new Error("HTTP " + res.status);
-          return res.json();
-        })
-        .then(data => {
-          window.playbooks = data;
-          console.log("✅ Loaded playbooks.json");
-          populateDropdown(data);
-        })
-        .catch(err => {
-          console.error("⚠️ Could not load playbooks.json, using defaults:", err);
-          window.playbooks = defaultPlaybooks;
-          populateDropdown(defaultPlaybooks);
-        });
+    // Fallback default (still defensive)
+    const defaultPlaybooks = {
+      "Phishing Email": [
+        "🚨 Immediately disconnect affected device from the network to prevent lateral movement.",
+        "📧 Collect and preserve complete email headers, attachments, and metadata for forensic analysis.",
+        "🔍 Analyze suspicious links/domains using VirusTotal, URLVoid, and threat intelligence platforms."
+      ],
+      "Ransomware Infection": [
+        "🔌 Immediately isolate infected systems - disconnect network cables and disable WiFi.",
+        "🚫 DO NOT pay ransom - contact FBI's IC3 and local law enforcement immediately.",
+        "💾 Identify and verify integrity of latest clean backups before restoration begins."
+      ]
+    };
+
+    // Basic helpers used to generate defensive enrichment for each step.
+    function enrichStep(stepText){
+      // Map phrases to plausible MITRE IDs (defensive suggestions only)
+      const mitreMap = [
+        {match: /phish|email|link|attachment/i, ids:["T1566"], note:"Phishing - user-targeted social engineering."},
+        {match: /ransom|encryption|backup/i, ids:["T1486"], note:"Ransomware - encryption of data."},
+        {match: /credential|password|login/i, ids:["T1110","T1078"], note:"Credential access / account misuse."},
+        {match: /isolate|network|lateral/i, ids:["T1087","T1570"], note:"Lateral movement / discovery."},
+        {match: /malware|sandbox|scan/i, ids:["T1059"], note:"Malware detection and analysis."},
+        {match: /ddos|traffic|waf/i, ids:["T1499"], note:"DDoS - volumetric or application layer."}
+      ];
+      let mitre_ids = new Set();
+      let mitre_notes = [];
+      for(const m of mitreMap){
+        if(m.match.test(stepText)){ m.ids.forEach(i=>mitre_ids.add(i)); mitre_notes.push(m.note); }
+      }
+      if(mitre_ids.size === 0){
+        mitre_ids.add("TTP-UNKNOWN");
+        mitre_notes.push("General detection & containment guidance.");
+      }
+
+      // Simple SIEM query examples (defensive) — generic placeholders
+      const splunk = `index=main earliest=-24h | search "${escapeForQuery(stepText).slice(0,120)}" | stats count by src_ip, user`;
+      const kql = `SecurityEvent | where TimeGenerated > ago(1d) | where tostring(EventData) contains "${escapeForQuery(stepText).slice(0,80)}" | summarize count() by IPAddress, Account`;
+      const sigma = `title: Suspicious activity related to playbook step
+detection:
+  selection:
+    Event|contains: "${escapeForQuery(stepText).slice(0,60)}"
+  condition: selection
+level: medium`;
+
+      // Forensics checklist (defensive)
+      const forensic = [
+        "Collect volatile memory (RAM) if possible for malware artifacts.",
+        "Capture full system image (bit-for-bit) before remediation.",
+        "Export relevant logs (auth, mail, proxy, firewall) and preserve timestamps."
+      ];
+
+      // YARA-like stub (detection placeholder, defensive)
+      const yara = `rule suspicious_playbook_indicator {\n  meta:\n    author = "IR Team"\n    description = "Defensive stub for indicators related to playbook step"\n  strings:\n    $s1 = "${escapeForQuery(stepText).slice(0,40)}"\n  condition:\n    any of them\n}`;
+
+      // Automation payload (safe template)
+      const webhookPayload = {
+        incident_id: "{{INCIDENT_ID}}",
+        step_text: stepText,
+        severity: "medium",
+        suggested_action: stepText,
+        timestamp: new Date().toISOString()
+      };
+
+      return {
+        step: stepText,
+        mitre_ids: Array.from(mitre_ids),
+        mitre_notes: mitre_notes,
+        siem: {splunk, kql, sigma},
+        forensic,
+        yara_stub: yara,
+        automation_payload: webhookPayload
+      };
     }
 
-    // Populate dropdown
-    function populateDropdown(playbooks) {
-      const dropdown = document.getElementById("incident");
-      dropdown.innerHTML = "";
-      Object.keys(playbooks).forEach(key => {
-        const option = document.createElement("option");
-        option.value = key;
-        option.textContent = key;
-        dropdown.appendChild(option);
+    function escapeForQuery(s){ return String(s).replace(/["']/g,""); }
+    function copyToClipboard(txt){ navigator.clipboard.writeText(txt).then(()=>flash("Copied to clipboard")); }
+
+    // UI: flash small message
+    function flash(msg, err=false){ const t=document.createElement('div'); t.textContent=msg; Object.assign(t.style,{position:'fixed',right:'16px',bottom:'16px',padding:'8px 12px',background: err? '#c84c4c': '#16a34a',color:'#001214',borderRadius:'6px',zIndex:9999}); document.body.appendChild(t); setTimeout(()=>t.remove(),1800); }
+
+    // load playbooks.json with fallback
+    async function loadPlaybooks(){
+      try{
+        const res = await fetch('playbooks.json');
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        window.playbooks = data;
+        populateDropdown(Object.keys(data));
+        console.log("Loaded playbooks.json");
+      }catch(e){
+        console.warn("playbooks.json not loaded, using fallback", e);
+        window.playbooks = defaultPlaybooks;
+        populateDropdown(Object.keys(defaultPlaybooks));
+      }
+    }
+
+    function populateDropdown(keys){
+      const select = document.getElementById('incident');
+      select.innerHTML = "";
+      keys.forEach(k=>{
+        const o = document.createElement('option'); o.value=k; o.textContent=k; select.appendChild(o);
       });
     }
 
-    // Generate playbook
-    function generatePlaybook() {
-      const type = document.getElementById("incident").value;
+    // Generate UI for chosen playbook
+    function generate(){
+      const type = document.getElementById('incident').value;
       const steps = window.playbooks[type] || [];
-      const output = document.getElementById("output");
-      output.innerHTML = `<h2>${type} Response Steps</h2>`;
-      let list = "<ol>";
-      steps.forEach(step => list += `<li>${step}</li>`);
-      list += "</ol>";
-      output.innerHTML += list;
+      const output = document.getElementById('output');
+      output.innerHTML = `<h2 style="margin:0 0 12px">${type}</h2>`;
+      for(let i=0;i<steps.length;i++){
+        const stepText = steps[i];
+        const enriched = enrichStep(stepText);
+        const div = document.createElement('div');
+        div.className = 'step-item';
+        div.innerHTML = `
+          <div class="step-h">
+            <h3>Step ${i+1} — ${escapeHtml(stepText)}</h3>
+            <div class="tiny muted">MITRE: ${enriched.mitre_ids.join(', ')}</div>
+          </div>
+          <div class="muted tiny" style="margin-top:6px">${enriched.mitre_notes.join(' • ')}</div>
+          <div class="actions">
+            <button class="btn secondary" data-copy-splunk>Copy Splunk</button>
+            <button class="btn secondary" data-copy-kql>Copy KQL</button>
+            <button class="btn secondary" data-copy-sigma>Copy Sigma</button>
+            <button class="btn secondary" data-copy-yara>Copy YARA stub</button>
+            <button class="btn" data-toggle-details>Details</button>
+            <button class="btn" data-send-webhook>Send to Webhook</button>
+          </div>
+          <div class="details" aria-hidden="true">
+            <div><strong>Forensic actions:</strong>
+              <ul>${enriched.forensic.map(f=>`<li class="muted tiny">${escapeHtml(f)}</li>`).join('')}</ul>
+            </div>
+            <div><strong>SIEM — Splunk:</strong><pre>${escapeHtml(enriched.siem.splunk)}</pre></div>
+            <div><strong>SIEM — KQL:</strong><pre>${escapeHtml(enriched.siem.kql)}</pre></div>
+            <div><strong>Sigma example:</strong><pre>${escapeHtml(enriched.siem.sigma)}</pre></div>
+            <div><strong>YARA stub:</strong><pre>${escapeHtml(enriched.yara_stub)}</pre></div>
+            <div><strong>Automation payload (preview):</strong><pre>${escapeHtml(JSON.stringify(enriched.automation_payload,null,2))}</pre></div>
+          </div>
+        `;
+        // attach handlers for buttons inside this div
+        output.appendChild(div);
+
+        // query selectors relative to div
+        (function localize(el, enriched){
+          el.querySelector('[data-toggle-details]').addEventListener('click', (e)=>{
+            const det = el.querySelector('.details');
+            const open = det.style.display === 'block';
+            det.style.display = open ? 'none' : 'block';
+            det.setAttribute('aria-hidden', open ? 'true' : 'false');
+          });
+          el.querySelector('[data-copy-splunk]').addEventListener('click', ()=> copyToClipboard(enriched.siem.splunk));
+          el.querySelector('[data-copy-kql]').addEventListener('click', ()=> copyToClipboard(enriched.siem.kql));
+          el.querySelector('[data-copy-sigma]').addEventListener('click', ()=> copyToClipboard(enriched.siem.sigma));
+          el.querySelector('[data-copy-yara]').addEventListener('click', ()=> copyToClipboard(enriched.yara_stub));
+          el.querySelector('[data-send-webhook]').addEventListener('click', async ()=>{
+            if(!CONFIG.webhook_submit){ flash('Webhook not configured', true); return; }
+            const payload = Object.assign({}, enriched.automation_payload, {incident_type: type, step_index: i+1});
+            try{
+              const res = await fetch(CONFIG.webhook_submit, {method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify(payload)});
+              if(res.ok){ flash('Webhook sent'); } else { flash('Webhook error', true); }
+            }catch(err){ console.error(err); flash('Webhook failed', true); }
+          });
+        })(div, enriched);
+      }
     }
 
-    // Download as PDF
-    function downloadPDF() {
-      const outputContent = document.getElementById("output").innerText;
-      if (!outputContent.trim()) {
-        alert("Please generate a playbook first!");
-        return;
-      }
+    // PDF export (takes visible text)
+    document.getElementById('pdfBtn').addEventListener('click', ()=>{
+      const text = document.getElementById('output').innerText;
+      if(!text.trim()){ flash('Generate playbook first', true); return; }
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-      doc.setFontSize(16);
-      doc.text("Incident Playbook", 20, 20);
-      doc.setFontSize(12);
-      const lines = doc.splitTextToSize(outputContent, 170);
-      doc.text(lines, 20, 40);
-      doc.save("incident-playbook.pdf");
-    }
+      doc.setFontSize(14);
+      const split = doc.splitTextToSize(text, 170);
+      doc.text(split, 14, 20);
+      doc.save('playbook.pdf');
+    });
 
-    // Init
-    loadPlaybooks();
+    // Save / local persistence of last generated playbook
+    document.getElementById('saveBtn').addEventListener('click', ()=>{
+      const type = document.getElementById('incident').value;
+      const payload = {type, data: window.playbooks[type] || [], saved_at: new Date().toISOString()};
+      localStorage.setItem('last_playbook', JSON.stringify(payload));
+      flash('Playbook saved locally');
+    });
+
+    // util: escape for HTML
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    // init
+    document.getElementById('genBtn').addEventListener('click', generate);
+    window.addEventListener('DOMContentLoaded', loadPlaybooks);
   </script>
 </body>
 </html>
