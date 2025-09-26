@@ -1,527 +1,157 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Interactive Incident Playbook — Live Response Hub</title>
+  <meta charset="UTF-8">
+  <title>🚨 Incident Playbook Generator</title>
   <style>
-    :root{
-      --bg:#0f1724; --card:#0b1220; --accent:#16a34a; --muted:#94a3b8; --danger:#dc2626;
-      --glass: rgba(255,255,255,0.03);
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Source+Code+Pro:wght@300;400;600&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Source Code Pro', monospace;
+      background: #000; color: #00ff41; overflow-x: hidden;
+      position: relative; min-height: 100vh;
     }
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071028 0%, #071426 100%);color:#e6eef8;}
-    .wrap{max-width:1100px;margin:28px auto;padding:20px;}
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
-    header h1{font-size:20px;margin:0}
-    .meta{color:var(--muted);font-size:13px}
-    .top-actions{display:flex;gap:8px}
-    button, .btn {background:var(--accent);border:0;color:#041017;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600}
-    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-weight:600}
-    .btn.danger{background:var(--danger);color:white}
-    .layout{display:grid;grid-template-columns:1fr 360px;gap:18px}
-    .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
-    .step{border:1px solid rgba(255,255,255,0.03);padding:12px;border-radius:10px;margin-bottom:10px;display:flex;gap:12px;align-items:start}
-    .step .left{width:28px;height:28px;border-radius:6px;background:var(--glass);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700}
-    .step h3{margin:0;font-size:15px}
-    .step p{margin:6px 0;color:var(--muted);font-size:13px}
-    .progress{height:10px;background:rgba(255,255,255,0.04);border-radius:10px;overflow:hidden;margin-top:8px}
-    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent), #34d399);width:0%}
-    .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .tools a, .tools button{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:6px 8px;border-radius:8px;text-decoration:none}
-    .templates{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-    .small{font-size:13px;color:var(--muted)}
-    label.checkbox{display:flex;align-items:center;gap:8px;cursor:pointer}
-    input[type="checkbox"]{width:18px;height:18px}
-    textarea{width:100%;min-height:100px;border-radius:8px;padding:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
-    .log-entries{max-height:260px;overflow:auto;margin-top:8px}
-    .log-item{border-bottom:1px dashed rgba(255,255,255,0.03);padding:8px 0}
-    footer{margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:center}
-    .kbd{background:#071426;border:1px solid rgba(255,255,255,0.03);padding:6px 8px;border-radius:6px}
-    .pill{display:inline-block;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);font-weight:700}
-    @media(max-width:980px){ .layout{grid-template-columns:1fr} .wrap{padding:12px} }
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(1,6,12,0.6);z-index:50}
-    .modal.open{display:flex}
-    .modal .box{width:720px;max-width:96%;background:#071424;padding:16px;border-radius:10px}
-    .row{display:flex;gap:8px}
-    .row > *{flex:1}
-    .muted{color:var(--muted)}
-    .tiny{font-size:12px;color:var(--muted)}
-    .step-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .step .left input{width:18px;height:18px}
+    .matrix-bg { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1; opacity:0.15; }
+    .matrix-column { position:absolute; top:-100px; font-size:14px; color:#00ff41; text-shadow:0 0 5px #00ff41; animation: matrix-fall linear infinite; }
+    @keyframes matrix-fall { 0%{ transform:translateY(-100vh);} 100%{ transform:translateY(100vh);} }
+    .container {
+      position: relative; z-index: 10; max-width: 900px; margin: 20px auto;
+      padding: 40px 20px; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+      border: 1px solid rgba(0,255,65,0.3); border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0,255,65,0.2);
+    }
+    h1 {
+      font-family:'Orbitron', monospace; font-weight:900; font-size:2.5rem;
+      color:#ff0040; text-align:center; text-shadow:0 0 20px #ff0040,0 0 40px #ff0040;
+      margin-bottom:40px; animation:pulse-red 2s infinite alternate;
+    }
+    @keyframes pulse-red { 0%{ text-shadow:0 0 20px #ff0040,0 0 40px #ff0040; } 100%{ text-shadow:0 0 30px #ff0040,0 0 60px #ff0040,0 0 80px #ff0040; } }
+    .form-group { margin:25px 0; }
+    label { display:block; font-family:'Orbitron'; font-weight:700; color:#00ff41; margin-bottom:10px; }
+    select {
+      width:100%; padding:15px; font-size:16px; background:rgba(0,20,0,0.8); color:#00ff41;
+      border:2px solid #00ff41; border-radius:8px; outline:none;
+    }
+    .button-group { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin:30px 0; }
+    button {
+      font-family:'Orbitron'; font-weight:700; padding:15px 30px; font-size:16px;
+      background:linear-gradient(45deg, rgba(0,255,65,0.1), rgba(0,255,65,0.2));
+      color:#00ff41; border:2px solid #00ff41; border-radius:8px; cursor:pointer;
+    }
+    #output { margin-top:40px; padding:30px; background:rgba(0,20,0,0.6); border:1px solid rgba(0,255,65,0.4); border-radius:10px; min-height:100px; }
+    #output h2 { font-family:'Orbitron'; font-weight:700; color:#ff0040; font-size:1.8rem; margin-bottom:25px; text-align:center; }
+    #output ol { padding-left:30px; line-height:2; }
+    #output li { margin:15px 0; padding:15px; background:rgba(0,255,65,0.05); border-left:4px solid #00ff41; border-radius:5px; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div>
-        <h1>Interactive Incident Playbook — Live Response Hub</h1>
-        <div class="meta">Phishing • Ransomware • Lost device — Turn steps into actions</div>
-      </div>
-      <div class="top-actions">
-        <button id="saveStateBtn" title="Save progress locally">Save</button>
-        <button id="exportJsonBtn" class="btn secondary">Export JSON</button>
-        <button id="exportCsvBtn" class="btn secondary">Export CSV</button>
-        <button id="printBtn" class="btn secondary">Printable</button>
-      </div>
-    </header>
+  <div class="matrix-bg" id="matrixBg"></div>
 
-    <div class="layout">
-      <!-- MAIN -->
-      <main class="card" id="mainCard">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div class="small">Active incident: <span id="incidentId" class="pill">new</span></div>
-          <div class="small">Progress: <span id="percentText">0%</span></div>
-        </div>
-        <div class="progress" aria-hidden="true">
-          <i id="progressBar"></i>
-        </div>
-
-        <!-- Steps (rendered from JSON) -->
-        <section id="stepsSection" style="margin-top:14px"></section>
-
-        <!-- Incident log and notes -->
-        <section style="margin-top:14px">
-          <div style="display:flex;gap:8px;align-items:center">
-            <input id="noteInput" placeholder="Add a quick note or action (type and press Enter)" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
-            <button id="addNoteBtn" class="btn secondary">Add</button>
-          </div>
-
-          <div class="log-entries" id="logEntries" aria-live="polite"></div>
-        </section>
-      </main>
-
-      <!-- SIDEBAR -->
-      <aside class="card">
-        <div>
-          <h3 style="margin:0 0 6px 0">Quick Actions</h3>
-          <div class="small muted">One-click tool access — replace placeholders with real links</div>
-
-          <div style="margin-top:10px" class="tools">
-            <a href="#" id="tool_ticket" data-url="#" target="_blank">Open Ticket Tool</a>
-            <a href="#" id="tool_multichecker" data-url="#" target="_blank">Multi-Checker</a>
-            <a href="#" id="tool_header" data-url="#" target="_blank">Email Header Analyzer</a>
-            <a href="#" id="tool_vt" data-url="#" target="_blank">VirusTotal Search</a>
-            <a href="#" id="tool_blockip" data-url="#" target="_blank">Block IP / Firewall</a>
-          </div>
-        </div>
-
-        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
-
-        <div>
-          <h3 style="margin:0 0 6px 0">Templates</h3>
-          <div class="tiny muted">Click to copy or send</div>
-          <div class="templates" style="margin-top:8px">
-            <button class="btn secondary" data-template="phish_notify">Notify Employees</button>
-            <button class="btn secondary" data-template="cust_notify">Customer Notice</button>
-            <button class="btn secondary" data-template="exec_brief">Exec Brief</button>
-            <button class="btn secondary" data-template="postmortem">Postmortem</button>
-          </div>
-        </div>
-
-        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
-
-        <div>
-          <h3 style="margin:0 0 6px 0">Incident Export / Submit</h3>
-          <div class="muted tiny">Save locally, export as JSON/CSV or submit to your webhook</div>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <button id="submitWebhookBtn" class="btn">Submit to webhook</button>
-            <button id="clearBtn" class="btn secondary">Clear</button>
-          </div>
-        </div>
-
-        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0">
-        <div class="tiny muted">Tip: replace tool links and the webhook in the script with your real endpoints.</div>
-      </aside>
+  <div class="container">
+    <h1>🚨 Incident Playbook Generator</h1>
+    <div class="form-group">
+      <label for="incident">[ SELECT INCIDENT TYPE ]</label>
+      <select id="incident"></select>
     </div>
-
-    <footer>
-      <div class="muted">Designed for SMB incident response — integrate your tools, templates, and automation.</div>
-      <div class="tiny muted">Local save • Export • Webhook</div>
-    </footer>
+    <div class="button-group">
+      <button onclick="generatePlaybook()">[ GENERATE PLAYBOOK ]</button>
+      <button onclick="downloadPDF()">[ DOWNLOAD PDF ]</button>
+    </div>
+    <div id="output"></div>
   </div>
 
-  <!-- Email header modal -->
-  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="box">
-      <h3>Analyze Email Header</h3>
-      <p class="tiny muted">Paste raw email headers below and click Analyze. This will open your analyzer tool (or POST to API).</p>
-      <textarea id="headerText" placeholder="Paste full email headers here..."></textarea>
-      <div style="display:flex;gap:8px;margin-top:8px;justify-content:flex-end">
-        <button id="analyzeOpenBtn" class="btn">Open in Analyzer</button>
-        <button id="analyzePostBtn" class="btn secondary">Send to Analyzer (API)</button>
-        <button id="closeModal" class="btn secondary">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- jsPDF for PDF export (optional) -->
+  <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
-    /************************************************************************
-     * CONFIGURE THESE VALUES:
-     * Replace the placeholder URLs below with your real tool endpoints.
-     ************************************************************************/
-    const CONFIG = {
-      tool_ticket: "https://your-ticket-system.example/new?incidentId={incidentId}",
-      tool_multichecker: "https://ezmcyber.xyz/checker.html?target={target}",
-      tool_header: "https://ezmcyber.xyz/header-analyzer?data={encoded}",
-      tool_vt: "https://www.virustotal.com/gui/search/{target}",
-      tool_blockip: "https://your-firewall.example/block?ip={target}",
-      webhook_submit: "" // set your webhook here
-    };
-
-    // Utility selectors
-    const $ = s => document.querySelector(s);
-    const $$ = s => Array.from(document.querySelectorAll(s));
-
-    /************************************************************************
-     * STATE: incident state, steps are driven by playbook JSON
-     ************************************************************************/
-    const state = {
-      id: "incident-" + Date.now(),
-      playbookType: "phishing",
-      stepsState: {}, // keyed by step id
-      logs: [],
-      meta: {title:"Untitled Incident", created: new Date().toISOString()}
-    };
-
-    // Playbooks (JSON-driven). Expand as needed.
-    const PLAYBOOKS = {
-      phishing: {
-        title: "Phishing Email",
-        steps: [
-          { id: "detect", title: "Detect — initial intake", desc: "Collect details: who, when, what, screenshots, sender headers and scope.", actions: ["Analyze headers","Quarantine email","Identify affected users"] },
-          { id: "contain", title: "Contain — limit spread", desc: "Isolate affected systems, block malicious sender domains/IPs, force password reset for impacted users.", actions: ["Block sender domain","Revoke sessions","Notify users"] },
-          { id: "eradicate", title: "Eradicate — remove threat", desc: "Remove malicious payloads, revoke compromised credentials, scan for indicators of compromise.", actions: ["Run AV scan","Reset credentials","Clean attachments"] },
-          { id: "recover", title: "Recover — restore services", desc: "Restore mailboxes/systems from verified backups and monitor closely for suspicious activity.", actions: ["Restore from backup","Confirm integrity","Monitor logs"] },
-          { id: "lessons", title: "Lessons Learned", desc: "Capture timeline, root cause, actions, and improvement plan.", actions: ["Postmortem","Awareness training","Update filters"] }
-        ]
-      },
-      ransomware: {
-        title: "Ransomware Infection",
-        steps: [
-          { id: "detect", title: "Detect", desc: "Identify encryption activity, ransom note, or unusual file changes.", actions: ["Identify infected hosts","Collect samples"] },
-          { id: "contain", title: "Contain", desc: "Isolate infected hosts, disable SMB/CIFS and shared drives.", actions: ["Network isolation","Disable accounts"] },
-          { id: "eradicate", title: "Eradicate", desc: "Remove ransomware binaries, rebuild compromised hosts from clean images.", actions: ["Reimage hosts","Change credentials"] },
-          { id: "recover", title: "Recover", desc: "Restore from verified backups, validate restored systems.", actions: ["Restore backups","Validate restores"] },
-          { id: "lessons", title: "Lessons Learned", desc: "Perform root-cause analysis and patch exploited vectors.", actions: ["Patch vulnerabilities","Improve backup cadence"] }
-        ]
-      },
-      lost_device: {
-        title: "Lost Laptop/Phone",
-        steps: [
-          { id: "report", title: "Immediate", desc: "Report device loss to IT within 1 hour and identify last known activity.", actions: ["Report lost device","Identify last activity"] },
-          { id: "remote", title: "Remote Wipe", desc: "Trigger device wipe via MDM and revoke tokens.", actions: ["Trigger MDM wipe","Revoke sessions"] },
-          { id: "credentials", title: "Credentials", desc: "Reset passwords for linked accounts and enforce MFA.", actions: ["Reset passwords","Enforce MFA"] },
-          { id: "legal", title: "Legal", desc: "File police report if required and notify compliance", actions: ["File police report","Notify compliance"] },
-          { id: "lessons", title: "Lessons Learned", desc: "Document incident and adjust device policy.", actions: ["Update device policy","User training"] }
-        ]
+    // Matrix Rain Effect
+    function createMatrixRain() {
+      const matrixBg = document.getElementById('matrixBg');
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*(){}[]<>?/\\|`~+=_-';
+      const numColumns = Math.floor(window.innerWidth / 20);
+      for (let i = 0; i < numColumns; i++) {
+        const column = document.createElement('div');
+        column.className = 'matrix-column';
+        column.style.left = `${i * 20}px`;
+        column.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        column.style.animationDelay = `${Math.random() * 2}s`;
+        let columnText = '';
+        for (let j = 0; j < 20; j++) columnText += chars[Math.floor(Math.random() * chars.length)] + '<br>';
+        column.innerHTML = columnText;
+        matrixBg.appendChild(column);
       }
+    }
+    createMatrixRain();
+
+    // Default playbooks (fallback if JSON fails)
+    const defaultPlaybooks = {
+      "Phishing Email": ["Disconnect affected device","Collect email headers","Verify malicious links"],
+      "Ransomware Infection": ["Isolate infected systems","Do NOT pay ransom","Restore from backups"],
+      "Data Breach": ["Isolate systems","Assess compromised data","Notify authorities"]
     };
 
-    // Initialize UI
-    $('#incidentId').textContent = state.id;
-
-    /************************************************************************
-     * RENDER: generate steps UI from PLAYBOOKS
-     ************************************************************************/
-    function generateSteps(playbookKey = state.playbookType) {
-      const section = $('#stepsSection');
-      section.innerHTML = "";
-      const pb = PLAYBOOKS[playbookKey];
-      if(!pb) { section.innerHTML = `<div class="step"><h3>No playbook for ${playbookKey}</h3></div>`; return; }
-
-      // ensure step states exist
-      pb.steps.forEach((s, i) => {
-        if(typeof state.stepsState[s.id] === "undefined") state.stepsState[s.id] = false;
-      });
-
-      pb.steps.forEach((s, idx) => {
-        const step = document.createElement('div');
-        step.className = 'step';
-        step.dataset.step = s.id;
-        step.innerHTML = `
-          <div class="left"><input type="checkbox" data-step-check="${s.id}" ${state.stepsState[s.id] ? "checked" : ""} /></div>
-          <div style="flex:1">
-            <h3>${s.title}</h3>
-            <p class="muted">${s.desc}</p>
-            <div class="step-actions" aria-hidden="false">
-              ${s.actions.map(a => `<button class="btn secondary" data-action="addLog" data-msg="${escapeAttr(a)}">${escapeHtml(a)}</button>`).join('')}
-              <button class="btn" data-action="openTool" data-tool="multichecker">Run Multi-Checker</button>
-              <button class="btn secondary" data-action="analyzeHeader">Analyze Header</button>
-            </div>
-          </div>
-        `;
-        section.appendChild(step);
-      });
-
-      updateProgress();
-      seedToolLinks();
+    // Load playbooks.json
+    function loadPlaybooks() {
+      fetch('playbooks.json')
+        .then(res => {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(data => {
+          window.playbooks = data;
+          console.log("✅ Loaded playbooks.json");
+          populateDropdown(data);
+        })
+        .catch(err => {
+          console.error("⚠️ Could not load playbooks.json, using defaults:", err);
+          window.playbooks = defaultPlaybooks;
+          populateDropdown(defaultPlaybooks);
+        });
     }
 
-    /************************************************************************
-     * SAVE / LOAD / LOGS / EXPORTS
-     ************************************************************************/
-    function saveState(){
-      try{
-        const payload = {
-          id: state.id,
-          playbookType: state.playbookType,
-          stepsState: state.stepsState,
-          logs: state.logs,
-          meta: state.meta
-        };
-        localStorage.setItem("incident_playbook_state", JSON.stringify(payload));
-        flash("Saved locally");
-      }catch(e){ console.error(e); flash("Save failed", true); }
-    }
-
-    function loadState(){
-      const raw = localStorage.getItem("incident_playbook_state");
-      if(!raw) return;
-      try{
-        const saved = JSON.parse(raw);
-        state.id = saved.id || state.id;
-        state.playbookType = saved.playbookType || state.playbookType;
-        state.stepsState = saved.stepsState || state.stepsState;
-        state.logs = saved.logs || state.logs;
-        state.meta = saved.meta || state.meta;
-        $('#incidentId').textContent = state.id;
-        generateSteps(state.playbookType);
-        renderLogs();
-        updateProgress();
-      }catch(e){ console.warn("load error", e); }
-    }
-
-    function addLog(message, level="info"){
-      const entry = {ts:new Date().toISOString(), message, level};
-      state.logs.push(entry);
-      renderLogs();
-      saveState();
-    }
-
-    function renderLogs(){
-      const container = $('#logEntries');
-      container.innerHTML = "";
-      state.logs.slice().reverse().forEach(l=>{
-        const div = document.createElement('div');
-        div.className = 'log-item';
-        div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><div><strong class="tiny">${new Date(l.ts).toLocaleString()}</strong></div><div class="tiny muted">${l.level}</div></div><div style="margin-top:6px;color:var(--muted)">${escapeHtml(l.message)}</div>`;
-        container.appendChild(div);
+    // Populate dropdown
+    function populateDropdown(playbooks) {
+      const dropdown = document.getElementById("incident");
+      dropdown.innerHTML = "";
+      Object.keys(playbooks).forEach(key => {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = key;
+        dropdown.appendChild(option);
       });
     }
 
-    function downloadFile(content, filename, mime){
-      const blob = new Blob([content], {type: mime || "application/octet-stream"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(()=>URL.revokeObjectURL(url), 3000);
+    // Generate playbook
+    function generatePlaybook() {
+      const type = document.getElementById("incident").value;
+      const steps = window.playbooks[type] || [];
+      const output = document.getElementById("output");
+      output.innerHTML = `<h2>${type} Response Steps</h2>`;
+      let list = "<ol>";
+      steps.forEach(step => list += `<li>${step}</li>`);
+      list += "</ol>";
+      output.innerHTML += list;
     }
 
-    /************************************************************************
-     * UI FEEDBACK, PROGRESS, and HELPERS
-     ************************************************************************/
-    function flash(msg, err=false){
-      const toast = document.createElement('div');
-      toast.textContent = msg;
-      toast.style.position="fixed";
-      toast.style.right="18px";
-      toast.style.bottom="18px";
-      toast.style.padding="10px 12px";
-      toast.style.background = err ? "rgba(220,60,60,0.95)" : "rgba(20,120,70,0.95)";
-      toast.style.color="#001214";
-      toast.style.borderRadius="8px";
-      toast.style.zIndex=9999;
-      document.body.appendChild(toast);
-      setTimeout(()=>toast.remove(), 2200);
-    }
-
-    function updateProgress(){
-      const stepKeys = Object.keys(PLAYBOOKS[state.playbookType].steps).map(i => PLAYBOOKS[state.playbookType].steps[i].id);
-      const total = stepKeys.length;
-      const done = stepKeys.filter(k => !!state.stepsState[k]).length;
-      const pct = Math.round((done / total) * 100);
-      $('#progressBar').style.width = pct + "%";
-      $('#percentText').textContent = pct + "%";
-    }
-
-    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-    function escapeAttr(s){ return String(s).replace(/"/g, '&quot;'); }
-
-    /************************************************************************
-     * EVENT BINDINGS (delegated)
-     ************************************************************************/
-    document.addEventListener('click', (ev)=>{
-      const t = ev.target;
-
-      // checkbox toggles
-      if(t.matches('input[data-step-check]')){
-        const id = t.getAttribute('data-step-check');
-        state.stepsState[id] = t.checked;
-        addLog(`Step ${id} ${t.checked ? "completed" : "reopened"}`);
-        updateProgress();
-        saveState();
+    // Download as PDF
+    function downloadPDF() {
+      const outputContent = document.getElementById("output").innerText;
+      if (!outputContent.trim()) {
+        alert("Please generate a playbook first!");
         return;
       }
-
-      // data-action buttons in steps
-      if(t.matches('[data-action]')){
-        const action = t.getAttribute('data-action');
-        if(action === "addLog"){
-          addLog(t.getAttribute('data-msg') || "Action logged");
-        } else if(action === "openTool"){
-          const tool = t.getAttribute('data-tool');
-          openTool(tool);
-        } else if(action === "analyzeHeader"){
-          openModal();
-        }
-      }
-
-      // template copy
-      if(t.matches('[data-template]')){
-        const name = t.getAttribute('data-template');
-        const txt = getTemplate(name);
-        navigator.clipboard.writeText(txt).then(()=>flash("Template copied to clipboard"));
-      }
-    });
-
-    // top action buttons
-    $('#saveStateBtn').addEventListener('click', saveState);
-    $('#addNoteBtn').addEventListener('click', ()=>{
-      const val = $('#noteInput').value.trim();
-      if(!val) return flash("Type a note first", true);
-      addLog(val);
-      $('#noteInput').value = "";
-    });
-    $('#noteInput').addEventListener('keydown', (e)=>{ if(e.key === "Enter") { e.preventDefault(); $('#addNoteBtn').click(); } });
-
-    $('#exportJsonBtn').addEventListener('click', ()=>{
-      const data = JSON.stringify({id:state.id, playbookType: state.playbookType, stepsState: state.stepsState, logs: state.logs, meta: state.meta}, null, 2);
-      downloadFile(data, state.id + ".json", "application/json");
-    });
-
-    $('#exportCsvBtn').addEventListener('click', ()=>{
-      const rows = [["timestamp","level","message"]];
-      state.logs.forEach(l => rows.push([l.ts,l.level, l.message.replace(/\n/g," ") ]));
-      const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(",")).join("\n");
-      downloadFile(csv, state.id + ".csv", "text/csv");
-    });
-
-    $('#printBtn').addEventListener('click', ()=> window.print());
-
-    $('#clearBtn').addEventListener('click', ()=>{
-      if(!confirm("Clear local incident progress? This cannot be undone.")) return;
-      localStorage.removeItem("incident_playbook_state");
-      location.reload();
-    });
-
-    $('#submitWebhookBtn').addEventListener('click', async ()=>{
-      const url = CONFIG.webhook_submit;
-      if(!url){ flash("Webhook not configured", true); return; }
-      try{
-        const res = await fetch(url, {method:"POST",headers:{"Content-Type":"application/json"},body: JSON.stringify({id:state.id, playbookType: state.playbookType, stepsState: state.stepsState, logs: state.logs, meta: state.meta})});
-        if(res.ok){ flash("Submitted to webhook"); addLog("Submitted to webhook"); } else { flash("Webhook error", true); addLog("Webhook failed: " + res.status); }
-      }catch(err){ console.error(err); flash("Submit failed", true); addLog("Webhook submit error"); }
-    });
-
-    /************************************************************************
-     * TOOL LINKS AND MODAL
-     ************************************************************************/
-    function seedToolLinks(){
-      const map = {tool_ticket:"tool_ticket", tool_multichecker:"tool_multichecker", tool_header:"tool_header", tool_vt:"tool_vt", tool_blockip:"tool_blockip"};
-      for(const k in map){
-        const el = document.getElementById(map[k]);
-        if(!el) continue;
-        const url = CONFIG[k] || "#";
-        el.href = url.replace("{incidentId}", encodeURIComponent(state.id)).replace("{target}", "");
-      }
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(16);
+      doc.text("Incident Playbook", 20, 20);
+      doc.setFontSize(12);
+      const lines = doc.splitTextToSize(outputContent, 170);
+      doc.text(lines, 20, 40);
+      doc.save("incident-playbook.pdf");
     }
 
-    function openTool(name, target=""){
-      const cfgKey = "tool_" + name;
-      const urlTemplate = CONFIG[cfgKey];
-      if(!urlTemplate){ flash("Tool not configured", true); return; }
-      const url = urlTemplate.replace("{incidentId}", encodeURIComponent(state.id)).replace("{target}", encodeURIComponent(target));
-      window.open(url, "_blank");
-      addLog(`Opened tool: ${name}`);
-    }
-
-    function openModal(){ $('#modal').classList.add('open'); $('#modal').setAttribute('aria-hidden','false'); }
-    function closeModal(){ $('#modal').classList.remove('open'); $('#modal').setAttribute('aria-hidden','true'); }
-    $('#closeModal').addEventListener('click', closeModal);
-
-    $('#analyzeOpenBtn').addEventListener('click', ()=>{
-      const raw = $('#headerText').value.trim();
-      if(!raw) return flash("Paste headers first", true);
-      const encoded = encodeURIComponent(btoa(unescape(encodeURIComponent(raw))));
-      const url = (CONFIG.tool_header || "#").replace("{encoded}", encoded).replace("{incidentId}", encodeURIComponent(state.id));
-      window.open(url, "_blank");
-      addLog("Opened header analyzer (browser)");
-      closeModal();
-    });
-
-    $('#analyzePostBtn').addEventListener('click', async ()=>{
-      const analyzerApi = (CONFIG.tool_header_api || null);
-      if(!analyzerApi){ flash("API analyzer not configured. Using open mode instead.", true); $('#analyzeOpenBtn').click(); return; }
-      const raw = $('#headerText').value.trim();
-      if(!raw) return flash("Paste headers first", true);
-      try{
-        const res = await fetch(analyzerApi, {method:'POST',headers:{"Content-Type":"text/plain"},body: raw});
-        const data = await res.json();
-        addLog("Header analysis POSTed to API");
-        addLog("Analyzer response: " + JSON.stringify(data).slice(0,200));
-        closeModal();
-      }catch(e){ console.error(e); flash("Analyzer API failed", true); }
-    });
-
-    // Sidebar quick-link behavior: open CONFIG or show flash if not set
-    ['tool_ticket','tool_multichecker','tool_header','tool_vt','tool_blockip'].forEach(id=>{
-      const el = document.getElementById(id);
-      if(!el) return;
-      el.addEventListener('click', (ev)=>{
-        const href = el.getAttribute('data-url') || el.href;
-        if(!href || href === "#"){ ev.preventDefault(); const cfg = CONFIG[id]; if(cfg) window.open(cfg.replace("{incidentId}", encodeURIComponent(state.id)), "_blank"); else flash("Configure this tool in CONFIG"); }
-      });
-    });
-
-    // Close modal on ESC
-    document.addEventListener('keydown', (e)=>{ if(e.key === "Escape") closeModal(); });
-
-    /************************************************************************
-     * TEMPLATES
-     ************************************************************************/
-    function getTemplate(name){
-      const templates = {
-        phish_notify: `Subject: Possible phishing attempt — immediate action required\n\nTeam,\nWe detected a suspected phishing email targeting employees. Do not click links or open attachments. IT will enforce password resets for affected accounts. Please report any suspicious activity to security@example.com.\n\n- Security Team`,
-        cust_notify: `Subject: Service Notice: Potential Account Compromise\n\nDear Customer,\nWe are investigating unusual activity affecting some accounts. We recommend you change your password immediately and enable MFA. We will update you within 24 hours.\n\n- Support`,
-        exec_brief: `Executive Summary:\n- Incident: [Type]\n- Scope: [# affected]\n- Impact: [impact]\n- Next steps: Containment, recovery, monitoring\n\nContact: security@example.com`,
-        postmortem: `Postmortem Template\n1) Summary:\n2) Timeline:\n3) Root cause:\n4) Actions taken:\n5) Remediation & follow-ups:\n6) Lessons learned:`
-      };
-      return templates[name] || "Template not found";
-    }
-
-    /************************************************************************
-     * BOOTSTRAP: initial state & render
-     ************************************************************************/
-    // ensure seed links & initial render
-    seedToolLinks();
-    loadState();
-    if(!localStorage.getItem("incident_playbook_state")){
-      // no saved state — initialize steps for default playbook
-      generateSteps(state.playbookType);
-      addLog("Incident created");
-      saveState();
-    }
-
-    // Allow dynamic playbook switching (optional dev helper)
-    // Example: change playbookType via JS console then call generateSteps('ransomware')
-    window.setPlaybook = (key) => { if(PLAYBOOKS[key]) { state.playbookType = key; generateSteps(key); saveState(); flash(`Playbook switched to ${key}`); } else flash("Playbook not found", true); };
-
-    // expose state for debugging: window.__INCIDENT_STATE
-    window.__INCIDENT_STATE = state;
+    // Init
+    loadPlaybooks();
   </script>
 </body>
 </html>
