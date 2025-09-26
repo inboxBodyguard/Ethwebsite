@@ -211,6 +211,49 @@
     90% { opacity: 1; }
     100% { transform: translateY(110vh); opacity: 0; }
   }
+  /* Cyber Rain Effect for Sidebar */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 240px; /* adjust sidebar width */
+  height: 100vh;
+  background: black; /* fallback background */
+  overflow: hidden;
+  z-index: 1000;
+  color: #00ffcc; /* neon green text */
+  font-family: monospace;
+}
+
+/* cyber rain particles */
+.sidebar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(to bottom, rgba(0,255,128,0.3) 50%, transparent 50%);
+  background-size: 2px 20px; /* thickness + spacing */
+  animation: rainFall 0.4s linear infinite;
+  opacity: 0.6;
+}
+
+/* subtle glow overlay */
+.sidebar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(0,255,128,0.15), transparent 70%);
+  pointer-events: none;
+}
+
+/* rain movement */
+@keyframes rainFall {
+  from { background-position-y: 0; }
+  to   { background-position-y: 20px; }
+}
 </style>
 </head>
 <body>
