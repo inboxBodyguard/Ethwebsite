@@ -1572,5 +1572,62 @@ window.addEventListener('resize', () => {
     3.293 0 .32.216.694.825.576A12.003 12.003 0 0012 .297z"/>
   </svg>
 </a>
+<!-- Cyber Rain Playbook Button -->
+<div style="text-align:center; margin-top:40px;">
+  <a href="incident-playbook.html" style="text-decoration:none;">
+    <button class="cyber-button">
+      🚨 Open Incident Playbook
+    </button>
+  </a>
+</div>
+
+<style>
+  .cyber-button {
+    position: relative;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #00f5ff;
+    border: 2px solid #00f5ff;
+    padding: 14px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    text-shadow: 0 0 5px #00f5ff, 0 0 10px #00f5ff;
+  }
+
+  .cyber-button::before {
+    content: "";
+    position: absolute;
+    top: -150%;
+    left: -50%;
+    width: 200%;
+    height: 400%;
+    background: repeating-linear-gradient(
+      transparent,
+      transparent 10px,
+      rgba(0, 245, 255, 0.2) 10px,
+      rgba(0, 245, 255, 0.2) 20px
+    );
+    animation: cyberRain 4s linear infinite;
+    z-index: 0;
+  }
+
+  .cyber-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #00f5ff;
+  }
+
+  .cyber-button span {
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes cyberRain {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100%); }
+  }
+</style>
 </body>
 </html>
