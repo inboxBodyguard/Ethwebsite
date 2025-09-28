@@ -387,6 +387,22 @@ body {
       document.getElementById('error-message').style.display = 'none';
     }
   </script>
+  
+   </script>
+async function verifyCaptcha(token) {
+    try {
+      let res = await fetch("https://e4ea3339-b0bb-474d-b03c-758fd0ece917-00-d5p6pubo8oyi.janeway.replit.dev/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: token })
+      });
+      let data = await res.json();
+      console.log("Verification result:", data);
+    } catch (err) {
+      console.error("Error verifying:", err);
+    }
+  }
+</script>
 
 </body>
 </html>
