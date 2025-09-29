@@ -9,240 +9,189 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    body {
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        color: #e0e6ed;
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
 
-body {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-  color: #e0e6ed;
-  font-family: 'Inter', sans-serif;
-  line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .login-container {
+        width: 100%;
+        max-width: 400px;
+        background: rgba(22, 33, 62, 0.8);
+        backdrop-filter: blur(15px);
+        border-radius: 16px;
+        padding: 2.5rem;
+        border: 1px solid rgba(0, 255, 204, 0.2);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+    }
 
-.login-container {
-  width: 100%;
-  max-width: 400px;
-  margin: 2rem;
-  background: rgba(22, 33, 62, 0.8);
-  backdrop-filter: blur(15px);
-  border-radius: 16px;
-  padding: 2.5rem;
-  border: 1px solid rgba(0, 255, 204, 0.2);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  position: relative;
-  overflow: hidden;
-}
+    .login-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #00ffcc, transparent);
+    }
 
-.login-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #00ffcc, transparent);
-}
+    .brand-logo { text-align: center; margin-bottom: 2rem; }
+    .brand-logo h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #00ffcc;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+    }
+    .brand-logo p { color: #b8c6db; font-size: 0.9rem; margin: 0; }
 
-.brand-logo { text-align: center; margin-bottom: 2rem; }
-.brand-logo h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #00ffcc;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
-}
-.brand-logo p { color: #b8c6db; font-size: 0.9rem; margin: 0; }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-label { display: block; color: #e0e6ed; font-weight: 500; margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        background: rgba(16, 21, 30, 0.8);
+        border: 1px solid rgba(0, 255, 204, 0.3);
+        border-radius: 8px;
+        color: #fff;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    .form-control:focus {
+        outline: none;
+        border-color: #00ffcc;
+        background: rgba(16, 21, 30, 0.9);
+        box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.1);
+    }
+    .form-control::placeholder { color: #8a94a6; }
 
-.form-group { margin-bottom: 1.5rem; }
-.form-label { display: block; color: #e0e6ed; font-weight: 500; margin-bottom: 0.5rem; font-size: 0.9rem; }
-.form-control {
-  width: 100%;
-  padding: 12px 16px;
-  background: rgba(16, 21, 30, 0.8);
-  border: 1px solid rgba(0, 255, 204, 0.3);
-  border-radius: 8px;
-  color: #fff;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-.form-control:focus {
-  outline: none;
-  border-color: #00ffcc;
-  background: rgba(16, 21, 30, 0.9);
-  box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.1);
-}
-.form-control::placeholder { color: #8a94a6; }
+    .btn-primary {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #00ffcc, #00ccaa);
+        color: #000;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 1rem;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 255, 204, 0.3); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:disabled { background: #555; cursor: not-allowed; }
 
-.btn-primary {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #00ffcc, #00ccaa);
-  color: #000;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-bottom: 1rem;
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 255, 204, 0.3); }
-.btn-primary:active { transform: translateY(0); }
 
-.divider {
-  display: flex;
-  align-items: center;
-  margin: 1.5rem 0;
-  color: #8a94a6;
-  font-size: 0.9rem;
-}
-.divider::before, .divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: rgba(138, 148, 166, 0.3);
-}
-.divider span { padding: 0 1rem; }
+    .divider {
+        display: flex;
+        align-items: center;
+        margin: 1.5rem 0;
+        color: #8a94a6;
+        font-size: 0.9rem;
+    }
+    .divider::before, .divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: rgba(138, 148, 166, 0.3);
+    }
+    .divider span { padding: 0 1rem; }
 
-.google-btn {
-  width: 100%;
-  padding: 12px 16px;
-  background: #ffffff;
-  color: #333;
-  border: 1px solid #dadce0;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 1.5rem;
-  text-decoration: none;
-}
-.google-btn:hover { background: #f8f9fa; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); transform: translateY(-1px); }
-.google-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
-.google-icon { width: 20px; height: 20px; background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0xNy42NCA5LjIwNWMwLS42MzktLjA1Ny0xLjI1Mi0uMTY0LTEuODQxSDljMCAxLjgzOS42NzIgMy41NzMgMS45MjkgNC43MjcuNjcxLS40NDYgMS4yNDUtMS4wNyAxLjY5Mi0xLjg0MXpNOSAwdjE4YzQuOTQ1IDAgOS0zLjk4IDktOVM5IDAgOSAwem0wIDEuNjM2aDYuMzgyYy0xLjI0Ny41NDktMi4zMzYgMS4zNzEtMy4xOSAyLjQ4MSAuNzE0IDEuODM5LjcxNCA0LjE4IDAgNi4wMTguODU0IDEuMTEgMS45NDMgMS45MzIgMy4xOSAyLjQ4MUg5VjEuNjM2em0wIDFDNi43OTEgMS4wMjcgNS4xOSAxLjYzNiA0IDIuNzI3aDMuNjQ5QzguODUxIDIuMjYzIDEwIDMuNTczIDEwIDUuOTA5SDF2NGg5di0uOTA5QzEwIDYuNDM2IDguODUxIDUuMTI2IDcuNjQ5IDQuNzI3SDRjMS4xOS0xLjA5IDIuNzkyLTEuNyA1LTEuNjM2eiIgZmlsbD0iIzQyODVGNCIvPjwvZz48L3N2Zz4='); background-size: contain; background-repeat: no-repeat; }
+    .social-btn {
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 1rem;
+        text-decoration: none;
+    }
+    .social-btn:hover { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); transform: translateY(-1px); }
+    .social-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
+    .social-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none;}
 
-.github-btn {
-  width: 100%;
-  padding: 12px 16px;
-  background: #24292e;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  text-decoration: none;
-}
-.github-btn:hover { background: #333; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); transform: translateY(-1px); }
-.github-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
 
-.microsoft-btn {
-  width: 100%;
-  padding: 12px 16px;
-  background: #0078d4;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  text-decoration: none;
-}
-.microsoft-btn:hover { background: #106ebe; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); transform: translateY(-1px); }
-.microsoft-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
+    .google-btn { background: #ffffff; color: #333; border: 1px solid #dadce0; }
+    .google-btn:hover { background: #f8f9fa; }
+    .google-icon { width: 20px; height: 20px; background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNy42NDUgOS4xODJoMy4wNHYxLjUyaC0zLjA0di0xLjUyek0xNy42NCA5LjIwNWMwLS42MzktLjA1Ny0xLjI1Mi0uMTY0LTEuODQxSDl2My40ODFoNC44NDRjLS4yMDkgMS4xMjUtLjgyMiAyLjA3OC0xLjYzNiAyLjg3MnYyLjU4M2g1LjE4N2MxLjU0LTEuNDAxIDIuNDM4LTMuNDUgMi40MzgtNS44Nzd6IiBmaWxsPSIjNDI4NUY0IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAxOGM0Ljk3IDAgOS00LjAzIDktOVMyMy45NyAwIDkgMCA5IDQuMDMgOSA5djB6bTAgMHYtMS44MThoMS44MThWOUg5VjEuODE4QzE0LjUgMS44MTggMTggNS41IDE4IDljMCAzLjUtMy41IDcuMTgyLTkgNy4xODJ6bTAgMHYtMy42MzZoMy42MzZDOTIgMTQuMzY0IDUgMTggMCAxOHYtOS4xODJoMy42MzZDOC4xODIgMTIuNjM2IDkgMTUgOSA5djB6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAxOGMtNC45NyAwLTktNC4wMy05LTlTMi4wMyAwIDkgMCA5IDQuMDMgOSA5djB6bTAgMHYtMS44MThIOS4xODJWOUg5VjEuODE4QzMuNSAxLjgxOCAwIDUuNSAwIDljMCAzLjUgMy41IDcuMTgyIDkgNy4xODJ6bTAgMHYtMy42MzZIOS4xODJDOSAxNC4zNjQgNSAxOCAwIDE4di05LjE4Mkg5QzkgMTIuNjM2IDkgMTUgOSA5djB6IiBmaWxsPSIjRUExNDQwIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAxOGM0Ljk3IDAgOS00LjAzIDktOVMyMy45NyAwIDkgMCA5IDQuMDMgOSA5djB6bTAgMHYtMS44MThoMS44MThWOUg5VjEuODE4QzE0LjUgMS44MTggMTggNS41IDE4IDljMCAzLjUtMy41IDcuMTgyLTkgNy4xODJ6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48L3N2Zz4='); background-size: contain; background-position: center; background-repeat: no-repeat; }
 
-.back-home { position: absolute; top: 1rem; left: 1rem; z-index: 10; }
-.back-home a { color: #00ffcc; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
-.back-home a:hover { color: #00e6b8; }
+    .github-btn { background: #24292e; color: #fff; border: none; }
+    .github-btn:hover { background: #333; }
+    .github-icon { width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E"); background-size: contain; background-position: center; background-repeat: no-repeat; }
 
-.signin-link { text-align: center; color: #b8c6db; font-size: 0.9rem; }
-.signin-link a { color: #00ffcc; text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
-.signin-link a:hover { color: #00e6b8; text-decoration: underline; }
+    .microsoft-btn { background: #0078d4; color: #fff; border: none; }
+    .microsoft-btn:hover { background: #106ebe; }
+    .microsoft-icon { width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 21 21' fill='white'%3E%3Cpath d='M10 0H0v10h10V0zM21 0h-10v10h10V0zM10 11H0v10h10V11zm11 0h-10v10h10V11z'/%3E%3C/svg%3E"); background-size: contain; background-position: center; background-repeat: no-repeat; }
 
-.error-message, .success-message {
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-  display: none;
-}
-.error-message { background: rgba(255,59,48,0.1); border: 1px solid rgba(255,59,48,0.3); color: #ff6b6b; }
-.success-message { background: rgba(52,199,89,0.1); border: 1px solid rgba(52,199,89,0.3); color: #34c759; }
+    .back-home { position: absolute; top: 1rem; left: 1rem; z-index: 10; }
+    .back-home a { color: #00ffcc; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
+    .back-home a:hover { color: #00e6b8; }
 
-.loading {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgba(0,0,0,0.3);
-  border-radius: 50%;
-  border-top-color: #000;
-  animation: spin 1s ease-in-out infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
+    .signin-link { text-align: center; color: #b8c6db; font-size: 0.9rem; margin-top: 1.5rem; }
+    .signin-link a { color: #00ffcc; text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+    .signin-link a:hover { color: #00e6b8; text-decoration: underline; }
 
-#verify-btn { display: none; margin-top: 0.5rem; }
-#recaptcha-container { margin-top: 1rem; }
+    .error-message, .success-message {
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        display: none;
+    }
+    .error-message { background: rgba(255,59,48,0.1); border: 1px solid rgba(255,59,48,0.3); color: #ff6b6b; }
+    .success-message { background: rgba(52,199,89,0.1); border: 1px solid rgba(52,199,89,0.3); color: #34c759; }
 
-@media (max-width: 480px) {
-  .login-container { margin: 1rem; padding: 2rem; }
-  .brand-logo h1 { font-size: 1.75rem; }
-}
+    #recaptcha-container { margin: 1rem 0; display: flex; justify-content: center; }
 
-#rain-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
-  overflow: hidden;
-}
+    @media (max-width: 480px) {
+        body { padding: 0; }
+        .login-container { margin: 0; padding: 2rem 1.5rem; border-radius: 0; min-height: 100vh; }
+        .brand-logo h1 { font-size: 1.75rem; }
+        .back-home { top: 1.5rem; left: 1.5rem; }
+    }
 
-.rain-column {
-  position: absolute;
-  top: -100%;
-  font-family: 'Courier New', monospace;
-  font-size: 14px;
-  color: #00ffcc;
-  text-shadow: 0 0 8px #00ffcc;
-  white-space: nowrap;
-  animation: fall linear infinite, flicker 1.5s infinite alternate;
-  opacity: 0.6;
-}
-
-@keyframes fall {
-  to {
-    top: 110%;
-  }
-}
-
-@keyframes flicker {
-  0%, 18%, 22%, 25%, 53%, 57%, 100% {
-    text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px #00ffcc, 0 0 80px #00ffcc, 0 0 90px #00ffcc, 0 0 100px #00ffcc, 0 0 150px #00ffcc;
-  }
-  20%, 24%, 55% {
-    text-shadow: none;
-  }
-}
-
+    #rain-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+    }
+    .rain-column {
+        position: absolute;
+        top: -100%;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        color: #00ffcc;
+        text-shadow: 0 0 8px #00ffcc;
+        white-space: nowrap;
+        animation: fall linear infinite, flicker 1.5s infinite alternate;
+        opacity: 0.6;
+    }
+    @keyframes fall { to { top: 110%; } }
+    @keyframes flicker {
+        0%, 18%, 22%, 25%, 53%, 57%, 100% { text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px #00ffcc, 0 0 80px #00ffcc, 0 0 90px #00ffcc, 0 0 100px #00ffcc, 0 0 150px #00ffcc; }
+        20%, 24%, 55% { text-shadow: none; }
+    }
   </style>
 </head>
 <body>
@@ -257,101 +206,86 @@ body {
       <p>Secure Signup</p>
     </div>
 
+    <div id="error-message" class="error-message"></div>
+    <div id="success-message" class="success-message"></div>
 
-<div id="error-message" class="error-message"></div>
-<div id="success-message" class="success-message"></div>
+    <button id="google-signin-btn" class="social-btn google-btn" onclick="handleGoogleSignIn()">
+        <div class="google-icon"></div>
+        <span>Continue with Google</span>
+    </button>
 
-<!-- Google Sign-In -->
-<div id="g_id_onload"
-     data-client_id="328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com"
-     data-context="signin"
-     data-ux_mode="popup"
-     data-callback="handleCredentialResponse"
-     data-auto_prompt="false">
+    <button id="github-signin-btn" class="social-btn github-btn" onclick="handleGitHubSignIn()">
+        <div class="github-icon"></div>
+        <span>Continue with GitHub</span>
+    </button>
+
+    <button id="microsoft-signin-btn" class="social-btn microsoft-btn" onclick="handleMicrosoftSignIn()">
+        <div class="microsoft-icon"></div>
+        <span>Continue with Microsoft</span>
+    </button>
+
+    <div class="divider"><span>or</span></div>
+
+    <form id="signup-form" action="https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New Signup from EZM Cyber!">
+        <input type="hidden" name="_next" id="formsubmit-redirect-url">
+        <input type="hidden" name="_captcha" value="false">
+
+        <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+        </div>
+
+        <div id="recaptcha-container"></div>
+
+        <button type="submit" id="verify-btn" class="btn-primary">
+            <span id="verify-btn-text">Sign Up with Email</span>
+        </button>
+    </form>
+
+    <div class="signin-link">
+        Already have an account? <a href="login.html">Sign in here</a>
+    </div>
 </div>
-
-<button id="google-signin-btn" class="google-btn" onclick="handleGoogleSignIn()">
-  <div class="google-icon"></div>
-</button>
-
-<button id="github-signin-btn" class="github-btn" onclick="handleGitHubSignIn()">Continue with GitHub</button>
-
-<button id="microsoft-signin-btn" class="microsoft-btn" onclick="handleMicrosoftSignIn()">Continue with Microsoft</button>
-
-<div class="divider"><span>or</span></div>
-
-<!-- Traditional signup -->
-<form id="signup-form">
-  <div class="form-group">
-    <label for="email" class="form-label">Email Address</label>
-    <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
-  </div>
-  <div class="form-group">
-    <label for="password" class="form-label">Password</label>
-    <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
-  </div>
-
-  <div id="recaptcha-container" style="display:none;"></div>
-
-  <button type="button" id="verify-btn" class="btn-primary">
-    <span id="verify-btn-text">Verify & Continue</span>
-  </button>
-</form>
-
-<div class="signin-link">
-  Already have an account? <a href="login.html">Sign in here</a>
-</div>
-
-
-  </div>
 
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-
   <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
-
   <script>
     const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com';
-    const GITHUB_CLIENT_ID = 'YOUR_GITHUB_CLIENT_ID'; // 'Ov23li9vNorDxb2x1Ljs'
+    const GITHUB_CLIENT_ID = 'Ov23li9vNorDxb2x1Ljs'; 
     const MICROSOFT_CLIENT_ID = 'YOUR_MICROSOFT_CLIENT_ID'; // Replace with your Microsoft App Client ID
-    const REDIRECT_URI = window.location.href;
     const RECAPTCHA_SITE_KEY = '6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG';
     let recaptchaWidgetId = null;
-    let recaptchaReady = false;
 
     document.addEventListener('DOMContentLoaded', function() {
-      const onloadDiv = document.getElementById('g_id_onload');
-      onloadDiv.setAttribute('data-client_id', GOOGLE_CLIENT_ID);
-
       // Check if user is already logged in
-      const user = sessionStorage.getItem('user');
-      if (user) {
+      if (sessionStorage.getItem('user')) {
         window.location.href = 'home.html';
         return;
       }
-
-      // Handle OAuth callback
+      
+      // Handle OAuth callback from GitHub/Microsoft
+      handleOAuthRedirect();
+      
+      // Handle Formsubmit redirect
       const urlParams = new URLSearchParams(window.location.search);
-      const code = urlParams.get('code');
-      const returnedState = urlParams.get('state');
-      const storedState = sessionStorage.getItem('oauth_state');
-      const provider = sessionStorage.getItem('oauth_provider');
-
-      if (code && returnedState && returnedState === storedState && provider) {
-        sessionStorage.removeItem('oauth_state');
-        const codeVerifier = sessionStorage.getItem(`${provider}_code_verifier`);
-        sessionStorage.removeItem(`${provider}_code_verifier`);
-        sessionStorage.removeItem('oauth_provider');
-
-        handleOAuthCallback(provider, code, codeVerifier);
-        // Clear URL params
-        history.replaceState({}, '', window.location.pathname);
+      if (urlParams.has('signup_success')) {
+        showSuccess('Thank you for signing up! Your submission has been received.');
+        // Clean the URL
+        history.replaceState(null, '', window.location.pathname);
       }
+      // Set the redirect URL for Formsubmit to return here with a success flag
+      document.getElementById('formsubmit-redirect-url').value = `${window.location.origin}${window.location.pathname}?signup_success=true`;
     });
 
-    // OAuth Helper Functions
+    // --- OAuth Helper Functions ---
     function generateRandomString(length) {
-      let text = '';
       const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+      let text = '';
       for (let i = 0; i < length; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
       }
@@ -359,14 +293,45 @@ body {
     }
 
     async function generateCodeChallenge(codeVerifier) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(codeVerifier);
+      const data = new TextEncoder().encode(codeVerifier);
       const digest = await window.crypto.subtle.digest('SHA-256', data);
-      const base64Digest = btoa(String.fromCharCode(...new Uint8Array(digest)));
-      return base64Digest.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+      return btoa(String.fromCharCode(...new Uint8Array(digest)))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
     }
 
-    // Google Sign-In Functions
+    function parseJwt(token) {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => 
+            '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        ).join(''));
+        return JSON.parse(jsonPayload);
+    }
+
+    // --- Google Sign-In ---
+    function handleGoogleSignIn() {
+      const btn = document.getElementById('google-signin-btn');
+      btn.disabled = true;
+
+      try {
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleCredentialResponse
+        });
+        google.accounts.id.prompt((notification) => {
+          if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+            btn.disabled = false;
+            console.warn('Google Sign-In prompt was not displayed.');
+            showError('Google Sign-In popup could not be displayed. Please check browser settings.');
+          }
+        });
+      } catch (error) {
+          console.error("Google Sign-In Error:", error);
+          showError("Google Sign-In is not available right now.");
+          btn.disabled = false;
+      }
+    }
+
     function handleCredentialResponse(response) {
       const userInfo = parseJwt(response.credential);
       sessionStorage.setItem('user', JSON.stringify({
@@ -379,231 +344,66 @@ body {
       setTimeout(() => { window.location.href = 'home.html'; }, 1500);
     }
 
-    function handleGoogleSignIn() {
-      const btn = document.getElementById('google-signin-btn');
-      btn.disabled = true;
-
-      google.accounts.id.initialize({ 
-        client_id: GOOGLE_CLIENT_ID, 
-        callback: handleCredentialResponse 
-      });
-      
-      google.accounts.id.prompt((notification) => {
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          btn.disabled = false;
-          // Fallback: render button if popup fails
-          google.accounts.id.renderButton(
-            document.getElementById("google-signin-btn"), 
-            { theme: "outline", size: "large", width: "100%" }
-          );
-        }
-      });
-    }
-
-    // GitHub Sign-In
+    // --- GitHub & Microsoft Sign-In (Requires a backend proxy for token exchange) ---
     function handleGitHubSignIn() {
-      const btn = document.getElementById('github-signin-btn');
-      btn.disabled = true;
-      btn.textContent = 'Redirecting...';
-
-      const codeVerifier = generateRandomString(128);
-      sessionStorage.setItem('github_code_verifier', codeVerifier);
       const state = generateRandomString(16);
+      const codeVerifier = generateRandomString(128);
+      
       sessionStorage.setItem('oauth_state', state);
       sessionStorage.setItem('oauth_provider', 'github');
+      sessionStorage.setItem('github_code_verifier', codeVerifier);
 
       generateCodeChallenge(codeVerifier).then(codeChallenge => {
-        const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=user:email&response_type=code&code_challenge=${codeChallenge}&code_challenge_method=S256&state=${state}`;
+        const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${window.location.origin}${window.location.pathname}&scope=user:email&state=${state}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
         window.location.href = authUrl;
       });
     }
 
-    // Microsoft Sign-In
     function handleMicrosoftSignIn() {
-      const btn = document.getElementById('microsoft-signin-btn');
-      btn.disabled = true;
-      btn.textContent = 'Redirecting...';
-
-      const codeVerifier = generateRandomString(128);
-      sessionStorage.setItem('microsoft_code_verifier', codeVerifier);
       const state = generateRandomString(16);
+      const codeVerifier = generateRandomString(128);
+
       sessionStorage.setItem('oauth_state', state);
       sessionStorage.setItem('oauth_provider', 'microsoft');
+      sessionStorage.setItem('microsoft_code_verifier', codeVerifier);
 
       generateCodeChallenge(codeVerifier).then(codeChallenge => {
-        const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${MICROSOFT_CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=openid%20profile%20email&code_challenge=${codeChallenge}&code_challenge_method=S256&state=${state}`;
+        const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${MICROSOFT_CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(window.location.origin + window.location.pathname)}&scope=openid%20profile%20email&state=${state}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
         window.location.href = authUrl;
       });
     }
 
-    // Handle OAuth Callback
-    function handleOAuthCallback(provider, code, codeVerifier) {
-      let tokenUrl, body, userUrl, authHeader;
-
-      if (provider === 'github') {
-        tokenUrl = 'https://github.com/login/oauth/access_token';
-        body = `client_id=${GITHUB_CLIENT_ID}&code=${code}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&code_verifier=${codeVerifier}&grant_type=authorization_code`;
-        userUrl = 'https://api.github.com/user';
-        authHeader = token => ({ 'Authorization': `Bearer ${token}` });
-      } else if (provider === 'microsoft') {
-        tokenUrl = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
-        body = `client_id=${MICROSOFT_CLIENT_ID}&code=${code}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&code_verifier=${codeVerifier}&grant_type=authorization_code&scope=openid%20profile%20email`;
-      }
-
-      fetch(tokenUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json'
-        },
-        body: body
-      }).then(res => res.json())
-      .then(data => {
-        if (data.error) {
-          showError(`${provider.charAt(0).toUpperCase() + provider.slice(1)} authentication failed: ${data.error_description || data.error}`);
-          return;
-        }
-
-        if (provider === 'github') {
-          const accessToken = data.access_token;
-          if (accessToken) {
-            fetch(userUrl, {
-              headers: authHeader(accessToken)
-            }).then(res => res.json())
-            .then(user => {
-              sessionStorage.setItem('user', JSON.stringify({
-                name: user.name || user.login,
-                email: user.email,
-                picture: user.avatar_url,
-                loginMethod: 'github'
-              }));
-              showSuccess('Successfully signed up with GitHub!');
-              setTimeout(() => { window.location.href = 'home.html'; }, 1500);
-            }).catch(err => {
-              showError('Failed to fetch user information.');
-            });
-          } else {
-            showError('GitHub authentication failed.');
-          }
-        } else if (provider === 'microsoft') {
-          const idToken = data.id_token;
-          if (idToken) {
-            const userInfo = parseJwt(idToken);
-            sessionStorage.setItem('user', JSON.stringify({
-              name: userInfo.name || `${userInfo.given_name} ${userInfo.family_name}`,
-              email: userInfo.preferred_username || userInfo.email,
-              picture: '',
-              loginMethod: 'microsoft'
-            }));
-            showSuccess('Successfully signed up with Microsoft!');
-            setTimeout(() => { window.location.href = 'home.html'; }, 1500);
-          } else {
-            showError('Microsoft authentication failed.');
-          }
-        }
-      }).catch(err => {
-        showError('Network error during authentication.');
-      });
-    }
-
-    function parseJwt(token) {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      return JSON.parse(decodeURIComponent(atob(base64).split('').map(c => 
-        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-      ).join('')));
-    }
-
-    // reCAPTCHA Functions
-    function onRecaptchaLoad() {
-      recaptchaReady = true;
-      renderRecaptcha();
-    }
-
-    function renderRecaptcha() {
-      if (!recaptchaReady) return;
-      if (recaptchaWidgetId === null) {
-        recaptchaWidgetId = grecaptcha.render('recaptcha-container', { 
-          sitekey: RECAPTCHA_SITE_KEY,6LeAFNkrAAAAAGnJ_5yOlf7mTH7HofSMKvLKoThS'
-          theme: 'light' 
-        });
-      }
-      document.getElementById('recaptcha-container').style.display = 'block';
-      document.getElementById('verify-btn').style.display = 'block';
-    }
-
-    function verifyRecaptchaThenSignup(callback) {
-      if (typeof grecaptcha === 'undefined') { 
-        showError('reCAPTCHA not loaded. Please refresh the page.'); 
-        return; 
-      }
-      const token = grecaptcha.getResponse(recaptchaWidgetId);
-      if (!token) { 
-        showError('Please complete the reCAPTCHA verification.'); 
-        return; 
-      }
-      callback(token);
-    }
-
-    // Event Listeners
-    document.getElementById('verify-btn').addEventListener('click', () => {
-      const verifyBtn = document.getElementById('verify-btn');
-      const verifyBtnText = document.getElementById('verify-btn-text');
+    function handleOAuthRedirect() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      const returnedState = urlParams.get('state');
+      const storedState = sessionStorage.getItem('oauth_state');
+      const provider = sessionStorage.getItem('oauth_provider');
       
-      verifyBtnText.innerHTML = '<div class="loading"></div> Verifying...';
-      verifyBtn.disabled = true;
+      if (code && returnedState && returnedState === storedState && provider) {
+        showError(`Sign-in with ${provider} requires a server to complete. This is a client-side only demo.`);
+        console.error(`Received code for ${provider}, but no backend is configured to exchange it for a token.`);
+        history.replaceState(null, '', window.location.pathname); // Clean URL
+      }
+    }
 
-      verifyRecaptchaThenSignup(async (token) => {
-        try {
-          const email = document.getElementById('email').value;
-          const password = document.getElementById('password').value;
-
-          if (!email || !password) {
-            showError('Please fill in all fields.');
-            verifyBtnText.textContent = 'Verify & Continue';
-            verifyBtn.disabled = false;
-            return;
-          }
-
-          // Simulate server verification
-          const res = await fetch('/verify', { 
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `g-recaptcha-response=${encodeURIComponent(token)}`
-          });
-
-          if (res.ok) {
-            sessionStorage.setItem('user', JSON.stringify({
-              email: email,
-              loginMethod: 'email'
-            }));
-            showSuccess('Successfully signed up!');
-            setTimeout(() => window.location.href = 'home.html', 1500);
-          } else {
-            showError('Verification failed. Please try again.');
-            verifyBtnText.textContent = 'Verify & Continue';
-            verifyBtn.disabled = false;
-          }
-        } catch (e) { 
-          console.error(e); 
-          showError('Server error. Please try again later.');
-          verifyBtnText.textContent = 'Verify & Continue';
-          verifyBtn.disabled = false;
+    // --- reCAPTCHA Rendering (For UI purposes) ---
+    function onRecaptchaLoad() {
+        if (document.getElementById('recaptcha-container')) {
+            recaptchaWidgetId = grecaptcha.render('recaptcha-container', { 
+                'sitekey': RECAPTCHA_SITE_KEY,
+                'theme': 'dark' 
+            });
         }
-      });
-    });
+    }
 
-    // Show reCAPTCHA when user starts typing
-    document.getElementById('email').addEventListener('input', renderRecaptcha);
-    document.getElementById('password').addEventListener('input', renderRecaptcha);
-
-    // Utility Functions
+    // --- UI Utility Functions ---
     function showError(message) {
       const errorDiv = document.getElementById('error-message');
       errorDiv.textContent = message;
       errorDiv.style.display = 'block';
       document.getElementById('success-message').style.display = 'none';
-      setTimeout(() => { errorDiv.style.display = 'none'; }, 5000);
+      setTimeout(() => { if(errorDiv) errorDiv.style.display = 'none'; }, 5000);
     }
 
     function showSuccess(message) {
@@ -612,55 +412,42 @@ body {
       successDiv.style.display = 'block';
       document.getElementById('error-message').style.display = 'none';
     }
-  </script>
-<script>
-  async function verifyCaptcha(token) {
-    try {
-      let res = await fetch("https://e4ea3339-b0bb-474d-b03c-758fd0ece917-00-d5p6pubo8oyi.janeway.replit.dev/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: token })
-      });
-      let data = await res.json();
-      console.log("Verification result:", data);
-    } catch (err) {
-      console.error("Error verifying:", err);
-    }
-  }
-</script>
-<script>
-  // Cyber Rain Effect
-  (function() {
-    const container = document.getElementById('rain-container');
-    const columnCount = Math.floor(window.innerWidth / 20);
     
-    function createRainColumn() {
-      const column = document.createElement('div');
-      column.className = 'rain-column';
-      column.style.left = Math.random() * 100 + '%';
-      column.style.animationDuration = (Math.random() * 3 + 2) + 's';
-      column.style.animationDelay = Math.random() * 2 + 's';
-      column.style.opacity = Math.random() * 0.5 + 0.3;
-      
-      let text = '';
-      for (let i = 0; i < Math.floor(Math.random() * 20 + 10); i++) {
-        text += 'WELCOME<br>';
-      }
-      column.innerHTML = text;
-      
-      container.appendChild(column);
-      
-      setTimeout(() => {
-        column.remove();
-        createRainColumn();
-      }, (Math.random() * 3 + 2) * 1000);
-    }
-    
-    for (let i = 0; i < columnCount; i++) {
-      setTimeout(() => createRainColumn(), i * 100);
-    }
-  })();
-</script>
+    // --- Cyber Rain Effect ---
+    (function() {
+        const container = document.getElementById('rain-container');
+        if (!container) return;
+        const columnCount = Math.floor(window.innerWidth / 20);
+        
+        const createRainColumn = () => {
+            const column = document.createElement('div');
+            column.className = 'rain-column';
+            column.style.left = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 3 + 2;
+            column.style.animationDuration = duration + 's, 1.5s';
+            column.style.animationDelay = Math.random() * 2 + 's';
+            column.style.opacity = Math.random() * 0.5 + 0.3;
+            
+            let text = '';
+            const charCount = Math.floor(Math.random() * 20 + 10);
+            for (let i = 0; i < charCount; i++) {
+                text += '10'[Math.floor(Math.random() * 2)] + '<br>';
+            }
+            column.innerHTML = text;
+            
+            container.appendChild(column);
+            
+            setTimeout(() => {
+                column.remove();
+            }, duration * 1000);
+        }
 
+        const rainInterval = setInterval(createRainColumn, 100);
+        
+        window.addEventListener('beforeunload', () => {
+          clearInterval(rainInterval);
+        });
+    })();
+  </script>
 </body>
 </html>
