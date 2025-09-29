@@ -148,6 +148,26 @@ body {
 .github-btn:hover { background: #333; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); transform: translateY(-1px); }
 .github-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
 
+.microsoft-btn {
+  width: 100%;
+  padding: 12px 16px;
+  background: #0078d4;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+}
+.microsoft-btn:hover { background: #106ebe; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); transform: translateY(-1px); }
+.microsoft-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
+
 .back-home { position: absolute; top: 1rem; left: 1rem; z-index: 10; }
 .back-home a { color: #00ffcc; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
 .back-home a:hover { color: #00e6b8; }
@@ -256,6 +276,8 @@ body {
 
 <button id="github-signin-btn" class="github-btn" onclick="handleGitHubSignIn()">Continue with GitHub</button>
 
+<button id="microsoft-signin-btn" class="microsoft-btn" onclick="handleMicrosoftSignIn()">Continue with Microsoft</button>
+
 <div class="divider"><span>or</span></div>
 
 <!-- Traditional signup -->
@@ -289,6 +311,9 @@ body {
 
   <script>
     const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com';
+    const GITHUB_CLIENT_ID = 'YOUR_GITHUB_CLIENT_ID'; // Replace with your GitHub OAuth App Client ID
+    const MICROSOFT_CLIENT_ID = 'YOUR_MICROSOFT_CLIENT_ID'; // Replace with your Microsoft App Client ID
+    const REDIRECT_URI = window.location.href;
     const RECAPTCHA_SITE_KEY = '6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG';
     let recaptchaWidgetId = null;
     let recaptchaReady = false;
@@ -299,8 +324,47 @@ body {
 
       // Check if user is already logged in
       const user = sessionStorage.getItem('user');
-      if (user) window.location.href = 'home.html';
+      if (user) {
+        window.location.href = 'home.html';
+        return;
+      }
+
+      // Handle OAuth callback
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      const returnedState = urlParams.get('state');
+      const storedState = sessionStorage.getItem('oauth_state');
+      const provider = sessionStorage.getItem('oauth_provider');
+
+      if (code && returnedState && returnedState === storedState && provider) {
+        sessionStorage.removeItem('oauth_state');
+        const codeVerifier = sessionStorage.getItem(`${provider}_code_verifier`);
+        sessionStorage.removeItem(`${provider}_code_verifier`);
+        sessionStorage.removeItem('oauth_provider');
+
+        handleOAuthCallback(provider, code, codeVerifier);
+        // Clear URL params
+        history.replaceState({}, '', window.location.pathname);
+      }
     });
+
+    // OAuth Helper Functions
+    function generateRandomString(length) {
+      let text = '';
+      const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+      for (let i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+      return text;
+    }
+
+    async function generateCodeChallenge(codeVerifier) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(codeVerifier);
+      const digest = await window.crypto.subtle.digest('SHA-256', data);
+      const base64Digest = btoa(String.fromCharCode(...new Uint8Array(digest)));
+      return base64Digest.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+    }
 
     // Google Sign-In Functions
     function handleCredentialResponse(response) {
@@ -333,6 +397,112 @@ body {
             { theme: "outline", size: "large", width: "100%" }
           );
         }
+      });
+    }
+
+    // GitHub Sign-In
+    function handleGitHubSignIn() {
+      const btn = document.getElementById('github-signin-btn');
+      btn.disabled = true;
+      btn.textContent = 'Redirecting...';
+
+      const codeVerifier = generateRandomString(128);
+      sessionStorage.setItem('github_code_verifier', codeVerifier);
+      const state = generateRandomString(16);
+      sessionStorage.setItem('oauth_state', state);
+      sessionStorage.setItem('oauth_provider', 'github');
+
+      generateCodeChallenge(codeVerifier).then(codeChallenge => {
+        const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=user:email&response_type=code&code_challenge=${codeChallenge}&code_challenge_method=S256&state=${state}`;
+        window.location.href = authUrl;
+      });
+    }
+
+    // Microsoft Sign-In
+    function handleMicrosoftSignIn() {
+      const btn = document.getElementById('microsoft-signin-btn');
+      btn.disabled = true;
+      btn.textContent = 'Redirecting...';
+
+      const codeVerifier = generateRandomString(128);
+      sessionStorage.setItem('microsoft_code_verifier', codeVerifier);
+      const state = generateRandomString(16);
+      sessionStorage.setItem('oauth_state', state);
+      sessionStorage.setItem('oauth_provider', 'microsoft');
+
+      generateCodeChallenge(codeVerifier).then(codeChallenge => {
+        const authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${MICROSOFT_CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=openid%20profile%20email&code_challenge=${codeChallenge}&code_challenge_method=S256&state=${state}`;
+        window.location.href = authUrl;
+      });
+    }
+
+    // Handle OAuth Callback
+    function handleOAuthCallback(provider, code, codeVerifier) {
+      let tokenUrl, body, userUrl, authHeader;
+
+      if (provider === 'github') {
+        tokenUrl = 'https://github.com/login/oauth/access_token';
+        body = `client_id=${GITHUB_CLIENT_ID}&code=${code}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&code_verifier=${codeVerifier}&grant_type=authorization_code`;
+        userUrl = 'https://api.github.com/user';
+        authHeader = token => ({ 'Authorization': `Bearer ${token}` });
+      } else if (provider === 'microsoft') {
+        tokenUrl = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
+        body = `client_id=${MICROSOFT_CLIENT_ID}&code=${code}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&code_verifier=${codeVerifier}&grant_type=authorization_code&scope=openid%20profile%20email`;
+      }
+
+      fetch(tokenUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        body: body
+      }).then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          showError(`${provider.charAt(0).toUpperCase() + provider.slice(1)} authentication failed: ${data.error_description || data.error}`);
+          return;
+        }
+
+        if (provider === 'github') {
+          const accessToken = data.access_token;
+          if (accessToken) {
+            fetch(userUrl, {
+              headers: authHeader(accessToken)
+            }).then(res => res.json())
+            .then(user => {
+              sessionStorage.setItem('user', JSON.stringify({
+                name: user.name || user.login,
+                email: user.email,
+                picture: user.avatar_url,
+                loginMethod: 'github'
+              }));
+              showSuccess('Successfully signed up with GitHub!');
+              setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+            }).catch(err => {
+              showError('Failed to fetch user information.');
+            });
+          } else {
+            showError('GitHub authentication failed.');
+          }
+        } else if (provider === 'microsoft') {
+          const idToken = data.id_token;
+          if (idToken) {
+            const userInfo = parseJwt(idToken);
+            sessionStorage.setItem('user', JSON.stringify({
+              name: userInfo.name || `${userInfo.given_name} ${userInfo.family_name}`,
+              email: userInfo.preferred_username || userInfo.email,
+              picture: '',
+              loginMethod: 'microsoft'
+            }));
+            showSuccess('Successfully signed up with Microsoft!');
+            setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+          } else {
+            showError('Microsoft authentication failed.');
+          }
+        }
+      }).catch(err => {
+        showError('Network error during authentication.');
       });
     }
 
@@ -459,23 +629,6 @@ body {
   }
 </script>
 <script>
-  function handleGitHubSignIn() {
-    const btn = document.getElementById('github-signin-btn');
-    btn.disabled = true;
-    btn.textContent = 'Signing up...';
-
-    // Simulate successful GitHub signup
-    setTimeout(() => {
-      sessionStorage.setItem('user', JSON.stringify({
-        name: 'GitHub User',
-        email: 'github@example.com',
-        loginMethod: 'github'
-      }));
-      showSuccess('Successfully signed up with GitHub!');
-      setTimeout(() => { window.location.href = 'home.html'; }, 1500);
-    }, 1000);
-  }
-
   // Cyber Rain Effect
   (function() {
     const container = document.getElementById('rain-container');
