@@ -449,5 +449,8 @@
         });
     })();
   </script>
+  <script>
+  document.addEventListener('DOMContentLoaded',()=>{const f=document.getElementById('signup-form');if(f){f.querySelector('input[name="_next"]')?.remove();const i=document.createElement('input');i.type='hidden';i.name='_next';i.value='home.html';f.appendChild(i);f.addEventListener('submit',()=>{const s=document.getElementById('success-message');s&&(s.textContent='Signup successful! Redirecting...',s.style.display='block');});}});
+</script>
 </body>
 </html>
