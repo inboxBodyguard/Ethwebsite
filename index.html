@@ -99,34 +99,41 @@
       transform: scale(1.05);
     }
 
-    .nav-link {
-      color: var(--text-primary) !important;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      padding: 0.5rem 1rem !important;
-      border-radius: 6px;
-      position: relative;
+    /* Sidebar Styles */
+    .offcanvas {
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(15px);
+      color: var(--text-primary);
     }
 
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: var(--neon-cyan);
+    .accordion-button {
+      background: transparent;
+      color: var(--text-primary);
+      border: none;
       transition: all 0.3s ease;
-      transform: translateX(-50%);
     }
 
-    .nav-link:hover {
-      color: var(--neon-cyan) !important;
+    .accordion-button:hover {
+      color: var(--neon-cyan);
       background: rgba(0, 255, 204, 0.05);
     }
 
-    .nav-link:hover::after {
-      width: 80%;
+    .accordion-button:not(.collapsed) {
+      color: var(--neon-cyan);
+      background: rgba(0, 255, 204, 0.1);
+    }
+
+    .accordion-body a {
+      display: block;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-body a:hover {
+      color: var(--neon-cyan);
+      background: rgba(0, 255, 204, 0.05);
     }
 
     /* Hero Section */
@@ -175,16 +182,15 @@
       letter-spacing: 3px;
       line-height: 1.2;
       opacity: 0;
-      animation: fadeInUp 1s ease forwards 0.2s, glow 3s ease-in-out infinite;
-      text-shadow: 0 0 40px rgba(0, 255, 204, 0.5);
+      animation: fadeInUp 1s ease forwards 0.2s, flicker 1.5s infinite alternate;
     }
 
-    @keyframes glow {
-      0%, 100% {
-        filter: brightness(1);
+    @keyframes flicker {
+      0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px var(--neon-cyan), 0 0 80px var(--neon-cyan), 0 0 90px var(--neon-cyan), 0 0 100px var(--neon-cyan), 0 0 150px var(--neon-cyan);
       }
-      50% {
-        filter: brightness(1.3);
+      20%, 24%, 55% {
+        text-shadow: none;
       }
     }
 
@@ -273,6 +279,19 @@
     .btn-custom:hover {
       transform: translateY(-3px) scale(1.05);
       box-shadow: 0 8px 30px rgba(0, 255, 204, 0.6);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(0, 255, 204, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 255, 204, 0);
+      }
     }
 
     .btn-secondary {
@@ -459,6 +478,31 @@
       line-height: 1.9;
     }
 
+    /* Modal Styles */
+    .modal-content {
+      background: var(--card-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--neon-cyan);
+    }
+
+    .modal-header {
+      border-bottom: 1px solid rgba(0, 255, 204, 0.2);
+    }
+
+    .modal-footer {
+      border-top: 1px solid rgba(0, 255, 204, 0.2);
+    }
+
+    .form-control {
+      background: rgba(10, 10, 10, 0.8);
+      border: 1px solid var(--neon-cyan);
+      color: var(--text-primary);
+    }
+
+    .form-control:focus {
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
     /* Footer */
     footer {
       padding: 3rem 0;
@@ -581,20 +625,90 @@
   <!-- Cyber Rain Effect Container -->
   <div id="rain-container"></div>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg fixed-top" aria-label="Main navigation">
+  <!-- Sidebar -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="sidebarLabel">
+        <a class="navbar-brand" href="#">EZMCyber</a>
+      </h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="accordion" id="sidebarAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#homeMenu" aria-expanded="false" aria-controls="homeMenu">
+              Home
+            </button>
+          </h2>
+          <div id="homeMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+            <div class="accordion-body">
+              <a href="#home" data-bs-dismiss="offcanvas">Top</a>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#servicesMenu" aria-expanded="false" aria-controls="servicesMenu">
+              Services
+            </button>
+          </h2>
+          <div id="servicesMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+            <div class="accordion-body">
+              <a href="#services" data-bs-dismiss="offcanvas">All Services</a>
+              <a href="#services" data-bs-dismiss="offcanvas">Protection</a>
+              <a href="#services" data-bs-dismiss="offcanvas">Detection</a>
+              <a href="#services" data-bs-dismiss="offcanvas">Reports</a>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#aboutMenu" aria-expanded="false" aria-controls="aboutMenu">
+              About
+            </button>
+          </h2>
+          <div id="aboutMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+            <div class="accordion-body">
+              <a href="#about" data-bs-dismiss="offcanvas">Our Story</a>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#testimonialsMenu" aria-expanded="false" aria-controls="testimonialsMenu">
+              Testimonials
+            </button>
+          </h2>
+          <div id="testimonialsMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+            <div class="accordion-body">
+              <a href="#testimonials" data-bs-dismiss="offcanvas">Client Reviews</a>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#contactMenu" aria-expanded="false" aria-controls="contactMenu">
+              Contact
+            </button>
+          </h2>
+          <div id="contactMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+            <div class="accordion-body">
+              <a href="#contact" data-bs-dismiss="offcanvas">Get in Touch</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Bar for Sidebar Toggle -->
+  <nav class="navbar fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">EZMCyber</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle sidebar">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        </ul>
-      </div>
+      <a class="navbar-brand mx-auto" href="#">EZMCyber</a>
     </div>
   </nav>
 
@@ -609,7 +723,10 @@
       <div class="cta-buttons">
         <a href="signup.html" class="btn-custom">Get Started</a>
         <a href="verify_link.html" class="btn-custom btn-secondary">Check a Link</a>
-        <a href="newsletter.html" class="btn-custom btn-secondary">Join Newsletter</a>
+        <button type="button" class="btn-custom btn-secondary" data-bs-toggle="modal" data-bs-target="#newsletterModal">Join Newsletter</button>
+        <a href="#services" class="btn-custom btn-secondary">Explore Tools</a>
+        <button type="button" class="btn-custom btn-secondary" data-bs-toggle="modal" data-bs-target="#communityModal">Join Community</button>
+        <button type="button" class="btn-custom btn-secondary" data-bs-toggle="modal" data-bs-target="#demoModal">Request Demo</button>
       </div>
     </div>
   </section>
@@ -700,6 +817,14 @@
     </div>
   </section>
 
+  <!-- Live Feed Section -->
+  <section class="section" id="live-feed-section">
+    <div class="container">
+      <h2 class="section-title">Live Cyber Feed</h2>
+      <div class="row g-4" id="live-feed"></div>
+    </div>
+  </section>
+
   <!-- Contact Section -->
   <section class="section contact" id="contact">
     <div class="container text-center">
@@ -717,9 +842,78 @@
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <p>&copy; 2024 EZMCyber. All rights reserved. Your security is our priority.</p>
+      <p>&copy; 2025 EZMCyber. All rights reserved. Your security is our priority.</p>
     </div>
   </footer>
+
+  <!-- Modals -->
+  <div class="modal fade" id="newsletterModal" tabindex="-1" aria-labelledby="newsletterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newsletterModalLabel">Join Newsletter</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="newsletterEmail" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="newsletterEmail" placeholder="name@example.com">
+            </div>
+            <button type="submit" class="btn btn-custom">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="communityModal" tabindex="-1" aria-labelledby="communityModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="communityModalLabel">Join Community</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="communityEmail" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="communityEmail" placeholder="name@example.com">
+            </div>
+            <button type="submit" class="btn btn-custom">Join</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="demoModalLabel">Request Demo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="demoName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="demoName" placeholder="Your Name">
+            </div>
+            <div class="mb-3">
+              <label for="demoEmail" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="demoEmail" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+              <label for="demoMessage" class="form-label">Message</label>
+              <textarea class="form-control" id="demoMessage" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-custom">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Bootstrap 5 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -728,19 +922,20 @@
     // Cyber Rain Effect
     (function() {
       const container = document.getElementById('rain-container');
-      const chars = '01EZMCyberSecureProtectRespond!@#$%^&*';
-      const columnCount = Math.floor(window.innerWidth / 20);
+      const chars = '01EZMCyberSecureProtectRespond!@#$%^&*()_+-=[]{}|;:,./<>?';
+      let columnCount = Math.floor(window.innerWidth / 10); // Denser rain
       
       function createRainColumn() {
         const column = document.createElement('div');
         column.className = 'rain-column';
         column.style.left = Math.random() * 100 + '%';
-        column.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        column.style.animationDuration = (Math.random() * 5 + 3) + 's'; // Varied speed
         column.style.animationDelay = Math.random() * 2 + 's';
         column.style.opacity = Math.random() * 0.5 + 0.3;
+        column.style.fontSize = (Math.random() * 5 + 12) + 'px'; // Varied size
         
         let text = '';
-        for (let i = 0; i < Math.floor(Math.random() * 20 + 10); i++) {
+        for (let i = 0; i < Math.floor(Math.random() * 30 + 15); i++) {
           text += chars[Math.floor(Math.random() * chars.length)] + '<br>';
         }
         column.innerHTML = text;
@@ -750,12 +945,19 @@
         setTimeout(() => {
           column.remove();
           createRainColumn();
-        }, (Math.random() * 3 + 2) * 1000);
+        }, parseFloat(column.style.animationDuration) * 1000 + 1000);
       }
       
-      for (let i = 0; i < columnCount; i++) {
-        setTimeout(() => createRainColumn(), i * 100);
+      function initRain() {
+        container.innerHTML = '';
+        columnCount = Math.floor(window.innerWidth / 10);
+        for (let i = 0; i < columnCount; i++) {
+          setTimeout(createRainColumn, i * 100);
+        }
       }
+      
+      initRain();
+      window.addEventListener('resize', initRain);
     })();
 
     // Scroll animations
@@ -800,9 +1002,45 @@
       }
     });
 
+    // Populate Live Feed
+    function populateLiveFeed() {
+      const feedContainer = document.getElementById('live-feed');
+      const feeds = [
+        {
+          title: 'New Ransomware Alert',
+          content: 'A new variant of ransomware is targeting small businesses. Stay vigilant and update your systems.',
+          date: '2025-09-29'
+        },
+        {
+          title: 'Phishing Campaign Spotted',
+          content: 'Emails impersonating banks are circulating. Verify links before clicking.',
+          date: '2025-09-28'
+        },
+        {
+          title: 'Zero-Day Vulnerability Patched',
+          content: 'Major software vendor releases patch for critical vulnerability. Apply immediately.',
+          date: '2025-09-27'
+        }
+      ];
+
+      feeds.forEach((feed, index) => {
+        const col = document.createElement('div');
+        col.className = 'col-md-4';
+        col.innerHTML = `
+          <div class="feature-card" style="animation-delay: ${index * 0.2}s;">
+            <h3>${feed.title}</h3>
+            <p>${feed.content}</p>
+            <small>${feed.date}</small>
+          </div>
+        `;
+        feedContainer.appendChild(col);
+      });
+    }
+
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       observeElements();
+      populateLiveFeed();
     });
   </script>
 </body>
