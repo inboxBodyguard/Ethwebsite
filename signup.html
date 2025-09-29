@@ -128,6 +128,26 @@ body {
 .google-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
 .google-icon { width: 20px; height: 20px; background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0xNy42NCA5LjIwNWMwLS42MzktLjA1Ny0xLjI1Mi0uMTY0LTEuODQxSDljMCAxLjgzOS42NzIgMy41NzMgMS45MjkgNC43MjcuNjcxLS40NDYgMS4yNDUtMS4wNyAxLjY5Mi0xLjg0MXpNOSAwdjE4YzQuOTQ1IDAgOS0zLjk4IDktOVM5IDAgOSAwem0wIDEuNjM2aDYuMzgyYy0xLjI0Ny41NDktMi4zMzYgMS4zNzEtMy4xOSAyLjQ4MSAuNzE0IDEuODM5LjcxNCA0LjE4IDAgNi4wMTguODU0IDEuMTEgMS45NDMgMS45MzIgMy4xOSAyLjQ4MUg5VjEuNjM2em0wIDFDNi43OTEgMS4wMjcgNS4xOSAxLjYzNiA0IDIuNzI3aDMuNjQ5QzguODUxIDIuMjYzIDEwIDMuNTczIDEwIDUuOTA5SDF2NGg5di0uOTA5QzEwIDYuNDM2IDguODUxIDUuMTI2IDcuNjQ5IDQuNzI3SDRjMS4xOS0xLjA5IDIuNzkyLTEuNyA1LTEuNjM2eiIgZmlsbD0iIzQyODVGNCIvPjwvZz48L3N2Zz4='); background-size: contain; background-repeat: no-repeat; }
 
+.github-btn {
+  width: 100%;
+  padding: 12px 16px;
+  background: #24292e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+}
+.github-btn:hover { background: #333; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); transform: translateY(-1px); }
+.github-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
+
 .back-home { position: absolute; top: 1rem; left: 1rem; z-index: 10; }
 .back-home a { color: #00ffcc; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
 .back-home a:hover { color: #00e6b8; }
@@ -165,10 +185,48 @@ body {
   .brand-logo h1 { font-size: 1.75rem; }
 }
 
+#rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.rain-column {
+  position: absolute;
+  top: -100%;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #00ffcc;
+  text-shadow: 0 0 8px #00ffcc;
+  white-space: nowrap;
+  animation: fall linear infinite, flicker 1.5s infinite alternate;
+  opacity: 0.6;
+}
+
+@keyframes fall {
+  to {
+    top: 110%;
+  }
+}
+
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px #00ffcc, 0 0 80px #00ffcc, 0 0 90px #00ffcc, 0 0 100px #00ffcc, 0 0 150px #00ffcc;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+}
 
   </style>
 </head>
 <body>
+  <div id="rain-container"></div>
   <div class="back-home">
     <a href="index.html">← Back to Home</a>
   </div>
@@ -194,8 +252,9 @@ body {
 
 <button id="google-signin-btn" class="google-btn" onclick="handleGoogleSignIn()">
   <div class="google-icon"></div>
-  <span id="google-btn-text">Continue with Google</span>
 </button>
+
+<button id="github-signin-btn" class="github-btn" onclick="handleGitHubSignIn()">Continue with GitHub</button>
 
 <div class="divider"><span>or</span></div>
 
@@ -258,8 +317,6 @@ body {
 
     function handleGoogleSignIn() {
       const btn = document.getElementById('google-signin-btn');
-      const btnText = document.getElementById('google-btn-text');
-      btnText.innerHTML = '<div class="loading"></div> Signing up...';
       btn.disabled = true;
 
       google.accounts.id.initialize({ 
@@ -269,7 +326,6 @@ body {
       
       google.accounts.id.prompt((notification) => {
         if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          btnText.textContent = 'Continue with Google';
           btn.disabled = false;
           // Fallback: render button if popup fails
           google.accounts.id.renderButton(
@@ -401,6 +457,56 @@ body {
       console.error("Error verifying:", err);
     }
   }
+</script>
+<script>
+  function handleGitHubSignIn() {
+    const btn = document.getElementById('github-signin-btn');
+    btn.disabled = true;
+    btn.textContent = 'Signing up...';
+
+    // Simulate successful GitHub signup
+    setTimeout(() => {
+      sessionStorage.setItem('user', JSON.stringify({
+        name: 'GitHub User',
+        email: 'github@example.com',
+        loginMethod: 'github'
+      }));
+      showSuccess('Successfully signed up with GitHub!');
+      setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+    }, 1000);
+  }
+
+  // Cyber Rain Effect
+  (function() {
+    const container = document.getElementById('rain-container');
+    const columnCount = Math.floor(window.innerWidth / 20);
+    
+    function createRainColumn() {
+      const column = document.createElement('div');
+      column.className = 'rain-column';
+      column.style.left = Math.random() * 100 + '%';
+      column.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      column.style.animationDelay = Math.random() * 2 + 's';
+      column.style.opacity = Math.random() * 0.5 + 0.3;
+      
+      let text = '';
+      for (let i = 0; i < Math.floor(Math.random() * 20 + 10); i++) {
+        text += 'WELCOME<br>';
+      }
+      column.innerHTML = text;
+      
+      container.appendChild(column);
+      
+      setTimeout(() => {
+        column.remove();
+        createRainColumn();
+      }, (Math.random() * 3 + 2) * 1000);
+    }
+    
+    for (let i = 0; i < columnCount; i++) {
+      setTimeout(() => createRainColumn(), i * 100);
+    }
+  })();
 </script>
 
 </body>
