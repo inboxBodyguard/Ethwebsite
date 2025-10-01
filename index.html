@@ -655,10 +655,11 @@
           </h2>
           <div id="servicesMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
             <div class="accordion-body">
-              <a href="#services" data-bs-dismiss="offcanvas">All Services</a>
-              <a href="#services" data-bs-dismiss="offcanvas">Protection</a>
-              <a href="#services" data-bs-dismiss="offcanvas">Detection</a>
-              <a href="#services" data-bs-dismiss="offcanvas">Reports</a>
+              <!-- changed to point to services.html -->
+              <a href="services.html" data-bs-dismiss="offcanvas">All Services</a>
+              <a href="services.html#protection" data-bs-dismiss="offcanvas">Protection</a>
+              <a href="services.html#detection" data-bs-dismiss="offcanvas">Detection</a>
+              <a href="services.html#reports" data-bs-dismiss="offcanvas">Reports</a>
             </div>
           </div>
         </div>
@@ -670,7 +671,8 @@
           </h2>
           <div id="aboutMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
             <div class="accordion-body">
-              <a href="#about" data-bs-dismiss="offcanvas">Our Story</a>
+              <!-- changed to point to about.html -->
+              <a href="about.html" data-bs-dismiss="offcanvas">Our Story</a>
             </div>
           </div>
         </div>
@@ -694,7 +696,8 @@
           </h2>
           <div id="contactMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
             <div class="accordion-body">
-              <a href="#contact" data-bs-dismiss="offcanvas">Get in Touch</a>
+              <!-- changed to contact.html -->
+              <a href="contact.html" data-bs-dismiss="offcanvas">Get in Touch</a>
             </div>
           </div>
         </div>
@@ -723,9 +726,11 @@
       <div class="cta-buttons">
         <a href="signup.html" class="btn-custom">Get Started</a>
         <a href="verify_link.html" class="btn-custom btn-secondary">Check a Link</a>
+        <!-- newsletter still opens modal -->
         <button type="button" class="btn-custom btn-secondary" data-bs-toggle="modal" data-bs-target="#newsletterModal">Join Newsletter</button>
-        <a href="#services" class="btn-custom btn-secondary">Explore Tools</a>
-        <button type="button" class="btn-custom btn-secondary" data-bs-toggle="modal" data-bs-target="#communityModal">Join Community</button>
+        <a href="services.html" class="btn-custom btn-secondary">Explore Tools</a>
+        <!-- changed: community now links to page instead of opening a modal -->
+        <a href="community/index.html" class="btn-custom btn-secondary">Join Community</a>
         <button type="button" class="btn-custom btn-secondary" data-bs-toggle="modal" data-bs-target="#demoModal">Request Demo</button>
       </div>
     </div>
@@ -837,10 +842,9 @@
   <footer>
     <div class="container footer-content">
       <ul class="footer-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
       <p>&copy; 2025 EZMCyber. All rights reserved. Your security is our priority.</p>
     </div>
@@ -855,10 +859,11 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <!-- added action to submit to ezmcyber@zohomail.com -->
+          <form action="https://formsubmit.co/ezmcyber@zohomail.com" method="POST">
             <div class="mb-3">
               <label for="newsletterEmail" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="newsletterEmail" placeholder="name@example.com">
+              <input type="email" class="form-control" id="newsletterEmail" name="email" placeholder="name@example.com" required>
             </div>
             <button type="submit" class="btn btn-custom">Subscribe</button>
           </form>
@@ -868,6 +873,7 @@
   </div>
 
   <div class="modal fade" id="communityModal" tabindex="-1" aria-labelledby="communityModalLabel" aria-hidden="true">
+    <!-- kept modal in DOM but hero now links directly to community page -->
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -895,18 +901,19 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <!-- added action to submit demo requests to ezmcyber@zohomail.com -->
+          <form action="https://formsubmit.co/ezmcyber@zohomail.com" method="POST">
             <div class="mb-3">
               <label for="demoName" class="form-label">Name</label>
-              <input type="text" class="form-control" id="demoName" placeholder="Your Name">
+              <input type="text" class="form-control" id="demoName" name="name" placeholder="Your Name">
             </div>
             <div class="mb-3">
               <label for="demoEmail" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="demoEmail" placeholder="name@example.com">
+              <input type="email" class="form-control" id="demoEmail" name="email" placeholder="name@example.com">
             </div>
             <div class="mb-3">
               <label for="demoMessage" class="form-label">Message</label>
-              <textarea class="form-control" id="demoMessage" rows="3"></textarea>
+              <textarea class="form-control" id="demoMessage" name="message" rows="3"></textarea>
             </div>
             <button type="submit" class="btn btn-custom">Submit</button>
           </form>
