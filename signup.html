@@ -467,5 +467,24 @@ document.getElementById('signup-form').addEventListener('submit', function(e){
   <script>
   document.addEventListener('DOMContentLoaded',()=>{const f=document.getElementById('signup-form');if(f){f.querySelector('input[name="_next"]')?.remove();const i=document.createElement('input');i.type='hidden';i.name='_next';i.value='home.html';f.appendChild(i);f.addEventListener('submit',()=>{const s=document.getElementById('success-message');s&&(s.textContent='Signup successful! Redirecting...',s.style.display='block');});}});
 </script>
+<script>
+document.getElementById('signup-form').addEventListener('submit', function(e){
+    e.preventDefault(); // prevent FormSubmit's default redirect
+    const form = this;
+
+    fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+    }).then(() => {
+        document.getElementById('verify-btn-text').innerText = 'Signed Up! Redirecting...';
+        setTimeout(() => {
+            window.location.href = "home.html"; // your redirect
+        }, 2000); // 2 sec delay, adjust if needed
+    }).catch(() => {
+        alert('Something went wrong. Try again.');
+    });
+});
+</script>
 </body>
 </html>
