@@ -1,78 +1,97 @@
-# main.py
 import os
 import base64
-import asyncio
-from typing import Optional
+import time
+import requests
+from flask import Flask, request, jsonify, send_from_directory
 
-import httpx
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.middleware.cors import CORSMiddleware
+app = Flask(__name__, static_folder='.')
 
 VT_API = os.getenv("VIRUSTOTAL_API_KEY")
 if not VT_API:
     raise RuntimeError("Set VIRUSTOTAL_API_KEY environment variable")
 
-app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # change to your domain in production
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 HEADERS = {"x-apikey": VT_API}
 VT_BASE = "https://www.virustotal.com/api/v3"
 
-def normalize_url(u: str) -> str:
-    u = u.strip()
-    if not u.startswith(("http://", "https://")):
-        u = "http://" + u
-    return u
+def normalize_url(url):
+    url = url.strip()
+    if not url.startswith(("http://", "https://")):
+        url = "http://" + url
+    return url
 
-def url_id_from_url(u: str) -> str:
-    # unpadded urlsafe base64 per VT docs
-    return base64.urlsafe_b64encode(u.encode()).decode().strip("=")
+def url_id_from_url(url):
+    # Unpadded urlsafe base64 per VT docs
+    return base64.urlsafe_b64encode(url.encode()).decode().rstrip("=")
 
-async def do_vt_check(url: str) -> dict:
+def do_vt_check(url):
     url = normalize_url(url)
     url_id = url_id_from_url(url)
 
-    async with httpx.AsyncClient(timeout=15.0) as client:
-        # 1) try cached report -> GET /urls/{id}
-        r = await client.get(f"{VT_BASE}/urls/{url_id}", headers=HEADERS)
-        if r.status_code == 200:
-            return {"source": "cached_url_report", "vt": r.json()}
+    # Try to get cached report
+    response = requests.get(f"{VT_BASE}/urls/{url_id}", headers=HEADERS, timeout=15)
+    
+    if response.status_code == 200:
+        data = response.json()
+        return data.get("data", {}).get("attributes", {})
+    
+    # Submit URL for analysis
+    response = requests.post(f"{VT_BASE}/urls", headers=HEADERS, data={"url": url}, timeout=15)
+    
+    if response.status_code in (200, 201):
+        analysis_id = response.json()["data"]["id"]
+        
+        # Poll for completion (up to 6 seconds)
+        for _ in range(6):
+            time.sleep(1)
+            analysis_response = requests.get(
+                f"{VT_BASE}/analyses/{analysis_id}", 
+                headers=HEADERS, 
+                timeout=15
+            )
+            
+            if analysis_response.status_code == 200:
+                analysis_data = analysis_response.json()
+                status = analysis_data.get("data", {}).get("attributes", {}).get("status")
+                
+                if status == "completed":
+                    # Fetch the actual URL report to get last_analysis_stats
+                    url_report = requests.get(f"{VT_BASE}/urls/{url_id}", headers=HEADERS, timeout=15)
+                    if url_report.status_code == 200:
+                        return url_report.json().get("data", {}).get("attributes", {})
+                    # Fallback: map stats to last_analysis_stats format
+                    stats = analysis_data.get("data", {}).get("attributes", {}).get("stats", {})
+                    return {"last_analysis_stats": stats}
+        
+        # If not completed, return pending status with proper structure
+        return {"last_analysis_stats": {"malicious": 0, "suspicious": 0, "undetected": 0, "harmless": 0}}
+    
+    elif response.status_code == 429:
+        raise Exception("VirusTotal rate limit exceeded")
+    else:
+        raise Exception(f"VirusTotal error: {response.status_code}")
 
-        # 2) submit for analysis -> POST /urls (returns analysis id)
-        r = await client.post(f"{VT_BASE}/urls", headers=HEADERS, data={"url": url})
-        if r.status_code in (200, 201):
-            analysis_id = r.json()["data"]["id"]
-            # poll analyses endpoint for completion (GET /analyses/{id})
-            for _ in range(6):  # ~6s total (adjust if you want)
-                await asyncio.sleep(1)
-                a = await client.get(f"{VT_BASE}/analyses/{analysis_id}", headers=HEADERS)
-                if a.status_code == 200:
-                    j = a.json()
-                    status = j.get("data", {}).get("attributes", {}).get("status")
-                    if status == "completed":
-                        return {"source": "analysis_complete", "analysis": j}
-            # not finished yet
-            return {"source": "analysis_pending", "analysis_id": analysis_id}
-        elif r.status_code == 429:
-            raise HTTPException(status_code=429, detail="VirusTotal rate limit")
-        else:
-            raise HTTPException(status_code=502, detail=f"VirusTotal error {r.status_code}")
+@app.route('/')
+def index():
+    return send_from_directory('.', 'index.html')
 
-@app.post("/check")
-async def check_post(req: Request):
-    body = await req.json()
-    url = body.get("url")
-    if not url:
-        raise HTTPException(status_code=400, detail="Missing 'url' in JSON body")
-    return await do_vt_check(url)
+@app.route('/api/virustotal', methods=['POST'])
+def check_url():
+    try:
+        data = request.get_json()
+        url = data.get('url')
+        
+        if not url:
+            return jsonify({"error": "Missing URL"}), 400
+        
+        result = do_vt_check(url)
+        return jsonify(result)
+    
+    except Exception as e:
+        error_msg = str(e)
+        # Return 429 for rate limit errors
+        if "rate limit" in error_msg.lower():
+            return jsonify({"error": error_msg}), 429
+        return jsonify({"error": error_msg}), 500
 
-@app.get("/check")
-async def check_get(url: Optional[str] = None):
-    if not url:
-        raise HTTPException(status_code=400, detail="Missing 'url' query param")
-    return await do_vt_check(url)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
