@@ -128,6 +128,13 @@ form.addEventListener('submit', async e=>{
       body: JSON.stringify({ url })
     });
     const data = await res.json();
+    
+    // Check for errors in response
+    if (!res.ok || data.error) {
+      result.innerHTML = `<div style="color:red;">Error: ${data.error || 'Request failed'}</div>`;
+      return;
+    }
+    
     displayResults(data, url);
   } catch(err) {
     result.innerHTML = `<div style="color:red;">Error: ${err.message}</div>`;
