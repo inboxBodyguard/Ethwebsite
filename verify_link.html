@@ -1,262 +1,78 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Suspicious Link Checker | EZM Cyber</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    body {
+      background-color: #0a0a0a;
+      color: #e0ffe0;
+      font-family: 'Orbitron', sans-serif;
+      padding: 30px;
     }
-
-
-body {
-  background-color: #0a0a0a;
-  color: #e0ffe0;
-  font-family: 'Orbitron', sans-serif;
-  padding: 30px;
-  position: relative;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-#rain-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.3;
-}
-
-.content {
-  position: relative;
-  z-index: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-h1 { 
-  color: #00ffcc;
-  font-size: 2.5em;
-  margin-bottom: 10px;
-  text-shadow: 0 0 10px #00ffcc;
-}
-
-h2 {
-  color: #00ffcc;
-  font-size: 1.8em;
-  margin: 30px 0 20px 0;
-  text-shadow: 0 0 8px #00ffcc;
-}
-
-h3 {
-  color: #00ffcc;
-  font-size: 1.3em;
-  margin: 30px 0 15px 0;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 12px;
-  background-color: #111;
-  border: 2px solid #00ffcc;
-  color: #fff;
-  margin: 10px 0;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 14px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-input[type="text"]:focus {
-  outline: none;
-  box-shadow: 0 0 15px #00ffcc;
-  border-color: #00ffff;
-}
-
-input[type="text"]::placeholder {
-  color: #666;
-}
-
-button {
-  padding: 12px 30px;
-  background-color: #00ffcc;
-  border: none;
-  color: #000;
-  cursor: pointer;
-  font-weight: bold;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 16px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-}
-
-button:hover { 
-  background-color: #00ccaa;
-  box-shadow: 0 0 20px #00ffcc;
-  transform: translateY(-2px);
-}
-
-button:active {
-  transform: translateY(0);
-}
-
-button:disabled {
-  background-color: #666;
-  cursor: not-allowed;
-  opacity: 0.5;
-  box-shadow: none;
-  transform: none;
-}
-
-#result { 
-  margin-top: 20px;
-  font-weight: bold;
-  font-size: 1.1em;
-  min-height: 30px;
-}
-
-.loading { 
-  color: #00ffcc;
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.scan-details {
-  margin-top: 15px;
-  padding: 15px;
-  background-color: #111;
-  border-left: 4px solid #00ffcc;
-  border-radius: 4px;
-}
-
-.detection-ratio {
-  font-size: 1.3em;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.status-safe {
-  color: #00ff00;
-  text-shadow: 0 0 5px #00ff00;
-}
-
-.status-suspicious {
-  color: #ff0000;
-  text-shadow: 0 0 5px #ff0000;
-}
-
-.status-warning {
-  color: #ffaa00;
-  text-shadow: 0 0 5px #ffaa00;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background-color: rgba(17, 17, 17, 0.8);
-}
-
-th, td {
-  border: 1px solid #00ffcc;
-  padding: 12px;
-  text-align: left;
-}
-
-th {
-  background-color: #111;
-  color: #00ffcc;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 0.9em;
-}
-
-td {
-  font-size: 0.85em;
-}
-
-tbody tr {
-  transition: background-color 0.3s ease;
-}
-
-tbody tr:hover {
-  background-color: rgba(0, 255, 204, 0.1);
-}
-
-a {
-  color: #00ffcc;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: #00ffff;
-  text-decoration: underline;
-}
-
-.url-cell {
-  max-width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-#link-checker {
-  margin-top: 30px;
-}
-
-form {
-  margin: 20px 0;
-}
-
-.debug-info {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #1a1a1a;
-  border: 1px solid #444;
-  font-size: 0.8em;
-  color: #888;
-  border-radius: 4px;
-}
-```
-
+    h1 { color: #00ffcc; }
+    input[type="url"] {
+      width: 100%;
+      padding: 12px;
+      background-color: #111;
+      border: 1px solid #00ffcc;
+      color: #fff;
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #00ffcc;
+      border: none;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background-color: #00ccaa; }
+    button:disabled {
+      background-color: #666;
+      cursor: not-allowed;
+    }
+    #result { margin-top: 20px; font-weight: bold; }
+    .loading { color: #00ffcc; }
+    .scan-details {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #111;
+      border-left: 3px solid #00ffcc;
+    }
+    .detection-ratio {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #00ffcc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #111;
+    }
   </style>
 </head>
 <body>
-  <canvas id="rain-canvas"></canvas>
 
-  <div class="content">
-    <h1>EZM Cyber Security</h1>
-
-
-<section id="link-checker">
+ <!-- Suspicious Link Checker Section -->
+<section id="link-checker" style="margin-top:30px;">
   <h2>Suspicious Link Checker</h2>
   <form id="linkForm">
-    <input 
-      type="text" 
-      id="urlInput" 
-      placeholder="Paste URL here (with or without https://)..." 
-      required 
-    />
-    <button type="submit" id="checkBtn">Check URL</button>
+    <input type="url" id="urlInput" placeholder="Paste URL here..." required style="width:100%; padding:10px; margin:10px 0;"/>
+    <button type="submit" id="checkBtn" style="padding:10px 20px; background:#00ffcc; border:none; cursor:pointer; font-weight:bold;">Check</button>
   </form>
-  <div id="result"></div>
-  
+  <div id="result" style="margin-top:20px; font-weight:bold;"></div>
   <h3>Scan History</h3>
-  <table id="historyTable">
+  <table id="historyTable" style="width:100%; border-collapse:collapse;">
     <thead>
       <tr>
         <th>URL</th>
@@ -270,293 +86,62 @@ form {
   </table>
 </section>
 
+<script>
+const form = document.getElementById('linkForm');
+const result = document.getElementById('result');
+const checkBtn = document.getElementById('checkBtn');
+const historyTbody = document.querySelector('#historyTable tbody');
 
-  </div>
+function getUrlId(url){
+  return btoa(url).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
 
-  <script>
-    // Cyber Rain Effect
-    const canvas = document.getElementById('rain-canvas');
-    const ctx = canvas.getContext('2d');
-    
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    const chars = '01アイウエオカキクケコサシスセソタチツテト';
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-    
-    function drawRain() {
-      ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      ctx.fillStyle = '#00ffcc';
-      ctx.font = fontSize + 'px monospace';
-      
-      for (let i = 0; i < drops.length; i++) {
-        const text = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-    }
-    
-    setInterval(drawRain, 33);
-    
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-    
-    // Link Checker Logic
-    const form = document.getElementById('linkForm');
-    const result = document.getElementById('result');
-    const checkBtn = document.getElementById('checkBtn');
-    const historyTbody = document.querySelector('#historyTable tbody');
-    
-    /**
-     * Normalize and validate URL
-     * Handles: missing protocols, extra spaces, special characters
-     */
-    function normalizeUrl(input) {
-      // Trim all whitespace
-      let url = input.trim();
-      
-      // Remove any leading/trailing quotes
-      url = url.replace(/^["']+|["']+$/g, '');
-      
-      // If no protocol, add https://
-      if (!/^https?:\/\//i.test(url)) {
-        url = 'https://' + url;
-      }
-      
-      // Validate URL structure
-      try {
-        const urlObj = new URL(url);
-        // Return normalized URL
-        return urlObj.href;
-      } catch (err) {
-        throw new Error('Invalid URL format');
-      }
-    }
-    
-    /**
-     * BULLETPROOF URL ID generation for VirusTotal
-     * Handles: Unicode, emoji, special characters, ALL valid URLs
-     * 
-     * VirusTotal expects: base64url(url) without padding
-     * base64url = base64 with + → -, / → _, and = removed
-     */
-    function getUrlId(url) {
-      try {
-        // Method 1: Modern browsers with TextEncoder (handles all Unicode)
-        if (typeof TextEncoder !== 'undefined') {
-          const encoder = new TextEncoder();
-          const data = encoder.encode(url);
-          
-          // Convert Uint8Array to binary string
-          let binary = '';
-          for (let i = 0; i < data.length; i++) {
-            binary += String.fromCharCode(data[i]);
-          }
-          
-          // Base64 encode and convert to base64url format
-          return btoa(binary)
-            .replace(/\+/g, '-')
-            .replace(/\//g, '_')
-            .replace(/=+$/, '');
-        }
-        
-        // Method 2: Fallback for older browsers
-        // Encode as UTF-8 manually
-        const utf8 = unescape(encodeURIComponent(url));
-        return btoa(utf8)
-          .replace(/\+/g, '-')
-          .replace(/\//g, '_')
-          .replace(/=+$/, '');
-          
-      } catch (err) {
-        console.error('URL encoding error:', err, 'URL:', url);
-        
-        // Method 3: Ultimate fallback - use SHA256 hash if available
-        // This won't match VirusTotal's exact format but prevents crashes
-        if (typeof crypto !== 'undefined' && crypto.subtle) {
-          // For display purposes only - won't work with VT API
-          return 'encoded-' + encodeURIComponent(url).substring(0, 50);
-        }
-        
-        // Last resort
-        throw new Error('Unable to encode URL. Please try a different URL.');
-      }
-    }
-    
-    /**
-     * Display scan results with proper formatting
-     */
-    function displayResults(data, originalUrl) {
-      const attributes = data.data?.attributes || data.attributes || {};
-      const stats = attributes.last_analysis_stats || {};
-      const malicious = stats.malicious || 0;
-      const suspicious = stats.suspicious || 0;
-      const undetected = stats.undetected || 0;
-      const harmless = stats.harmless || 0;
-      const timeout = stats.timeout || 0;
-      const total = malicious + suspicious + undetected + harmless + timeout;
-      
-      let statusClass = 'status-safe';
-      let statusText = 'Safe';
-      
-      if (malicious > 0) {
-        statusClass = 'status-suspicious';
-        statusText = 'Suspicious';
-      } else if (suspicious > 0) {
-        statusClass = 'status-warning';
-        statusText = 'Warning';
-      }
-      
-      // Generate VirusTotal report link
-      const urlId = getUrlId(originalUrl);
-      const reportLink = `https://www.virustotal.com/gui/url/${urlId}`;
-      
-      result.innerHTML = `
-        <div class="scan-details">
-          <div class="detection-ratio ${statusClass}">
-            ${malicious + suspicious} / ${total} security vendors flagged this URL
-          </div>
-          <div>Status: <span class="${statusClass}">${statusText}</span></div>
-          <div style="margin-top:10px; font-size:0.9em;">
-            Malicious: ${malicious} | Suspicious: ${suspicious} | 
-            Undetected: ${undetected} | Harmless: ${harmless}
-            ${timeout > 0 ? ` | Timeout: ${timeout}` : ''}
-          </div>
-          <div style="margin-top:10px;">
-            <a href="${reportLink}" target="_blank" rel="noopener noreferrer">View Full Report on VirusTotal →</a>
-          </div>
-        </div>
-      `;
-      
-      // Add to history table
-      addToHistory(originalUrl, statusText, statusClass, malicious + suspicious, total, reportLink);
-    }
-    
-    /**
-     * Add scan to history table
-     */
-    function addToHistory(url, statusText, statusClass, detections, total, reportLink) {
-      const row = document.createElement('tr');
-      const date = new Date().toLocaleString();
-      
-      row.innerHTML = `
-        <td class="url-cell" title="${url}">${url}</td>
-        <td><span class="${statusClass}">${statusText}</span></td>
-        <td>${detections}/${total}</td>
-        <td>${date}</td>
-        <td><a href="${reportLink}" target="_blank" rel="noopener noreferrer">View Report</a></td>
-      `;
-      
-      // Add to top of table
-      historyTbody.insertBefore(row, historyTbody.firstChild);
-      
-      // Limit history to 50 entries
-      while (historyTbody.children.length > 50) {
-        historyTbody.removeChild(historyTbody.lastChild);
-      }
-    }
-    
-    /**
-     * Handle form submission
-     */
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const rawInput = document.getElementById('urlInput').value;
-      
-      if (!rawInput || !rawInput.trim()) {
-        result.innerHTML = '<div style="color:#ff0000;">Please enter a URL</div>';
-        return;
-      }
-      
-      let normalizedUrl;
-      
-      // Normalize and validate URL
-      try {
-        normalizedUrl = normalizeUrl(rawInput);
-      } catch (err) {
-        result.innerHTML = `
-          <div style="color:#ff0000;">
-            <strong>Invalid URL:</strong> ${err.message}
-            <br><small>Examples: https://example.com, example.com, http://test.org</small>
-          </div>
-        `;
-        return;
-      }
-      
-      result.innerHTML = '<div class="loading">Scanning URL... Please wait...</div>';
-      checkBtn.disabled = true;
-      
-      try {
-        // Call Replit backend API
-        const res = await fetch('https://cb0fcf53-04f5-430b-bfbd-f54ffce1e063-00-dvfiqwm9c8cu.picard.replit.dev/api/virustotal', {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ url: normalizedUrl })
-        });
-        
-        // Parse response
-        const data = await res.json();
-        
-        // Check for errors
-        if (!res.ok) {
-          throw new Error(data.error || `Server error: ${res.status}`);
-        }
-        
-        if (data.error) {
-          throw new Error(data.error);
-        }
-        
-        // Display results
-        displayResults(data, normalizedUrl);
-        
-        // Clear input on success
-        document.getElementById('urlInput').value = '';
-        
-      } catch (err) {
-        console.error('Scan error:', err);
-        result.innerHTML = `
-          <div style="color:#ff0000;">
-            <strong>Error:</strong> ${err.message}
-            <br><small>Please check the URL and try again. If the issue persists, contact support.</small>
-          </div>
-        `;
-      } finally {
-        checkBtn.disabled = false;
-      }
-    });
-    
-    // Debug: Test URL encoding on page load
-    console.log('URL Encoding Tests:');
-    const testUrls = [
-      'https://example.com',
-      'https://test.com/page?param=value',
-      'https://例え.jp/テスト',
-      'https://example.com/emoji🚀test',
-      'https://test.com/特殊文字'
-    ];
-    
-    testUrls.forEach(url => {
-      try {
-        const encoded = getUrlId(url);
-        console.log(`✓ ${url} → ${encoded.substring(0, 30)}...`);
-      } catch (err) {
-        console.error(`✗ ${url} → ERROR:`, err.message);
-      }
-    });
-  </script>
+function displayResults(attributes, url) {
+  const stats = attributes.last_analysis_stats || {};
+  const malicious = stats.malicious || 0;
+  const total = Object.values(stats).reduce((a,b)=>a+b,0);
 
+  result.innerHTML = `<div>${malicious} / ${total} detections</div>`;
+
+  // Add to history
+  const row = document.createElement('tr');
+  const status = malicious>0 ? 'Suspicious':'Safe';
+  const date = new Date().toLocaleString();
+  const reportLink = `https://www.virustotal.com/gui/url/${getUrlId(url)}`;
+  row.innerHTML = `<td>${url}</td><td>${status}</td><td>${malicious}/${total}</td><td>${date}</td><td><a href="${reportLink}" target="_blank" style="color:#00ffcc;">View Report</a></td>`;
+  historyTbody.appendChild(row);
+}
+
+form.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const url = document.getElementById('urlInput').value.trim();
+  if(!url) return;
+
+  result.innerHTML = 'Checking...';
+  checkBtn.disabled = true;
+
+  try {
+    const res = await fetch('https://cb0fcf53-04f5-430b-bfbd-f54ffce1e063-00-dvfiqwm9c8cu.picard.replit.dev/api/virustotal', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ url })
+    });
+    const data = await res.json();
+
+    // Check for errors in response
+    if (!res.ok || data.error) {
+      result.innerHTML = `<div style="color:red;">Error: ${data.error || 'Request failed'}</div>`;
+      return;
+    }
+
+    displayResults(data, url);
+  } catch(err) {
+    result.innerHTML = `<div style="color:red;">Error: ${err.message}</div>`;
+  } finally {
+    checkBtn.disabled = false;
+  }
+});
+
+</script>
 </body>
 </html>
