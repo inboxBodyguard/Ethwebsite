@@ -3,8 +3,10 @@ import base64
 import time
 import requests
 from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
 
 app = Flask(__name__, static_folder='.')
+CORS(app)
 
 VT_API = os.getenv("VIRUSTOTAL_API_KEY")
 if not VT_API:
