@@ -6,30 +6,12 @@
   <title>Suspicious Link Checker | EZM Cyber</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <style>
-    /* Cyber rain effect */
     body {
       background-color: #0a0a0a;
       color: #e0ffe0;
       font-family: 'Orbitron', sans-serif;
       padding: 30px;
-      overflow-x: hidden;
-      position: relative;
     }
-    .raindrop {
-      position: absolute;
-      top: -20px;
-      color: #00ffcc;
-      user-select: none;
-      font-size: 14px;
-      animation: fall linear infinite;
-    }
-    @keyframes fall {
-      0% { transform: translateY(0); opacity: 0; }
-      10% { opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; }
-    }
-
-    /* UI Styles */
     h1 { color: #00ffcc; }
     input[type="url"] {
       width: 100%;
@@ -53,6 +35,7 @@
       cursor: not-allowed;
     }
     #result { margin-top: 20px; font-weight: bold; }
+    .loading { color: #00ffcc; }
     .scan-details {
       margin-top: 10px;
       padding: 10px;
@@ -79,19 +62,17 @@
   </style>
 </head>
 <body>
- <!-- Cyber Rain Layer -->
-<div id="cyberRain"></div>
 
  <!-- Suspicious Link Checker Section -->
 <section id="link-checker" style="margin-top:30px;">
   <h2>Suspicious Link Checker</h2>
   <form id="linkForm">
-    <input type="url" id="urlInput" placeholder="Paste URL here..." required/>
-    <button type="submit" id="checkBtn">Check</button>
+    <input type="url" id="urlInput" placeholder="Paste URL here..." required style="width:100%; padding:10px; margin:10px 0;"/>
+    <button type="submit" id="checkBtn" style="padding:10px 20px; background:#00ffcc; border:none; cursor:pointer; font-weight:bold;">Check</button>
   </form>
-  <div id="result"></div>
+  <div id="result" style="margin-top:20px; font-weight:bold;"></div>
   <h3>Scan History</h3>
-  <table id="historyTable">
+  <table id="historyTable" style="width:100%; border-collapse:collapse;">
     <thead>
       <tr>
         <th>URL</th>
@@ -111,19 +92,6 @@ const result = document.getElementById('result');
 const checkBtn = document.getElementById('checkBtn');
 const historyTbody = document.querySelector('#historyTable tbody');
 
-// Cyber rain effect
-function createRaindrop() {
-  const drop = document.createElement('div');
-  drop.classList.add('raindrop');
-  drop.style.left = Math.random() * window.innerWidth + 'px';
-  drop.style.animationDuration = 2 + Math.random() * 3 + 's';
-  drop.textContent = Math.random().toString(36).charAt(2);
-  document.body.appendChild(drop);
-  setTimeout(() => drop.remove(), 5000);
-}
-setInterval(createRaindrop, 100);
-
-// Helper for VirusTotal URL ID
 function getUrlId(url){
   return btoa(url).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
@@ -144,7 +112,6 @@ function displayResults(attributes, url) {
   historyTbody.appendChild(row);
 }
 
-// Handle form submit without page reload
 form.addEventListener('submit', async e=>{
   e.preventDefault();
   const url = document.getElementById('urlInput').value.trim();
@@ -154,6 +121,7 @@ form.addEventListener('submit', async e=>{
   checkBtn.disabled = true;
 
   try {
+    // **No API key in frontend** — call your server endpoint
     const res = await fetch('/api/virustotal', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
@@ -161,6 +129,7 @@ form.addEventListener('submit', async e=>{
     });
     const data = await res.json();
 
+    // Check for errors in response
     if (!res.ok || data.error) {
       result.innerHTML = `<div style="color:red;">Error: ${data.error || 'Request failed'}</div>`;
       return;
@@ -173,6 +142,7 @@ form.addEventListener('submit', async e=>{
     checkBtn.disabled = false;
   }
 });
+
 </script>
 </body>
 </html>
