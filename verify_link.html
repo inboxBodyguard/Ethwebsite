@@ -142,6 +142,11 @@ form.addEventListener('submit', async e=>{
     checkBtn.disabled = false;
   }
 });
+const res = await fetch('https://cb0fcf53-04f5-430b-bfbd-f54ffce1e063-00-dvfiqwm9c8cu.picard.replit.dev/api/virustotal', {
+  method: 'POST',
+  headers: {'Content-Type':'application/json'},
+  body: JSON.stringify({ url })
+});
 
 </script>
 </body>
