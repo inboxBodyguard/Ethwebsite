@@ -70,5 +70,6 @@
 [![Email](https://img.shields.io/badge/Email-FF6F61?style=for-the-badge&logo=gmail&logoColor=white)](mailto:contact@ezmcyber.xyz)  
 
 [![X/Twitter](https://img.shields.io/badge/X-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/ezmcyberhq?s=21)
-
+## Live Demo
+Check out the running app here: [Suspicious Link Checker on Replit](https://cb0fcf53-04f5-430b-bfbd-f54ffce1e063-00-dvfiqwm9c8cu.picard.replit.dev/)
 ⚡ “I break things to understand threats — and learn how to defend against them.”
