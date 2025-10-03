@@ -1,5 +1,5 @@
 {
-  "name": "ezm_project"
+  "name": "ezm_project",
   "version": "1.0.0",
   "description": "My Node.js project",
   "main": "index.js",
