@@ -2,7 +2,7 @@
 // notify-admin.php
 
 // Set your admin email
-$adminEmail = "contact@ezmcyber.xyz";
+$adminEmail = "ezmcyber@zohomail.com";
 
 // Get POST data
 $data = json_decode(file_get_contents('php://input'), true);
