@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -13,613 +12,473 @@
       box-sizing: border-box;
     }
 
-```
-body {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 100%);
-  color: #e0ffe0;
-  font-family: 'Orbitron', sans-serif;
-  padding: 30px;
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
-}
-
-/* Animated background grid */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: gridMove 20s linear infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-
-@keyframes gridMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(50px, 50px); }
-}
-
-/* Container */
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-
-/* Headings with glow */
-h1 { 
-  color: #00ffcc;
-  font-size: 3em;
-  font-weight: 900;
-  text-align: center;
-  margin-bottom: 20px;
-  text-shadow: 
-    0 0 10px #00ffcc,
-    0 0 20px #00ffcc,
-    0 0 30px #00ffcc,
-    0 0 40px #00ffcc;
-  animation: pulse-glow 3s ease-in-out infinite;
-  letter-spacing: 3px;
-}
-
-@keyframes pulse-glow {
-  0%, 100% { 
-    text-shadow: 
-      0 0 10px #00ffcc,
-      0 0 20px #00ffcc,
-      0 0 30px #00ffcc;
-  }
-  50% { 
-    text-shadow: 
-      0 0 20px #00ffcc,
-      0 0 30px #00ffcc,
-      0 0 40px #00ffcc,
-      0 0 50px #00ffcc;
-  }
-}
-
-h2 {
-  color: #00ffcc;
-  font-size: 2em;
-  font-weight: 700;
-  margin-bottom: 25px;
-  text-shadow: 0 0 15px #00ffcc;
-  border-bottom: 2px solid #00ffcc;
-  padding-bottom: 10px;
-  animation: slideInLeft 0.8s ease-out;
-}
-
-h3 {
-  color: #00ffcc;
-  font-size: 1.5em;
-  font-weight: 700;
-  margin: 40px 0 20px 0;
-  text-shadow: 0 0 10px #00ffcc;
-  position: relative;
-  padding-left: 15px;
-}
-
-h3::before {
-  content: '▸';
-  position: absolute;
-  left: 0;
-  animation: blink 1.5s ease-in-out infinite;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-@keyframes slideInLeft {
-  from {
-    transform: translateX(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-/* Section styling */
-#link-checker {
-  margin-top: 40px;
-  background: rgba(17, 17, 17, 0.6);
-  padding: 40px;
-  border-radius: 15px;
-  border: 2px solid rgba(0, 255, 204, 0.3);
-  box-shadow: 
-    0 0 30px rgba(0, 255, 204, 0.2),
-    inset 0 0 30px rgba(0, 255, 204, 0.05);
-  backdrop-filter: blur(10px);
-  animation: fadeIn 1s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Form styling */
-form {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-}
-
-input[type="url"] {
-  flex: 1;
-  min-width: 250px;
-  padding: 15px 20px;
-  background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
-  border: 2px solid #00ffcc;
-  color: #fff;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 14px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(0, 255, 204, 0.1);
-}
-
-input[type="url"]:focus {
-  outline: none;
-  border-color: #00ffff;
-  box-shadow: 
-    0 0 25px rgba(0, 255, 204, 0.4),
-    inset 0 0 15px rgba(0, 255, 204, 0.1);
-  transform: translateY(-2px);
-}
-
-input[type="url"]::placeholder {
-  color: #666;
-}
-
-button {
-  padding: 15px 35px;
-  background: linear-gradient(135deg, #00ffcc 0%, #00ccaa 100%);
-  border: none;
-  color: #000;
-  cursor: pointer;
-  font-weight: bold;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 16px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 
-    0 4px 15px rgba(0, 255, 204, 0.4),
-    0 0 20px rgba(0, 255, 204, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-button:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-button:hover { 
-  background: linear-gradient(135deg, #00ffff 0%, #00ffcc 100%);
-  box-shadow: 
-    0 6px 20px rgba(0, 255, 204, 0.6),
-    0 0 40px rgba(0, 255, 204, 0.4);
-  transform: translateY(-3px);
-}
-
-button:active {
-  transform: translateY(-1px);
-}
-
-button:disabled {
-  background: linear-gradient(135deg, #666 0%, #555 100%);
-  cursor: not-allowed;
-  opacity: 0.5;
-  box-shadow: none;
-  transform: none;
-}
-
-/* Results section */
-#result { 
-  margin-top: 30px;
-  font-weight: bold;
-  font-size: 1.2em;
-  min-height: 40px;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-  border: 1px solid rgba(0, 255, 204, 0.3);
-}
-
-.loading { 
-  color: #00ffcc;
-  animation: pulse-text 1.5s ease-in-out infinite;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.loading::after {
-  content: '...';
-  animation: dots 1.5s steps(4, end) infinite;
-}
-
-@keyframes dots {
-  0%, 20% { content: '.'; }
-  40% { content: '..'; }
-  60%, 100% { content: '...'; }
-}
-
-@keyframes pulse-text {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.scan-details {
-  margin-top: 20px;
-  padding: 25px;
-  background: linear-gradient(135deg, rgba(17, 17, 17, 0.9) 0%, rgba(26, 26, 26, 0.9) 100%);
-  border-left: 5px solid #00ffcc;
-  border-radius: 10px;
-  box-shadow: 
-    0 8px 32px rgba(0, 255, 204, 0.2),
-    inset 0 0 20px rgba(0, 255, 204, 0.05);
-  animation: slideInUp 0.5s ease-out;
-}
-
-@keyframes slideInUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.detection-ratio {
-  font-size: 1.8em;
-  font-weight: bold;
-  margin-bottom: 15px;
-  text-shadow: 0 0 10px currentColor;
-}
-
-/* Table styling - Enhanced */
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin-top: 30px;
-  background: rgba(17, 17, 17, 0.8);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 
-    0 10px 40px rgba(0, 255, 204, 0.2),
-    0 0 0 1px rgba(0, 255, 204, 0.3);
-}
-
-thead {
-  background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
-}
-
-th {
-  border: none;
-  border-bottom: 2px solid #00ffcc;
-  padding: 18px 15px;
-  text-align: left;
-  color: #00ffcc;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.95em;
-  text-shadow: 0 0 10px #00ffcc;
-  position: relative;
-}
-
-th::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    #00ffcc 50%, 
-    transparent 100%);
-  box-shadow: 0 0 10px #00ffcc;
-}
-
-tbody tr {
-  transition: all 0.3s ease;
-  border-bottom: 1px solid rgba(0, 255, 204, 0.1);
-  animation: fadeInRow 0.5s ease-out;
-}
-
-@keyframes fadeInRow {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-tbody tr:hover {
-  background: linear-gradient(90deg, 
-    rgba(0, 255, 204, 0.05) 0%, 
-    rgba(0, 255, 204, 0.15) 50%, 
-    rgba(0, 255, 204, 0.05) 100%);
-  transform: translateX(5px);
-  box-shadow: 
-    inset 5px 0 0 #00ffcc,
-    0 0 20px rgba(0, 255, 204, 0.2);
-}
-
-td {
-  border: none;
-  padding: 15px;
-  color: #e0ffe0;
-  font-size: 0.9em;
-}
-
-td:first-child {
-  font-weight: 600;
-  color: #00ffcc;
-  max-width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* Status badges */
-td:nth-child(2) {
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 0.85em;
-  letter-spacing: 0.5px;
-}
-
-/* Links */
-a {
-  color: #00ffcc;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  position: relative;
-  padding: 5px 10px;
-  border-radius: 5px;
-  display: inline-block;
-}
-
-a::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #00ffcc;
-  transition: width 0.3s ease;
-}
-
-a:hover {
-  color: #00ffff;
-  background: rgba(0, 255, 204, 0.1);
-  text-shadow: 0 0 10px #00ffcc;
-}
-
-a:hover::before {
-  width: 100%;
-}
-
-/* Mobile responsive */
-@media (max-width: 768px) {
-  body {
-    padding: 15px;
-  }
-
-  h1 {
-    font-size: 2em;
-  }
-
-  h2 {
-    font-size: 1.5em;
-  }
-
-  #link-checker {
-    padding: 20px;
-  }
-
-  form {
-    flex-direction: column;
-  }
-
-  input[type="url"] {
-    width: 100%;
-  }
-
-  button {
-    width: 100%;
-  }
-
-  table {
-    font-size: 0.85em;
-  }
-
-  th, td {
-    padding: 10px 8px;
-  }
-
-  /* Stack table on mobile */
-  thead {
-    display: none;
-  }
-
-  tbody tr {
-    display: block;
-    margin-bottom: 15px;
-    border: 1px solid rgba(0, 255, 204, 0.3);
-    border-radius: 8px;
-    padding: 10px;
-  }
-
-  tbody td {
-    display: block;
-    text-align: left;
-    padding: 8px 5px;
-    border: none;
-  }
-
-  tbody td::before {
-    content: attr(data-label);
-    font-weight: bold;
-    color: #00ffcc;
-    display: inline-block;
-    width: 120px;
-  }
-
-  td:first-child {
-    max-width: 100%;
-    white-space: normal;
-    word-break: break-all;
-  }
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0a0a0a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #00ffcc 0%, #00ccaa 100%);
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #00ffff 0%, #00ffcc 100%);
-}
-
-
+    body {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 100%);
+      color: #e0ffe0;
+      font-family: 'Orbitron', sans-serif;
+      padding: 30px;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 { 
+      color: #00ffcc;
+      font-size: 3em;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 
+        0 0 10px #00ffcc,
+        0 0 20px #00ffcc,
+        0 0 30px #00ffcc,
+        0 0 40px #00ffcc;
+      animation: pulse-glow 3s ease-in-out infinite;
+      letter-spacing: 3px;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { 
+        text-shadow: 
+          0 0 10px #00ffcc,
+          0 0 20px #00ffcc,
+          0 0 30px #00ffcc;
+      }
+      50% { 
+        text-shadow: 
+          0 0 20px #00ffcc,
+          0 0 30px #00ffcc,
+          0 0 40px #00ffcc,
+          0 0 50px #00ffcc;
+      }
+    }
+
+    h2 {
+      color: #00ffcc;
+      font-size: 2em;
+      font-weight: 700;
+      margin-bottom: 25px;
+      text-shadow: 0 0 15px #00ffcc;
+      border-bottom: 2px solid #00ffcc;
+      padding-bottom: 10px;
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        transform: translateX(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    #link-checker {
+      margin-top: 40px;
+      background: rgba(17, 17, 17, 0.6);
+      padding: 40px;
+      border-radius: 15px;
+      border: 2px solid rgba(0, 255, 204, 0.3);
+      box-shadow: 
+        0 0 30px rgba(0, 255, 204, 0.2),
+        inset 0 0 30px rgba(0, 255, 204, 0.05);
+      backdrop-filter: blur(10px);
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    form {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    input[type="url"] {
+      flex: 1;
+      min-width: 250px;
+      padding: 15px 20px;
+      background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+      border: 2px solid #00ffcc;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.1);
+    }
+
+    input[type="url"]:focus {
+      outline: none;
+      border-color: #00ffff;
+      box-shadow: 
+        0 0 25px rgba(0, 255, 204, 0.4),
+        inset 0 0 15px rgba(0, 255, 204, 0.1);
+      transform: translateY(-2px);
+    }
+
+    input[type="url"]::placeholder {
+      color: #666;
+    }
+
+    button {
+      padding: 15px 35px;
+      background: linear-gradient(135deg, #00ffcc 0%, #00ccaa 100%);
+      border: none;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 
+        0 4px 15px rgba(0, 255, 204, 0.4),
+        0 0 20px rgba(0, 255, 204, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    button:hover { 
+      background: linear-gradient(135deg, #00ffff 0%, #00ffcc 100%);
+      box-shadow: 
+        0 6px 20px rgba(0, 255, 204, 0.6),
+        0 0 40px rgba(0, 255, 204, 0.4);
+      transform: translateY(-3px);
+    }
+
+    button:active {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      background: linear-gradient(135deg, #666 0%, #555 100%);
+      cursor: not-allowed;
+      opacity: 0.5;
+      box-shadow: none;
+      transform: none;
+    }
+
+    #result { 
+      margin-top: 30px;
+      font-weight: bold;
+      font-size: 1.2em;
+      min-height: 40px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
+      border: 1px solid rgba(0, 255, 204, 0.3);
+    }
+
+    .loading { 
+      color: #00ffcc;
+      animation: pulse-text 1.5s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .loading::after {
+      content: '...';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+      0%, 20% { content: '.'; }
+      40% { content: '..'; }
+      60%, 100% { content: '...'; }
+    }
+
+    @keyframes pulse-text {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .safe {
+      color: #00ff88;
+      text-shadow: 0 0 15px #00ff88;
+    }
+
+    .malicious {
+      color: #ff0044;
+      text-shadow: 0 0 15px #ff0044;
+    }
+
+    .suspicious {
+      color: #ffaa00;
+      text-shadow: 0 0 15px #ffaa00;
+    }
+
+    .scan-details {
+      margin-top: 20px;
+      padding: 25px;
+      background: linear-gradient(135deg, rgba(17, 17, 17, 0.9) 0%, rgba(26, 26, 26, 0.9) 100%);
+      border-left: 5px solid #00ffcc;
+      border-radius: 10px;
+      box-shadow: 
+        0 8px 32px rgba(0, 255, 204, 0.2),
+        inset 0 0 20px rgba(0, 255, 204, 0.05);
+      animation: slideInUp 0.5s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .detection-ratio {
+      font-size: 1.8em;
+      font-weight: bold;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px currentColor;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .stat-item {
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      border: 1px solid rgba(0, 255, 204, 0.2);
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.9em;
+      color: #00ffcc;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-value {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 2em;
+      }
+
+      h2 {
+        font-size: 1.5em;
+      }
+
+      #link-checker {
+        padding: 20px;
+      }
+
+      form {
+        flex-direction: column;
+      }
+
+      input[type="url"] {
+        width: 100%;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>🔒 SUSPICIOUS LINK CHECKER</h1>
+    
+    <section id="link-checker">
+      <h2>🔍 Scan URL with VirusTotal</h2>
+      <form id="link-form">
+        <input 
+          type="url" 
+          id="url-input" 
+          placeholder="Enter suspicious URL (e.g., https://example.com)" 
+          required 
+        />
+        <button type="submit">SCAN URL</button>
+      </form>
+      <div id="result"></div>
+    </section>
+  </div>
 
-<div class="container">
-  <h1>EZM CYBER</h1>
+  <script>
+    const form = document.getElementById('link-form');
+    const urlInput = document.getElementById('url-input');
+    const resultDiv = document.getElementById('result');
 
-  <section id="link-checker">
-    <h2>⚡ Suspicious Link Checker</h2>
-    <form id="linkForm">
-      <input type="url" id="urlInput" placeholder="Paste URL here..." required />
-      <button type="submit" id="checkBtn">SCAN</button>
-    </form>
-    <div id="result"></div>
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const url = urlInput.value.trim();
+      if (!url) {
+        resultDiv.innerHTML = '<span class="malicious">⚠️ Please enter a valid URL</span>';
+        return;
+      }
 
+      // Show loading state
+      resultDiv.innerHTML = '<div class="loading">🔄 Scanning URL with VirusTotal</div>';
+      const submitButton = form.querySelector('button');
+      submitButton.disabled = true;
 
-<h3>Scan History</h3>
-<table id="historyTable">
-  <thead>
-    <tr>
-      <th>URL</th>
-      <th>Status</th>
-      <th>Detections</th>
-      <th>Scan Date</th>
-      <th>Report</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+      try {
+        // Call the Flask backend API
+        const response = await fetch('/api/virustotal', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ url: url })
+        });
 
+        const data = await response.json();
 
-  </section>
-</div>
+        if (!response.ok) {
+          throw new Error(data.error || `HTTP error! status: ${response.status}`);
+        }
 
-<script>
-const form = document.getElementById('linkForm');
-const result = document.getElementById('result');
-const checkBtn = document.getElementById('checkBtn');
-const historyTbody = document.querySelector('#historyTable tbody');
+        // Process the VirusTotal response
+        displayResults(url, data);
 
-function getUrlId(url){
-  return btoa(url).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-}
-
-function displayResults(attributes, url) {
-  const stats = attributes.last_analysis_stats || {};
-  const malicious = stats.malicious || 0;
-  const total = Object.values(stats).reduce((a,b)=>a+b,0);
-
-  result.innerHTML = `<div class="scan-details"><div class="detection-ratio">${malicious} / ${total} detections</div></div>`;
-
-  const row = document.createElement('tr');
-  const status = malicious>0 ? 'Suspicious':'Safe';
-  const date = new Date().toLocaleString();
-  const reportLink = `https://www.virustotal.com/gui/url/${getUrlId(url)}`;
-  row.innerHTML = `<td data-label="URL: ">${url}</td><td data-label="Status: ">${status}</td><td data-label="Detections: ">${malicious}/${total}</td><td data-label="Date: ">${date}</td><td data-label="Report: "><a href="${reportLink}" target="_blank">View Report</a></td>`;
-  historyTbody.insertBefore(row, historyTbody.firstChild);
-}
-
-form.addEventListener('submit', async e=>{
-  e.preventDefault();
-  const url = document.getElementById('urlInput').value.trim();
-  if(!url) return;
-
-  result.innerHTML = '<div class="loading">Checking</div>';
-  checkBtn.disabled = true;
-
-  try {
-    const res = await fetch('https://cb0fcf53-04f5-430b-bfbd-f54ffce1e063-00-dvfiqwm9c8cu.picard.replit.dev/api/virustotal', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ url })
+      } catch (error) {
+        console.error('Error:', error);
+        resultDiv.innerHTML = `<span class="malicious">❌ Error: ${error.message}</span>`;
+      } finally {
+        submitButton.disabled = false;
+      }
     });
-    const data = await res.json();
 
-    if (!res.ok || data.error) {
-      result.innerHTML = `<div style="color:#ff3366;">Error: ${data.error || 'Request failed'}</div>`;
-      return;
+    function displayResults(url, data) {
+      const stats = data.last_analysis_stats || {};
+      const malicious = stats.malicious || 0;
+      const suspicious = stats.suspicious || 0;
+      const harmless = stats.harmless || 0;
+      const undetected = stats.undetected || 0;
+      
+      const totalEngines = malicious + suspicious + harmless + undetected;
+      const threatCount = malicious + suspicious;
+
+      let statusClass = 'safe';
+      let statusIcon = '✅';
+      let statusText = 'SAFE';
+
+      if (malicious > 0) {
+        statusClass = 'malicious';
+        statusIcon = '🚨';
+        statusText = 'MALICIOUS';
+      } else if (suspicious > 0) {
+        statusClass = 'suspicious';
+        statusIcon = '⚠️';
+        statusText = 'SUSPICIOUS';
+      }
+
+      resultDiv.innerHTML = `
+        <div class="${statusClass}">
+          <div style="font-size: 2em; margin-bottom: 10px;">${statusIcon} ${statusText}</div>
+          <div style="font-size: 1em; color: #00ffcc; margin-bottom: 10px;">
+            URL: <span style="color: #e0ffe0; word-break: break-all;">${escapeHtml(url)}</span>
+          </div>
+        </div>
+        <div class="scan-details">
+          <div class="detection-ratio ${statusClass}">
+            Detection Ratio: ${threatCount}/${totalEngines}
+          </div>
+          <div class="stat-grid">
+            <div class="stat-item">
+              <div class="stat-label">Malicious</div>
+              <div class="stat-value" style="color: #ff0044;">${malicious}</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Suspicious</div>
+              <div class="stat-value" style="color: #ffaa00;">${suspicious}</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Harmless</div>
+              <div class="stat-value" style="color: #00ff88;">${harmless}</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Undetected</div>
+              <div class="stat-value" style="color: #888;">${undetected}</div>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
-    displayResults(data, url);
-  } catch(err) {
-    result.innerHTML = `<div style="color:#ff3366;">Error: ${err.message}</div>`;
-  } finally {
-    checkBtn.disabled = false;
-  }
-});
-</script>
-
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  </script>
 </body>
 </html>
