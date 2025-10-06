@@ -128,7 +128,7 @@
       flex-wrap: wrap;
     }
 
-    input[type="url"] {
+    input[type="text"] {
       flex: 1;
       min-width: 250px;
       padding: 15px 20px;
@@ -142,7 +142,7 @@
       box-shadow: 0 0 15px rgba(0, 255, 204, 0.1);
     }
 
-    input[type="url"]:focus {
+    input[type="text"]:focus {
       outline: none;
       border-color: #00ffff;
       box-shadow: 
@@ -151,7 +151,7 @@
       transform: translateY(-2px);
     }
 
-    input[type="url"]::placeholder {
+    input[type="text"]::placeholder {
       color: #666;
     }
 
@@ -342,7 +342,7 @@
         flex-direction: column;
       }
 
-      input[type="url"] {
+      input[type="text"] {
         width: 100%;
       }
 
@@ -360,9 +360,9 @@
       <h2>🔍 Scan URL with VirusTotal</h2>
       <form id="link-form">
         <input 
-          type="url" 
+          type="text" 
           id="url-input" 
-          placeholder="Enter suspicious URL (e.g., https://example.com)" 
+          placeholder="Enter URL (e.g., example.com or https://example.com)" 
           required 
         />
         <button type="submit">SCAN URL</button>
