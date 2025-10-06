@@ -1,0 +1,7 @@
+{
+  "name": "ezm_link_checker",
+  "version": "1.0.0",
+  "description": "Suspicious Link Checker with VirusTotal API",
+  "author": "EZM Cyber",
+  "license": "ISC"
+}
