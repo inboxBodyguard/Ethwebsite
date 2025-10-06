@@ -385,13 +385,11 @@
         return;
       }
 
-      // Show loading state
       resultDiv.innerHTML = '<div class="loading">🔄 Scanning URL with VirusTotal</div>';
       const submitButton = form.querySelector('button');
       submitButton.disabled = true;
 
       try {
-        // Call the Flask backend API
         const response = await fetch('/api/virustotal', {
           method: 'POST',
           headers: {
@@ -406,7 +404,6 @@
           throw new Error(data.error || `HTTP error! status: ${response.status}`);
         }
 
-        // Process the VirusTotal response
         displayResults(url, data);
 
       } catch (error) {
