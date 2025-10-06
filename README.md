@@ -72,6 +72,10 @@
 [![X/Twitter](https://img.shields.io/badge/X-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/ezmcyberhq?s=21)
  ## 🔗 Suspicious Link Checker - Live Demo
 
+# 🚨 Suspicious Link Checker
 
+Scan URLs for safety using VirusTotal:
+
+[💻 Open Link Checker](https://91da85b0-401a-49b4-9e03-e05b7ceb0642-00-2ujldfztncl4f.spock.replit.dev/)
 
 > ⚡ “I break things to understand threats — and learn how to defend against them.”
