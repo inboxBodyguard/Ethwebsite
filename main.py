@@ -68,6 +68,10 @@ def do_vt_check(url):
 @app.route('/')
 def index():
     return send_from_directory('.', 'index.html')
+@app.route('/verify-link')
+def verify_link():
+    return send_from_directory('.', 'verify_link.html')
+
 
 @app.route('/api/virustotal', methods=['POST'])
 def check_url():
