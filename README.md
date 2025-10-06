@@ -72,7 +72,26 @@
 [![X/Twitter](https://img.shields.io/badge/X-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/ezmcyberhq?s=21)
  ## 🔗 Suspicious Link Checker - Live Demo
 
-Check out the running app here:  
-[![Live Demo](https://img.shields.io/badge/Launch%20Checker-Replit-blue?style=for-the-badge&logo=replit&logoColor=white)](https://cb0fcf53-04f5-430b-bfbd-f54ffce1e063-00-dvfiqwm9c8cu.picard.replit.dev/)
+# 🔒 Suspicious Link Checker | EZM Cyber
+
+A cybersecurity web application that checks URLs for malicious content using the VirusTotal API.
+
+## 🚀 Quick Start
+
+### 1. Get VirusTotal API Key
+- Go to [VirusTotal](https://www.virustotal.com/gui/my-apikey)
+- Sign up for a free account
+- Copy your API key
+
+### 2. Set Environment Variable
+
+**On Replit:**
+- Go to "Secrets" (lock icon in sidebar)
+- Add key: `VIRUSTOTAL_API_KEY`
+- Add value: Your VirusTotal API key
+
+**On Local Machine:**
+```bash
+export VIRUSTOTAL_API_KEY="your_api_key_here"
 
 > ⚡ “I break things to understand threats — and learn how to defend against them.”
