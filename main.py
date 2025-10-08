@@ -5,11 +5,11 @@ import requests
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
-app = Flask(__name__, static_folder='.')  # Fixed __name__ here
+app = Flask(__name__, static_folder='.')  # Static files in same folder
 CORS(app)
 
-# Set your VirusTotal API key directly
-VT_API = "c221412044bcba574f0dbbff636b6255f5014ee87a92528649458da697caa967"
+# Use environment variable if set, otherwise fallback to direct key (for testing only)
+VT_API = os.getenv("VIRUSTOTAL_API_KEY", "c221412044bcba574f0dbbff636b6255f5014ee87a92528649458da697caa967")
 HEADERS = {"x-apikey": VT_API}
 VT_BASE = "https://www.virustotal.com/api/v3"
 
@@ -26,40 +26,30 @@ def do_vt_check(url):
     url = normalize_url(url)
     url_id = url_id_from_url(url)
 
+    # First try GET
     response = requests.get(f"{VT_BASE}/urls/{url_id}", headers=HEADERS, timeout=15)
-    
     if response.status_code == 200:
-        data = response.json()
-        return data.get("data", {}).get("attributes", {})
-    
+        return response.json().get("data", {}).get("attributes", {})
+
+    # If not found, POST and poll
     response = requests.post(f"{VT_BASE}/urls", headers=HEADERS, data={"url": url}, timeout=15)
-    
     if response.status_code in (200, 201):
         analysis_id = response.json()["data"]["id"]
-        
         for _ in range(6):
             time.sleep(1)
-            analysis_response = requests.get(
-                f"{VT_BASE}/analyses/{analysis_id}", 
-                headers=HEADERS, 
-                timeout=15
-            )
-            
+            analysis_response = requests.get(f"{VT_BASE}/analyses/{analysis_id}", headers=HEADERS, timeout=15)
             if analysis_response.status_code == 200:
                 analysis_data = analysis_response.json()
                 status = analysis_data.get("data", {}).get("attributes", {}).get("status")
-                
                 if status == "completed":
                     url_report = requests.get(f"{VT_BASE}/urls/{url_id}", headers=HEADERS, timeout=15)
                     if url_report.status_code == 200:
                         return url_report.json().get("data", {}).get("attributes", {})
                     stats = analysis_data.get("data", {}).get("attributes", {}).get("stats", {})
                     return {"last_analysis_stats": stats}
-        
         return {"last_analysis_stats": {"malicious": 0, "suspicious": 0, "undetected": 0, "harmless": 0}}
-    
     elif response.status_code == 429:
-        raise Exception("VirusTotal rate limit exceeded. Please try again in a few minutes.")
+        raise Exception("VirusTotal rate limit exceeded. Please try again later.")
     else:
         raise Exception(f"VirusTotal API error: {response.status_code}")
 
@@ -76,13 +66,10 @@ def check_url():
     try:
         data = request.get_json()
         url = data.get('url')
-        
         if not url:
             return jsonify({"error": "Missing URL parameter"}), 400
-        
         result = do_vt_check(url)
         return jsonify(result)
-    
     except Exception as e:
         error_msg = str(e)
         if "rate limit" in error_msg.lower():
@@ -90,4 +77,7 @@ def check_url():
         return jsonify({"error": error_msg}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    # Use host 0.0.0.0 so it’s accessible externally
+    # Use PORT env variable if hosting platform provides one, else default 5000
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
