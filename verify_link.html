@@ -376,15 +376,56 @@
     const urlInput = document.getElementById('url-input');
     const resultDiv = document.getElementById('result');
 
+    // Function to normalize and validate URL
+    function normalizeAndValidateUrl(inputUrl) {
+      // Trim and convert to lowercase for consistent processing
+      let url = inputUrl.trim();
+      
+      // Check if URL is empty
+      if (!url) {
+        return { isValid: false, error: '⚠️ Please enter a URL' };
+      }
+      
+      // Check for obvious invalid formats (no dot, contains spaces, etc.)
+      if (url.includes(' ')) {
+        return { isValid: false, error: '⚠️ URL cannot contain spaces' };
+      }
+      
+      // Check if it has at least one dot (for domain extension) or is localhost
+      if (!url.includes('.') && url !== 'localhost' && !url.startsWith('http://localhost') && !url.startsWith('https://localhost')) {
+        return { isValid: false, error: '⚠️ Please enter a valid URL with a domain (e.g., example.com)' };
+      }
+      
+      // Normalize URL - add protocol if missing
+      let normalizedUrl = url;
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        normalizedUrl = 'http://' + url;
+      }
+      
+      // Basic URL validation
+      try {
+        // Try to create a URL object to validate the format
+        new URL(normalizedUrl);
+        return { isValid: true, normalizedUrl: normalizedUrl };
+      } catch (error) {
+        return { isValid: false, error: '⚠️ Please enter a valid URL format' };
+      }
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
       const url = urlInput.value.trim();
-      if (!url) {
-        resultDiv.innerHTML = '<span class="malicious">⚠️ Please enter a valid URL</span>';
+      
+      // Validate and normalize the URL
+      const validationResult = normalizeAndValidateUrl(url);
+      if (!validationResult.isValid) {
+        resultDiv.innerHTML = `<span class="malicious">${validationResult.error}</span>`;
         return;
       }
 
+      const normalizedUrl = validationResult.normalizedUrl;
+      
       resultDiv.innerHTML = '<div class="loading">🔄 Scanning URL with VirusTotal</div>';
       const submitButton = form.querySelector('button');
       submitButton.disabled = true;
@@ -395,7 +436,7 @@
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ url: url })
+          body: JSON.stringify({ url: normalizedUrl })
         });
 
         const data = await response.json();
@@ -404,7 +445,7 @@
           throw new Error(data.error || `HTTP error! status: ${response.status}`);
         }
 
-        displayResults(url, data);
+        displayResults(normalizedUrl, data);
 
       } catch (error) {
         console.error('Error:', error);
