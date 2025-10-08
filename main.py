@@ -5,13 +5,11 @@ import requests
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
-app = Flask(__name__, static_folder='.')
+app = Flask(__name__, static_folder='.')  # Fixed __name__ here
 CORS(app)
 
-VT_API = os.getenv("VIRUSTOTAL_API_KEY")
-if not VT_API:
-    raise RuntimeError("⚠️ VIRUSTOTAL_API_KEY environment variable is not set")
-
+# Set your VirusTotal API key directly
+VT_API = "c221412044bcba574f0dbbff636b6255f5014ee87a92528649458da697caa967"
 HEADERS = {"x-apikey": VT_API}
 VT_BASE = "https://www.virustotal.com/api/v3"
 
@@ -68,10 +66,10 @@ def do_vt_check(url):
 @app.route('/')
 def index():
     return send_from_directory('.', 'index.html')
+
 @app.route('/verify-link')
 def verify_link():
     return send_from_directory('.', 'verify_link.html')
-
 
 @app.route('/api/virustotal', methods=['POST'])
 def check_url():
