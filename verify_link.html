@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Suspicious Link Checker | EZM Cyber</title>
+  <title>EZM Cyber — Link Checker</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
   <style>
     * {
@@ -43,11 +43,50 @@
       100% { transform: translate(50px, 50px); }
     }
 
+    /* cyber rain */
+    #cyber-rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .rain-drop {
+      position: absolute;
+      width: 2px;
+      height: 50px;
+      background: linear-gradient(to bottom, transparent, rgba(0, 255, 204, 0.3));
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+      }
+    }
+
     .container {
       max-width: 1400px;
       margin: 0 auto;
       position: relative;
       z-index: 1;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 1.5em;
+      color: #00ffcc;
+      text-shadow: 
+        0 0 10px #00ffcc,
+        0 0 20px #00ffcc,
+        0 0 30px #00ffcc,
+        0 0 40px #00ffcc;
+      margin-bottom: 10px;
+      animation: pulse-glow 3s ease-in-out infinite;
     }
 
     h1 { 
@@ -222,6 +261,14 @@
       background: rgba(0, 0, 0, 0.4);
       border-radius: 10px;
       border: 1px solid rgba(0, 255, 204, 0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    #result.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .loading { 
@@ -321,6 +368,125 @@
       font-weight: bold;
     }
 
+    /* vendor table */
+    #vendor-section {
+      margin-top: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease-out 0.2s, transform 0.5s ease-out 0.2s;
+    }
+
+    #vendor-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #vendor-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow-x: auto;
+      display: block;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    #vendor-table th, #vendor-table td {
+      padding: 10px;
+      border: 1px solid rgba(0, 255, 204, 0.2);
+      text-align: left;
+    }
+
+    #vendor-table th {
+      background: rgba(0, 255, 204, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    #vendor-table tr {
+      transition: box-shadow 0.3s;
+    }
+
+    #vendor-table tr:hover {
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+    }
+
+    .row-malicious { background-color: rgba(255, 0, 68, 0.2); }
+    .row-suspicious { background-color: rgba(255, 170, 0, 0.2); }
+    .row-harmless { background-color: rgba(0, 255, 136, 0.2); }
+    .row-undetected { background-color: rgba(136, 136, 136, 0.2); }
+
+    #vendor-accordion {
+      display: none;
+    }
+
+    .accordion-item {
+      margin-bottom: 10px;
+      border: 1px solid rgba(0, 255, 204, 0.2);
+      border-radius: 5px;
+    }
+
+    .accordion-summary {
+      padding: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .accordion-details {
+      padding: 10px;
+      display: none;
+    }
+
+    .accordion-item.open .accordion-details {
+      display: block;
+    }
+
+    .category-badge {
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .badge-malicious { background-color: #ff0044; }
+    .badge-suspicious { background-color: #ffaa00; }
+    .badge-harmless { background-color: #00ff88; }
+    .badge-undetected { background-color: #888; }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      color: #00ffcc;
+      cursor: pointer;
+      font-size: 1em;
+      margin-left: 10px;
+      position: relative;
+    }
+
+    .copy-btn:hover {
+      color: #00ffff;
+    }
+
+    .tooltip {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 0.8em;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .copy-btn.copied .tooltip {
+      opacity: 1;
+    }
+
     @media (max-width: 768px) {
       body {
         padding: 15px;
@@ -349,15 +515,25 @@
       button {
         width: 100%;
       }
+
+      #vendor-table {
+        display: none;
+      }
+
+      #vendor-accordion {
+        display: block;
+      }
     }
   </style>
 </head>
 <body>
+  <div id="cyber-rain"></div>
   <div class="container">
-    <h1>🔒 SUSPICIOUS LINK CHECKER</h1>
+    <div class="logo">EZM Cyber</div>
+    <h1>🔒 EZM Cyber — Link Checker</h1>
     
     <section id="link-checker">
-      <h2>🔍 Scan URL with VirusTotal</h2>
+      <h2>🔍 Scan URL</h2>
       <form id="link-form">
         <input 
           type="text" 
@@ -367,11 +543,12 @@
         />
         <button type="submit">SCAN URL</button>
       </form>
-      <div id="result"></div>
+      <div id="result" aria-live="polite"></div>
     </section>
   </div>
 
   <script>
+    const BACKEND_API = 'https://ethwebsite-3guq.onrender.com/api/virustotal';
     const form = document.getElementById('link-form');
     const urlInput = document.getElementById('url-input');
     const resultDiv = document.getElementById('result');
@@ -426,18 +603,18 @@
 
       const normalizedUrl = validationResult.normalizedUrl;
       
-      resultDiv.innerHTML = '<div class="loading">🔄 Scanning URL with VirusTotal</div>';
+      resultDiv.innerHTML = '<div class="loading">🔄 Scanning URL</div>';
       const submitButton = form.querySelector('button');
       submitButton.disabled = true;
 
       try {
-  const response = await fetch('https://ethwebsite-3guq.onrender.com/api/virustotal', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ url: normalizedUrl })
-});
+        const response = await fetch(BACKEND_API, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ url: normalizedUrl })
+        });
 
         const data = await response.json();
 
@@ -479,11 +656,12 @@
         statusText = 'SUSPICIOUS';
       }
 
-      resultDiv.innerHTML = `
+      let summaryHtml = `
         <div class="${statusClass}">
           <div style="font-size: 2em; margin-bottom: 10px;">${statusIcon} ${statusText}</div>
-          <div style="font-size: 1em; color: #00ffcc; margin-bottom: 10px;">
-            URL: <span style="color: #e0ffe0; word-break: break-all;">${escapeHtml(url)}</span>
+          <div style="font-size: 1em; color: #00ffcc; margin-bottom: 10px; display: flex; align-items: center;">
+            URL: <span style="color: #e0ffe0; word-break: break-all; margin-left: 5px;">${escapeHtml(url)}</span>
+            <button class="copy-btn" onclick="copyUrl('${escapeHtml(url)}')" aria-label="Copy URL">📋<span class="tooltip">Copied!</span></button>
           </div>
         </div>
         <div class="scan-details">
@@ -510,6 +688,141 @@
           </div>
         </div>
       `;
+
+      let vendorHtml = '';
+      if (!data.last_analysis_results) {
+        vendorHtml = `<div id="vendor-section"><p>Vendor details unavailable.</p></div>`;
+      } else {
+        const vendors = Object.entries(data.last_analysis_results);
+        let tableRows = '';
+        let accordionItems = '';
+        const limit = 200;
+        const initialVendors = vendors.slice(0, limit);
+        const remainingVendors = vendors.slice(limit);
+
+        initialVendors.forEach(([vendor, info]) => {
+          const category = info.category || 'undetected';
+          const engineVersion = info.engine_version || 'N/A';
+          const resultDetail = `${info.result || category} (${info.method || 'N/A'})`;
+          const rowClass = `row-${category}`;
+          const badgeClass = `badge-${category}`;
+
+          tableRows += `
+            <tr class="${rowClass}">
+              <td>${escapeHtml(vendor)}</td>
+              <td>${escapeHtml(category)}</td>
+              <td>${escapeHtml(engineVersion)}</td>
+              <td>${escapeHtml(resultDetail)}</td>
+            </tr>
+          `;
+
+          accordionItems += `
+            <div class="accordion-item">
+              <div class="accordion-summary" onclick="toggleAccordion(this)" tabindex="0" role="button" aria-expanded="false">
+                <span>${escapeHtml(vendor)}</span>
+                <span class="category-badge ${badgeClass}">${escapeHtml(category)}</span>
+              </div>
+              <div class="accordion-details">
+                <p>Engine Version: ${escapeHtml(engineVersion)}</p>
+                <p>Result Detail: ${escapeHtml(resultDetail)}</p>
+              </div>
+            </div>
+          `;
+        });
+
+        let moreButton = '';
+        if (remainingVendors.length > 0) {
+          moreButton = `<button onclick="showMoreVendors(${JSON.stringify(remainingVendors)})" style="margin-top: 10px;">Show More</button>`;
+        }
+
+        vendorHtml = `
+          <div id="vendor-section">
+            <h3 style="color: #00ffcc; margin-bottom: 10px;">Vendor Details</h3>
+            <div id="vendor-table-wrapper" style="overflow-x: auto;">
+              <table id="vendor-table" aria-label="Vendor Analysis Results">
+                <thead>
+                  <tr>
+                    <th>Vendor</th>
+                    <th>Category</th>
+                    <th>Engine Version</th>
+                    <th>Result Detail</th>
+                  </tr>
+                </thead>
+                <tbody id="vendor-table-body">
+                  ${tableRows}
+                </tbody>
+              </table>
+            </div>
+            <div id="vendor-accordion">
+              ${accordionItems}
+            </div>
+            <div id="more-vendors">${moreButton}</div>
+          </div>
+        `;
+      }
+
+      resultDiv.innerHTML = summaryHtml + vendorHtml;
+      requestAnimationFrame(() => {
+        resultDiv.classList.add('visible');
+        const vendorSection = document.getElementById('vendor-section');
+        if (vendorSection) vendorSection.classList.add('visible');
+      });
+    }
+
+    function showMoreVendors(remaining) {
+      const tableBody = document.getElementById('vendor-table-body');
+      const accordion = document.getElementById('vendor-accordion');
+      const moreDiv = document.getElementById('more-vendors');
+
+      remaining.forEach(([vendor, info]) => {
+        const category = info.category || 'undetected';
+        const engineVersion = info.engine_version || 'N/A';
+        const resultDetail = `${info.result || category} (${info.method || 'N/A'})`;
+        const rowClass = `row-${category}`;
+        const badgeClass = `badge-${category}`;
+
+        if (tableBody) {
+          tableBody.innerHTML += `
+            <tr class="${rowClass}">
+              <td>${escapeHtml(vendor)}</td>
+              <td>${escapeHtml(category)}</td>
+              <td>${escapeHtml(engineVersion)}</td>
+              <td>${escapeHtml(resultDetail)}</td>
+            </tr>
+          `;
+        }
+
+        if (accordion) {
+          accordion.innerHTML += `
+            <div class="accordion-item">
+              <div class="accordion-summary" onclick="toggleAccordion(this)" tabindex="0" role="button" aria-expanded="false">
+                <span>${escapeHtml(vendor)}</span>
+                <span class="category-badge ${badgeClass}">${escapeHtml(category)}</span>
+              </div>
+              <div class="accordion-details">
+                <p>Engine Version: ${escapeHtml(engineVersion)}</p>
+                <p>Result Detail: ${escapeHtml(resultDetail)}</p>
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      moreDiv.innerHTML = '';
+    }
+
+    function toggleAccordion(summary) {
+      const item = summary.parentElement;
+      item.classList.toggle('open');
+      const expanded = item.classList.contains('open');
+      summary.setAttribute('aria-expanded', expanded);
+    }
+
+    function copyUrl(url) {
+      navigator.clipboard.writeText(url);
+      const btn = event.target;
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 2000);
     }
 
     function escapeHtml(text) {
@@ -517,6 +830,23 @@
       div.textContent = text;
       return div.innerHTML;
     }
+
+    // cyber rain init
+    function initCyberRain() {
+      const rainDiv = document.getElementById('cyber-rain');
+      const numDrops = 30;
+      for (let i = 0; i < numDrops; i++) {
+        const drop = document.createElement('div');
+        drop.classList.add('rain-drop');
+        drop.style.left = `${Math.random() * 100}%`;
+        drop.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        drop.style.animationDelay = `${Math.random() * 5}s`;
+        drop.style.opacity = Math.random() * 0.5 + 0.1;
+        rainDiv.appendChild(drop);
+      }
+    }
+
+    initCyberRain();
   </script>
 </body>
 </html>
