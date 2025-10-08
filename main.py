@@ -8,9 +8,9 @@ from flask_cors import CORS
 app = Flask(__name__, static_folder='.')  # Static files in same folder
 CORS(app)
 
-# Use environment variable if set, otherwise fallback to direct key (for testing only)
-VT_API = os.getenv("VIRUSTOTAL_API_KEY", "c221412044bcba574f0dbbff636b6255f5014ee87a92528649458da697caa967")
-HEADERS = {"x-apikey": VT_API}
+# Use environment variable for VirusTotal API key
+VT_API = os.getenv("VIRUSTOTAL_API_KEY")
+HEADERS = {"x-apikey": VT_API} if VT_API else {}
 VT_BASE = "https://www.virustotal.com/api/v3"
 
 def normalize_url(url):
@@ -23,6 +23,9 @@ def url_id_from_url(url):
     return base64.urlsafe_b64encode(url.encode()).decode().rstrip("=")
 
 def do_vt_check(url):
+    if not VT_API:
+        raise Exception("VirusTotal API key not found. Set the VIRUSTOTAL_API_KEY environment variable.")
+    
     url = normalize_url(url)
     url_id = url_id_from_url(url)
 
@@ -77,7 +80,5 @@ def check_url():
         return jsonify({"error": error_msg}), 500
 
 if __name__ == '__main__':
-    # Use host 0.0.0.0 so it’s accessible externally
-    # Use PORT env variable if hosting platform provides one, else default 5000
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
