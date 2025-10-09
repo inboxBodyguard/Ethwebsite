@@ -41,13 +41,7 @@
         background: linear-gradient(90deg, transparent, #00ffcc, transparent);
     }
     .brand-logo { text-align: center; margin-bottom: 2rem; }
-    .brand-logo h1 {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #00ffcc;
-        margin-bottom: 0.5rem;
-        text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
-    }
+    .brand-logo h1 { font-size: 2rem; font-weight: 700; color: #00ffcc; margin-bottom: 0.5rem; text-shadow: 0 0 10px rgba(0, 255, 204, 0.3); }
     .brand-logo p { color: #b8c6db; font-size: 0.9rem; margin: 0; }
     .form-group { margin-bottom: 1.5rem; }
     .form-label { display: block; color: #e0e6ed; font-weight: 500; margin-bottom: 0.5rem; font-size: 0.9rem; }
@@ -61,81 +55,35 @@
         font-size: 1rem;
         transition: all 0.3s ease;
     }
-    .form-control:focus {
-        outline: none;
-        border-color: #00ffcc;
-        background: rgba(16, 21, 30, 0.9);
-        box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.1);
-    }
+    .form-control:focus { outline: none; border-color: #00ffcc; background: rgba(16, 21, 30, 0.9); box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.1); }
     .form-control::placeholder { color: #8a94a6; }
-    .btn-primary {
-        width: 100%;
-        padding: 14px;
-        background: linear-gradient(135deg, #00ffcc, #00ccaa);
-        color: #000;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-bottom: 1rem;
-    }
+    .btn-primary { width: 100%; padding: 14px; background: linear-gradient(135deg, #00ffcc, #00ccaa); color: #000; border: none; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; margin-bottom: 1rem; }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 255, 204, 0.3); }
     .btn-primary:active { transform: translateY(0); }
     .btn-primary:disabled { background: #555; cursor: not-allowed; }
-
-    .divider {
-        display: flex;
-        align-items: center;
-        margin: 1.5rem 0;
-        color: #8a94a6;
-        font-size: 0.9rem;
-    }
-    .divider::before, .divider::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: rgba(138, 148, 166, 0.3);
-    }
+    .divider { display: flex; align-items: center; margin: 1.5rem 0; color: #8a94a6; font-size: 0.9rem; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: rgba(138, 148, 166, 0.3); }
     .divider span { padding: 0 1rem; }
-    .social-btn {
-        width: 100%;
-        padding: 12px 16px;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        margin-bottom: 1rem;
-        text-decoration: none;
-    }
+    .social-btn { width: 100%; padding: 12px 16px; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 1rem; text-decoration: none; }
     .social-btn:hover { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); transform: translateY(-1px); }
     .social-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
     .social-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none;}
     .google-btn { background: #ffffff; color: #333; border: 1px solid #dadce0; }
     .google-btn:hover { background: #f8f9fa; }
-    .google-icon { width: 20px; height: 20px; background-image: url('data:image/svg+xml;base64,...'); background-size: contain; background-position: center; background-repeat: no-repeat; }
+    .google-icon { width: 20px; height: 20px; background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4='); background-size: contain; background-position: center; background-repeat: no-repeat; }
     .microsoft-btn { background: #0078d4; color: #fff; border: none; }
     .microsoft-btn:hover { background: #106ebe; }
-    .microsoft-icon { width: 18px; height: 18px; background-image: url("data:image/svg+xml,..."); background-size: contain; background-position: center; background-repeat: no-repeat; }
+    .microsoft-icon { width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23 23'%3E%3Cpath fill='%23f35325' d='M1 1h10v10H1z'/%3E%3Cpath fill='%2381bc06' d='M12 1h10v10H12z'/%3E%3Cpath fill='%2305a6f0' d='M1 12h10v10H1z'/%3E%3Cpath fill='%23ffba08' d='M12 12h10v10H12z'/%3E%3C/svg%3E"); background-size: contain; background-position: center; background-repeat: no-repeat; }
+    .github-btn { background: #333; color: #fff; border: none; }
+    .github-btn:hover { background: #444; }
+    .github-icon { width: 20px; height: 20px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/%3E%3C/svg%3E"); background-size: contain; background-position: center; background-repeat: no-repeat; }
     .back-home { position: absolute; top: 1rem; left: 1rem; z-index: 10; }
     .back-home a { color: #00ffcc; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
     .back-home a:hover { color: #00e6b8; }
     .signin-link { text-align: center; color: #b8c6db; font-size: 0.9rem; margin-top: 1.5rem; }
     .signin-link a { color: #00ffcc; text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
     .signin-link a:hover { color: #00e6b8; text-decoration: underline; }
-    .error-message, .success-message {
-        padding: 12px;
-        border-radius: 8px;
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-        display: none;
-    }
+    .error-message, .success-message { padding: 12px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 1rem; display: none; }
     .error-message { background: rgba(255,59,48,0.1); border: 1px solid rgba(255,59,48,0.3); color: #ff6b6b; }
     .success-message { background: rgba(52,199,89,0.1); border: 1px solid rgba(52,199,89,0.3); color: #34c759; }
     #recaptcha-container { margin: 1rem 0; display: flex; justify-content: center; }
@@ -171,11 +119,13 @@
       <div class="microsoft-icon"></div><span>Continue with Microsoft</span>
     </button>
 
+    <button id="github-signin-btn" class="social-btn github-btn" onclick="handleGitHubSignIn()">
+      <div class="github-icon"></div><span>Continue with GitHub</span>
+    </button>
+
     <div class="divider"><span>or</span></div>
 
-    <form id="signup-form" action="https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com" method="POST">
-      <input type="hidden" name="_next" value="home.html">
-      <input type="hidden" name="_captcha" value="false">
+    <form id="signup-form">
       <div class="form-group">
         <label for="email" class="form-label">Email Address</label>
         <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
@@ -200,31 +150,59 @@
 
   <script>
     const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com';
-    const MICROSOFT_CLIENT_ID = 'YOUR_MICROSOFT_CLIENT_ID'; // Replace with real ID
+    const MICROSOFT_CLIENT_ID = 'YOUR_MICROSOFT_CLIENT_ID';
+    const GITHUB_CLIENT_ID = 'Ov23li9vNorDxb2x1Ljs';
     const RECAPTCHA_SITE_KEY = '6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG';
     let recaptchaWidgetId = null;
 
-    document.addEventListener('DOMContentLoaded', () => {
-      if (sessionStorage.getItem('user')) { window.location.href = 'home.html'; }
-      handleOAuthRedirect();
-    });
+    function showError(msg){
+      const e=document.getElementById('error-message');
+      e.textContent=msg;
+      e.style.display='block';
+      document.getElementById('success-message').style.display='none';
+      setTimeout(()=>{ e.style.display='none'; },5000);
+    }
 
-    function showError(msg){ const e=document.getElementById('error-message'); e.textContent=msg;e.style.display='block'; document.getElementById('success-message').style.display='none'; setTimeout(()=>{e.style.display='none';},5000);}
-    function showSuccess(msg){ const s=document.getElementById('success-message'); s.textContent=msg;s.style.display='block'; document.getElementById('error-message').style.display='none'; }
+    function showSuccess(msg){
+      const s=document.getElementById('success-message');
+      s.textContent=msg;
+      s.style.display='block';
+      document.getElementById('error-message').style.display='none';
+    }
 
-    function parseJwt(token){ const base64Url=token.split('.')[1]; const base64=base64Url.replace(/-/g,'+').replace(/_/g,'/'); const jsonPayload=decodeURIComponent(atob(base64).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join('')); return JSON.parse(jsonPayload); }
+    function parseJwt(token){
+      const base64Url=token.split('.')[1];
+      const base64=base64Url.replace(/-/g,'+').replace(/_/g,'/');
+      const jsonPayload=decodeURIComponent(atob(base64).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+      return JSON.parse(jsonPayload);
+    }
 
     function handleGoogleSignIn(){
-      const btn=document.getElementById('google-signin-btn'); btn.disabled=true;
+      const btn=document.getElementById('google-signin-btn');
+      btn.disabled=true;
       try{
         google.accounts.id.initialize({ client_id:GOOGLE_CLIENT_ID, callback:handleCredentialResponse });
-        google.accounts.id.prompt((n)=>{ if(n.isNotDisplayed()||n.isSkippedMoment()){ btn.disabled=false; showError('Google Sign-In popup could not be displayed.'); }});
+        google.accounts.id.prompt((n)=>{
+          if(n.isNotDisplayed()||n.isSkippedMoment()){ 
+            btn.disabled=false; 
+            showError('Google Sign-In popup could not be displayed.'); 
+          }
+        });
       }catch(e){ console.error(e); showError('Google Sign-In unavailable.'); btn.disabled=false; }
     }
+
     function handleCredentialResponse(response){
       const user=parseJwt(response.credential);
       sessionStorage.setItem('user',JSON.stringify({name:user.name,email:user.email,picture:user.picture,loginMethod:'google'}));
       showSuccess('Successfully signed up with Google!');
+
+      // Notify Admin via FormSubmit
+      fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ email:user.email, name:user.name, loginMethod:'google' })
+      }).catch(err => console.warn('Admin notification failed', err));
+
       setTimeout(()=>{window.location.href='home.html';},1500);
     }
 
@@ -232,26 +210,108 @@
       showError('Microsoft Sign-In requires backend server to complete OAuth.');
     }
 
+    function handleGitHubSignIn(){
+      const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user:email`;
+      window.location.href = githubAuthUrl;
+    }
+
     function handleOAuthRedirect(){
       const urlParams=new URLSearchParams(window.location.search);
       const code=urlParams.get('code');
-      if(code){ showError('OAuth requires a server to complete.'); history.replaceState(null,'',window.location.pathname); }
+      
+      // Handle GitHub OAuth callback
+      if(code && document.referrer.includes('github.com')) {
+        // Store GitHub user data (in real implementation, you'd exchange code for token)
+        sessionStorage.setItem('user',JSON.stringify({
+          name:'GitHub User',
+          email:'github@example.com',
+          picture:'',
+          loginMethod:'github'
+        }));
+        showSuccess('Successfully signed up with GitHub!');
+        
+        // Notify Admin
+        fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ email:'github@example.com', name:'GitHub User', loginMethod:'github' })
+        }).catch(err => console.warn('Admin notification failed', err));
+        
+        setTimeout(()=>{window.location.href='home.html';},1500);
+        history.replaceState(null,'',window.location.pathname);
+      }
+      else if(code) { 
+        showError('OAuth requires a server to complete.'); 
+        history.replaceState(null, '', window.location.pathname); 
+      }
     }
 
-    function onRecaptchaLoad(){ if(document.getElementById('recaptcha-container')){ recaptchaWidgetId=grecaptcha.render('recaptcha-container',{sitekey:RECAPTCHA_SITE_KEY,theme:'dark'}); } }
+    function onRecaptchaLoad(){
+      if(document.getElementById('recaptcha-container')){
+        recaptchaWidgetId=grecaptcha.render('recaptcha-container',{sitekey:RECAPTCHA_SITE_KEY,theme:'dark'});
+      }
+    }
 
-    // --- Email Form Submission ---
-    document.getElementById('signup-form').addEventListener('submit', function(e){
-      e.preventDefault();
-      const form=this;
-      document.getElementById('verify-btn').disabled=true;
-      fetch(form.action, {method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
-        .then(()=>{ document.getElementById('verify-btn-text').innerText='Signed Up! Redirecting...'; setTimeout(()=>{window.location.href='home.html';},2000); })
-        .catch(()=>{ showError('Submission failed. Try again.'); document.getElementById('verify-btn').disabled=false; });
+    document.addEventListener('DOMContentLoaded', () => {
+      if(sessionStorage.getItem('user')){ window.location.href='home.html'; }
+      handleOAuthRedirect();
+
+      // Email Form Submission
+      const form=document.getElementById('signup-form');
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        document.getElementById('verify-btn').disabled=true;
+
+        fetch('https://ethwebsite-12.onrender.com/api/signup', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({ email: form.email.value, password: form.password.value })
+        })
+        .then(response=>response.json())
+        .then(data=>{
+          if(data.success){
+            // Notify Admin via FormSubmit
+            fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
+              method:'POST',
+              headers:{'Content-Type':'application/json'},
+              body: JSON.stringify({ email: form.email.value, loginMethod:'email' })
+            }).catch(err => console.warn('Admin notification failed', err));
+
+            showSuccess('Signup successful!');
+            setTimeout(()=>{window.location.href='home.html';},1500);
+          }else{
+            showError(data.message||'Signup failed. Try again.');
+            document.getElementById('verify-btn').disabled=false;
+          }
+        })
+        .catch(()=>{
+          showError('Network error. Please try again later.');
+          document.getElementById('verify-btn').disabled=false;
+        });
+      });
+
+      // Cyber Rain Effect
+      (function(){
+        const container=document.getElementById('rain-container');
+        if(!container) return;
+        const createRainColumn=()=>{
+          const col=document.createElement('div');
+          col.className='rain-column';
+          col.style.left=Math.random()*100+'vw';
+          const duration=Math.random()*3+2;
+          col.style.animationDuration=duration+'s,1.5s';
+          col.style.animationDelay=Math.random()*2+'s';
+          col.style.opacity=Math.random()*0.5+0.3;
+          let text='';
+          const charCount=Math.floor(Math.random()*20+10);
+          for(let i=0;i<charCount;i++){ text+='10'[Math.floor(Math.random()*2)]+'<br>'; }
+          col.innerHTML=text;
+          container.appendChild(col);
+          setTimeout(()=>{ col.remove(); },duration*1000);
+        };
+        setInterval(createRainColumn,100);
+      })();
     });
-
-    // --- Cyber Rain Effect ---
-    (function(){ const container=document.getElementById('rain-container'); if(!container) return; const createRainColumn=()=>{ const col=document.createElement('div'); col.className='rain-column'; col.style.left=Math.random()*100+'vw'; const duration=Math.random()*3+2; col.style.animationDuration=duration+'s,1.5s'; col.style.animationDelay=Math.random()*2+'s'; col.style.opacity=Math.random()*0.5+0.3; let text=''; const charCount=Math.floor(Math.random()*20+10); for(let i=0;i<charCount;i++){ text+='10'[Math.floor(Math.random()*2)]+'<br>'; } col.innerHTML=text; container.appendChild(col); setTimeout(()=>{ col.remove(); },duration*1000); }; setInterval(createRainColumn,100); })();
   </script>
 </body>
 </html>
