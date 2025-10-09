@@ -7,7 +7,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* --- Your existing CSS stays unchanged --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%); color: #e0e6ed; font-family: 'Inter', sans-serif; line-height: 1.6; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
     .login-container { width: 100%; max-width: 400px; background: rgba(22, 33, 62, 0.8); backdrop-filter: blur(15px); border-radius: 16px; padding: 2.5rem; border: 1px solid rgba(0, 255, 204, 0.2); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); position: relative; overflow: hidden; }
@@ -33,10 +32,10 @@
     .social-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none;}
     .google-btn { background: #ffffff; color: #333; border: 1px solid #dadce0; }
     .google-btn:hover { background: #f8f9fa; }
-    .google-icon { width: 20px; height: 20px; background-image: url('data:image/svg+xml;base64,...'); background-size: contain; background-position: center; background-repeat: no-repeat; }
+    .google-icon { width: 20px; height: 20px; background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4='); background-size: contain; background-position: center; background-repeat: no-repeat; }
     .microsoft-btn { background: #0078d4; color: #fff; border: none; }
     .microsoft-btn:hover { background: #106ebe; }
-    .microsoft-icon { width: 18px; height: 18px; background-image: url("data:image/svg+xml,..."); background-size: contain; background-position: center; background-repeat: no-repeat; }
+    .microsoft-icon { width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23 23'%3E%3Cpath fill='%23f35325' d='M1 1h10v10H1z'/%3E%3Cpath fill='%2381bc06' d='M12 1h10v10H12z'/%3E%3Cpath fill='%2305a6f0' d='M1 12h10v10H1z'/%3E%3Cpath fill='%23ffba08' d='M12 12h10v10H12z'/%3E%3C/svg%3E"); background-size: contain; background-position: center; background-repeat: no-repeat; }
     .back-home { position: absolute; top: 1rem; left: 1rem; z-index: 10; }
     .back-home a { color: #00ffcc; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; }
     .back-home a:hover { color: #00e6b8; }
@@ -76,7 +75,6 @@
 
     <div class="divider"><span>or</span></div>
 
-    <!-- --- Integrated Email Signup --- -->
     <form id="signup-form">
       <div class="form-group">
         <label for="email" class="form-label">Email Address</label>
@@ -101,82 +99,171 @@
   <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 
   <script>
-    const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com';
-    const MICROSOFT_CLIENT_ID = 'YOUR_MICROSOFT_CLIENT_ID'; // Replace with real ID
-    const RECAPTCHA_SITE_KEY = '6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG';
-    let recaptchaWidgetId = null;
+  const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com';
+  const MICROSOFT_CLIENT_ID = 'YOUR_MICROSOFT_CLIENT_ID';
+  const RECAPTCHA_SITE_KEY = '6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG';
+  let recaptchaWidgetId = null;
 
-    document.addEventListener('DOMContentLoaded', () => {
-      if (sessionStorage.getItem('user')) { window.location.href = 'home.html'; }
-      handleOAuthRedirect();
-    });
+  document.addEventListener('DOMContentLoaded', () => {
+    if (sessionStorage.getItem('user')) { window.location.href = 'home.html'; }
+    handleOAuthRedirect();
+  });
 
-    function showError(msg){ const e=document.getElementById('error-message'); e.textContent=msg;e.style.display='block'; document.getElementById('success-message').style.display='none'; setTimeout(()=>{e.style.display='none';},5000);}
-    function showSuccess(msg){ const s=document.getElementById('success-message'); s.textContent=msg;s.style.display='block'; document.getElementById('error-message').style.display='none'; }
+  function showError(msg){ 
+    const e = document.getElementById('error-message'); 
+    e.textContent = msg;
+    e.style.display = 'block'; 
+    document.getElementById('success-message').style.display = 'none'; 
+    setTimeout(() => { e.style.display = 'none'; }, 5000);
+  }
 
-    function parseJwt(token){ const base64Url=token.split('.')[1]; const base64=base64Url.replace(/-/g,'+').replace(/_/g,'/'); const jsonPayload=decodeURIComponent(atob(base64).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join('')); return JSON.parse(jsonPayload); }
+  function showSuccess(msg){ 
+    const s = document.getElementById('success-message'); 
+    s.textContent = msg;
+    s.style.display = 'block'; 
+    document.getElementById('error-message').style.display = 'none'; 
+  }
 
-    function handleGoogleSignIn(){
-      const btn=document.getElementById('google-signin-btn'); btn.disabled=true;
-      try{
-        google.accounts.id.initialize({ client_id:GOOGLE_CLIENT_ID, callback:handleCredentialResponse });
-        google.accounts.id.prompt((n)=>{ if(n.isNotDisplayed()||n.isSkippedMoment()){ btn.disabled=false; showError('Google Sign-In popup could not be displayed.'); }});
-      }catch(e){ console.error(e); showError('Google Sign-In unavailable.'); btn.disabled=false; }
+  function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+    return JSON.parse(jsonPayload);
+  }
+
+  function handleGoogleSignIn() {
+    const btn = document.getElementById('google-signin-btn');
+    btn.disabled = true;
+    
+    try {
+      google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: handleCredentialResponse
+      });
+      
+      google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          btn.disabled = false;
+          showError('Google Sign-In popup could not be displayed.');
+        }
+      });
+    } catch (e) {
+      console.error(e);
+      showError('Google Sign-In unavailable.');
+      btn.disabled = false;
     }
-    function handleCredentialResponse(response){
-      const user=parseJwt(response.credential);
-      sessionStorage.setItem('user',JSON.stringify({name:user.name,email:user.email,picture:user.picture,loginMethod:'google'}));
-      showSuccess('Successfully signed up with Google!');
-      setTimeout(()=>{window.location.href='home.html';},1500);
+  }
+
+  function handleCredentialResponse(response) {
+    const user = parseJwt(response.credential);
+    sessionStorage.setItem('user', JSON.stringify({
+      name: user.name,
+      email: user.email,
+      picture: user.picture,
+      loginMethod: 'google'
+    }));
+    showSuccess('Successfully signed up with Google!');
+    setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+  }
+
+  function handleMicrosoftSignIn() {
+    showError('Microsoft Sign-In requires backend server to complete OAuth.');
+  }
+
+  function handleOAuthRedirect() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    if (code) { 
+      showError('OAuth requires a server to complete.'); 
+      history.replaceState(null, '', window.location.pathname); 
     }
+  }
 
-    function handleMicrosoftSignIn(){
-      showError('Microsoft Sign-In requires backend server to complete OAuth.');
+  function onRecaptchaLoad() {
+    if (document.getElementById('recaptcha-container')) {
+      recaptchaWidgetId = grecaptcha.render('recaptcha-container', {
+        sitekey: RECAPTCHA_SITE_KEY,
+        theme: 'dark'
+      });
     }
+  }
 
-    function handleOAuthRedirect(){
-      const urlParams=new URLSearchParams(window.location.search);
-      const code=urlParams.get('code');
-      if(code){ showError('OAuth requires a server to complete.'); history.replaceState(null,'',window.location.pathname); }
-    }
+  // SINGLE Email form submission listener
+  document.getElementById('signup-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const btn = document.getElementById('verify-btn');
+    
+    btn.disabled = true;
+    document.getElementById('verify-btn-text').innerText = 'Signing Up...';
 
-    function onRecaptchaLoad(){ if(document.getElementById('recaptcha-container')){ recaptchaWidgetId=grecaptcha.render('recaptcha-container',{sitekey:RECAPTCHA_SITE_KEY,theme:'dark'}); } }
-
-    // --- Email Form Submission to Flask Backend ---
-    document.getElementById('signup-form').addEventListener('submit', function(e){
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const btn = document.getElementById('verify-btn');
-      btn.disabled = true;
-      document.getElementById('verify-btn-text').innerText = 'Signing Up...';
-
-      fetch('/api/virustotal', {
+    try {
+      const response = await fetch('/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, password: password })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data.error){
-          showError(data.error);
-          btn.disabled = false;
-          document.getElementById('verify-btn-text').innerText = 'Sign Up with Email';
-        } else {
-          showSuccess('Signed up successfully! Welcome email sent.');
-          setTimeout(()=>{ window.location.href='home.html'; }, 2000);
-        }
-      })
-      .catch(err=>{
-        console.error(err);
-        showError('Signup failed. Try again.');
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        showError(data.error);
         btn.disabled = false;
         document.getElementById('verify-btn-text').innerText = 'Sign Up with Email';
-      });
-    });
+      } else {
+        // Notify admin via FormSubmit
+        const adminEmail = 'bgcustomshomeshrmca3667strawberry@hotmail.com';
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('_subject', 'New User Signup - EZM Cyber');
+        formData.append('message', `New user signed up with email: ${email}`);
+        
+        fetch(`https://formsubmit.co/ajax/${adminEmail}`, {
+          method: 'POST',
+          body: formData,
+          mode: 'no-cors'
+        }).catch(err => console.log('Admin notification sent'));
 
-    // --- Cyber Rain Effect ---
-    (function(){ const container=document.getElementById('rain-container'); if(!container) return; const createRainColumn=()=>{ const col=document.createElement('div'); col.className='rain-column'; col.style.left=Math.random()*100+'vw'; const duration=Math.random()*3+2; col.style.animationDuration=duration+'s,1.5s'; col.style.animationDelay=Math.random()*2+'s'; col.style.opacity=Math.random()*0.5+0.3; let text=''; const charCount=Math.floor(Math.random()*20+10); for(let i=0;i<charCount;i++){ text+='10'[Math.floor(Math.random()*2)]+'<br>'; } col.innerHTML=text; container.appendChild(col); setTimeout(()=>{ col.remove(); },duration*1000); }; setInterval(createRainColumn,100); })();
-  </script>
+        showSuccess('Signed up successfully! Welcome email sent.');
+        setTimeout(() => { window.location.href = 'home.html'; }, 2000);
+      }
+    } catch (err) {
+      console.error(err);
+      showError('Signup failed. Please try again.');
+      btn.disabled = false;
+      document.getElementById('verify-btn-text').innerText = 'Sign Up with Email';
+    }
+  });
+
+  // Cyber Rain Effect
+  (function() {
+    const container = document.getElementById('rain-container');
+    if (!container) return;
+    
+    const createRainColumn = () => {
+      const col = document.createElement('div');
+      col.className = 'rain-column';
+      col.style.left = Math.random() * 100 + 'vw';
+      const duration = Math.random() * 3 + 2;
+      col.style.animationDuration = duration + 's,1.5s';
+      col.style.animationDelay = Math.random() * 2 + 's';
+      col.style.opacity = Math.random() * 0.5 + 0.3;
+      
+      let text = '';
+      const charCount = Math.floor(Math.random() * 20 + 10);
+      for (let i = 0; i < charCount; i++) {
+        text += '10'[Math.floor(Math.random() * 2)] + '<br>';
+      }
+      col.innerHTML = text;
+      container.appendChild(col);
+      
+      setTimeout(() => { col.remove(); }, duration * 1000);
+    };
+    
+    setInterval(createRainColumn, 100);
+  })();
+</script>
 </body>
 </html>
