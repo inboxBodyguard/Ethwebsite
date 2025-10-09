@@ -56,6 +56,10 @@ def do_vt_check(url):
     else:
         raise Exception(f"VirusTotal API error: {response.status_code}")
 
+
+import openai
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 # --- SendGrid Welcome Email ---
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 
