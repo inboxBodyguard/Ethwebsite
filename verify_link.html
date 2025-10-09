@@ -395,12 +395,19 @@ const MOCK_VENDORS = [
       }
     });
 
-    // Init: render mock on load (so the page shows the VT-like layout immediately)
-    document.addEventListener('DOMContentLoaded', ()=>{
-      renderResultSummary('No URL scanned');
-      renderVendorGrid(MOCK_VENDORS);
-      lastAction.textContent = 'Ready (mock)';
-    });
+    // Init: show blank state until user scans
+document.addEventListener('DOMContentLoaded', ()=>{
+  resultsDiv.innerHTML = `
+    <div class="card" role="region">
+      <div class="result-header">
+        <div class="result-title">No URL scanned yet</div>
+        <div class="muted" style="margin-top:6px">Enter a URL above and press Scan.</div>
+      </div>
+    </div>
+  `;
+  vendorArea.innerHTML = '';
+  lastAction.textContent = 'Idle';
+});
 
     // Cyber rain (visual only)
     (function initCyberRain(){
