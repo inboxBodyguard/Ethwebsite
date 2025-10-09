@@ -1050,5 +1050,49 @@
       populateLiveFeed();
     });
   </script>
+  <!-- AI Chat Widget -->
+<div id="ai-chat-container" style="position:fixed;bottom:20px;right:20px;width:300px;background:#111;padding:1rem;border-radius:12px;color:#fff;box-shadow:0 5px 15px rgba(0,0,0,0.3);">
+  <div id="ai-chat-log" style="height:200px;overflow-y:auto;margin-bottom:10px;border:1px solid #333;padding:8px;border-radius:8px;background:#000;"></div>
+  <input type="text" id="ai-chat-input" placeholder="Ask me anything..." style="width:calc(100% - 50px);padding:8px;border-radius:6px;border:none;background:#222;color:#fff;" />
+  <button id="ai-chat-send" style="width:40px;padding:8px;margin-left:5px;border:none;border-radius:6px;background:#00ffcc;color:#000;cursor:pointer;">➤</button>
+</div>
+
+<script>
+const chatLog = document.getElementById('ai-chat-log');
+const chatInput = document.getElementById('ai-chat-input');
+const chatSend = document.getElementById('ai-chat-send');
+
+function appendMessage(sender, msg) {
+  const div = document.createElement('div');
+  div.innerHTML = `<strong>${sender}:</strong> ${msg}`;
+  div.style.marginBottom = '6px';
+  chatLog.appendChild(div);
+  chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+chatSend.addEventListener('click', async () => {
+  const message = chatInput.value.trim();
+  if (!message) return;
+  appendMessage('You', message);
+  chatInput.value = '';
+  
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    });
+    const data = await res.json();
+    appendMessage('AI', data.reply || 'No response');
+  } catch (err) {
+    appendMessage('AI', 'Error connecting to AI backend.');
+    console.error(err);
+  }
+});
+
+chatInput.addEventListener('keypress', e => {
+  if (e.key === 'Enter') chatSend.click();
+});
+</script>
 </body>
 </html>
