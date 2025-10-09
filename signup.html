@@ -7,113 +7,27 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* --- Your existing CSS stays unchanged --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-        color: #e0e6ed;
-        font-family: 'Inter', sans-serif;
-        line-height: 1.6;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-    }
-    .login-container {
-        width: 100%;
-        max-width: 400px;
-        background: rgba(22, 33, 62, 0.8);
-        backdrop-filter: blur(15px);
-        border-radius: 16px;
-        padding: 2.5rem;
-        border: 1px solid rgba(0, 255, 204, 0.2);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        position: relative;
-        overflow: hidden;
-    }
-    .login-container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, #00ffcc, transparent);
-    }
+    body { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%); color: #e0e6ed; font-family: 'Inter', sans-serif; line-height: 1.6; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .login-container { width: 100%; max-width: 400px; background: rgba(22, 33, 62, 0.8); backdrop-filter: blur(15px); border-radius: 16px; padding: 2.5rem; border: 1px solid rgba(0, 255, 204, 0.2); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); position: relative; overflow: hidden; }
+    .login-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #00ffcc, transparent); }
     .brand-logo { text-align: center; margin-bottom: 2rem; }
-    .brand-logo h1 {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #00ffcc;
-        margin-bottom: 0.5rem;
-        text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
-    }
+    .brand-logo h1 { font-size: 2rem; font-weight: 700; color: #00ffcc; margin-bottom: 0.5rem; text-shadow: 0 0 10px rgba(0, 255, 204, 0.3); }
     .brand-logo p { color: #b8c6db; font-size: 0.9rem; margin: 0; }
     .form-group { margin-bottom: 1.5rem; }
     .form-label { display: block; color: #e0e6ed; font-weight: 500; margin-bottom: 0.5rem; font-size: 0.9rem; }
-    .form-control {
-        width: 100%;
-        padding: 12px 16px;
-        background: rgba(16, 21, 30, 0.8);
-        border: 1px solid rgba(0, 255, 204, 0.3);
-        border-radius: 8px;
-        color: #fff;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
-    .form-control:focus {
-        outline: none;
-        border-color: #00ffcc;
-        background: rgba(16, 21, 30, 0.9);
-        box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.1);
-    }
+    .form-control { width: 100%; padding: 12px 16px; background: rgba(16, 21, 30, 0.8); border: 1px solid rgba(0, 255, 204, 0.3); border-radius: 8px; color: #fff; font-size: 1rem; transition: all 0.3s ease; }
+    .form-control:focus { outline: none; border-color: #00ffcc; background: rgba(16, 21, 30, 0.9); box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.1); }
     .form-control::placeholder { color: #8a94a6; }
-    .btn-primary {
-        width: 100%;
-        padding: 14px;
-        background: linear-gradient(135deg, #00ffcc, #00ccaa);
-        color: #000;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-bottom: 1rem;
-    }
+    .btn-primary { width: 100%; padding: 14px; background: linear-gradient(135deg, #00ffcc, #00ccaa); color: #000; border: none; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; margin-bottom: 1rem; }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 255, 204, 0.3); }
     .btn-primary:active { transform: translateY(0); }
     .btn-primary:disabled { background: #555; cursor: not-allowed; }
-
-    .divider {
-        display: flex;
-        align-items: center;
-        margin: 1.5rem 0;
-        color: #8a94a6;
-        font-size: 0.9rem;
-    }
-    .divider::before, .divider::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: rgba(138, 148, 166, 0.3);
-    }
+    .divider { display: flex; align-items: center; margin: 1.5rem 0; color: #8a94a6; font-size: 0.9rem; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: rgba(138, 148, 166, 0.3); }
     .divider span { padding: 0 1rem; }
-    .social-btn {
-        width: 100%;
-        padding: 12px 16px;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        margin-bottom: 1rem;
-        text-decoration: none;
-    }
+    .social-btn { width: 100%; padding: 12px 16px; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 1rem; text-decoration: none; }
     .social-btn:hover { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); transform: translateY(-1px); }
     .social-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
     .social-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none;}
@@ -129,22 +43,11 @@
     .signin-link { text-align: center; color: #b8c6db; font-size: 0.9rem; margin-top: 1.5rem; }
     .signin-link a { color: #00ffcc; text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
     .signin-link a:hover { color: #00e6b8; text-decoration: underline; }
-    .error-message, .success-message {
-        padding: 12px;
-        border-radius: 8px;
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-        display: none;
-    }
+    .error-message, .success-message { padding: 12px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 1rem; display: none; }
     .error-message { background: rgba(255,59,48,0.1); border: 1px solid rgba(255,59,48,0.3); color: #ff6b6b; }
     .success-message { background: rgba(52,199,89,0.1); border: 1px solid rgba(52,199,89,0.3); color: #34c759; }
     #recaptcha-container { margin: 1rem 0; display: flex; justify-content: center; }
-    @media (max-width: 480px) {
-        body { padding: 0; }
-        .login-container { margin: 0; padding: 2rem 1.5rem; border-radius: 0; min-height: 100vh; }
-        .brand-logo h1 { font-size: 1.75rem; }
-        .back-home { top: 1.5rem; left: 1.5rem; }
-    }
+    @media (max-width: 480px) { body { padding: 0; } .login-container { margin: 0; padding: 2rem 1.5rem; border-radius: 0; min-height: 100vh; } .brand-logo h1 { font-size: 1.75rem; } .back-home { top: 1.5rem; left: 1.5rem; } }
     #rain-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
     .rain-column { position: absolute; top: -100%; font-family: 'Courier New', monospace; font-size: 14px; color: #00ffcc; text-shadow: 0 0 8px #00ffcc; white-space: nowrap; animation: fall linear infinite, flicker 1.5s infinite alternate; opacity: 0.6; }
     @keyframes fall { to { top: 110%; } }
@@ -173,9 +76,8 @@
 
     <div class="divider"><span>or</span></div>
 
-    <form id="signup-form" action="https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com" method="POST">
-      <input type="hidden" name="_next" value="home.html">
-      <input type="hidden" name="_captcha" value="false">
+    <!-- --- Integrated Email Signup --- -->
+    <form id="signup-form">
       <div class="form-group">
         <label for="email" class="form-label">Email Address</label>
         <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
@@ -240,14 +142,37 @@
 
     function onRecaptchaLoad(){ if(document.getElementById('recaptcha-container')){ recaptchaWidgetId=grecaptcha.render('recaptcha-container',{sitekey:RECAPTCHA_SITE_KEY,theme:'dark'}); } }
 
-    // --- Email Form Submission ---
+    // --- Email Form Submission to Flask Backend ---
     document.getElementById('signup-form').addEventListener('submit', function(e){
       e.preventDefault();
-      const form=this;
-      document.getElementById('verify-btn').disabled=true;
-      fetch(form.action, {method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
-        .then(()=>{ document.getElementById('verify-btn-text').innerText='Signed Up! Redirecting...'; setTimeout(()=>{window.location.href='home.html';},2000); })
-        .catch(()=>{ showError('Submission failed. Try again.'); document.getElementById('verify-btn').disabled=false; });
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('verify-btn');
+      btn.disabled = true;
+      document.getElementById('verify-btn-text').innerText = 'Signing Up...';
+
+      fetch('/api/virustotal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, password: password })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.error){
+          showError(data.error);
+          btn.disabled = false;
+          document.getElementById('verify-btn-text').innerText = 'Sign Up with Email';
+        } else {
+          showSuccess('Signed up successfully! Welcome email sent.');
+          setTimeout(()=>{ window.location.href='home.html'; }, 2000);
+        }
+      })
+      .catch(err=>{
+        console.error(err);
+        showError('Signup failed. Try again.');
+        btn.disabled = false;
+        document.getElementById('verify-btn-text').innerText = 'Sign Up with Email';
+      });
     });
 
     // --- Cyber Rain Effect ---
