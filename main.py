@@ -4,11 +4,13 @@ import time
 import requests
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 app = Flask(__name__, static_folder='.')  # Static files in same folder
 CORS(app)
 
-# Use environment variable for VirusTotal API key
+# --- VirusTotal Configuration ---
 VT_API = os.getenv("VIRUSTOTAL_API_KEY")
 HEADERS = {"x-apikey": VT_API} if VT_API else {}
 VT_BASE = "https://www.virustotal.com/api/v3"
@@ -29,12 +31,10 @@ def do_vt_check(url):
     url = normalize_url(url)
     url_id = url_id_from_url(url)
 
-    # First try GET
     response = requests.get(f"{VT_BASE}/urls/{url_id}", headers=HEADERS, timeout=15)
     if response.status_code == 200:
         return response.json().get("data", {}).get("attributes", {})
 
-    # If not found, POST and poll
     response = requests.post(f"{VT_BASE}/urls", headers=HEADERS, data={"url": url}, timeout=15)
     if response.status_code in (200, 201):
         analysis_id = response.json()["data"]["id"]
@@ -56,6 +56,27 @@ def do_vt_check(url):
     else:
         raise Exception(f"VirusTotal API error: {response.status_code}")
 
+# --- SendGrid Welcome Email ---
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+
+def send_welcome_email(to_email):
+    if not SENDGRID_API_KEY:
+        print("SendGrid API key not found.")
+        return
+    message = Mail(
+        from_email='you@yourdomain.com',  # Replace with your verified sender
+        to_emails=to_email,
+        subject='Welcome to EZM Cyber!',
+        html_content='<strong>Thanks for signing up! You are now protected by EZM Cyber.</strong>'
+    )
+    try:
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+        print("Email sent:", response.status_code)
+    except Exception as e:
+        print("SendGrid error:", e)
+
+# --- Routes ---
 @app.route('/')
 def index():
     return send_from_directory('.', 'index.html')
@@ -69,9 +90,16 @@ def check_url():
     try:
         data = request.get_json()
         url = data.get('url')
+        email = data.get('email')  # Optional: pass email to send welcome
         if not url:
             return jsonify({"error": "Missing URL parameter"}), 400
+        
         result = do_vt_check(url)
+
+        # Send welcome email if email provided
+        if email:
+            send_welcome_email(email)
+
         return jsonify(result)
     except Exception as e:
         error_msg = str(e)
