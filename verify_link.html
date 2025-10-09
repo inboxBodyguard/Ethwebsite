@@ -1,852 +1,357 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EZM Cyber — Link Checker</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EZM Cyber — Link Checker (Grid Vendor View)</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg-1:#06060a; --bg-2:#0b0710;
+      --accent:#00ffcc; --muted:#9fb6b0;
+      --clean:#16a34a; --suspicious:#f59e0b; --phish:#ef4444; --unrated:#6b7280;
+      --card:#071218; --glass:rgba(255,255,255,0.03);
+      --maxw:1200px;
+    }
+    html,body{height:100%}
+    body{
+      min-height:100vh;
+      background: linear-gradient(135deg,var(--bg-1) 0%, var(--bg-2) 100%);
+      color:#e6fff8;
+      font-family:"Orbitron", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      padding:28px;
+      overflow-x:hidden;
+      position:relative;
     }
 
-    body {
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 100%);
-      color: #e0ffe0;
-      font-family: 'Orbitron', sans-serif;
-      padding: 30px;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
-      background-size: 50px 50px;
-      animation: gridMove 20s linear infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    @keyframes gridMove {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(50px, 50px); }
+    /* subtle grid overlay */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      background-image:
+        linear-gradient(rgba(0,255,204,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,204,0.02) 1px, transparent 1px);
+      background-size:48px 48px; pointer-events:none; z-index:0;
     }
 
     /* cyber rain */
-    #cyber-rain {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
+    #cyber-rain{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+    .rain-drop{position:absolute;width:2px;height:48px;background:linear-gradient(to bottom,transparent,rgba(0,255,204,0.25));animation:fall linear infinite}
+    @keyframes fall{to{transform:translateY(110vh)}}
+
+    .wrap{max-width:var(--maxw);margin:0 auto;position:relative;z-index:1;padding:10px}
+
+    .logo{text-align:center;color:var(--accent);font-size:1.25rem;margin-bottom:6px;text-shadow:0 0 12px rgba(0,255,204,0.12)}
+    h1{font-size:2.25rem;color:var(--accent);text-align:center;margin-bottom:6px;letter-spacing:2px;text-shadow:0 0 16px rgba(0,255,204,0.08)}
+    p.lead{color:var(--muted);text-align:center;margin-bottom:20px}
+
+    /* scanner card */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+      border:1px solid rgba(0,255,204,0.08);
+      padding:20px;border-radius:12px;margin-bottom:18px;box-shadow:0 8px 40px rgba(0,255,204,0.03);
+      backdrop-filter: blur(6px);
     }
 
-    .rain-drop {
-      position: absolute;
-      width: 2px;
-      height: 50px;
-      background: linear-gradient(to bottom, transparent, rgba(0, 255, 204, 0.3));
-      animation: fall linear infinite;
+    form {display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    input[type="text"]{
+      flex:1;min-width:220px;padding:12px 14px;border-radius:8px;border:1px solid rgba(0,255,204,0.12);
+      background:linear-gradient(180deg,#071218,#08121a);color:#eafff7;font-size:14px;
     }
-
-    @keyframes fall {
-      to {
-        transform: translateY(100vh);
-      }
+    input::placeholder{color:#6c7c79}
+    button{
+      padding:12px 20px;border-radius:8px;border:none;background:linear-gradient(180deg,var(--accent),#00cc99);
+      color:#001517;font-weight:700;cursor:pointer;letter-spacing:1px;
     }
+    button[disabled]{opacity:.6;cursor:not-allowed}
 
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
+    /* summary */
+    .summary{display:flex;gap:14px;align-items:center;margin-top:14px;flex-wrap:wrap}
+    .summary .badge{padding:8px 12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);font-weight:700;color:var(--muted)}
+
+    /* vendor grid */
+    .vendor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:18px}
+    .vendor-card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+      border-radius:10px;padding:14px;border:1px solid rgba(0,255,204,0.04);min-height:84px;display:flex;flex-direction:column;justify-content:space-between;
+      transition:transform .18s ease, box-shadow .18s ease;
     }
+    .vendor-card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(0,255,204,0.06)}
+    .vendor-name{font-weight:800;color:#e9fff6;font-size:.95rem}
+    .vendor-sub{color:var(--muted);font-size:.78rem;margin-top:6px}
 
-    .logo {
-      text-align: center;
-      font-size: 1.5em;
-      color: #00ffcc;
-      text-shadow: 
-        0 0 10px #00ffcc,
-        0 0 20px #00ffcc,
-        0 0 30px #00ffcc,
-        0 0 40px #00ffcc;
-      margin-bottom: 10px;
-      animation: pulse-glow 3s ease-in-out infinite;
+    .verdict{
+      display:inline-flex;align-items:center;gap:8px;padding:6px 8px;border-radius:999px;font-weight:800;font-size:.78rem;
+      width:max-content;
     }
+    .verdict.clean{background:rgba(22,163,74,0.12);color:var(--clean);border:1px solid rgba(22,163,74,0.12)}
+    .verdict.suspicious{background:rgba(245,158,11,0.08);color:var(--suspicious);border:1px solid rgba(245,158,11,0.08)}
+    .verdict.phish{background:rgba(239,68,68,0.09);color:var(--phish);border:1px solid rgba(239,68,68,0.08)}
+    .verdict.unrated{background:rgba(107,114,128,0.06);color:var(--unrated);border:1px solid rgba(107,114,128,0.04)}
 
-    h1 { 
-      color: #00ffcc;
-      font-size: 3em;
-      font-weight: 900;
-      text-align: center;
-      margin-bottom: 20px;
-      text-shadow: 
-        0 0 10px #00ffcc,
-        0 0 20px #00ffcc,
-        0 0 30px #00ffcc,
-        0 0 40px #00ffcc;
-      animation: pulse-glow 3s ease-in-out infinite;
-      letter-spacing: 3px;
-    }
+    .meta-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px;flex-wrap:wrap}
+    .muted{color:var(--muted);font-size:.82rem}
 
-    @keyframes pulse-glow {
-      0%, 100% { 
-        text-shadow: 
-          0 0 10px #00ffcc,
-          0 0 20px #00ffcc,
-          0 0 30px #00ffcc;
-      }
-      50% { 
-        text-shadow: 
-          0 0 20px #00ffcc,
-          0 0 30px #00ffcc,
-          0 0 40px #00ffcc,
-          0 0 50px #00ffcc;
-      }
-    }
+    /* result header */
+    .result-header{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .result-title{font-weight:900;font-size:1.15rem}
+    .result-status{font-weight:900;padding:8px 12px;border-radius:8px}
 
-    h2 {
-      color: #00ffcc;
-      font-size: 2em;
-      font-weight: 700;
-      margin-bottom: 25px;
-      text-shadow: 0 0 15px #00ffcc;
-      border-bottom: 2px solid #00ffcc;
-      padding-bottom: 10px;
-      animation: slideInLeft 0.8s ease-out;
-    }
+    .status-safe{background:rgba(22,163,74,0.12);color:var(--clean);border:1px solid rgba(22,163,74,0.06)}
+    .status-susp{background:rgba(245,158,11,0.08);color:var(--suspicious);border:1px solid rgba(245,158,11,0.06)}
+    .status-bad{background:rgba(239,68,68,0.08);color:var(--phish);border:1px solid rgba(239,68,68,0.06)}
 
-    @keyframes slideInLeft {
-      from {
-        transform: translateX(-50px);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-
-    #link-checker {
-      margin-top: 40px;
-      background: rgba(17, 17, 17, 0.6);
-      padding: 40px;
-      border-radius: 15px;
-      border: 2px solid rgba(0, 255, 204, 0.3);
-      box-shadow: 
-        0 0 30px rgba(0, 255, 204, 0.2),
-        inset 0 0 30px rgba(0, 255, 204, 0.05);
-      backdrop-filter: blur(10px);
-      animation: fadeIn 1s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    form {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-    }
-
-    input[type="text"] {
-      flex: 1;
-      min-width: 250px;
-      padding: 15px 20px;
-      background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
-      border: 2px solid #00ffcc;
-      color: #fff;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 14px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(0, 255, 204, 0.1);
-    }
-
-    input[type="text"]:focus {
-      outline: none;
-      border-color: #00ffff;
-      box-shadow: 
-        0 0 25px rgba(0, 255, 204, 0.4),
-        inset 0 0 15px rgba(0, 255, 204, 0.1);
-      transform: translateY(-2px);
-    }
-
-    input[type="text"]::placeholder {
-      color: #666;
-    }
-
-    button {
-      padding: 15px 35px;
-      background: linear-gradient(135deg, #00ffcc 0%, #00ccaa 100%);
-      border: none;
-      color: #000;
-      cursor: pointer;
-      font-weight: bold;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 16px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      box-shadow: 
-        0 4px 15px rgba(0, 255, 204, 0.4),
-        0 0 20px rgba(0, 255, 204, 0.2);
-      position: relative;
-      overflow: hidden;
-    }
-
-    button::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: width 0.6s, height 0.6s;
-    }
-
-    button:hover::before {
-      width: 300px;
-      height: 300px;
-    }
-
-    button:hover { 
-      background: linear-gradient(135deg, #00ffff 0%, #00ffcc 100%);
-      box-shadow: 
-        0 6px 20px rgba(0, 255, 204, 0.6),
-        0 0 40px rgba(0, 255, 204, 0.4);
-      transform: translateY(-3px);
-    }
-
-    button:active {
-      transform: translateY(-1px);
-    }
-
-    button:disabled {
-      background: linear-gradient(135deg, #666 0%, #555 100%);
-      cursor: not-allowed;
-      opacity: 0.5;
-      box-shadow: none;
-      transform: none;
-    }
-
-    #result { 
-      margin-top: 30px;
-      font-weight: bold;
-      font-size: 1.2em;
-      min-height: 40px;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 10px;
-      border: 1px solid rgba(0, 255, 204, 0.3);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-    }
-
-    #result.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .loading { 
-      color: #00ffcc;
-      animation: pulse-text 1.5s ease-in-out infinite;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .loading::after {
-      content: '...';
-      animation: dots 1.5s steps(4, end) infinite;
-    }
-
-    @keyframes dots {
-      0%, 20% { content: '.'; }
-      40% { content: '..'; }
-      60%, 100% { content: '...'; }
-    }
-
-    @keyframes pulse-text {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
-    .safe {
-      color: #00ff88;
-      text-shadow: 0 0 15px #00ff88;
-    }
-
-    .malicious {
-      color: #ff0044;
-      text-shadow: 0 0 15px #ff0044;
-    }
-
-    .suspicious {
-      color: #ffaa00;
-      text-shadow: 0 0 15px #ffaa00;
-    }
-
-    .scan-details {
-      margin-top: 20px;
-      padding: 25px;
-      background: linear-gradient(135deg, rgba(17, 17, 17, 0.9) 0%, rgba(26, 26, 26, 0.9) 100%);
-      border-left: 5px solid #00ffcc;
-      border-radius: 10px;
-      box-shadow: 
-        0 8px 32px rgba(0, 255, 204, 0.2),
-        inset 0 0 20px rgba(0, 255, 204, 0.05);
-      animation: slideInUp 0.5s ease-out;
-    }
-
-    @keyframes slideInUp {
-      from {
-        transform: translateY(20px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .detection-ratio {
-      font-size: 1.8em;
-      font-weight: bold;
-      margin-bottom: 15px;
-      text-shadow: 0 0 10px currentColor;
-    }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .stat-item {
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 8px;
-      border: 1px solid rgba(0, 255, 204, 0.2);
-      text-align: center;
-    }
-
-    .stat-label {
-      font-size: 0.9em;
-      color: #00ffcc;
-      margin-bottom: 5px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .stat-value {
-      font-size: 1.5em;
-      font-weight: bold;
-    }
-
-    /* vendor table */
-    #vendor-section {
-      margin-top: 30px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease-out 0.2s, transform 0.5s ease-out 0.2s;
-    }
-
-    #vendor-section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    #vendor-table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow-x: auto;
-      display: block;
-      max-height: 400px;
-      overflow-y: auto;
-    }
-
-    #vendor-table th, #vendor-table td {
-      padding: 10px;
-      border: 1px solid rgba(0, 255, 204, 0.2);
-      text-align: left;
-    }
-
-    #vendor-table th {
-      background: rgba(0, 255, 204, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
-
-    #vendor-table tr {
-      transition: box-shadow 0.3s;
-    }
-
-    #vendor-table tr:hover {
-      box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-    }
-
-    .row-malicious { background-color: rgba(255, 0, 68, 0.2); }
-    .row-suspicious { background-color: rgba(255, 170, 0, 0.2); }
-    .row-harmless { background-color: rgba(0, 255, 136, 0.2); }
-    .row-undetected { background-color: rgba(136, 136, 136, 0.2); }
-
-    #vendor-accordion {
-      display: none;
-    }
-
-    .accordion-item {
-      margin-bottom: 10px;
-      border: 1px solid rgba(0, 255, 204, 0.2);
-      border-radius: 5px;
-    }
-
-    .accordion-summary {
-      padding: 10px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .accordion-details {
-      padding: 10px;
-      display: none;
-    }
-
-    .accordion-item.open .accordion-details {
-      display: block;
-    }
-
-    .category-badge {
-      padding: 5px 10px;
-      border-radius: 5px;
-      color: #000;
-      font-weight: bold;
-    }
-
-    .badge-malicious { background-color: #ff0044; }
-    .badge-suspicious { background-color: #ffaa00; }
-    .badge-harmless { background-color: #00ff88; }
-    .badge-undetected { background-color: #888; }
-
-    .copy-btn {
-      background: none;
-      border: none;
-      color: #00ffcc;
-      cursor: pointer;
-      font-size: 1em;
-      margin-left: 10px;
-      position: relative;
-    }
-
-    .copy-btn:hover {
-      color: #00ffff;
-    }
-
-    .tooltip {
-      position: absolute;
-      top: -25px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.8);
-      padding: 5px 10px;
-      border-radius: 5px;
-      color: #fff;
-      font-size: 0.8em;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .copy-btn.copied .tooltip {
-      opacity: 1;
-    }
-
-    @media (max-width: 768px) {
-      body {
-        padding: 15px;
-      }
-
-      h1 {
-        font-size: 2em;
-      }
-
-      h2 {
-        font-size: 1.5em;
-      }
-
-      #link-checker {
-        padding: 20px;
-      }
-
-      form {
-        flex-direction: column;
-      }
-
-      input[type="text"] {
-        width: 100%;
-      }
-
-      button {
-        width: 100%;
-      }
-
-      #vendor-table {
-        display: none;
-      }
-
-      #vendor-accordion {
-        display: block;
-      }
+    /* small screens */
+    @media (max-width:640px){
+      .vendor-card{min-height:90px}
+      h1{font-size:1.6rem}
     }
   </style>
 </head>
 <body>
-  <div id="cyber-rain"></div>
-  <div class="container">
+  <div id="cyber-rain" aria-hidden="true"></div>
+
+  <main class="wrap" role="main">
     <div class="logo">EZM Cyber</div>
     <h1>🔒 EZM Cyber — Link Checker</h1>
-    
-    <section id="link-checker">
-      <h2>🔍 Scan URL</h2>
-      <form id="link-form">
-        <input 
-          type="text" 
-          id="url-input" 
-          placeholder="Enter URL (e.g., example.com or https://example.com)" 
-          required 
-        />
-        <button type="submit">SCAN URL</button>
+    <p class="lead">Grid-style vendor analysis (mock data). Backend still posts to your Render API.</p>
+
+    <section class="card" aria-labelledby="scan-heading">
+      <h2 id="scan-heading" style="margin-bottom:10px">🔍 Scan URL</h2>
+
+      <form id="scan-form" aria-describedby="scan-desc">
+        <input id="url-input" type="text" placeholder="Enter URL (example.com or https://example.com)" autocomplete="off" />
+        <button id="scan-btn" type="submit">SCAN URL</button>
       </form>
-      <div id="result" aria-live="polite"></div>
+
+      <div id="scan-desc" class="summary" aria-live="polite" style="margin-top:12px">
+        <div class="badge">Mode: Mock vendor data (static)</div>
+        <div class="badge">Backend: <span style="color:var(--muted);font-weight:700;margin-left:6px">Using configured Render API</span></div>
+        <div id="last-action" class="badge" style="margin-left:auto;color:var(--muted)">Idle</div>
+      </div>
+
+      <!-- Results container -->
+      <div id="results" style="margin-top:18px"></div>
     </section>
-  </div>
+
+    <!-- vendor grid (mock template) -->
+    <section id="vendor-area" style="margin-top:14px"></section>
+  </main>
 
   <script>
+    // === Configuration ===
     const BACKEND_API = 'https://ethwebsite-3guq.onrender.com/api/virustotal';
-    const form = document.getElementById('link-form');
+    const form = document.getElementById('scan-form');
     const urlInput = document.getElementById('url-input');
-    const resultDiv = document.getElementById('result');
+    const scanBtn = document.getElementById('scan-btn');
+    const resultsDiv = document.getElementById('results');
+    const vendorArea = document.getElementById('vendor-area');
+    const lastAction = document.getElementById('last-action');
 
-    // Function to normalize and validate URL
-    function normalizeAndValidateUrl(inputUrl) {
-      // Trim and convert to lowercase for consistent processing
-      let url = inputUrl.trim();
-      
-      // Check if URL is empty
-      if (!url) {
-        return { isValid: false, error: '⚠️ Please enter a URL' };
-      }
-      
-      // Check for obvious invalid formats (no dot, contains spaces, etc.)
-      if (url.includes(' ')) {
-        return { isValid: false, error: '⚠️ URL cannot contain spaces' };
-      }
-      
-      // Check if it has at least one dot (for domain extension) or is localhost
-      if (!url.includes('.') && url !== 'localhost' && !url.startsWith('http://localhost') && !url.startsWith('https://localhost')) {
-        return { isValid: false, error: '⚠️ Please enter a valid URL with a domain (e.g., example.com)' };
-      }
-      
-      // Normalize URL - add protocol if missing
-      let normalizedUrl = url;
-      if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        normalizedUrl = 'http://' + url;
-      }
-      
-      // Basic URL validation
-      try {
-        // Try to create a URL object to validate the format
-        new URL(normalizedUrl);
-        return { isValid: true, normalizedUrl: normalizedUrl };
-      } catch (error) {
-        return { isValid: false, error: '⚠️ Please enter a valid URL format' };
-      }
+    // === Static mock vendor data (STATIC as requested) ===
+    // Use these names & fixed verdicts to mimic VirusTotal vendor grid.
+    const MOCK_VENDORS = [
+      { name: "SOCRadar", verdict: "phish", note: "Phishing" },
+      { name: "alphaMountain.ai", verdict: "phish", note: "Phishing" },
+      { name: "Forcepoint ThreatSeeker", verdict: "suspicious", note: "Suspicious" },
+      { name: "Abusix", verdict: "clean", note: "Clean" },
+      { name: "Acronis", verdict: "clean", note: "Clean" },
+      { name: "ADMINUSLabs", verdict: "clean", note: "Clean" },
+      { name: "AlienVault", verdict: "clean", note: "Clean" },
+      { name: "BitDefender", verdict: "clean", note: "Clean" },
+      { name: "Phishtank", verdict: "clean", note: "Clean" },
+      { name: "OpenPhish", verdict: "clean", note: "Clean" },
+      { name: "Dr.Web", verdict: "clean", note: "Clean" },
+      { name: "Fortinet", verdict: "clean", note: "Clean" },
+      { name: "Kaspersky", verdict: "clean", note: "Clean" },
+      { name: "Google Safebrowsing", verdict: "clean", note: "Clean" },
+      { name: "Webroot", verdict: "clean", note: "Clean" },
+      { name: "Yandex Safebrowsing", verdict: "clean", note: "Clean" },
+      { name: "ZeroCERT", verdict: "clean", note: "Clean" },
+      { name: "EmergingThreats", verdict: "unrated", note: "Unrated" },
+      { name: "AlphaSOC", verdict: "unrated", note: "Unrated" },
+      { name: "Netcraft", verdict: "unrated", note: "Unrated" }
+    ];
+
+    // Utility: map verdict to CSS class & label
+    function verdictClass(v) {
+      if (!v) return 'unrated';
+      if (v === 'clean') return 'clean';
+      if (v === 'suspicious') return 'suspicious';
+      if (v === 'phish' || v === 'malicious') return 'phish';
+      return 'unrated';
+    }
+    function verdictLabel(v) {
+      if (!v) return 'Unrated';
+      if (v === 'clean') return 'Clean';
+      if (v === 'suspicious') return 'Suspicious';
+      if (v === 'phish' || v === 'malicious') return 'Phishing';
+      return 'Unrated';
     }
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const url = urlInput.value.trim();
-      
-      // Validate and normalize the URL
-      const validationResult = normalizeAndValidateUrl(url);
-      if (!validationResult.isValid) {
-        resultDiv.innerHTML = `<span class="malicious">${validationResult.error}</span>`;
-        return;
-      }
-
-      const normalizedUrl = validationResult.normalizedUrl;
-      
-      resultDiv.innerHTML = '<div class="loading">🔄 Scanning URL</div>';
-      const submitButton = form.querySelector('button');
-      submitButton.disabled = true;
-
-      try {
-        const response = await fetch(BACKEND_API, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ url: normalizedUrl })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.error || `HTTP error! status: ${response.status}`);
-        }
-
-        displayResults(normalizedUrl, data);
-
-      } catch (error) {
-        console.error('Error:', error);
-        resultDiv.innerHTML = `<span class="malicious">❌ Error: ${error.message}</span>`;
-      } finally {
-        submitButton.disabled = false;
-      }
-    });
-
-    function displayResults(url, data) {
-      const stats = data.last_analysis_stats || {};
-      const malicious = stats.malicious || 0;
-      const suspicious = stats.suspicious || 0;
-      const harmless = stats.harmless || 0;
-      const undetected = stats.undetected || 0;
-      
-      const totalEngines = malicious + suspicious + harmless + undetected;
-      const threatCount = malicious + suspicious;
-
-      let statusClass = 'safe';
-      let statusIcon = '✅';
-      let statusText = 'SAFE';
-
-      if (malicious > 0) {
-        statusClass = 'malicious';
-        statusIcon = '🚨';
-        statusText = 'MALICIOUS';
-      } else if (suspicious > 0) {
-        statusClass = 'suspicious';
-        statusIcon = '⚠️';
-        statusText = 'SUSPICIOUS';
-      }
-
-      let summaryHtml = `
-        <div class="${statusClass}">
-          <div style="font-size: 2em; margin-bottom: 10px;">${statusIcon} ${statusText}</div>
-          <div style="font-size: 1em; color: #00ffcc; margin-bottom: 10px; display: flex; align-items: center;">
-            URL: <span style="color: #e0ffe0; word-break: break-all; margin-left: 5px;">${escapeHtml(url)}</span>
-            <button class="copy-btn" onclick="copyUrl('${escapeHtml(url)}')" aria-label="Copy URL">📋<span class="tooltip">Copied!</span></button>
+    // Render vendors as a responsive grid of cards (static)
+    function renderVendorGrid(vendorList) {
+      const gridHtml = `
+        <div class="card" aria-hidden="true">
+          <div class="result-header" style="margin-bottom:10px">
+            <div>
+              <div class="result-title">Security Vendors — Analysis (static mock)</div>
+              <div class="muted" style="margin-top:6px">This is a static preview of vendor verdicts (mock)</div>
+            </div>
+            <div id="top-status" class="result-status status-safe">Mock Ready</div>
           </div>
-        </div>
-        <div class="scan-details">
-          <div class="detection-ratio ${statusClass}">
-            Detection Ratio: ${threatCount}/${totalEngines}
-          </div>
-          <div class="stat-grid">
-            <div class="stat-item">
-              <div class="stat-label">Malicious</div>
-              <div class="stat-value" style="color: #ff0044;">${malicious}</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-label">Suspicious</div>
-              <div class="stat-value" style="color: #ffaa00;">${suspicious}</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-label">Harmless</div>
-              <div class="stat-value" style="color: #00ff88;">${harmless}</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-label">Undetected</div>
-              <div class="stat-value" style="color: #888;">${undetected}</div>
-            </div>
+
+          <div class="vendor-grid" role="list" aria-label="Vendor verdicts">
+            ${vendorList.map(v => `
+              <div class="vendor-card" role="listitem" aria-label="${v.name} — ${verdictLabel(v.verdict)}">
+                <div>
+                  <div class="vendor-name">${escapeHtml(v.name)}</div>
+                  <div class="vendor-sub">${escapeHtml(v.note || '')}</div>
+                </div>
+                <div class="meta-row">
+                  <div class="muted">Engine</div>
+                  <div class="verdict ${verdictClass(v.verdict)}">${verdictLabel(v.verdict)}</div>
+                </div>
+              </div>
+            `).join('')}
           </div>
         </div>
       `;
+      vendorArea.innerHTML = gridHtml;
+    }
 
-      let vendorHtml = '';
-      if (!data.last_analysis_results) {
-        vendorHtml = `<div id="vendor-section"><p>Vendor details unavailable.</p></div>`;
-      } else {
-        const vendors = Object.entries(data.last_analysis_results);
-        let tableRows = '';
-        let accordionItems = '';
-        const limit = 200;
-        const initialVendors = vendors.slice(0, limit);
-        const remainingVendors = vendors.slice(limit);
+    // Basic escaping
+    function escapeHtml(s){ return String(s || '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;'); }
 
-        initialVendors.forEach(([vendor, info]) => {
-          const category = info.category || 'undetected';
-          const engineVersion = info.engine_version || 'N/A';
-          const resultDetail = `${info.result || category} (${info.method || 'N/A'})`;
-          const rowClass = `row-${category}`;
-          const badgeClass = `badge-${category}`;
+    // Show quick result summary above grid (mirrors VirusTotal top summary)
+    function renderResultSummary(url, dataStats) {
+      // dataStats is optional; when backend returns real stats we will use it.
+      const stats = dataStats || { malicious:0, suspicious:0, harmless:0, undetected:0 };
+      const threatCount = (stats.malicious || 0) + (stats.suspicious || 0);
+      const total = (stats.malicious || 0) + (stats.suspicious || 0) + (stats.harmless || 0) + (stats.undetected || 0) || MOCK_VENDORS.length;
 
-          tableRows += `
-            <tr class="${rowClass}">
-              <td>${escapeHtml(vendor)}</td>
-              <td>${escapeHtml(category)}</td>
-              <td>${escapeHtml(engineVersion)}</td>
-              <td>${escapeHtml(resultDetail)}</td>
-            </tr>
-          `;
+      const status = stats.malicious > 0 ? 'bad' : (stats.suspicious > 0 ? 'susp' : 'safe');
+      const statusClass = status === 'bad' ? 'status-bad' : (status === 'susp' ? 'status-susp' : 'status-safe');
+      const statusText = status === 'bad' ? 'MALICIOUS' : (status === 'susp' ? 'SUSPICIOUS' : 'CLEAN');
 
-          accordionItems += `
-            <div class="accordion-item">
-              <div class="accordion-summary" onclick="toggleAccordion(this)" tabindex="0" role="button" aria-expanded="false">
-                <span>${escapeHtml(vendor)}</span>
-                <span class="category-badge ${badgeClass}">${escapeHtml(category)}</span>
-              </div>
-              <div class="accordion-details">
-                <p>Engine Version: ${escapeHtml(engineVersion)}</p>
-                <p>Result Detail: ${escapeHtml(resultDetail)}</p>
-              </div>
+      resultsDiv.innerHTML = `
+        <div class="card" role="region" aria-live="polite" aria-atomic="true">
+          <div class="result-header">
+            <div style="min-width:0">
+              <div class="result-title">Result: <span style="font-weight:800">${escapeHtml(url)}</span></div>
+              <div class="muted" style="margin-top:6px">Detection ratio: <strong>${threatCount}/${total}</strong></div>
             </div>
-          `;
+            <div class="result-status ${statusClass}">${statusText}</div>
+          </div>
+          <div style="margin-top:14px; color:var(--muted)">Below is a grid of vendor verdicts (static mock). If your backend returns live results they will replace mock data when available.</div>
+        </div>
+      `;
+    }
+
+    // Main: show mock immediately, then optionally fetch backend and replace if live results arrive
+    async function runScan(url) {
+      lastAction.textContent = 'Scanning (mock)...';
+      renderResultSummary(url);                // summary using mock counts (0)
+      renderVendorGrid(MOCK_VENDORS);         // static grid immediate
+
+      // attempt call to backend (non-blocking). If success and structure matches, update grid + summary
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(()=>controller.abort(), 16000); // 16s timeout
+
+        const resp = await fetch(BACKEND_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url }),
+          signal: controller.signal
         });
 
-        let moreButton = '';
-        if (remainingVendors.length > 0) {
-          moreButton = `<button onclick="showMoreVendors(${JSON.stringify(remainingVendors)})" style="margin-top: 10px;">Show More</button>`;
+        clearTimeout(timeout);
+
+        if (!resp.ok) {
+          // show non-fatal message but keep mock
+          lastAction.textContent = `Backend returned ${resp.status} — mock shown`;
+          return;
         }
 
-        vendorHtml = `
-          <div id="vendor-section">
-            <h3 style="color: #00ffcc; margin-bottom: 10px;">Vendor Details</h3>
-            <div id="vendor-table-wrapper" style="overflow-x: auto;">
-              <table id="vendor-table" aria-label="Vendor Analysis Results">
-                <thead>
-                  <tr>
-                    <th>Vendor</th>
-                    <th>Category</th>
-                    <th>Engine Version</th>
-                    <th>Result Detail</th>
-                  </tr>
-                </thead>
-                <tbody id="vendor-table-body">
-                  ${tableRows}
-                </tbody>
-              </table>
-            </div>
-            <div id="vendor-accordion">
-              ${accordionItems}
-            </div>
-            <div id="more-vendors">${moreButton}</div>
-          </div>
-        `;
-      }
-
-      resultDiv.innerHTML = summaryHtml + vendorHtml;
-      requestAnimationFrame(() => {
-        resultDiv.classList.add('visible');
-        const vendorSection = document.getElementById('vendor-section');
-        if (vendorSection) vendorSection.classList.add('visible');
-      });
-    }
-
-    function showMoreVendors(remaining) {
-      const tableBody = document.getElementById('vendor-table-body');
-      const accordion = document.getElementById('vendor-accordion');
-      const moreDiv = document.getElementById('more-vendors');
-
-      remaining.forEach(([vendor, info]) => {
-        const category = info.category || 'undetected';
-        const engineVersion = info.engine_version || 'N/A';
-        const resultDetail = `${info.result || category} (${info.method || 'N/A'})`;
-        const rowClass = `row-${category}`;
-        const badgeClass = `badge-${category}`;
-
-        if (tableBody) {
-          tableBody.innerHTML += `
-            <tr class="${rowClass}">
-              <td>${escapeHtml(vendor)}</td>
-              <td>${escapeHtml(category)}</td>
-              <td>${escapeHtml(engineVersion)}</td>
-              <td>${escapeHtml(resultDetail)}</td>
-            </tr>
-          `;
+        const json = await resp.json().catch(()=>null);
+        if (!json || !json.last_analysis_results) {
+          lastAction.textContent = 'Backend returned no vendor data — mock shown';
+          return;
         }
 
-        if (accordion) {
-          accordion.innerHTML += `
-            <div class="accordion-item">
-              <div class="accordion-summary" onclick="toggleAccordion(this)" tabindex="0" role="button" aria-expanded="false">
-                <span>${escapeHtml(vendor)}</span>
-                <span class="category-badge ${badgeClass}">${escapeHtml(category)}</span>
-              </div>
-              <div class="accordion-details">
-                <p>Engine Version: ${escapeHtml(engineVersion)}</p>
-                <p>Result Detail: ${escapeHtml(resultDetail)}</p>
-              </div>
-            </div>
-          `;
-        }
-      });
+        // convert backend vendor structure to array of {name, verdict, note}
+        const backendVendors = Object.entries(json.last_analysis_results).map(([name, info])=>{
+          // map VT-like categories to our verdict tags
+          const cat = (info && info.category) ? info.category.toLowerCase() : 'undetected';
+          let v = 'unrated';
+          if (cat === 'malicious' || cat === 'phishing') v = 'phish';
+          else if (cat === 'suspicious') v = 'suspicious';
+          else if (cat === 'harmless' || cat === 'clean') v = 'clean';
+          else v = 'unrated';
+          const note = info && (info.result || info.method || info.engine_version) ? `${info.result || ''} ${info.method || ''}`.trim() : '';
+          return { name, verdict: v, note };
+        });
 
-      moreDiv.innerHTML = '';
-    }
+        // compute stats
+        const stats = { malicious:0, suspicious:0, harmless:0, undetected:0 };
+        backendVendors.forEach(v=>{
+          if (v.verdict === 'phish') stats.malicious++;
+          else if (v.verdict === 'suspicious') stats.suspicious++;
+          else if (v.verdict === 'clean') stats.harmless++;
+          else stats.undetected++;
+        });
 
-    function toggleAccordion(summary) {
-      const item = summary.parentElement;
-      item.classList.toggle('open');
-      const expanded = item.classList.contains('open');
-      summary.setAttribute('aria-expanded', expanded);
-    }
-
-    function copyUrl(url) {
-      navigator.clipboard.writeText(url);
-      const btn = event.target;
-      btn.classList.add('copied');
-      setTimeout(() => btn.classList.remove('copied'), 2000);
-    }
-
-    function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
-
-    // cyber rain init
-    function initCyberRain() {
-      const rainDiv = document.getElementById('cyber-rain');
-      const numDrops = 30;
-      for (let i = 0; i < numDrops; i++) {
-        const drop = document.createElement('div');
-        drop.classList.add('rain-drop');
-        drop.style.left = `${Math.random() * 100}%`;
-        drop.style.animationDuration = `${Math.random() * 5 + 5}s`;
-        drop.style.animationDelay = `${Math.random() * 5}s`;
-        drop.style.opacity = Math.random() * 0.5 + 0.1;
-        rainDiv.appendChild(drop);
+        // update UI
+        renderResultSummary(url, stats);
+        renderVendorGrid(backendVendors);
+        lastAction.textContent = 'Live backend results displayed';
+      } catch (err) {
+        // network or timeout: keep mock visible
+        if (err.name === 'AbortError') lastAction.textContent = 'Backend timed out — mock shown';
+        else lastAction.textContent = 'Backend error — mock shown';
+        console.debug('Backend fetch error', err);
       }
     }
 
-    initCyberRain();
+    // Form handling
+    form.addEventListener('submit', (ev)=>{
+      ev.preventDefault();
+      const raw = (urlInput.value || '').trim();
+      if (!raw) { lastAction.textContent = 'Enter a URL'; return; }
+      let normalized = raw;
+      if (!/^https?:\/\//i.test(raw)) normalized = 'http://' + raw;
+      try {
+        const parsed = new URL(normalized);
+        scanBtn.disabled = true;
+        runScan(parsed.href).finally(()=>{ scanBtn.disabled = false });
+      } catch (err) {
+        lastAction.textContent = 'Invalid URL';
+      }
+    });
+
+    // Init: render mock on load (so the page shows the VT-like layout immediately)
+    document.addEventListener('DOMContentLoaded', ()=>{
+      renderResultSummary('No URL scanned');
+      renderVendorGrid(MOCK_VENDORS);
+      lastAction.textContent = 'Ready (mock)';
+    });
+
+    // Cyber rain (visual only)
+    (function initCyberRain(){
+      const container = document.getElementById('cyber-rain');
+      const drops = 28;
+      for (let i=0;i<drops;i++){
+        const d = document.createElement('div');
+        d.className = 'rain-drop';
+        d.style.left = Math.random()*100 + '%';
+        d.style.opacity = (Math.random()*0.6 + 0.15).toFixed(2);
+        d.style.animationDuration = (Math.random()*6 + 5).toFixed(2) + 's';
+        d.style.animationDelay = (Math.random()*5).toFixed(2) + 's';
+        container.appendChild(d);
+      }
+    })();
   </script>
 </body>
 </html>
