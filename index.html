@@ -1050,5 +1050,120 @@
       populateLiveFeed();
     });
 </script>
+<!-- AI Chat Widget -->
+<div id="ai-chat-widget">
+  <div id="ai-chat-container" class="ai-chat-hidden">
+    <div class="ai-chat-header">
+      <span>AI Assistant</span>
+      <button id="ai-chat-close" class="ai-chat-close-btn">&times;</button>
+    </div>
+    <div id="ai-chat-log" class="ai-chat-log"></div>
+    <div class="ai-chat-input-area">
+      <input type="text" id="ai-chat-input" placeholder="Ask me anything..." autocomplete="off" />
+      <button id="ai-chat-send">➤</button>
+    </div>
+  </div>
+  <button id="ai-chat-toggle">💬</button>
+</div>
+
+<style>
+  #ai-chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: sans-serif; }
+  #ai-chat-container { width: 320px; max-width: calc(100vw - 40px); background: #111; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); display: flex; flex-direction: column; overflow: hidden; transition: 0.3s; }
+  #ai-chat-container.ai-chat-hidden { opacity: 0; transform: scale(0.8); pointer-events: none; }
+  .ai-chat-header { background: #1a1a1a; padding: 10px 14px; display: flex; justify-content: space-between; color: #fff; font-weight: 600; border-bottom: 1px solid #333; }
+  .ai-chat-close-btn { background: none; border: none; color: #888; font-size: 22px; cursor: pointer; }
+  .ai-chat-close-btn:hover { color: #fff; }
+  .ai-chat-log { height: 280px; overflow-y: auto; padding: 12px; background: #000; scroll-behavior: smooth; }
+  .ai-chat-message { margin-bottom: 10px; padding: 8px 10px; border-radius: 8px; max-width: 85%; word-wrap: break-word; }
+  .ai-chat-message.user { background: #00ffcc; color: #000; margin-left: auto; text-align: right; }
+  .ai-chat-message.ai { background: #222; color: #fff; border: 1px solid #333; }
+  .ai-chat-message.error { background: #ff4444; color: #fff; }
+  .ai-chat-input-area { display: flex; padding: 10px; gap: 6px; background: #1a1a1a; border-top: 1px solid #333; }
+  #ai-chat-input { flex: 1; padding: 8px 10px; border-radius: 6px; border: 1px solid #333; background: #222; color: #fff; outline: none; }
+  #ai-chat-input::placeholder { color: #666; }
+  #ai-chat-send { width: 40px; border: none; border-radius: 6px; background: #00ffcc; color: #000; cursor: pointer; }
+  #ai-chat-send:hover { background: #00e6b8; }
+  #ai-chat-toggle { width: 56px; height: 56px; border-radius: 50%; border: none; background: #00ffcc; color: #000; font-size: 26px; cursor: pointer; }
+  #ai-chat-toggle:hover { transform: scale(1.1); }
+  .ai-typing { font-style: italic; color: #888; margin-bottom: 8px; }
+</style>
+
+<script>
+(function() {
+  const API_ENDPOINT = 'https://ethwebsite-1-2z41.onrender.com/api/chat';
+  const container = document.getElementById('ai-chat-container');
+  const chatLog = document.getElementById('ai-chat-log');
+  const input = document.getElementById('ai-chat-input');
+  const sendBtn = document.getElementById('ai-chat-send');
+  const toggleBtn = document.getElementById('ai-chat-toggle');
+  const closeBtn = document.getElementById('ai-chat-close');
+
+  let isOpen = false;
+
+  function addMessage(text, type='ai') {
+    const div = document.createElement('div');
+    div.className = `ai-chat-message ${type}`;
+    div.textContent = text;
+    chatLog.appendChild(div);
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  function showTyping() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'ai-typing';
+    typingDiv.id = 'ai-typing';
+    typingDiv.textContent = 'AI is typing...';
+    chatLog.appendChild(typingDiv);
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  function removeTyping() {
+    const t = document.getElementById('ai-typing');
+    if (t) t.remove();
+  }
+
+  async function sendMessage() {
+    const message = input.value.trim();
+    if (!message) return;
+
+    addMessage(message, 'user');
+    input.value = '';
+    sendBtn.disabled = true;
+    showTyping();
+
+    try {
+      const res = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ message })
+      });
+      const data = await res.json();
+      removeTyping();
+      addMessage(data.reply || 'No response from AI', 'ai');
+    } catch (err) {
+      removeTyping();
+      addMessage(`Error: ${err.message}`, 'error');
+      console.error(err);
+    } finally {
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  }
+
+  function toggleChat() {
+    isOpen = !isOpen;
+    container.classList.toggle('ai-chat-hidden');
+    toggleBtn.classList.toggle('ai-chat-hidden');
+    if (isOpen) input.focus();
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+  input.addEventListener('keypress', e => { if(e.key==='Enter') sendMessage(); });
+  toggleBtn.addEventListener('click', toggleChat);
+  closeBtn.addEventListener('click', toggleChat);
+
+  addMessage("Hi! I'm your AI assistant. How can I help you today?", 'ai');
+})();
+</script>
 </body>
 </html>
