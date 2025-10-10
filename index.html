@@ -1050,7 +1050,7 @@
       populateLiveFeed();
     });
 </script>
-<!-- AI Chat Widget - Paste Anywhere -->
+<!-- AI Chat Widget - Full Version -->
 <div id="ai-chat-widget">
   <div id="ai-chat-container" class="ai-chat-hidden">
     <div class="ai-chat-header">
@@ -1109,7 +1109,6 @@
     div.className=`ai-chat-message ${type}`;
     div.innerHTML=marked.parse(text);
 
-    // Add feedback buttons only for AI messages
     if(type==='ai'){
       const upBtn=document.createElement('button');
       upBtn.className='feedback-btn';
@@ -1158,7 +1157,10 @@
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({message})
       });
-      const data=await res.json(); removeTyping();
+      console.log('Raw backend response:', res);
+      const data=await res.json();
+      console.log('Parsed backend JSON:', data);
+      removeTyping();
       addMessage(data.reply||'No response from AI','ai');
     }catch(err){
       removeTyping(); addMessage(`Error: ${err.message}`,'error'); console.error(err);
