@@ -10,7 +10,7 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-# Single VirusTotal API key
+
 VIRUSTOTAL_KEY = os.getenv("VIRUSTOTAL_API_KEY_1")
 
 @app.route("/api/check-link", methods=["POST"])
