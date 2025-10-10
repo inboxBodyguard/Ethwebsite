@@ -1,1187 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EZMCyber | Secure. Protect. Respond.</title>
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Bootstrap 5 CSS CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  
-  <style>
-    :root {
-      --neon-cyan: #00ffcc;
-      --neon-blue: #00d4ff;
-      --dark-bg: #0a0a0a;
-      --darker-bg: #050505;
-      --card-bg: rgba(22, 33, 62, 0.6);
-      --text-primary: #e0e6ed;
-      --text-secondary: #b8c6db;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-      color: var(--text-primary);
-      font-family: 'Inter', 'Segoe UI', sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Cyber Rain Background */
-    #rain-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .rain-column {
-      position: absolute;
-      top: -100%;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      color: var(--neon-cyan);
-      text-shadow: 0 0 8px var(--neon-cyan);
-      white-space: nowrap;
-      animation: fall linear infinite;
-      opacity: 0.6;
-    }
-
-    @keyframes fall {
-      to {
-        top: 110%;
-      }
-    }
-
-    /* Navigation */
-    .navbar {
-      background: rgba(10, 10, 10, 0.95) !important;
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid rgba(0, 255, 204, 0.1);
-      transition: all 0.3s ease;
-      z-index: 1000;
-    }
-
-    .navbar.scrolled {
-      background: rgba(10, 10, 10, 0.98) !important;
-      box-shadow: 0 4px 20px rgba(0, 255, 204, 0.1);
-    }
-
-    .navbar-brand {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: var(--neon-cyan) !important;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      transition: all 0.3s ease;
-      text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
-    }
-
-    .navbar-brand:hover {
-      text-shadow: 0 0 30px var(--neon-cyan), 0 0 50px var(--neon-cyan);
-      transform: scale(1.05);
-    }
-
-    /* Sidebar Styles */
-    .offcanvas {
-      background: rgba(10, 10, 10, 0.95);
-      backdrop-filter: blur(15px);
-      color: var(--text-primary);
-    }
-
-    .accordion-button {
-      background: transparent;
-      color: var(--text-primary);
-      border: none;
-      transition: all 0.3s ease;
-    }
-
-    .accordion-button:hover {
-      color: var(--neon-cyan);
-      background: rgba(0, 255, 204, 0.05);
-    }
-
-    .accordion-button:not(.collapsed) {
-      color: var(--neon-cyan);
-      background: rgba(0, 255, 204, 0.1);
-    }
-
-    .accordion-body a {
-      display: block;
-      color: var(--text-secondary);
-      text-decoration: none;
-      padding: 0.5rem 1rem;
-      transition: all 0.3s ease;
-    }
-
-    .accordion-body a:hover {
-      color: var(--neon-cyan);
-      background: rgba(0, 255, 204, 0.05);
-    }
-
-    /* Hero Section */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background:
-        radial-gradient(circle at 20% 80%, rgba(0, 255, 204, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .hero-content {
-      max-width: 900px;
-      z-index: 2;
-      position: relative;
-    }
-
-    .brand-tagline {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(2rem, 6vw, 5rem);
-      font-weight: 900;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #fff 0%, var(--neon-cyan) 50%, var(--neon-blue) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      line-height: 1.2;
-      opacity: 0;
-      animation: fadeInUp 1s ease forwards 0.2s, flicker 1.5s infinite alternate;
-    }
-
-    @keyframes flicker {
-      0%, 18%, 22%, 25%, 53%, 57%, 100% {
-        text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px var(--neon-cyan), 0 0 80px var(--neon-cyan), 0 0 90px var(--neon-cyan), 0 0 100px var(--neon-cyan), 0 0 150px var(--neon-cyan);
-      }
-      20%, 24%, 55% {
-        text-shadow: none;
-      }
-    }
-
-    .greeting {
-      font-size: 1.3rem;
-      color: var(--neon-cyan);
-      margin-bottom: 1.5rem;
-      font-weight: 600;
-      opacity: 0;
-      animation: fadeInUp 1s ease forwards 0.4s;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      color: #fff;
-      opacity: 0;
-      animation: fadeInUp 1s ease forwards 0.6s;
-    }
-
-    .hero-subtitle {
-      font-size: 1.4rem;
-      color: var(--text-secondary);
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeInUp 1s ease forwards 0.8s;
-      line-height: 1.8;
-    }
-
-    .tagline {
-      font-size: 1.1rem;
-      color: #8a94a6;
-      margin-bottom: 3rem;
-      font-style: italic;
-      opacity: 0;
-      animation: fadeInUp 1s ease forwards 1s;
-    }
-
-    /* CTA Buttons */
-    .cta-buttons {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeInUp 1s ease forwards 1.2s;
-    }
-
-    .btn-custom {
-      padding: 16px 40px;
-      background: linear-gradient(135deg, var(--neon-cyan), #00ccaa);
-      color: #000;
-      border: none;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 1.1rem;
-      border-radius: 50px;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 255, 204, 0.4);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .btn-custom::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      transition: left 0.6s ease;
-    }
-
-    .btn-custom:hover::before {
-      left: 100%;
-    }
-
-    .btn-custom:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 8px 30px rgba(0, 255, 204, 0.6);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% {
-        box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.7);
-      }
-      70% {
-        box-shadow: 0 0 0 10px rgba(0, 255, 204, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(0, 255, 204, 0);
-      }
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--neon-cyan);
-      border: 2px solid var(--neon-cyan);
-      box-shadow: 0 4px 15px rgba(0, 255, 204, 0.2);
-    }
-
-    .btn-secondary:hover {
-      background: var(--neon-cyan);
-      color: #000;
-      border-color: var(--neon-cyan);
-    }
-
-    /* Sections */
-    .section {
-      padding: 6rem 0;
-      background: rgba(16, 21, 30, 0.8);
-      position: relative;
-      z-index: 1;
-    }
-
-    .section-dark {
-      background: rgba(10, 10, 10, 0.9);
-    }
-
-    .section-title {
-      text-align: center;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.8rem;
-      margin-bottom: 3rem;
-      color: #fff;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      position: relative;
-      display: inline-block;
-      width: 100%;
-    }
-
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
-    }
-
-    .section-title.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Feature Cards */
-    .feature-card {
-      background: var(--card-bg);
-      padding: 2.5rem;
-      border-radius: 16px;
-      border: 1px solid rgba(0, 255, 204, 0.2);
-      text-align: center;
-      transition: all 0.4s ease;
-      opacity: 0;
-      transform: translateY(30px);
-      height: 100%;
-      backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.1), transparent);
-      transition: left 0.6s ease;
-    }
-
-    .feature-card:hover::before {
-      left: 100%;
-    }
-
-    .feature-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .feature-card:hover {
-      transform: translateY(-10px);
-      border-color: var(--neon-cyan);
-      box-shadow: 0 15px 40px rgba(0, 255, 204, 0.3);
-      background: rgba(22, 33, 62, 0.8);
-    }
-
-    .feature-icon {
-      font-size: 3.5rem;
-      margin-bottom: 1.5rem;
-      filter: drop-shadow(0 0 10px var(--neon-cyan));
-      transition: all 0.3s ease;
-    }
-
-    .feature-card:hover .feature-icon {
-      transform: scale(1.2) rotateY(360deg);
-      filter: drop-shadow(0 0 20px var(--neon-cyan));
-    }
-
-    .feature-card h3 {
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-      color: #fff;
-      font-weight: 700;
-    }
-
-    .feature-card p {
-      color: var(--text-secondary);
-      line-height: 1.8;
-    }
-
-    /* Testimonials */
-    .testimonial {
-      background: rgba(22, 33, 62, 0.4);
-      padding: 2.5rem;
-      border-radius: 16px;
-      border-left: 4px solid var(--neon-cyan);
-      transition: all 0.4s ease;
-      opacity: 0;
-      transform: translateX(-30px);
-      height: 100%;
-      backdrop-filter: blur(10px);
-      position: relative;
-    }
-
-    .testimonial::before {
-      content: '"';
-      position: absolute;
-      top: 10px;
-      left: 20px;
-      font-size: 4rem;
-      color: var(--neon-cyan);
-      opacity: 0.2;
-      font-family: Georgia, serif;
-    }
-
-    .testimonial.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .testimonial:hover {
-      transform: translateX(10px);
-      background: rgba(22, 33, 62, 0.6);
-      box-shadow: -5px 0 20px rgba(0, 255, 204, 0.2);
-    }
-
-    .testimonial-text {
-      font-style: italic;
-      color: var(--text-primary);
-      margin-bottom: 1.5rem;
-      font-size: 1.1rem;
-      line-height: 1.8;
-    }
-
-    .testimonial-author {
-      color: var(--neon-cyan);
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    /* About Section */
-    .about p {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: 1.15rem;
-      line-height: 1.9;
-    }
-
-    /* Modal Styles */
-    .modal-content {
-      background: var(--card-bg);
-      color: var(--text-primary);
-      border: 1px solid var(--neon-cyan);
-    }
-
-    .modal-header {
-      border-bottom: 1px solid rgba(0, 255, 204, 0.2);
-    }
-
-    .modal-footer {
-      border-top: 1px solid rgba(0, 255, 204, 0.2);
-    }
-
-    .form-control {
-      background: rgba(10, 10, 10, 0.8);
-      border: 1px solid var(--neon-cyan);
-      color: var(--text-primary);
-    }
-
-    .form-control:focus {
-      box-shadow: 0 0 10px var(--neon-cyan);
-    }
-
-    /* Footer */
-    footer {
-      padding: 3rem 0;
-      background: var(--darker-bg);
-      text-align: center;
-      border-top: 1px solid rgba(0, 255, 204, 0.2);
-      position: relative;
-      z-index: 1;
-    }
-
-    .footer-links {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      gap: 2.5rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: var(--text-primary);
-      text-decoration: none;
-      transition: all 0.3s ease;
-      font-weight: 500;
-      position: relative;
-    }
-
-    .footer-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--neon-cyan);
-      transition: width 0.3s ease;
-    }
-
-    .footer-links a:hover {
-      color: var(--neon-cyan);
-    }
-
-    .footer-links a:hover::after {
-      width: 100%;
-    }
-
-    /* Animations */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .brand-tagline {
-        font-size: 2.5rem;
-      }
-
-      .hero h1 {
-        font-size: 1.8rem;
-      }
-
-      .hero-subtitle {
-        font-size: 1.1rem;
-      }
-
-      .cta-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .btn-custom {
-        width: 100%;
-        max-width: 300px;
-      }
-
-      .section-title {
-        font-size: 2rem;
-      }
-
-      .footer-links {
-        flex-direction: column;
-        gap: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .brand-tagline {
-        font-size: 1.8rem;
-        letter-spacing: 1px;
-      }
-
-      .navbar-brand {
-        font-size: 1.4rem;
-      }
-
-      .btn-custom {
-        padding: 14px 28px;
-        font-size: 1rem;
-      }
-    }
-
-    /* Navbar toggler custom color */
-    .navbar-toggler {
-      border-color: var(--neon-cyan);
-    }
-
-    .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 255, 204, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-    }
-  </style>
-</head>
-<body>
-  <!-- Cyber Rain Effect Container -->
-  <div id="rain-container"></div>
-
-  <!-- Sidebar -->
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="sidebarLabel">
-        <a class="navbar-brand" href="#">EZMCyber</a>
-      </h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div class="accordion" id="sidebarAccordion">
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#homeMenu" aria-expanded="false" aria-controls="homeMenu">
-              Home
-            </button>
-          </h2>
-          <div id="homeMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
-            <div class="accordion-body">
-              <a href="#home" data-bs-dismiss="offcanvas">Top</a>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#servicesMenu" aria-expanded="false" aria-controls="servicesMenu">
-              Services
-            </button>
-          </h2>
-          <div id="servicesMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
-            <div class="accordion-body">
-              <!-- changed to point to services.html -->
-              <a href="services.html" data-bs-dismiss="offcanvas">All Services</a>
-              <a href="services.html#protection" data-bs-dismiss="offcanvas">Protection</a>
-              <a href="services.html#detection" data-bs-dismiss="offcanvas">Detection</a>
-              <a href="services.html#reports" data-bs-dismiss="offcanvas">Reports</a>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#aboutMenu" aria-expanded="false" aria-controls="aboutMenu">
-              About
-            </button>
-          </h2>
-          <div id="aboutMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
-            <div class="accordion-body">
-              <!-- changed to point to about.html -->
-              <a href="about.html" data-bs-dismiss="offcanvas">Our Story</a>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#testimonialsMenu" aria-expanded="false" aria-controls="testimonialsMenu">
-              Testimonials
-            </button>
-          </h2>
-          <div id="testimonialsMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
-            <div class="accordion-body">
-              <a href="#testimonials" data-bs-dismiss="offcanvas">Client Reviews</a>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#contactMenu" aria-expanded="false" aria-controls="contactMenu">
-              Contact
-            </button>
-          </h2>
-          <div id="contactMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
-            <div class="accordion-body">
-              <!-- changed to contact.html -->
-              <a href="contact.html" data-bs-dismiss="offcanvas">Get in Touch</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Top Bar for Sidebar Toggle -->
-  <nav class="navbar fixed-top">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle sidebar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand mx-auto" href="#">EZMCyber</a>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <h2 class="brand-tagline">EZMCyber<br>Secure. Protect. Respond.</h2>
-      <p class="greeting">Your Digital Shield in a Connected World</p>
-      <h1>Empowering You Against Cyber Threats</h1>
-      <p class="hero-subtitle">Expert cybersecurity solutions tailored for individuals and businesses</p>
-      <p class="tagline">"In the digital age, security is not optional—it's essential. Let us safeguard your future."</p>
-      <div class="cta-buttons">
-        <a href="signup.html" class="btn-custom">Get Started</a>
-        <a href="verify_link.html" class="btn-custom btn-secondary">Check a Link</a>
-        <!-- newsletter still opens modal -->
-        <button type="button" class="btn-custom btn-secondary" data-bs-toggle="modal" data-bs-target="#newsletterModal">Join Newsletter</button>
-        <a href="services.html" class="btn-custom btn-secondary">Explore Tools</a>
-        <!-- changed: community now links to page instead of opening a modal -->
-        <a href="community/index.html" class="btn-custom btn-secondary">Join Community</a>
-        <button type="button" class="btn-custom btn-secondary" data-bs-toggle="modal" data-bs-target="#demoModal">Request Demo</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section class="section about" id="about">
-    <div class="container">
-      <h2 class="section-title">About EZMCyber</h2>
-      <p>EZMCyber is a premier cybersecurity firm committed to protecting your online presence from evolving digital threats. With a team of certified experts and cutting-edge technology, we offer comprehensive services including vulnerability assessments, real-time monitoring, and educational resources. Our mission is to make cybersecurity accessible, effective, and effortless for everyone—from small businesses to large enterprises.</p>
-    </div>
-  </section>
-
-  <!-- Key Features Section -->
-  <section class="section" id="services">
-    <div class="container">
-      <h2 class="section-title">Key Features & Services</h2>
-      <div class="row g-4 features-grid">
-        <div class="col-md-4">
-          <div class="feature-card">
-            <div class="feature-icon">🛡️</div>
-            <h3>Advanced Protection</h3>
-            <p>State-of-the-art security solutions that adapt to emerging threats in real-time, ensuring your data remains secure.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="feature-card">
-            <div class="feature-icon">🔍</div>
-            <h3>Threat Detection Tools</h3>
-            <p>Utilize our free tools like the Suspicious Link Checker to identify and verify potential phishing or malware links instantly.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="feature-card">
-            <div class="feature-icon">📊</div>
-            <h3>Threat Reports</h3>
-            <p>Access detailed, up-to-date reports on the latest cyber threats, vulnerabilities, and industry trends to stay informed.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="feature-card">
-            <div class="feature-icon">📚</div>
-            <h3>Security Tutorials</h3>
-            <p>Step-by-step guides and tutorials on best practices for online safety, password management, and more.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3>Rapid Response</h3>
-            <p>24/7 security team ready to respond to incidents within minutes, minimizing downtime and damage.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="feature-card">
-            <div class="feature-icon">🤝</div>
-            <h3>Custom Consultations</h3>
-            <p>Personalized cybersecurity strategies tailored to your specific needs and risk profile.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
-  <section class="section section-dark testimonials" id="testimonials">
-    <div class="container">
-      <h2 class="section-title">What Our Clients Say</h2>
-      <div class="row g-4 testimonials-grid">
-        <div class="col-md-4">
-          <div class="testimonial">
-            <p class="testimonial-text">EZMCyber transformed our security posture completely. Their proactive approach saved us from multiple potential breaches.</p>
-            <p class="testimonial-author">— Sarah Johnson, CTO at TechStart</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="testimonial">
-            <p class="testimonial-text">The peace of mind that comes with EZMCyber's protection is invaluable. Their team is responsive and incredibly knowledgeable.</p>
-            <p class="testimonial-author">— Michael Chen, IT Director</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="testimonial">
-            <p class="testimonial-text">Finally, a cybersecurity partner that explains everything in plain English. Professional, reliable, and always available.</p>
-            <p class="testimonial-author">— Lisa Rodriguez, Small Business Owner</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Live Feed Section -->
-  <section class="section" id="live-feed-section">
-    <div class="container">
-      <h2 class="section-title">Live Cyber Feed</h2>
-      <div class="row g-4" id="live-feed"></div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section class="section contact" id="contact">
-    <div class="container text-center">
-      <h2 class="section-title">Get in Touch</h2>
-      <a href="contact.html" class="btn-custom">Contact Us</a>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container footer-content">
-      <ul class="footer-links">
-        <li><a href="services.html">Services</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-      <p>&copy; 2025 EZMCyber. All rights reserved. Your security is our priority.</p>
-    </div>
-  </footer>
-
-  <!-- Modals -->
-  <div class="modal fade" id="newsletterModal" tabindex="-1" aria-labelledby="newsletterModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="newsletterModalLabel">Join Newsletter</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <!-- added action to submit to ezmcyber@zohomail.com -->
-          <form action="https://formsubmit.co/ezmcyber@zohomail.com" method="POST">
-            <div class="mb-3">
-              <label for="newsletterEmail" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="newsletterEmail" name="email" placeholder="name@example.com" required>
-            </div>
-            <button type="submit" class="btn btn-custom">Subscribe</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="communityModal" tabindex="-1" aria-labelledby="communityModalLabel" aria-hidden="true">
-    <!-- kept modal in DOM but hero now links directly to community page -->
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="communityModalLabel">Join Community</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="communityEmail" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="communityEmail" placeholder="name@example.com">
-            </div>
-            <button type="submit" class="btn btn-custom">Join</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="demoModalLabel">Request Demo</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <!-- added action to submit demo requests to ezmcyber@zohomail.com -->
-          <form action="https://formsubmit.co/ezmcyber@zohomail.com" method="POST">
-            <div class="mb-3">
-              <label for="demoName" class="form-label">Name</label>
-              <input type="text" class="form-control" id="demoName" name="name" placeholder="Your Name">
-            </div>
-            <div class="mb-3">
-              <label for="demoEmail" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="demoEmail" name="email" placeholder="name@example.com">
-            </div>
-            <div class="mb-3">
-              <label for="demoMessage" class="form-label">Message</label>
-              <textarea class="form-control" id="demoMessage" name="message" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-custom">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bootstrap 5 JS Bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  
-  <script>
-    // Cyber Rain Effect
-    (function() {
-      const container = document.getElementById('rain-container');
-      const chars = '01EZMCyberSecureProtectRespond!@#$%^&*()_+-=[]{}|;:,./<>?';
-      let columnCount = Math.floor(window.innerWidth / 10); // Denser rain
-      
-      function createRainColumn() {
-        const column = document.createElement('div');
-        column.className = 'rain-column';
-        column.style.left = Math.random() * 100 + '%';
-        column.style.animationDuration = (Math.random() * 5 + 3) + 's'; // Varied speed
-        column.style.animationDelay = Math.random() * 2 + 's';
-        column.style.opacity = Math.random() * 0.5 + 0.3;
-        column.style.fontSize = (Math.random() * 5 + 12) + 'px'; // Varied size
-        
-        let text = '';
-        for (let i = 0; i < Math.floor(Math.random() * 30 + 15); i++) {
-          text += chars[Math.floor(Math.random() * chars.length)] + '<br>';
-        }
-        column.innerHTML = text;
-        
-        container.appendChild(column);
-        
-        setTimeout(() => {
-          column.remove();
-          createRainColumn();
-        }, parseFloat(column.style.animationDuration) * 1000 + 1000);
-      }
-      
-      function initRain() {
-        container.innerHTML = '';
-        columnCount = Math.floor(window.innerWidth / 10);
-        for (let i = 0; i < columnCount; i++) {
-          setTimeout(createRainColumn, i * 100);
-        }
-      }
-      
-      initRain();
-      window.addEventListener('resize', initRain);
-    })();
-
-    // Scroll animations
-    function observeElements() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      });
-
-      document.querySelectorAll('.section-title, .feature-card, .testimonial').forEach(el => {
-        observer.observe(el);
-      });
-    }
-
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
-    });
-
-    // Navbar scroll effect
-    window.addEventListener('scroll', () => {
-      const nav = document.querySelector('.navbar');
-      if (window.scrollY > 100) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
-    });
-
-    // Populate Live Feed
-    function populateLiveFeed() {
-      const feedContainer = document.getElementById('live-feed');
-      const feeds = [
-        {
-          title: 'New Ransomware Alert',
-          content: 'A new variant of ransomware is targeting small businesses. Stay vigilant and update your systems.',
-          date: '2025-09-29'
-        },
-        {
-          title: 'Phishing Campaign Spotted',
-          content: 'Emails impersonating banks are circulating. Verify links before clicking.',
-          date: '2025-09-28'
-        },
-        {
-          title: 'Zero-Day Vulnerability Patched',
-          content: 'Major software vendor releases patch for critical vulnerability. Apply immediately.',
-          date: '2025-09-27'
-        }
-      ];
-
-      feeds.forEach((feed, index) => {
-        const col = document.createElement('div');
-        col.className = 'col-md-4';
-        col.innerHTML = `
-          <div class="feature-card" style="animation-delay: ${index * 0.2}s;">
-            <h3>${feed.title}</h3>
-            <p>${feed.content}</p>
-            <small>${feed.date}</small>
-          </div>
-        `;
-        feedContainer.appendChild(col);
-      });
-    }
-
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-      observeElements();
-      populateLiveFeed();
-    });
-  </script>
-<!-- AI Chat Widget - Full Version -->
-<div id="ai-chat-widget">
-  <div id="ai-chat-container" class="ai-chat-hidden">
-    <div class="ai-chat-header">
-      <span>AI Assistant</span>
-      <button id="ai-chat-close">&times;</button>
-    </div>
-    <div id="ai-chat-log"></div>
-    <div class="ai-chat-input-area">
-      <input type="text" id="ai-chat-input" placeholder="Ask me anything..." autocomplete="off" />
-      <button id="ai-chat-send">➤</button>
-    </div>
-  </div>
-  <button id="ai-chat-toggle">💬</button>
-</div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EZMCyber | Secure. Protect. Respond.</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 <style>
-#ai-chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: sans-serif; }
-#ai-chat-container { width: 350px; max-width: calc(100vw - 40px); background: #111; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); display: flex; flex-direction: column; overflow: hidden; transition: 0.3s; }
-#ai-chat-container.ai-chat-hidden { opacity: 0; transform: scale(0.8); pointer-events: none; }
-.ai-chat-header { background: #1a1a1a; padding: 10px 14px; display: flex; justify-content: space-between; color: #fff; font-weight: 600; border-bottom: 1px solid #333; }
-#ai-chat-close { background: none; border: none; color: #888; font-size: 22px; cursor: pointer; }
-#ai-chat-close:hover { color: #fff; }
-#ai-chat-log { height: 300px; overflow-y: auto; padding: 12px; background: #000; scroll-behavior: smooth; }
-.ai-chat-message { margin-bottom: 10px; padding: 8px 10px; border-radius: 8px; max-width: 85%; word-wrap: break-word; position: relative; }
-.ai-chat-message.user { background: #00ffcc; color: #000; margin-left: auto; text-align: right; }
-.ai-chat-message.ai { background: #222; color: #fff; border: 1px solid #333; }
-.ai-chat-message.error { background: #ff4444; color: #fff; }
-.ai-typing { font-style: italic; color: #888; margin-bottom: 8px; }
-.ai-chat-input-area { display: flex; padding: 10px; gap: 6px; background: #1a1a1a; border-top: 1px solid #333; }
-#ai-chat-input { flex: 1; padding: 8px 10px; border-radius: 6px; border: 1px solid #333; background: #222; color: #fff; outline: none; }
-#ai-chat-input::placeholder { color: #666; }
-#ai-chat-send { width: 40px; border: none; border-radius: 6px; background: #00ffcc; color: #000; cursor: pointer; }
-#ai-chat-send:hover { background: #00e6b8; }
-#ai-chat-toggle { width: 56px; height: 56px; border-radius: 50%; border: none; background: #00ffcc; color: #000; font-size: 26px; cursor: pointer; }
-#ai-chat-toggle:hover { transform: scale(1.1); }
-.feedback-btn { margin-left: 6px; font-size: 14px; cursor: pointer; background: none; border: none; color: #00ffcc; }
-.feedback-btn:hover { color: #fff; }
+:root {
+  --neon-cyan: #00ffcc;
+  --neon-blue: #00d4ff;
+  --dark-bg: #0a0a0a;
+  --text-primary: #e0e6ed;
+  --text-secondary: #b8c6db;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  padding-top: 70px;
+  overflow-x: hidden;
+}
+
+/* Cyber Rain */
+#rain-container { position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; overflow:hidden; }
+.rain-column { position:absolute; top:-100%; font-family:'Courier New', monospace; font-size:14px; color:var(--neon-cyan); text-shadow:0 0 8px var(--neon-cyan); white-space:nowrap; animation:fall linear infinite; opacity:0.6; }
+@keyframes fall { to { top:110%; } }
+
+/* Navbar */
+.navbar { background: rgba(10,10,10,0.95) !important; backdrop-filter: blur(15px); border-bottom:1px solid rgba(0,255,204,0.1); z-index:10000; }
+.navbar-brand { font-family:'Orbitron'; color:var(--neon-cyan)!important; }
+.navbar-toggler { border-color: var(--neon-cyan); }
+
+/* Sidebar */
+.offcanvas { background: rgba(10,10,10,0.95); backdrop-filter: blur(15px); color: var(--text-primary); z-index:10500; }
+.accordion-button { background: transparent; color: var(--text-primary); border:none; }
+.accordion-button:hover { color: var(--neon-cyan); background: rgba(0,255,204,0.05); }
+
+/* Hero */
+.hero { min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; position:relative; z-index:1; overflow:hidden; }
+.hero-content { max-width:900px; z-index:2; position:relative; }
+.brand-tagline { font-family:'Orbitron'; font-weight:900; font-size:clamp(2rem,6vw,5rem); background:linear-gradient(135deg,#fff 0%,var(--neon-cyan) 50%,var(--neon-blue) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-transform:uppercase; letter-spacing:3px; }
+
+/* AI Chat Widget */
+#ai-chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  max-height: 400px;
+  background: rgba(10,10,10,0.95);
+  color: #fff;
+  border-radius: 12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  display:flex;
+  flex-direction:column;
+  z-index:20000;
+}
+#ai-chat-header { padding:10px; font-weight:bold; font-family:'Orbitron'; border-bottom:1px solid var(--neon-cyan); cursor:move; }
+#ai-chat-log { flex:1; overflow-y:auto; padding:10px; font-size:0.9rem; }
+#ai-chat-input { display:flex; border-top:1px solid var(--neon-cyan); }
+#ai-chat-input input { flex:1; padding:10px; border:none; outline:none; background:transparent; color:#fff; }
+#ai-chat-input button { padding:10px; border:none; background:var(--neon-cyan); color:#000; cursor:pointer; }
+
 </style>
+</head>
+<body>
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<!-- Cyber Rain -->
+<div id="rain-container"></div>
+
+<!-- Sidebar -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="sidebarLabel"><a class="navbar-brand" href="#">EZMCyber</a></h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="accordion" id="sidebarAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#homeMenu" aria-expanded="false" aria-controls="homeMenu">
+            Home
+          </button>
+        </h2>
+        <div id="homeMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+          <div class="accordion-body">
+            <a href="#home" data-bs-dismiss="offcanvas">Top</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar fixed-top">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle sidebar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand mx-auto" href="#">EZMCyber</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="brand-tagline">EZMCyber</div>
+    <p class="greeting">Secure. Protect. Respond.</p>
+  </div>
+</section>
+
+<!-- AI Chat Widget -->
+<div id="ai-chat-container">
+  <div id="ai-chat-header">AI Chat</div>
+  <div id="ai-chat-log"></div>
+  <div id="ai-chat-input">
+    <input type="text" id="ai-input" placeholder="Type your message...">
+    <button id="ai-send">Send</button>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"></script>
+
 <script>
-(function(){
-  const API_ENDPOINT = 'https://ethwebsite-1-2z41.onrender.com/api/chat';
-  const container = document.getElementById('ai-chat-container');
-  const chatLog = document.getElementById('ai-chat-log');
-  const input = document.getElementById('ai-chat-input');
-  const sendBtn = document.getElementById('ai-chat-send');
-  const toggleBtn = document.getElementById('ai-chat-toggle');
-  const closeBtn = document.getElementById('ai-chat-close');
+// Cyber Rain
+const rainContainer = document.getElementById('rain-container');
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+for(let i=0; i<100; i++){
+  const column = document.createElement('div');
+  column.classList.add('rain-column');
+  column.style.left = Math.random()*100 + 'vw';
+  column.style.animationDuration = (Math.random()*3+2) + 's';
+  column.innerText = letters[Math.floor(Math.random()*letters.length)];
+  rainContainer.appendChild(column);
+}
 
-  let isOpen = false;
-  let chatHistory = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+// AI Chat
+const chatLog = document.getElementById('ai-chat-log');
+const chatInput = document.getElementById('ai-input');
+const chatSend = document.getElementById('ai-send');
 
-  function addMessage(text,type='ai'){
-    const div=document.createElement('div');
-    div.className=`ai-chat-message ${type}`;
-    div.innerHTML=marked.parse(text);
+async function sendMessage(){
+  const msg = chatInput.value.trim();
+  if(!msg) return;
+  chatLog.innerHTML += `<div><strong>You:</strong> ${msg}</div>`;
+  chatInput.value='';
+  chatLog.scrollTop = chatLog.scrollHeight;
 
-    if(type==='ai'){
-      const upBtn=document.createElement('button');
-      upBtn.className='feedback-btn';
-      upBtn.textContent='👍';
-      upBtn.onclick=()=>console.log('User liked:', text);
-
-      const downBtn=document.createElement('button');
-      downBtn.className='feedback-btn';
-      downBtn.textContent='👎';
-      downBtn.onclick=()=>console.log('User disliked:', text);
-
-      div.appendChild(upBtn);
-      div.appendChild(downBtn);
-    }
-
-    chatLog.appendChild(div);
+  try {
+    const res = await fetch('YOUR_API_ENDPOINT', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({message: msg})
+    });
+    const data = await res.json();
+    chatLog.innerHTML += `<div><strong>AI:</strong> ${data.reply}</div>`;
     chatLog.scrollTop = chatLog.scrollHeight;
-
-    chatHistory.push({text,type});
-    localStorage.setItem('chatHistory',JSON.stringify(chatHistory));
-  }
-
-  function loadHistory(){
-    chatHistory.forEach(msg=>addMessage(msg.text,msg.type));
-  }
-
-  function showTyping(){
-    const typingDiv=document.createElement('div');
-    typingDiv.className='ai-typing';
-    typingDiv.id='ai-typing';
-    typingDiv.textContent='AI is typing...';
-    chatLog.appendChild(typingDiv);
+  } catch(err){
+    chatLog.innerHTML += `<div><strong>AI:</strong> Error connecting to API.</div>`;
     chatLog.scrollTop = chatLog.scrollHeight;
   }
+}
 
-  function removeTyping(){
-    const t=document.getElementById('ai-typing'); if(t) t.remove();
-  }
+chatSend.addEventListener('click', sendMessage);
+chatInput.addEventListener('keypress', e => { if(e.key==='Enter') sendMessage(); });
 
-  async function sendMessage(){
-    const message=input.value.trim(); if(!message) return;
-    addMessage(message,'user'); input.value=''; sendBtn.disabled=true; showTyping();
-    try{
-      const res=await fetch(API_ENDPOINT,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({message})
-      });
-      console.log('Raw backend response:', res);
-      const data=await res.json();
-      console.log('Parsed backend JSON:', data);
-      removeTyping();
-      addMessage(data.response || data.reply || 'No response from AI','ai');
-    }catch(err){
-      removeTyping(); addMessage(`Error: ${err.message}`,'error'); console.error(err);
-    }finally{ sendBtn.disabled=false; input.focus(); }
-  }
-
-  function toggleChat(){
-    isOpen=!isOpen;
-    container.classList.toggle('ai-chat-hidden');
-    toggleBtn.classList.toggle('ai-chat-hidden');
-    if(isOpen) input.focus();
-  }
-
-  sendBtn.addEventListener('click',sendMessage);
-  input.addEventListener('keypress',e=>{if(e.key==='Enter')sendMessage();});
-  toggleBtn.addEventListener('click',toggleChat);
-  closeBtn.addEventListener('click',toggleChat);
-
-  loadHistory();
-  addMessage("Hi! I'm your AI assistant. How can I help you today?",'ai');
-})();
 </script>
 </body>
 </html>
