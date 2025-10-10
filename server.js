@@ -1,49 +1,42 @@
-import express from "express";
-import axios from "axios";
-import dotenv from "dotenv";
-import cors from "cors";
-import bodyParser from "body-parser";
+# server.js
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import requests
+import os
+import base64
+from dotenv import load_dotenv
 
-dotenv.config();
+load_dotenv()
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+app = Flask(__name__)
+CORS(app)
 
-app.use(cors());
-app.use(bodyParser.json());
+# Single VirusTotal API key
+VIRUSTOTAL_KEY = os.getenv("VIRUSTOTAL_API_KEY_1")
 
-// Single VirusTotal API key
-const VIRUSTOTAL_KEY = process.env.VIRUSTOTAL_API_KEY_1;
+@app.route("/api/check-link", methods=["POST"])
+def check_link():
+    data = request.get_json()
+    url = data.get("url")
+    if not url:
+        return jsonify({"error": "Missing URL"}), 400
 
-// 🔍 Main route: Link safety checker
-app.post("/api/check-link", async (req, res) => {
-  try {
-    const { url } = req.body;
-    if (!url) return res.status(400).json({ error: "Missing URL" });
+    try:
+        encoded_url = base64.b64encode(url.encode()).decode()
+        headers = {"x-apikey": VIRUSTOTAL_KEY}
+        response = requests.get(
+            f"https://www.virustotal.com/api/v3/urls/{encoded_url}",
+            headers=headers,
+            timeout=20
+        )
+        return jsonify({"status": "success", "data": response.json()})
+    except Exception as e:
+        return jsonify({"error": "Backend timeout or VirusTotal API error", "message": str(e)}), 500
 
-    const encodedUrl = Buffer.from(url).toString("base64");
+@app.route("/")
+def root():
+    return "✅ EZM Cyber Link Checker Backend is running fine."
 
-    const response = await axios.get(`https://www.virustotal.com/api/v3/urls/${encodedUrl}`, {
-      headers: { "x-apikey": VIRUSTOTAL_KEY },
-      timeout: 20000 // 20 seconds max
-    });
-
-    res.json({
-      status: "success",
-      data: response.data
-    });
-  } catch (err) {
-    console.error("❌ Error checking link:", err.message);
-    res.status(500).json({
-      error: "Backend timeout or VirusTotal API error",
-      message: err.message
-    });
-  }
-});
-
-// Root route
-app.get("/", (req, res) => {
-  res.send("✅ EZM Cyber Link Checker Backend is running fine.");
-});
-
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 3000))
+    app.run(host="0.0.0.0", port=port)
