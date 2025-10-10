@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -384,11 +384,6 @@
       left: 100%;
     }
 
-    .feature-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     .feature-card:hover {
       transform: translateY(-10px);
       border-color: var(--neon-cyan);
@@ -619,7 +614,7 @@
     }
 
     .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 255, 204, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      background-image: url("image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 255, 204, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     }
   </style>
 
@@ -732,11 +727,8 @@
       <div class="cta-buttons">
         <a href="signup.html" class="btn-custom">Get Started</a>
         <a href="verify_link.html" class="btn-custom btn-secondary">Check a Link</a>
-        <!-- newsletter still opens modal -->
-        <button type="button" class="btn-custom btn-secondary" data-bs-toggle="modal" data-bs-target="#newsletterModal">Join Newsletter</button>
         <a href="services.html" class="btn-custom btn-secondary">Explore Tools</a>
-        <!-- changed: community now links to page instead of opening a modal -->
-        <a href="community/index.html" class="btn-custom btn-secondary">Join Community</a>
+        
         <button type="button" class="btn-custom btn-secondary" data-bs-toggle="modal" data-bs-target="#demoModal">Request Demo</button>
       </div>
     </div>
@@ -863,48 +855,6 @@
   </footer>
 
   <!-- Modals -->
-
-  <div class="modal fade" id="newsletterModal" tabindex="-1" aria-labelledby="newsletterModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="newsletterModalLabel">Join Newsletter</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <!-- added action to submit to ezmcyber@zohomail.com -->
-          <form action="https://formsubmit.co/ezmcyber@zohomail.com" method="POST">
-            <div class="mb-3">
-              <label for="newsletterEmail" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="newsletterEmail" name="email" placeholder="name@example.com" required>
-            </div>
-            <button type="submit" class="btn btn-custom">Subscribe</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="communityModal" tabindex="-1" aria-labelledby="communityModalLabel" aria-hidden="true">
-    <!-- kept modal in DOM but hero now links directly to community page -->
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="communityModalLabel">Join Community</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="communityEmail" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="communityEmail" placeholder="name@example.com">
-            </div>
-            <button type="submit" class="btn btn-custom">Join</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
