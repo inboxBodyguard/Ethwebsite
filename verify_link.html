@@ -126,15 +126,13 @@
       </form>
 
       <div id="scan-desc" class="summary" aria-live="polite" style="margin-top:12px">
-  <div class="badge">Mode: Mock vendor data (static)</div>
-  <div id="last-action" class="badge" style="margin-left:auto;color:var(--muted)">Idle</div>
-</div>
+        <div class="badge">Mode: Live API with mock fallback</div>
+        <div id="last-action" class="badge" style="margin-left:auto;color:var(--muted)">Idle</div>
+      </div>
 
-      <!-- Results container -->
       <div id="results" style="margin-top:18px"></div>
     </section>
 
-    <!-- vendor grid (mock template) -->
     <section id="vendor-area" style="margin-top:14px"></section>
   </main>
 
@@ -148,124 +146,26 @@
     const vendorArea = document.getElementById('vendor-area');
     const lastAction = document.getElementById('last-action');
 
-    // === Static mock vendor data (STATIC as requested) ===
-// Expanded list (~90 vendors) — static verdicts for VirusTotal-like display.
-const MOCK_VENDORS = [
-  { name: "SOCRadar", verdict: "phish", note: "Phishing" },
-  { name: "alphaMountain.ai", verdict: "phish", note: "Phishing" },
-  { name: "Forcepoint ThreatSeeker", verdict: "suspicious", note: "Suspicious" },
-  { name: "Abusix", verdict: "clean", note: "Clean" },
-  { name: "Acronis", verdict: "clean", note: "Clean" },
-  { name: "ADMINUSLabs", verdict: "clean", note: "Clean" },
-  { name: "AlienVault", verdict: "clean", note: "Clean" },
-  { name: "BitDefender", verdict: "clean", note: "Clean" },
-  { name: "Phishtank", verdict: "clean", note: "Clean" },
-  { name: "OpenPhish", verdict: "clean", note: "Clean" },
-  { name: "Dr.Web", verdict: "clean", note: "Clean" },
-  { name: "Fortinet", verdict: "clean", note: "Clean" },
-  { name: "Kaspersky", verdict: "clean", note: "Clean" },
-  { name: "Google Safebrowsing", verdict: "clean", note: "Clean" },
-  { name: "Webroot", verdict: "clean", note: "Clean" },
-  { name: "Yandex Safebrowsing", verdict: "clean", note: "Clean" },
-  { name: "ZeroCERT", verdict: "clean", note: "Clean" },
-  { name: "EmergingThreats", verdict: "unrated", note: "Unrated" },
-  { name: "AlphaSOC", verdict: "unrated", note: "Unrated" },
-  { name: "Netcraft", verdict: "unrated", note: "Unrated" },
+    // === Static mock vendor data (used as a fallback) ===
+    const MOCK_VENDORS = [
+      { name: "SOCRadar", verdict: "phish", note: "Phishing" }, { name: "alphaMountain.ai", verdict: "phish", note: "Phishing" }, { name: "Forcepoint ThreatSeeker", verdict: "suspicious", note: "Suspicious" }, { name: "Abusix", verdict: "clean", note: "Clean" }, { name: "Acronis", verdict: "clean", note: "Clean" }, { name: "ADMINUSLabs", verdict: "clean", note: "Clean" }, { name: "AlienVault", verdict: "clean", note: "Clean" }, { name: "BitDefender", verdict: "clean", note: "Clean" }, { name: "Phishtank", verdict: "clean", note: "Clean" }, { name: "OpenPhish", verdict: "clean", note: "Clean" }, { name: "Dr.Web", verdict: "clean", note: "Clean" }, { name: "Fortinet", verdict: "clean", note: "Clean" }, { name: "Kaspersky", verdict: "clean", note: "Clean" }, { name: "Google Safebrowsing", verdict: "clean", note: "Clean" }, { name: "Webroot", verdict: "clean", note: "Clean" }, { name: "Yandex Safebrowsing", verdict: "clean", note: "Clean" }, { name: "ZeroCERT", verdict: "clean", note: "Clean" }, { name: "EmergingThreats", verdict: "unrated", note: "Unrated" }, { name: "AlphaSOC", verdict: "unrated", note: "Unrated" }, { name: "Netcraft", verdict: "unrated", note: "Unrated" }, { name: "CrowdStrike Falcon", verdict: "clean", note: "No threats" }, { name: "ESET", verdict: "clean", note: "Clean site" }, { name: "Avira", verdict: "suspicious", note: "Potential phishing" }, { name: "McAfee", verdict: "clean", note: "Trusted" }, { name: "Sophos", verdict: "clean", note: "Clean" }, { name: "CheckPoint", verdict: "unrated", note: "No data" }, { name: "CyRadar", verdict: "clean", note: "Clean" }, { name: "CleanMX", verdict: "clean", note: "No issues" }, { name: "Trustwave", verdict: "clean", note: "Verified safe" }, { name: "ZScaler", verdict: "clean", note: "Clean" }, { name: "Tencent Safebrowsing", verdict: "clean", note: "Safe" }, { name: "Comodo Valkyrie", verdict: "suspicious", note: "Heuristic match" }, { name: "ThreatFabric", verdict: "clean", note: "Clean" }, { name: "URLHaus", verdict: "clean", note: "Clean" }, { name: "Spam404", verdict: "clean", note: "Clean" }, { name: "G-Data", verdict: "clean", note: "Clean" }, { name: "Avast", verdict: "clean", note: "Clean" }, { name: "Malwarebytes", verdict: "clean", note: "Clean" }, { name: "BitSight", verdict: "unrated", note: "Unrated" }, { name: "Cisco Talos", verdict: "clean", note: "Safe" }, { name: "IBM X-Force", verdict: "clean", note: "Safe" }, { name: "Norton SafeWeb", verdict: "clean", note: "Safe" }, { name: "Cloudflare Radar", verdict: "clean", note: "Safe" }, { name: "Certego", verdict: "clean", note: "Clean" }, { name: "DNS8", verdict: "clean", note: "Clean" }, { name: "QuickHeal", verdict: "clean", note: "Clean" }, { name: "TrendMicro", verdict: "clean", note: "Clean" }, { name: "SecureBrain", verdict: "clean", note: "Clean" }, { name: "BitScan", verdict: "clean", note: "Clean" }, { name: "PhishLabs", verdict: "clean", note: "Clean" }, { name: "NetSTAR", verdict: "clean", note: "Clean" }, { name: "ThreatBook", verdict: "clean", note: "Clean" }, { name: "CERT Polska", verdict: "clean", note: "Clean" }, { name: "Emsisoft", verdict: "clean", note: "Clean" }, { name: "CyberDefender", verdict: "clean", note: "Clean" }, { name: "Any.run", verdict: "clean", note: "Clean" }, { name: "MetaDefender", verdict: "clean", note: "Clean" }, { name: "SpamHaus", verdict: "clean", note: "Clean" }, { name: "ProofPoint", verdict: "clean", note: "Clean" }, { name: "AhnLab", verdict: "clean", note: "Clean" }, { name: "Cynet", verdict: "clean", note: "Clean" }, { name: "Sangfor", verdict: "clean", note: "Clean" }, { name: "GridinSoft", verdict: "clean", note: "Clean" }, { name: "ArmorBlox", verdict: "clean", note: "Clean" }, { name: "HybridAnalysis", verdict: "clean", note: "Clean" }, { name: "Cyble", verdict: "clean", note: "Clean" }, { name: "Vade", verdict: "clean", note: "Clean" }, { name: "DarkTrace", verdict: "clean", note: "Clean" }, { name: "McAfee GTI", verdict: "clean", note: "Clean" }, { name: "NANO Antivirus", verdict: "clean", note: "Clean" }, { name: "F-Secure", verdict: "clean", note: "Clean" }, { name: "Emsisoft Cloud", verdict: "clean", note: "Clean" }, { name: "ClamAV", verdict: "clean", note: "Clean" }, { name: "BlueCoat", verdict: "clean", note: "Clean" }, { name: "SpyEye", verdict: "clean", note: "Clean" }, { name: "CleanTalk", verdict: "clean", note: "Clean" }, { name: "ThreatMiner", verdict: "clean", note: "Clean" }, { name: "ReversingLabs", verdict: "clean", note: "Clean" }, { name: "Opswat", verdict: "clean", note: "Clean" }, { name: "SecureDNS", verdict: "clean", note: "Clean" }, { name: "ThreatGrid", verdict: "clean", note: "Clean" }, { name: "Cyren", verdict: "clean", note: "Clean" }, { name: "Malware Patrol", verdict: "clean", note: "Clean" }
+    ];
 
-  // --- Added vendors below ---
-  { name: "CrowdStrike Falcon", verdict: "clean", note: "No threats" },
-  { name: "ESET", verdict: "clean", note: "Clean site" },
-  { name: "Avira", verdict: "suspicious", note: "Potential phishing" },
-  { name: "McAfee", verdict: "clean", note: "Trusted" },
-  { name: "Sophos", verdict: "clean", note: "Clean" },
-  { name: "CheckPoint", verdict: "unrated", note: "No data" },
-  { name: "CyRadar", verdict: "clean", note: "Clean" },
-  { name: "CleanMX", verdict: "clean", note: "No issues" },
-  { name: "Trustwave", verdict: "clean", note: "Verified safe" },
-  { name: "ZScaler", verdict: "clean", note: "Clean" },
-  { name: "Tencent Safebrowsing", verdict: "clean", note: "Safe" },
-  { name: "Comodo Valkyrie", verdict: "suspicious", note: "Heuristic match" },
-  { name: "ThreatFabric", verdict: "clean", note: "Clean" },
-  { name: "URLHaus", verdict: "clean", note: "Clean" },
-  { name: "Spam404", verdict: "clean", note: "Clean" },
-  { name: "G-Data", verdict: "clean", note: "Clean" },
-  { name: "Avast", verdict: "clean", note: "Clean" },
-  { name: "Malwarebytes", verdict: "clean", note: "Clean" },
-  { name: "BitSight", verdict: "unrated", note: "Unrated" },
-  { name: "Cisco Talos", verdict: "clean", note: "Safe" },
-  { name: "IBM X-Force", verdict: "clean", note: "Safe" },
-  { name: "Norton SafeWeb", verdict: "clean", note: "Safe" },
-  { name: "Cloudflare Radar", verdict: "clean", note: "Safe" },
-  { name: "Certego", verdict: "clean", note: "Clean" },
-  { name: "DNS8", verdict: "clean", note: "Clean" },
-  { name: "QuickHeal", verdict: "clean", note: "Clean" },
-  { name: "TrendMicro", verdict: "clean", note: "Clean" },
-  { name: "SecureBrain", verdict: "clean", note: "Clean" },
-  { name: "BitScan", verdict: "clean", note: "Clean" },
-  { name: "PhishLabs", verdict: "clean", note: "Clean" },
-  { name: "NetSTAR", verdict: "clean", note: "Clean" },
-  { name: "ThreatBook", verdict: "clean", note: "Clean" },
-  { name: "CERT Polska", verdict: "clean", note: "Clean" },
-  { name: "Emsisoft", verdict: "clean", note: "Clean" },
-  { name: "CyberDefender", verdict: "clean", note: "Clean" },
-  { name: "Any.run", verdict: "clean", note: "Clean" },
-  { name: "MetaDefender", verdict: "clean", note: "Clean" },
-  { name: "SpamHaus", verdict: "clean", note: "Clean" },
-  { name: "ProofPoint", verdict: "clean", note: "Clean" },
-  { name: "AhnLab", verdict: "clean", note: "Clean" },
-  { name: "Cynet", verdict: "clean", note: "Clean" },
-  { name: "Sangfor", verdict: "clean", note: "Clean" },
-  { name: "GridinSoft", verdict: "clean", note: "Clean" },
-  { name: "ArmorBlox", verdict: "clean", note: "Clean" },
-  { name: "HybridAnalysis", verdict: "clean", note: "Clean" },
-  { name: "Cyble", verdict: "clean", note: "Clean" },
-  { name: "Vade", verdict: "clean", note: "Clean" },
-  { name: "DarkTrace", verdict: "clean", note: "Clean" },
-  { name: "McAfee GTI", verdict: "clean", note: "Clean" },
-  { name: "NANO Antivirus", verdict: "clean", note: "Clean" },
-  { name: "F-Secure", verdict: "clean", note: "Clean" },
-  { name: "Emsisoft Cloud", verdict: "clean", note: "Clean" },
-  { name: "ClamAV", verdict: "clean", note: "Clean" },
-  { name: "BlueCoat", verdict: "clean", note: "Clean" },
-  { name: "SpyEye", verdict: "clean", note: "Clean" },
-  { name: "CleanTalk", verdict: "clean", note: "Clean" },
-  { name: "ThreatMiner", verdict: "clean", note: "Clean" },
-  { name: "ReversingLabs", verdict: "clean", note: "Clean" },
-  { name: "Opswat", verdict: "clean", note: "Clean" },
-  { name: "SecureDNS", verdict: "clean", note: "Clean" },
-  { name: "ThreatGrid", verdict: "clean", note: "Clean" },
-  { name: "Cyren", verdict: "clean", note: "Clean" },
-  { name: "Malware Patrol", verdict: "clean", note: "Clean" }
-];
+    // --- UTILITY FUNCTIONS (no changes needed here) ---
+    function verdictClass(v) { if (!v) return 'unrated'; if (v === 'clean') return 'clean'; if (v === 'suspicious') return 'suspicious'; if (v === 'phish' || v === 'malicious') return 'phish'; return 'unrated'; }
+    function verdictLabel(v) { if (!v) return 'Unrated'; if (v === 'clean') return 'Clean'; if (v === 'suspicious') return 'Suspicious'; if (v === 'phish' || v === 'malicious') return 'Phishing'; return 'Unrated'; }
+    function escapeHtml(s){ return String(s || '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;'); }
 
-    // Utility: map verdict to CSS class & label
-    function verdictClass(v) {
-      if (!v) return 'unrated';
-      if (v === 'clean') return 'clean';
-      if (v === 'suspicious') return 'suspicious';
-      if (v === 'phish' || v === 'malicious') return 'phish';
-      return 'unrated';
-    }
-    function verdictLabel(v) {
-      if (!v) return 'Unrated';
-      if (v === 'clean') return 'Clean';
-      if (v === 'suspicious') return 'Suspicious';
-      if (v === 'phish' || v === 'malicious') return 'Phishing';
-      return 'Unrated';
-    }
-
-    // Render vendors as a responsive grid of cards (static)
-    function renderVendorGrid(vendorList) {
+    // --- UI RENDERING FUNCTIONS (no changes needed here) ---
+    function renderVendorGrid(vendorList, isMock = false) {
       const gridHtml = `
         <div class="card" aria-hidden="true">
           <div class="result-header" style="margin-bottom:10px">
             <div>
-              <div class="result-title">Security Vendors — Analysis (static mock)</div>
-              <div class="muted" style="margin-top:6px">This is a static preview of vendor verdicts (mock)</div>
+              <div class="result-title">Security Vendors — Analysis</div>
+              <div class="muted" style="margin-top:6px">${isMock ? 'This is a static preview of vendor verdicts (backend failed)' : 'Live results from security vendors'}</div>
             </div>
-            <div id="top-status" class="result-status status-safe">Mock Ready</div>
           </div>
-
           <div class="vendor-grid" role="list" aria-label="Vendor verdicts">
             ${vendorList.map(v => `
               <div class="vendor-card" role="listitem" aria-label="${v.name} — ${verdictLabel(v.verdict)}">
@@ -285,16 +185,10 @@ const MOCK_VENDORS = [
       vendorArea.innerHTML = gridHtml;
     }
 
-    // Basic escaping
-    function escapeHtml(s){ return String(s || '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;'); }
-
-    // Show quick result summary above grid (mirrors VirusTotal top summary)
     function renderResultSummary(url, dataStats) {
-      // dataStats is optional; when backend returns real stats we will use it.
       const stats = dataStats || { malicious:0, suspicious:0, harmless:0, undetected:0 };
       const threatCount = (stats.malicious || 0) + (stats.suspicious || 0);
       const total = (stats.malicious || 0) + (stats.suspicious || 0) + (stats.harmless || 0) + (stats.undetected || 0) || MOCK_VENDORS.length;
-
       const status = stats.malicious > 0 ? 'bad' : (stats.suspicious > 0 ? 'susp' : 'safe');
       const statusClass = status === 'bad' ? 'status-bad' : (status === 'susp' ? 'status-susp' : 'status-safe');
       const statusText = status === 'bad' ? 'MALICIOUS' : (status === 'susp' ? 'SUSPICIOUS' : 'CLEAN');
@@ -308,21 +202,34 @@ const MOCK_VENDORS = [
             </div>
             <div class="result-status ${statusClass}">${statusText}</div>
           </div>
-          <div style="margin-top:14px; color:var(--muted)">Below is a grid of vendor verdicts (static mock). If your backend returns live results they will replace mock data when available.</div>
         </div>
       `;
     }
 
-    // Main: show mock immediately, then optionally fetch backend and replace if live results arrive
+    // NEW: Function to show a clear "scanning" state
+    function showLoadingState(url) {
+      lastAction.textContent = 'Scanning...';
+      resultsDiv.innerHTML = `
+        <div class="card" role="status">
+          <div class="result-header">
+            <div class="result-title">Analyzing URL: <span style="font-weight:800">${escapeHtml(url)}</span></div>
+            <div class="muted" style="margin-top:6px">Please wait while we check the link against security vendors...</div>
+          </div>
+        </div>
+      `;
+      vendorArea.innerHTML = ''; // Ensure vendor area is clear during scan
+    }
+    
+    // --- MAIN LOGIC ---
+    // CHANGED: The main scan function is now rewritten for the correct flow.
     async function runScan(url) {
-      lastAction.textContent = 'Scanning (mock)...';
-      renderResultSummary(url);                // summary using mock counts (0)
-      renderVendorGrid(MOCK_VENDORS);         // static grid immediate
+      // 1. Show a loading state immediately.
+      showLoadingState(url);
 
-      // attempt call to backend (non-blocking). If success and structure matches, update grid + summary
+      // 2. Try to fetch live results from the backend.
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(()=>controller.abort(), 16000); // 16s timeout
+        const timeout = setTimeout(() => controller.abort(), 16000); // 16s timeout
 
         const resp = await fetch(BACKEND_API, {
           method: 'POST',
@@ -334,20 +241,16 @@ const MOCK_VENDORS = [
         clearTimeout(timeout);
 
         if (!resp.ok) {
-          // show non-fatal message but keep mock
-          lastAction.textContent = `Backend returned ${resp.status} — mock shown`;
-          return;
+          throw new Error(`Backend returned status ${resp.status}`);
         }
 
-        const json = await resp.json().catch(()=>null);
+        const json = await resp.json().catch(() => null);
         if (!json || !json.last_analysis_results) {
-          lastAction.textContent = 'Backend returned no vendor data — mock shown';
-          return;
+          throw new Error('Backend returned invalid or empty data');
         }
 
-        // convert backend vendor structure to array of {name, verdict, note}
-        const backendVendors = Object.entries(json.last_analysis_results).map(([name, info])=>{
-          // map VT-like categories to our verdict tags
+        // --- SUCCESS PATH: Process and display live data ---
+        const backendVendors = Object.entries(json.last_analysis_results).map(([name, info]) => {
           const cat = (info && info.category) ? info.category.toLowerCase() : 'undetected';
           let v = 'unrated';
           if (cat === 'malicious' || cat === 'phishing') v = 'phish';
@@ -358,58 +261,65 @@ const MOCK_VENDORS = [
           return { name, verdict: v, note };
         });
 
-        // compute stats
         const stats = { malicious:0, suspicious:0, harmless:0, undetected:0 };
-        backendVendors.forEach(v=>{
+        backendVendors.forEach(v => {
           if (v.verdict === 'phish') stats.malicious++;
           else if (v.verdict === 'suspicious') stats.suspicious++;
           else if (v.verdict === 'clean') stats.harmless++;
           else stats.undetected++;
         });
 
-        // update UI
+        // 3. Render the live results ONLY after they are ready.
         renderResultSummary(url, stats);
-        renderVendorGrid(backendVendors);
-        lastAction.textContent = 'Live backend results displayed';
+        renderVendorGrid(backendVendors, false); // `false` means it's not mock data
+        lastAction.textContent = 'Live results displayed';
+
       } catch (err) {
-        // network or timeout: keep mock visible
-        if (err.name === 'AbortError') lastAction.textContent = 'Backend timed out — mock shown';
-        else lastAction.textContent = 'Backend error — mock shown';
-        console.debug('Backend fetch error', err);
+        // --- FAILURE PATH: Display fallback mock data ---
+        if (err.name === 'AbortError') lastAction.textContent = 'Backend timed out — showing mock results';
+        else lastAction.textContent = 'Backend error — showing mock results';
+        console.error('Backend fetch error:', err);
+
+        // 3. Render the mock results as a fallback.
+        renderResultSummary(url); // Renders summary with mock counts
+        renderVendorGrid(MOCK_VENDORS, true); // `true` means it IS mock data
       }
     }
 
-    // Form handling
-    form.addEventListener('submit', (ev)=>{
+    // Form handling (no changes needed here)
+    form.addEventListener('submit', (ev) => {
       ev.preventDefault();
       const raw = (urlInput.value || '').trim();
-      if (!raw) { lastAction.textContent = 'Enter a URL'; return; }
+      if (!raw) { lastAction.textContent = 'Please enter a URL'; return; }
+      
       let normalized = raw;
       if (!/^https?:\/\//i.test(raw)) normalized = 'http://' + raw;
+      
       try {
         const parsed = new URL(normalized);
         scanBtn.disabled = true;
-        runScan(parsed.href).finally(()=>{ scanBtn.disabled = false });
+        runScan(parsed.href).finally(() => { scanBtn.disabled = false });
       } catch (err) {
-        lastAction.textContent = 'Invalid URL';
+        lastAction.textContent = 'Invalid URL format';
       }
     });
 
-    // Init: show blank state until user scans
-document.addEventListener('DOMContentLoaded', ()=>{
-  resultsDiv.innerHTML = `
-    <div class="card" role="region">
-      <div class="result-header">
-        <div class="result-title">No URL scanned yet</div>
-        <div class="muted" style="margin-top:6px">Enter a URL above and press Scan.</div>
-      </div>
-    </div>
-  `;
-  vendorArea.innerHTML = '';
-  lastAction.textContent = 'Idle';
-});
+    // --- INITIALIZATION ---
+    // CHANGED: The initial state message is simpler now.
+    document.addEventListener('DOMContentLoaded', () => {
+      resultsDiv.innerHTML = `
+        <div class="card" role="region">
+          <div class="result-header">
+            <div class="result-title">Ready to Scan</div>
+            <div class="muted" style="margin-top:6px">Enter a URL above and press SCAN to begin.</div>
+          </div>
+        </div>
+      `;
+      vendorArea.innerHTML = ''; // Start with an empty vendor area
+      lastAction.textContent = 'Idle';
+    });
 
-    // Cyber rain (visual only)
+    // Cyber rain (visual only - no changes needed)
     (function initCyberRain(){
       const container = document.getElementById('cyber-rain');
       const drops = 28;
