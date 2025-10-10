@@ -45,6 +45,10 @@ app.post('/signup', async (req, res) => {
 // =======================
 // AI Chat route
 // =======================
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.post('/api/chat', async (req, res) => {
     const { message, context } = req.body;
 
@@ -54,6 +58,7 @@ app.post('/api/chat', async (req, res) => {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
+                // ✅ BACKTICKS are required here
                 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
                 'Content-Type': 'application/json'
             },
@@ -76,10 +81,6 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
-// =======================
-// Health check
-// =======================
 app.get('/', (req, res) => res.send('EZM Cyber Backend is running!'));
 
-// Start server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
