@@ -119,8 +119,6 @@
       <div class="microsoft-icon"></div><span>Continue with Microsoft</span>
     </button>
 
-   
-
     <div class="divider"><span>or</span></div>
 
     <form id="signup-form">
@@ -254,38 +252,43 @@
       if(sessionStorage.getItem('user')){ window.location.href='home.html'; }
       handleOAuthRedirect();
 
-      // Email Form Submission
+      // Updated Async form submission handler
       const form=document.getElementById('signup-form');
-      form.addEventListener('submit', function(e){
+      form.addEventListener('submit', async function(e){
         e.preventDefault();
-        document.getElementById('verify-btn').disabled=true;
+        document.getElementById('verify-btn').disabled = true;
 
-        fetch('https://ethwebsite-12.onrender.com/api/signup', {
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({ email: form.email.value, password: form.password.value })
-        })
-        .then(response=>response.json())
-        .then(data=>{
-          if(data.success){
-            // Notify Admin via FormSubmit
+        const email = form.email.value;
+        const linkStatus = 'Welcome!'; // Can be dynamic if you want
+
+        try {
+          const response = await fetch('https://sengrid.onrender.com/send-report', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, link_status: linkStatus })
+          });
+
+          const data = await response.json();
+
+          if(data.status === 'sent'){
+            // Notify Admin
             fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
               method:'POST',
               headers:{'Content-Type':'application/json'},
-              body: JSON.stringify({ email: form.email.value, loginMethod:'email' })
+              body: JSON.stringify({ email: email, loginMethod:'email' })
             }).catch(err => console.warn('Admin notification failed', err));
 
-            showSuccess('Signup successful!');
-            setTimeout(()=>{window.location.href='home.html';},1500);
-          }else{
-            showError(data.message||'Signup failed. Try again.');
-            document.getElementById('verify-btn').disabled=false;
+            showSuccess('Signup successful! Welcome email sent.');
+            setTimeout(()=>{ window.location.href='home.html'; },1500);
+          } else {
+            showError('Failed to send welcome email. Try again.');
+            document.getElementById('verify-btn').disabled = false;
           }
-        })
-        .catch(()=>{
+
+        } catch(err) {
           showError('Network error. Please try again later.');
-          document.getElementById('verify-btn').disabled=false;
-        });
+          document.getElementById('verify-btn').disabled = false;
+        }
       });
 
       // Cyber Rain Effect
