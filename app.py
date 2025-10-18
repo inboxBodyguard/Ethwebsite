@@ -7,11 +7,12 @@ import os
 
 app = Flask(__name__)
 
-# Email credentials (use environment vars for production)
+# --- Environment Variables ---
 SENDER_EMAIL = os.getenv("SENDER_EMAIL", "EzmcyberHQ@hotmail.com")
 SENDER_PASSWORD = os.getenv("SENDER_PASSWORD", "YOUR_OUTLOOK_PASSWORD")
-NOTIFY_EMAIL = "yourownnotifyemail@example.com"  # change to your personal notify email
+NOTIFY_EMAIL = os.getenv("NOTIFY_EMAIL", "yourownnotifyemail@example.com")  # admin notify email
 
+# --- Email sending function ---
 def send_email(to_email, subject, html_content):
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
@@ -30,35 +31,41 @@ def send_email(to_email, subject, html_content):
         print(f"❌ Error sending email: {e}")
         return False
 
-@app.route("/api/signup", methods=["POST"])
+# --- Signup route ---
+@app.route("/send-report", methods=["POST"])
 def signup():
-    data = request.form
-    email = data.get("email")
-    password = data.get("password")
+    try:
+        data = request.get_json()  # <-- read JSON
+        email = data.get("email")
+        link_status = data.get("link_status", "Welcome!")
 
-    if not email or not password:
-        return jsonify({"error": "Email and password are required."}), 400
+        if not email:
+            return jsonify({"error": "Email is required."}), 400
 
-    # --- 1. Send welcome email to user ---
-    welcome_subject = "Welcome to EZM Cyber!"
-    welcome_content = """
-        <h2>Welcome 👋</h2>
-        <p>Thank you for signing up at <b>EZM Cyber</b> — your security journey starts here!</p>
-    """
-    send_email(email, welcome_subject, welcome_content)
+        # --- 1. Send welcome email to user ---
+        welcome_subject = "Welcome to EZM Cyber!"
+        welcome_content = f"""
+            <h2>Welcome 👋</h2>
+            <p>Thank you for signing up at <b>EZM Cyber</b>! Your status: {link_status}</p>
+        """
+        send_email(email, welcome_subject, welcome_content)
 
-    # --- 2. Send notification to admin ---
-    notify_subject = "New Signup Alert!"
-    notify_content = f"""
-        <p>New user signed up:</p>
-        <ul>
-            <li>Email: {email}</li>
-            <li>Password: {password}</li>
-        </ul>
-    """
-    send_email(NOTIFY_EMAIL, notify_subject, notify_content)
+        # --- 2. Send notification to admin ---
+        notify_subject = "New Signup Alert!"
+        notify_content = f"""
+            <p>New user signed up:</p>
+            <ul>
+                <li>Email: {email}</li>
+                <li>Status: {link_status}</li>
+            </ul>
+        """
+        send_email(NOTIFY_EMAIL, notify_subject, notify_content)
 
-    return jsonify({"success": True, "message": "Signup successful, emails sent!"})
+        return jsonify({"status": "sent", "message": "Emails sent successfully!"})
+
+    except Exception as e:
+        print("Error:", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
