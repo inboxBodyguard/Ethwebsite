@@ -1,11 +1,13 @@
-# save this as app.py
+# save as app.py
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 
 app = Flask(__name__)
+CORS(app)  # allow cross-origin requests
 
 # --- Environment Variables ---
 SENDER_EMAIL = os.getenv("SENDER_EMAIL", "EzmcyberHQ@hotmail.com")
@@ -33,9 +35,9 @@ def send_email(to_email, subject, html_content):
 
 # --- Signup route ---
 @app.route("/send-report", methods=["POST"])
-def signup():
+def send_report():
     try:
-        data = request.get_json()  # <-- read JSON
+        data = request.get_json()
         email = data.get("email")
         link_status = data.get("link_status", "Welcome!")
 
