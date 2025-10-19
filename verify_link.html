@@ -2,48 +2,146 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EZM Cyber — Link Checker</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --bg-1:#06060a; --bg-2:#0b0710;
-      --accent:#00ffcc; --muted:#9fb6b0;
-      --clean:#16a34a; --suspicious:#f59e0b; --phish:#ef4444; --unrated:#6b7280;
-      --bubble-user:#07251f; --bubble-bot:#071218;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-1: #06060a; --bg-2: #0b0710;
+      --accent: #00ffcc; --muted: #9fb6b0;
+      --clean: #16a34a; --suspicious: #f59e0b; --phish: #ef4444; --unrated: #6b7280;
+      --bubble-user: #00ffcc25; --bubble-bot: #071218;
     }
-    body{
-      background:linear-gradient(135deg,var(--bg-1) 0%, var(--bg-2) 100%);
-      color:#e6fff8;font-family:"Orbitron", system-ui, sans-serif;
-      height:100vh;display:flex;flex-direction:column;
+    body {
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      color: #e6fff8;
+      font-family: "Orbitron", system-ui, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    #chat-container{
-      flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;
+
+    #chat-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      scroll-behavior: smooth;
     }
-    .msg{max-width:80%;padding:12px 16px;border-radius:12px;line-height:1.4;word-wrap:break-word;font-size:0.95rem}
-    .user{align-self:flex-end;background:var(--bubble-user);border:1px solid rgba(0,255,204,0.15)}
-    .bot{align-self:flex-start;background:var(--bubble-bot);border:1px solid rgba(0,255,204,0.08)}
-    .bot strong{color:var(--accent)}
-    #input-bar{display:flex;padding:14px;border-top:1px solid rgba(0,255,204,0.08);background:rgba(255,255,255,0.02)}
-    #url-input{flex:1;padding:10px 12px;border:none;background:rgba(0,0,0,0.2);color:#e6fff8;border-radius:8px}
-    #send-btn{margin-left:10px;padding:10px 18px;background:var(--accent);color:#001517;font-weight:700;border:none;border-radius:8px;cursor:pointer}
-    .status-safe{color:var(--clean)} .status-susp{color:var(--suspicious)} .status-bad{color:var(--phish)}
-    .vendor-grid{margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px}
-    .vendor-card{padding:8px;border-radius:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(0,255,204,0.04);font-size:0.8rem;text-align:center}
-    .typing{display:inline-block;font-style:italic;opacity:0.9}
-    .dot{animation:blink 1.2s infinite}
-    @keyframes blink{
-      0%,20%{opacity:0}
-      50%{opacity:1}
-      100%{opacity:0}
+
+    .msg {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 16px;
+      line-height: 1.5;
+      word-wrap: break-word;
+      font-size: 0.95rem;
+      display: inline-block;
+      position: relative;
+      animation: pop 0.25s ease-out;
     }
-    footer{text-align:center;padding:10px;color:var(--muted);font-size:0.85rem}
+
+    @keyframes pop {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .user {
+      align-self: flex-end;
+      background: var(--bubble-user);
+      border: 1px solid rgba(0, 255, 204, 0.3);
+      color: #e6fff8;
+    }
+    .bot {
+      align-self: flex-start;
+      background: var(--bubble-bot);
+      border: 1px solid rgba(0, 255, 204, 0.1);
+    }
+    .bot strong { color: var(--accent); }
+
+    #input-bar {
+      display: flex;
+      padding: 12px;
+      border-top: 1px solid rgba(0, 255, 204, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    #url-input {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      background: rgba(0, 0, 0, 0.3);
+      color: #e6fff8;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    #send-btn {
+      margin-left: 8px;
+      padding: 12px 18px;
+      background: var(--accent);
+      color: #001517;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    #send-btn:hover { filter: brightness(1.2); }
+
+    .status-safe { color: var(--clean); }
+    .status-susp { color: var(--suspicious); }
+    .status-bad { color: var(--phish); }
+
+    .vendor-grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+    }
+    .vendor-card {
+      padding: 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 255, 204, 0.06);
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    .typing {
+      display: inline-block;
+      font-style: italic;
+      opacity: 0.8;
+    }
+    .dot { animation: blink 1.2s infinite; }
+    @keyframes blink {
+      0%, 20% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    /* 📱 Mobile optimization */
+    @media (max-width: 600px) {
+      #chat-container { padding: 12px; gap: 12px; }
+      #url-input { font-size: 0.9rem; }
+      #send-btn { padding: 10px 14px; font-size: 0.9rem; }
+      .vendor-card { font-size: 0.75rem; }
+    }
   </style>
 </head>
 <body>
-  <div id="chat-container" role="log" aria-live="polite">
-    <div class="msg bot"><strong>EZM Cyber:</strong> Drop a link and I’ll analyze it against security vendors for threats 🔍</div>
+  <div id="chat-container">
+    <div class="msg bot"><strong>EZM Cyber:</strong> Drop a link and I’ll analyze it across 90+ security vendors 🔍</div>
   </div>
 
   <div id="input-bar">
@@ -51,7 +149,7 @@
     <button id="send-btn">Send</button>
   </div>
 
-  <footer>EZM Cyber — Link Checker</footer>
+  <footer>EZM Cyber — Threat Intelligence in Chat</footer>
 
   <script>
     const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
@@ -59,7 +157,7 @@
     const input = document.getElementById('url-input');
     const sendBtn = document.getElementById('send-btn');
 
-    function addMessage(text, sender='bot') {
+    function addMessage(text, sender = 'bot') {
       const div = document.createElement('div');
       div.className = `msg ${sender}`;
       div.innerHTML = text;
@@ -69,13 +167,16 @@
     }
 
     function verdictClass(v) {
-      if (v==='phish'||v==='malicious') return 'status-bad';
-      if (v==='suspicious') return 'status-susp';
+      if (v === 'phish' || v === 'malicious') return 'status-bad';
+      if (v === 'suspicious') return 'status-susp';
       return 'status-safe';
     }
 
     function addTyping() {
-      const typingDiv = addMessage(`<span class="typing">EZM Cyber is scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, 'bot');
+      const typingDiv = addMessage(
+        `<span class="typing">EZM Cyber is scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`,
+        'bot'
+      );
       return typingDiv;
     }
 
@@ -83,63 +184,68 @@
       const typingDiv = addTyping();
       try {
         const resp = await fetch(BACKEND_API, {
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({url})
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url }),
         });
         if (!resp.ok) throw new Error(`Error ${resp.status}`);
         const data = await resp.json();
         if (!data.last_analysis_results) throw new Error('Invalid response');
-        
-        const vendors = Object.entries(data.last_analysis_results).map(([name, info])=>{
+
+        const vendors = Object.entries(data.last_analysis_results).map(([name, info]) => {
           const cat = info?.category?.toLowerCase() || 'unrated';
           let v = 'unrated';
-          if (cat==='malicious'||cat==='phishing') v='phish';
-          else if (cat==='suspicious') v='suspicious';
-          else if (cat==='harmless'||cat==='clean') v='clean';
-          return {name, verdict:v};
+          if (cat === 'malicious' || cat === 'phishing') v = 'phish';
+          else if (cat === 'suspicious') v = 'suspicious';
+          else if (cat === 'harmless' || cat === 'clean') v = 'clean';
+          return { name, verdict: v };
         });
 
-        const stats = {mal:0,susp:0,clean:0};
-        vendors.forEach(v=>{
-          if (v.verdict==='phish') stats.mal++;
-          else if (v.verdict==='suspicious') stats.susp++;
-          else if (v.verdict==='clean') stats.clean++;
+        const stats = { mal: 0, susp: 0, clean: 0 };
+        vendors.forEach(v => {
+          if (v.verdict === 'phish') stats.mal++;
+          else if (v.verdict === 'suspicious') stats.susp++;
+          else if (v.verdict === 'clean') stats.clean++;
         });
 
         const total = vendors.length;
         const threatCount = stats.mal + stats.susp;
-        const status = stats.mal>0?'bad':(stats.susp>0?'susp':'safe');
-        const label = status==='bad'?'MALICIOUS':status==='susp'?'SUSPICIOUS':'CLEAN';
+        const status = stats.mal > 0 ? 'bad' : stats.susp > 0 ? 'susp' : 'safe';
+        const label = status === 'bad' ? 'MALICIOUS' : status === 'susp' ? 'SUSPICIOUS' : 'CLEAN';
 
-        let html = `<strong>Status:</strong> <span class="${'status-'+status}">${label}</span><br>
+        let html = `<strong>Status:</strong> <span class="${'status-' + status}">${label}</span><br>
         <small>Detections: ${threatCount}/${total}</small>`;
 
-        html += `<div class="vendor-grid">` + vendors.slice(0,90).map(v=>`
+        html += `<div class="vendor-grid">` + vendors.slice(0, 90).map(v => `
           <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
         `).join('') + `</div>`;
 
         typingDiv.remove();
-        addMessage(html,'bot');
-      } catch(e){
+        addMessage(html, 'bot');
+      } catch (e) {
         console.error(e);
         typingDiv.remove();
         addMessage(`⚠️ Backend error — unable to scan right now.`, 'bot');
       }
     }
 
-    sendBtn.onclick = ()=>{
+    sendBtn.onclick = () => {
       const val = input.value.trim();
-      if(!val) return;
-      addMessage(val,'user');
-      input.value='';
+      if (!val) return;
+      addMessage(val, 'user');
+      input.value = '';
       let normalized = val;
-      if(!/^https?:\/\//i.test(val)) normalized='http://'+val;
-      try{new URL(normalized); analyzeLink(normalized);}catch{addMessage('Invalid URL format','bot');}
+      if (!/^https?:\/\//i.test(val)) normalized = 'http://' + val;
+      try {
+        new URL(normalized);
+        analyzeLink(normalized);
+      } catch {
+        addMessage('Invalid URL format.', 'bot');
+      }
     };
 
-    input.addEventListener('keypress', e=>{
-      if(e.key==='Enter'){sendBtn.click();}
+    input.addEventListener('keypress', e => {
+      if (e.key === 'Enter') sendBtn.click();
     });
   </script>
 </body>
