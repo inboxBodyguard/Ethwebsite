@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -52,113 +53,194 @@ footer{text-align:center;padding:10px;color:var(--muted);font-size:0.8rem}
 </head>
 <body>
 <div id="chat-container">
-<div class="msg bot"><strong>EZM Cyber:</strong> Drop a link and I’ll analyze it across multiple security vendors 🔍</div>
+<div class="msg bot"><strong>EZM Cyber:</strong> Hey! Send me any link and I'll run it through my threat scanner. Let's see what we're dealing with 🔍</div>
 </div>
 <div id="input-bar">
-<input id="url-input" type="text" placeholder="Type or paste a link..." autocomplete="off">
+<input id="url-input" type="text" placeholder="Drop a link, email, or domain..." autocomplete="off">
 <button id="send-btn">Send</button>
 </div>
-<footer>EZM Cyber — Threat Intelligence in Chat</footer>
+<footer>EZM Cyber — Real Threat Intel, Real Talk</footer>
 <script>
 const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
 const chat = document.getElementById('chat-container');
 const input = document.getElementById('url-input');
 const sendBtn = document.getElementById('send-btn');
 
-function addMessage(text,sender='bot'){
-  const div=document.createElement('div');
-  div.className=`msg ${sender}`;
-  div.innerHTML=text;
-  chat.appendChild(div);
-  chat.scrollTop=chat.scrollHeight;
-  return div;
+// Random human-like responses
+const scanningMessages = [
+“Alright, running this through the scanner…”,
+“Got it, checking with the security engines now 🔍”,
+“Let me see what we’re working with here…”,
+“On it — pulling threat intel now…”,
+“Scanning across multiple vendors, hold tight…”,
+“Analyzing this one for you…”,
+“Let me check if this is legit or sus…”
+];
+
+const cleanResponses = [
+“You’re good! This one checks out clean.”,
+“All clear — no threats detected here.”,
+“Looks safe to me. You’re in the clear.”,
+“Clean scan! Nothing sketchy found.”,
+“This one’s legit. No red flags.”,
+“Safe and sound — nothing to worry about.”
+];
+
+const suspiciousResponses = [
+“Hmm, this one’s a bit sketchy. I’d be careful.”,
+“Got some suspicious flags here. Proceed with caution.”,
+“Not the worst, but definitely questionable. Watch out.”,
+“A few vendors are side-eyeing this one. Be cautious.”,
+“Suspicious vibes — I wouldn’t trust it fully.”,
+“Some red flags popping up. Tread carefully.”
+];
+
+const maliciousResponses = [
+“Yikes. This is flagged as malicious. Stay far away.”,
+“Hard pass on this one — it’s a threat.”,
+“This is bad news. Do NOT click it.”,
+“Major red flags. This is a confirmed threat.”,
+“Nope, this is dangerous. Avoid at all costs.”,
+“This one’s actively malicious. Don’t go near it.”
+];
+
+const errorMessages = [
+“Oof, something went wrong on my end. Try again?”,
+“Backend hiccup — couldn’t scan that one. Give it another shot.”,
+“Ran into an issue. Mind resending?”,
+“Hmm, that didn’t work. Let’s try again.”,
+“Error on my side — hit me with it one more time.”
+];
+
+function getRandom(arr) {
+return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function addMessage(text, sender=‘bot’){
+const div = document.createElement(‘div’);
+div.className = `msg ${sender}`;
+div.innerHTML = text;
+chat.appendChild(div);
+chat.scrollTop = chat.scrollHeight;
+return div;
 }
 
 function verdictClass(v){
-  if(v==='phish'||v==='malicious') return 'status-bad';
-  if(v==='suspicious') return 'status-susp';
-  return 'status-safe';
+if(v === ‘phish’ || v === ‘malicious’) return ‘status-bad’;
+if(v === ‘suspicious’) return ‘status-susp’;
+return ‘status-safe’;
 }
 
 function addTyping(){
-  return addMessage(`<span class="typing">EZM Cyber is scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`,'bot');
+return addMessage(`<span class="typing">${getRandom(scanningMessages)}<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, ‘bot’);
+}
+
+function detectSiteType(url) {
+const lower = url.toLowerCase();
+if(lower.includes(‘amaz’) || lower.includes(‘ebay’) || lower.includes(‘shop’)) return ‘e-commerce’;
+if(lower.includes(‘facebook’) || lower.includes(‘twitter’) || lower.includes(‘instagram’)) return ‘social’;
+if(lower.includes(‘gov’) || lower.includes(’.edu’)) return ‘official’;
+if(lower.includes(‘bit.ly’) || lower.includes(‘tinyurl’) || lower.includes(‘short’)) return ‘shortener’;
+return ‘general’;
 }
 
 async function analyzeLink(url){
-  const typingDiv=addTyping();
-  try{
-    const resp=await fetch(BACKEND_API,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({url})
-    });
-    if(!resp.ok) throw new Error(`Error ${resp.status}`);
-    const data=await resp.json();
-    if(!data.last_analysis_results) throw new Error('Invalid response');
+const typingDiv = addTyping();
+const siteType = detectSiteType(url);
 
-    const vendors=Object.entries(data.last_analysis_results).map(([name,info])=>{
-      const cat=info?.category?.toLowerCase()||'unrated';
-      let v='unrated';
-      if(cat==='malicious'||cat==='phishing') v='phish';
-      else if(cat==='suspicious') v='suspicious';
-      else if(cat==='harmless'||cat==='clean') v='clean';
-      return {name,verdict:v};
-    });
+try{
+const resp = await fetch(BACKEND_API, {
+method: ‘POST’,
+headers: {‘Content-Type’: ‘application/json’},
+body: JSON.stringify({url})
+});
 
-    const stats={mal:0,susp:0,clean:0};
-    vendors.forEach(v=>{
-      if(v.verdict==='phish') stats.mal++;
-      else if(v.verdict==='suspicious') stats.susp++;
-      else if(v.verdict==='clean') stats.clean++;
-    });
+```
+if(!resp.ok) throw new Error(`Error ${resp.status}`);
+const data = await resp.json();
+if(!data.last_analysis_results) throw new Error('Invalid response');
 
-    const total=vendors.length;
-    const threatCount=stats.mal+stats.susp;
-    let status='safe';
-    let label='CLEAN';
-    if(stats.mal>0) {status='bad'; label='MALICIOUS'}
-    else if(stats.susp>0) {status='susp'; label='SUSPICIOUS'}
-    else {status='safe'; label='CLEAN'}
+const vendors = Object.entries(data.last_analysis_results).map(([name, info]) => {
+  const cat = info?.category?.toLowerCase() || 'unrated';
+  let v = 'unrated';
+  if(cat === 'malicious' || cat === 'phishing') v = 'phish';
+  else if(cat === 'suspicious') v = 'suspicious';
+  else if(cat === 'harmless' || cat === 'clean') v = 'clean';
+  return {name, verdict: v};
+});
 
-    // Friendly display for mostly clean
-    if(stats.susp>0 && stats.mal===0){
-      label=`Mostly Clean (${stats.susp} flagged)`
-    }
+const stats = {mal: 0, susp: 0, clean: 0};
+vendors.forEach(v => {
+  if(v.verdict === 'phish') stats.mal++;
+  else if(v.verdict === 'suspicious') stats.susp++;
+  else if(v.verdict === 'clean') stats.clean++;
+});
 
-    let html=`<strong>Status:</strong> <span class="${'status-'+status}">${label}</span><br>
-    <small>Detections: ${threatCount}/${total}</small>`;
+const total = vendors.length;
+const threatCount = stats.mal + stats.susp;
+let status = 'safe';
+let responseMsg = '';
 
-    html+=`<div class="vendor-grid">`+vendors.slice(0,90).map(v=>`
-      <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
-    `).join('')+`</div>`;
-
-    typingDiv.remove();
-    addMessage(html,'bot');
-  }catch(e){
-    console.error(e);
-    typingDiv.remove();
-    addMessage(`⚠️ Backend error — unable to scan right now.`,'bot');
-  }
+if(stats.mal > 0) {
+  status = 'bad';
+  responseMsg = getRandom(maliciousResponses);
+} else if(stats.susp > 0) {
+  status = 'susp';
+  responseMsg = getRandom(suspiciousResponses);
+} else {
+  status = 'safe';
+  responseMsg = getRandom(cleanResponses);
 }
 
-sendBtn.onclick=()=>{
-  const val=input.value.trim();
-  if(!val) return;
-  addMessage(val,'user');
-  input.value='';
-  let normalized=val;
-  if(!/^https?:\/\//i.test(val)) normalized='http://'+val;
-  try{
-    new URL(normalized);
-    analyzeLink(normalized);
-  }catch{
-    addMessage('Invalid URL format.','bot');
-  }
+// Add context based on site type
+let contextNote = '';
+if(siteType === 'shortener' && stats.mal === 0) {
+  contextNote = '<br><small>⚠️ Heads up: URL shorteners can hide the real destination. Be cautious.</small>';
+} else if(siteType === 'social' && status === 'safe') {
+  contextNote = '<br><small>✅ Recognized social media domain.</small>';
+} else if(siteType === 'official' && status === 'safe') {
+  contextNote = '<br><small>✅ Looks like an official/educational site.</small>';
+}
+
+let html = `<strong>${responseMsg}</strong>${contextNote}<br><br>`;
+html += `<small>Detections: ${threatCount}/${total} vendors flagged this</small>`;
+
+html += `<div class="vendor-grid">` + vendors.slice(0, 90).map(v => `
+  <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
+`).join('') + `</div>`;
+
+typingDiv.remove();
+addMessage(html, 'bot');
+```
+
+} catch(e) {
+console.error(e);
+typingDiv.remove();
+addMessage(`<strong>${getRandom(errorMessages)}</strong>`, ‘bot’);
+}
+}
+
+sendBtn.onclick = () => {
+const val = input.value.trim();
+if(!val) return;
+addMessage(val, ‘user’);
+input.value = ‘’;
+
+let normalized = val;
+if(!/^https?:///i.test(val)) normalized = ‘http://’ + val;
+
+try {
+new URL(normalized);
+analyzeLink(normalized);
+} catch {
+addMessage(’<strong>That doesn't look like a valid URL.</strong> Try something like “example.com” or paste a full link.’, ‘bot’);
+}
 };
 
-input.addEventListener('keypress',e=>{
-  if(e.key==='Enter') sendBtn.click();
+input.addEventListener(‘keypress’, e => {
+if(e.key === ‘Enter’) sendBtn.click();
 });
 </script>
+
 </body>
 </html>
