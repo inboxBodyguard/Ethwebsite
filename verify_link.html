@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EZM Cyber — Link Checker</title>
+  <title>EZM Cyber — Chat Link Scanner</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg-1: #06060a; --bg-2: #0b0710;
       --accent: #00ffcc; --muted: #9fb6b0;
-      --clean: #16a34a; --suspicious: #f59e0b; --phish: #ef4444; --unrated: #6b7280;
+      --clean: #16a34a; --suspicious: #f59e0b; --phish: #ef4444;
       --bubble-user: #00ffcc25; --bubble-bot: #071218;
     }
+
     body {
       background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
       color: #e6fff8;
@@ -55,11 +56,13 @@
       border: 1px solid rgba(0, 255, 204, 0.3);
       color: #e6fff8;
     }
+
     .bot {
       align-self: flex-start;
       background: var(--bubble-bot);
       border: 1px solid rgba(0, 255, 204, 0.1);
     }
+
     .bot strong { color: var(--accent); }
 
     #input-bar {
@@ -111,27 +114,16 @@
       text-align: center;
     }
 
-    .typing {
-      display: inline-block;
-      font-style: italic;
-      opacity: 0.8;
-    }
+    .typing { display: inline-block; font-style: italic; opacity: 0.8; }
     .dot { animation: blink 1.2s infinite; }
-    @keyframes blink {
-      0%, 20% { opacity: 0; }
-      50% { opacity: 1; }
-      100% { opacity: 0; }
-    }
+    @keyframes blink { 0%,20% { opacity:0 } 50% { opacity:1 } 100% { opacity:0 } }
 
-    footer {
-      text-align: center;
-      padding: 10px;
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
+    .conf-bar { width: 100%; height: 6px; background: #222; border-radius: 3px; margin: 6px 0; }
+    .conf-fill { height: 100%; width: 0%; border-radius: 3px; transition: 0.5s; }
 
-    /* 📱 Mobile optimization */
-    @media (max-width: 600px) {
+    footer { text-align: center; padding: 10px; color: var(--muted); font-size: 0.8rem; }
+
+    @media (max-width: 600px){
       #chat-container { padding: 12px; gap: 12px; }
       #url-input { font-size: 0.9rem; }
       #send-btn { padding: 10px 14px; font-size: 0.9rem; }
@@ -149,7 +141,7 @@
     <button id="send-btn">Send</button>
   </div>
 
-  <footer>EZM Cyber — secure.protect.respond</footer>
+  <footer>EZM Cyber — Threat Intelligence in Chat</footer>
 
   <script>
     const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
@@ -157,7 +149,7 @@
     const input = document.getElementById('url-input');
     const sendBtn = document.getElementById('send-btn');
 
-    function addMessage(text, sender = 'bot') {
+    function addMessage(text, sender='bot'){
       const div = document.createElement('div');
       div.className = `msg ${sender}`;
       div.innerHTML = text;
@@ -166,87 +158,96 @@
       return div;
     }
 
-    function verdictClass(v) {
-      if (v === 'phish' || v === 'malicious') return 'status-bad';
-      if (v === 'suspicious') return 'status-susp';
+    function verdictClass(v){
+      if(v==='phish'||v==='malicious') return 'status-bad';
+      if(v==='suspicious') return 'status-susp';
       return 'status-safe';
     }
 
-    function addTyping() {
-      const typingDiv = addMessage(
-        `<span class="typing">EZM Cyber is scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`,
-        'bot'
-      );
-      return typingDiv;
+    function addTyping(){
+      return addMessage(`<span class="typing">EZM Cyber is scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`,'bot');
     }
 
-    async function analyzeLink(url) {
+    function aiCommentary(stats){
+      if(stats.mal>0) return "⚠️ Multiple vendors flagged this link as dangerous. Avoid clicking it!";
+      if(stats.susp>0) return "Hmm… a few vendors raised minor flags. Be careful if you open it.";
+      return "✅ Looks clean! No major issues detected, safe to use.";
+    }
+
+    async function analyzeLink(url){
       const typingDiv = addTyping();
-      try {
-        const resp = await fetch(BACKEND_API, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url }),
+      try{
+        const resp = await fetch(BACKEND_API,{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({url})
         });
-        if (!resp.ok) throw new Error(`Error ${resp.status}`);
+        if(!resp.ok) throw new Error(`Error ${resp.status}`);
         const data = await resp.json();
-        if (!data.last_analysis_results) throw new Error('Invalid response');
+        if(!data.last_analysis_results) throw new Error('Invalid response');
 
-        const vendors = Object.entries(data.last_analysis_results).map(([name, info]) => {
+        const vendors = Object.entries(data.last_analysis_results).map(([name, info])=>{
           const cat = info?.category?.toLowerCase() || 'unrated';
-          let v = 'unrated';
-          if (cat === 'malicious' || cat === 'phishing') v = 'phish';
-          else if (cat === 'suspicious') v = 'suspicious';
-          else if (cat === 'harmless' || cat === 'clean') v = 'clean';
-          return { name, verdict: v };
+          let v='unrated';
+          if(cat==='malicious'||cat==='phishing') v='phish';
+          else if(cat==='suspicious') v='suspicious';
+          else if(cat==='harmless'||cat==='clean') v='clean';
+          return {name, verdict: v};
         });
 
-        const stats = { mal: 0, susp: 0, clean: 0 };
-        vendors.forEach(v => {
-          if (v.verdict === 'phish') stats.mal++;
-          else if (v.verdict === 'suspicious') stats.susp++;
-          else if (v.verdict === 'clean') stats.clean++;
+        const stats={mal:0,susp:0,clean:0};
+        vendors.forEach(v=>{
+          if(v.verdict==='phish') stats.mal++;
+          else if(v.verdict==='suspicious') stats.susp++;
+          else stats.clean++;
         });
 
         const total = vendors.length;
         const threatCount = stats.mal + stats.susp;
-        const status = stats.mal > 0 ? 'bad' : stats.susp > 0 ? 'susp' : 'safe';
-        const label = status === 'bad' ? 'MALICIOUS' : status === 'susp' ? 'SUSPICIOUS' : 'CLEAN';
+        const status = stats.mal>0?'bad':stats.susp>0?'susp':'safe';
+        const label = status==='bad'?'MALICIOUS':status==='susp'?'SUSPICIOUS':'CLEAN';
+        const commentary = aiCommentary(stats);
+        const confPercent = Math.round((threatCount/total)*100);
 
-        let html = `<strong>Status:</strong> <span class="${'status-' + status}">${label}</span><br>
-        <small>Detections: ${threatCount}/${total}</small>`;
-
-        html += `<div class="vendor-grid">` + vendors.slice(0, 90).map(v => `
-          <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
-        `).join('') + `</div>`;
+        let html=`<strong>Status:</strong> <span class="status-${status}">${label}</span>
+        <div class="conf-bar"><div class="conf-fill" style="width:0%;background:${status==='bad'?'#ef4444':status==='susp'?'#f59e0b':'#16a34a'}"></div></div>
+        <small>${commentary}</small>
+        <div class="vendor-grid"></div>`;
 
         typingDiv.remove();
-        addMessage(html, 'bot');
-      } catch (e) {
+        const msgDiv = addMessage(html,'bot');
+
+        const fill = msgDiv.querySelector('.conf-fill');
+        setTimeout(()=>{ fill.style.width = confPercent+'%'; },50);
+
+        const grid = msgDiv.querySelector('.vendor-grid');
+        vendors.forEach((v,i)=>{
+          setTimeout(()=>{
+            const card = document.createElement('div');
+            card.className='vendor-card';
+            card.innerHTML=`${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span>`;
+            grid.appendChild(card);
+          }, 50*i);
+        });
+
+      }catch(e){
         console.error(e);
         typingDiv.remove();
         addMessage(`⚠️ Backend error — unable to scan right now.`, 'bot');
       }
     }
 
-    sendBtn.onclick = () => {
+    sendBtn.onclick = ()=>{
       const val = input.value.trim();
-      if (!val) return;
-      addMessage(val, 'user');
-      input.value = '';
+      if(!val) return;
+      addMessage(val,'user');
+      input.value='';
       let normalized = val;
-      if (!/^https?:\/\//i.test(val)) normalized = 'http://' + val;
-      try {
-        new URL(normalized);
-        analyzeLink(normalized);
-      } catch {
-        addMessage('Invalid URL format.', 'bot');
-      }
+      if(!/^https?:\/\//i.test(val)) normalized='http://'+val;
+      try{ new URL(normalized); analyzeLink(normalized);}catch{ addMessage('Invalid URL format.','bot'); }
     };
 
-    input.addEventListener('keypress', e => {
-      if (e.key === 'Enter') sendBtn.click();
-    });
+    input.addEventListener('keypress', e=>{ if(e.key==='Enter') sendBtn.click(); });
   </script>
 </body>
 </html>
