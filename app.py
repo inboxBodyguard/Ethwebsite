@@ -10,8 +10,8 @@ app = Flask(__name__)
 CORS(app)  # allow cross-origin requests
 
 # --- Environment Variables ---
-SENDER_EMAIL = os.getenv("SENDER_EMAIL", "EzmcyberHQ@hotmail.com")
-SENDER_PASSWORD = os.getenv("SENDER_PASSWORD", "YOUR_OUTLOOK_PASSWORD")
+SENDER_EMAIL = os.getenv("SENDER_EMAIL", "contact@ezmcyber.xyz")  # business email
+SENDER_PASSWORD = os.getenv("SENDER_PASSWORD")  # set in Render environment
 NOTIFY_EMAIL = os.getenv("NOTIFY_EMAIL", "yourownnotifyemail@example.com")  # admin notify email
 
 # --- Email sending function ---
@@ -23,7 +23,8 @@ def send_email(to_email, subject, html_content):
     msg.attach(MIMEText(html_content, "html"))
 
     try:
-        with smtplib.SMTP("smtp.office365.com", 587) as server:
+        # Using Hostinger SMTP for your business email
+        with smtplib.SMTP("smtp.hostinger.com", 587) as server:
             server.starttls()
             server.login(SENDER_EMAIL, SENDER_PASSWORD)
             server.sendmail(SENDER_EMAIL, to_email, msg.as_string())
