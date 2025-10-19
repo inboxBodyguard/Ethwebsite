@@ -1,285 +1,446 @@
- :root {
-  --primary-color: #6366f1;
-  --primary-dark: #4f46e5;
-  --secondary-color: #8b5cf6;
-  --accent-color: #06b6d4;
-  --success-color: #10b981;
-  --warning-color: #f59e0b;
-  --danger-color: #ef4444;
-  --dark-bg: #0f172a;
-  --dark-card: #1e293b;
-  --light-bg: #f8fafc;
-  --light-card: #ffffff;
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --text-light: #94a3b8;
-  --border-color: #e2e8f0;
-  --neon-glow: 0 0 8px #8b5cf6, 0 0 16px #06b6d4;
+:root {
+–primary-color: #6366f1;
+–primary-dark: #4f46e5;
+–secondary-color: #8b5cf6;
+–accent-color: #06b6d4;
+–success-color: #10b981;
+–warning-color: #f59e0b;
+–danger-color: #ef4444;
+–dark-bg: #0f172a;
+–dark-card: #1e293b;
+–light-bg: #f8fafc;
+–light-card: #ffffff;
+–text-primary: #1e293b;
+–text-secondary: #64748b;
+–text-light: #94a3b8;
+–border-color: #e2e8f0;
+–neon-glow: 0 0 8px #8b5cf6, 0 0 16px #06b6d4;
 }
 
-* {
+- {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+  }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  color: var(--text-light);
-  line-height: 1.7;
-  min-height: 100vh;
-  padding-top: 72px;
-  overflow-x: hidden;
+font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, ‘Segoe UI’, sans-serif;
+background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+color: var(–text-light);
+line-height: 1.7;
+min-height: 100vh;
+padding-top: 72px;
+overflow-x: hidden;
+position: relative;
+}
+
+/* ===============================
+FULL PAGE CYBER RAIN BACKGROUND
+=============================== */
+#cyber-bg {
+position: fixed !important;
+top: 0 !important;
+left: 0 !important;
+width: 100vw !important;
+height: 100vh !important;
+z-index: 0 !important;
+pointer-events: none !important;
+}
+
+/* Ensure all content sits above the cyber rain */
+body > *:not(#cyber-bg) {
+position: relative;
+z-index: 1;
 }
 
 /* Banner */
 .banner {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 16px;
-  text-align: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  box-shadow: var(--neon-glow);
-  text-transform: uppercase;
-  position: relative;
-  z-index: 10;
+background-color: var(–primary-color);
+color: white;
+padding: 16px;
+text-align: center;
+font-family: ‘Orbitron’, sans-serif;
+font-size: 1.5rem;
+font-weight: 700;
+box-shadow: var(–neon-glow);
+text-transform: uppercase;
+position: relative;
+z-index: 10;
 }
 
 /* ===============================
-   Sidebar with Cyber Rain Effect
-   =============================== */
-nav#sidebar {
-  position: fixed;
-  top: 72px;
-  left: 0;
-  width: 260px;
-  height: calc(100vh - 72px);
-  background: black;
-  padding: 20px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-  z-index: 1000;
-  color: #00ffcc;
-  font-family: monospace;
+SIDEBAR WITH CYBER RAIN EFFECT
+=============================== */
+.ezm-sidebar {
+position: fixed !important;
+top: 0 !important;
+left: 0 !important;
+width: 320px;
+max-width: 92%;
+height: 100vh !important;
+background: black;
+padding: 20px;
+overflow-y: auto;
+overflow-x: hidden;
+transform: translateX(-100%) !important;
+visibility: hidden !important;
+opacity: 0 !important;
+transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0.3s, opacity 300ms ease !important;
+z-index: 1200;
+color: #00ffcc;
+font-family: monospace;
 }
 
-nav#sidebar.open {
-  transform: translateX(0);
+.ezm-sidebar.open {
+transform: translateX(0) !important;
+visibility: visible !important;
+opacity: 1 !important;
+transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0s, opacity 300ms ease !important;
 }
 
-/* Cyber Rain */
-nav#sidebar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(to bottom, rgba(0,255,128,0.3) 50%, transparent 50%);
-  background-size: 2px 20px;
-  animation: rainFall 0.4s linear infinite;
-  opacity: 0.6;
-  pointer-events: none;
-  z-index: 0;
+/* Cyber rain particles in sidebar */
+.ezm-sidebar::before {
+content: “”;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-image: linear-gradient(to bottom, rgba(0,255,128,0.3) 50%, transparent 50%);
+background-size: 2px 20px;
+animation: rainFall 0.4s linear infinite;
+opacity: 0.6;
+pointer-events: none;
+z-index: 0;
 }
 
-/* Glow overlay */
-nav#sidebar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top, rgba(0,255,128,0.15), transparent 70%);
-  pointer-events: none;
-  z-index: 0;
+/* Subtle glow overlay in sidebar */
+.ezm-sidebar::after {
+content: “”;
+position: absolute;
+inset: 0;
+background: radial-gradient(circle at top, rgba(0,255,128,0.15), transparent 70%);
+pointer-events: none;
+z-index: 0;
 }
 
-/* Rain animation */
+/* Rain movement animation */
 @keyframes rainFall {
-  from { background-position-y: 0; }
-  to   { background-position-y: 20px; }
+from { background-position-y: 0; }
+to { background-position-y: 20px; }
 }
 
-/* Content above pseudo-elements */
-nav#sidebar > * {
-  position: relative;
-  z-index: 1;
+/* Ensure sidebar content is above pseudo-elements */
+.ezm-sidebar > * {
+position: relative;
+z-index: 1;
 }
 
-/* Sidebar elements */
-#sidebarOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease;
-  z-index: 999;
+.ezm-sidebar-inner {
+padding: 88px 18px 28px;
+box-sizing: border-box;
 }
 
-#sidebarOverlay.visible {
-  opacity: 1;
-  visibility: visible;
+.ezm-sidebar-close {
+position: absolute;
+top: 12px;
+right: 12px;
+border: none;
+background: transparent;
+font-size: 28px;
+cursor: pointer;
+color: var(–text-primary);
+width: 40px;
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
 }
 
-#hamburgerToggle {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background: var(--primary-dark);
-  color: white;
-  border: none;
-  padding: 10px 14px;
-  font-size: 1.2rem;
-  border-radius: 6px;
-  cursor: pointer;
-  z-index: 1001;
-  box-shadow: var(--neon-glow);
+.ezm-sidebar-close:hover {
+background: rgba(0,0,0,0.05);
 }
 
-#sidebarClose {
-  background: var(--danger-color);
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  margin-top: 20px;
-  cursor: pointer;
-  border-radius: 4px;
-  width: 100%;
+.ezm-sidebar-brand {
+margin-bottom: 1rem;
+text-align: left;
 }
 
-nav#sidebar ul {
-  list-style: none;
+.ezm-sidebar-brand a {
+font-weight: 800;
+font-size: 1.25rem;
+color: var(–text-primary);
+text-decoration: none;
 }
 
-nav#sidebar ul li {
-  margin-bottom: 10px;
+/* Sidebar nav */
+.ezm-sidebar-nav ul {
+list-style: none;
+padding: 0;
+margin: 0;
 }
 
-nav#sidebar a {
-  color: var(--accent-color);
-  text-decoration: none;
-  font-weight: 500;
-  display: block;
-  padding: 6px 0;
+.ezm-sidebar-nav li {
+margin-bottom: 6px;
 }
 
-.ezm-sub-toggle {
-  background: none;
-  border: none;
-  font: inherit;
-  cursor: pointer;
-  padding: 8px 12px;
-  text-align: left;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--text-light);
-  font-weight: 600;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.05);
+.ezm-btn {
+display: block;
+width: 100%;
+text-align: left;
+padding: 12px 14px;
+border-radius: 10px;
+text-decoration: none;
+font-weight: 600;
+color: #fff;
+background: linear-gradient(135deg, var(–primary-color), var(–primary-dark));
+box-shadow: 0 8px 28px rgba(99,102,241,0.12);
 }
 
-.ezm-sub-toggle:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+.ezm-btn:hover {
+box-shadow: 0 12px 36px rgba(99,102,241,0.16);
+transform: translateY(-2px);
 }
 
-.ezm-sub-toggle .ezm-caret {
-  margin-left: 5px;
-  transition: transform 0.3s ease;
+/* Submenu */
+.ezm-has-sub .ezm-sub-toggle {
+width: 100%;
+padding: 12px 14px;
+border-radius: 10px;
+background: transparent;
+border: 1px solid rgba(16,24,40,0.08);
+font-weight: 700;
+cursor: pointer;
+display: flex;
+justify-content: space-between;
+align-items: center;
+color: var(–text-primary);
 }
 
-.ezm-has-sub.open .ezm-sub-toggle .ezm-caret {
-  transform: rotate(180deg);
+.ezm-has-sub .ezm-sub-toggle:hover {
+background: rgba(99,102,241,0.05);
+}
+
+.ezm-has-sub .ezm-sub-toggle .ezm-caret {
+font-size: 0.9em;
+transition: transform 0.3s ease;
+}
+
+.ezm-has-sub[aria-expanded=“true”] .ezm-sub-toggle .ezm-caret {
+transform: rotate(180deg);
 }
 
 .ezm-submenu {
-  list-style: none;
-  margin: 8px 0 10px 0;
-  padding-left: 16px;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: all 0.3s ease;
+list-style: none;
+margin: 8px 0 10px 0;
+padding-left: 8px;
+display: none;
+opacity: 0;
+max-height: 0;
+overflow: hidden;
+transition: all 0.3s ease;
 }
 
-.ezm-has-sub.open .ezm-submenu {
-  opacity: 1;
-  max-height: 500px;
+.ezm-submenu[aria-expanded=“true”] {
+display: block;
+opacity: 1;
+max-height: 300px;
+}
+
+.ezm-submenu li a {
+display: block;
+padding: 10px 12px;
+border-radius: 8px;
+background: rgba(2,6,23,0.02);
+color: var(–text-primary);
+font-weight: 600;
+text-decoration: none;
+margin-bottom: 6px;
+}
+
+.ezm-submenu li a:hover {
+background: rgba(2,6,23,0.04);
+transform: translateX(4px);
+}
+
+/* Sidebar footer */
+.ezm-sidebar-footer {
+margin-top: 18px;
+padding-top: 8px;
+border-top: 1px solid rgba(0,0,0,0.04);
+text-align: center;
+}
+
+.ezm-cta {
+display: inline-block;
+padding: 10px 18px;
+border-radius: 10px;
+background: linear-gradient(135deg, var(–primary-color), var(–primary-dark));
+color: #fff;
+text-decoration: none;
+font-weight: 700;
+}
+
+.ezm-cta:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+}
+
+/* Overlay */
+.ezm-sidebar-overlay {
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.36);
+opacity: 0;
+visibility: hidden;
+transition: opacity 220ms ease;
+z-index: 1150;
+}
+
+.ezm-sidebar-overlay.visible {
+opacity: 1;
+visibility: visible;
+}
+
+/* Topbar */
+.ezm-topbar {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+height: 72px;
+display: flex;
+align-items: center;
+z-index: 1100;
+background: rgba(255,255,255,0.92);
+backdrop-filter: blur(6px);
+border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.ezm-topbar .container {
+display: flex;
+align-items: center;
+justify-content: space-between;
+width: 100%;
+padding: 0 1rem;
+}
+
+.ezm-topbar .navbar-brand {
+font-weight: 700;
+font-size: 1.25rem;
+color: var(–text-primary);
+text-decoration: none;
+}
+
+/* Hamburger */
+.ezm-hamburger {
+background: transparent;
+border: none;
+padding: 8px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+width: 44px;
+height: 44px;
+}
+
+.ezm-hamburger:focus {
+outline: 3px solid rgba(99,102,241,0.18);
+border-radius: 6px;
+}
+
+.ezm-hamburger-box {
+display: inline-block;
+width: 22px;
+height: 16px;
+position: relative;
+}
+
+.ezm-hamburger-inner,
+.ezm-hamburger-inner::before,
+.ezm-hamburger-inner::after {
+display: block;
+background: var(–text-primary);
+height: 2px;
+border-radius: 2px;
+position: absolute;
+left: 0;
+right: 0;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ezm-hamburger-inner {
+top: 50%;
+transform: translateY(-50%);
+}
+
+.ezm-hamburger-inner::before {
+content: ‘’;
+top: -7px;
+}
+
+.ezm-hamburger-inner::after {
+content: ‘’;
+top: 7px;
+}
+
+/* Hamburger animation when open */
+.ezm-hamburger[aria-expanded=“true”] .ezm-hamburger-inner {
+background: transparent;
+}
+
+.ezm-hamburger[aria-expanded=“true”] .ezm-hamburger-inner::before {
+transform: rotate(45deg);
+top: 0;
+}
+
+.ezm-hamburger[aria-expanded=“true”] .ezm-hamburger-inner::after {
+transform: rotate(-45deg);
+top: 0;
 }
 
 @media (max-width: 768px) {
-  nav#sidebar { width: 80%; }
-  #hamburgerToggle { font-size: 1rem; padding: 8px 10px; }
+.ezm-sidebar {
+width: 80%;
+}
+}
+
+@media (max-width: 600px) {
+.ezm-sidebar {
+width: 88%;
+}
 }
 
 /* ===============================
-   Live Feed
-   =============================== */
-#liveFeed {
-  margin-left: 280px;
-  padding: 20px;
-  max-width: 800px;
-}
-
-.feed-item {
-  background-color: var(--dark-card);
-  padding: 16px;
-  margin-bottom: 12px;
-  border-radius: 8px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.4s ease;
-}
-
-.feed-item.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-#loading {
-  text-align: center;
-  color: var(--accent-color);
-  margin: 20px 0;
-  font-weight: 600;
-}
-
-/* ===============================
-   Falling Text Effect
-   =============================== */
+FALLING TEXT EFFECT
+=============================== */
 .falling-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+pointer-events: none;
+overflow: hidden;
+z-index: 0;
 }
 
 .falling-text {
-  position: absolute;
-  top: -50px;
-  font-size: 1.2rem;
-  font-family: 'Orbitron', sans-serif;
-  color: var(--accent-color);
-  text-shadow: var(--neon-glow);
-  animation: fall linear infinite;
+position: absolute;
+top: -50px;
+font-size: 1.2rem;
+font-family: ‘Orbitron’, sans-serif;
+color: var(–accent-color);
+text-shadow: var(–neon-glow);
+animation: fall linear infinite;
 }
 
 @keyframes fall {
-  0% { transform: translateY(-50px); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(110vh); opacity: 0; }
+0% { transform: translateY(-50px); opacity: 0; }
+10% { opacity: 1; }
+90% { opacity: 1; }
+100% { transform: translateY(110vh); opacity: 0; }
 }
