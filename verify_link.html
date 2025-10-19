@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>EZM Cyber — Link Checker (Grid Vendor View)</title>
+  <title>EZM Cyber — Link Checker</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -11,328 +11,136 @@
       --bg-1:#06060a; --bg-2:#0b0710;
       --accent:#00ffcc; --muted:#9fb6b0;
       --clean:#16a34a; --suspicious:#f59e0b; --phish:#ef4444; --unrated:#6b7280;
-      --card:#071218; --glass:rgba(255,255,255,0.03);
-      --maxw:1200px;
+      --bubble-user:#07251f; --bubble-bot:#071218;
     }
-    html,body{height:100%}
     body{
-      min-height:100vh;
-      background: linear-gradient(135deg,var(--bg-1) 0%, var(--bg-2) 100%);
-      color:#e6fff8;
-      font-family:"Orbitron", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      padding:28px;
-      overflow-x:hidden;
-      position:relative;
+      background:linear-gradient(135deg,var(--bg-1) 0%, var(--bg-2) 100%);
+      color:#e6fff8;font-family:"Orbitron", system-ui, sans-serif;
+      height:100vh;display:flex;flex-direction:column;
     }
-
-    /* subtle grid overlay */
-    body::before{
-      content:"";
-      position:fixed; inset:0;
-      background-image:
-        linear-gradient(rgba(0,255,204,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,255,204,0.02) 1px, transparent 1px);
-      background-size:48px 48px; pointer-events:none; z-index:0;
+    #chat-container{
+      flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;
     }
-
-    /* cyber rain */
-    #cyber-rain{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-    .rain-drop{position:absolute;width:2px;height:48px;background:linear-gradient(to bottom,transparent,rgba(0,255,204,0.25));animation:fall linear infinite}
-    @keyframes fall{to{transform:translateY(110vh)}}
-
-    .wrap{max-width:var(--maxw);margin:0 auto;position:relative;z-index:1;padding:10px}
-
-    .logo{text-align:center;color:var(--accent);font-size:1.25rem;margin-bottom:6px;text-shadow:0 0 12px rgba(0,255,204,0.12)}
-    h1{font-size:2.25rem;color:var(--accent);text-align:center;margin-bottom:6px;letter-spacing:2px;text-shadow:0 0 16px rgba(0,255,204,0.08)}
-    p.lead{color:var(--muted);text-align:center;margin-bottom:20px}
-
-    /* scanner card */
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
-      border:1px solid rgba(0,255,204,0.08);
-      padding:20px;border-radius:12px;margin-bottom:18px;box-shadow:0 8px 40px rgba(0,255,204,0.03);
-      backdrop-filter: blur(6px);
+    .msg{max-width:80%;padding:12px 16px;border-radius:12px;line-height:1.4;word-wrap:break-word;font-size:0.95rem}
+    .user{align-self:flex-end;background:var(--bubble-user);border:1px solid rgba(0,255,204,0.15)}
+    .bot{align-self:flex-start;background:var(--bubble-bot);border:1px solid rgba(0,255,204,0.08)}
+    .bot strong{color:var(--accent)}
+    #input-bar{display:flex;padding:14px;border-top:1px solid rgba(0,255,204,0.08);background:rgba(255,255,255,0.02)}
+    #url-input{flex:1;padding:10px 12px;border:none;background:rgba(0,0,0,0.2);color:#e6fff8;border-radius:8px}
+    #send-btn{margin-left:10px;padding:10px 18px;background:var(--accent);color:#001517;font-weight:700;border:none;border-radius:8px;cursor:pointer}
+    .status-safe{color:var(--clean)} .status-susp{color:var(--suspicious)} .status-bad{color:var(--phish)}
+    .vendor-grid{margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px}
+    .vendor-card{padding:8px;border-radius:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(0,255,204,0.04);font-size:0.8rem;text-align:center}
+    .typing{display:inline-block;font-style:italic;opacity:0.9}
+    .dot{animation:blink 1.2s infinite}
+    @keyframes blink{
+      0%,20%{opacity:0}
+      50%{opacity:1}
+      100%{opacity:0}
     }
-
-    form {display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-    input[type="text"]{
-      flex:1;min-width:220px;padding:12px 14px;border-radius:8px;border:1px solid rgba(0,255,204,0.12);
-      background:linear-gradient(180deg,#071218,#08121a);color:#eafff7;font-size:14px;
-    }
-    input::placeholder{color:#6c7c79}
-    button{
-      padding:12px 20px;border-radius:8px;border:none;background:linear-gradient(180deg,var(--accent),#00cc99);
-      color:#001517;font-weight:700;cursor:pointer;letter-spacing:1px;
-    }
-    button[disabled]{opacity:.6;cursor:not-allowed}
-
-    /* summary */
-    .summary{display:flex;gap:14px;align-items:center;margin-top:14px;flex-wrap:wrap}
-    .summary .badge{padding:8px 12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);font-weight:700;color:var(--muted)}
-
-    /* vendor grid */
-    .vendor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:18px}
-    .vendor-card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
-      border-radius:10px;padding:14px;border:1px solid rgba(0,255,204,0.04);min-height:84px;display:flex;flex-direction:column;justify-content:space-between;
-      transition:transform .18s ease, box-shadow .18s ease;
-    }
-    .vendor-card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(0,255,204,0.06)}
-    .vendor-name{font-weight:800;color:#e9fff6;font-size:.95rem}
-    .vendor-sub{color:var(--muted);font-size:.78rem;margin-top:6px}
-
-    .verdict{
-      display:inline-flex;align-items:center;gap:8px;padding:6px 8px;border-radius:999px;font-weight:800;font-size:.78rem;
-      width:max-content;
-    }
-    .verdict.clean{background:rgba(22,163,74,0.12);color:var(--clean);border:1px solid rgba(22,163,74,0.12)}
-    .verdict.suspicious{background:rgba(245,158,11,0.08);color:var(--suspicious);border:1px solid rgba(245,158,11,0.08)}
-    .verdict.phish{background:rgba(239,68,68,0.09);color:var(--phish);border:1px solid rgba(239,68,68,0.08)}
-    .verdict.unrated{background:rgba(107,114,128,0.06);color:var(--unrated);border:1px solid rgba(107,114,128,0.04)}
-
-    .meta-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px;flex-wrap:wrap}
-    .muted{color:var(--muted);font-size:.82rem}
-
-    /* result header */
-    .result-header{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    .result-title{font-weight:900;font-size:1.15rem}
-    .result-status{font-weight:900;padding:8px 12px;border-radius:8px}
-
-    .status-safe{background:rgba(22,163,74,0.12);color:var(--clean);border:1px solid rgba(22,163,74,0.06)}
-    .status-susp{background:rgba(245,158,11,0.08);color:var(--suspicious);border:1px solid rgba(245,158,11,0.06)}
-    .status-bad{background:rgba(239,68,68,0.08);color:var(--phish);border:1px solid rgba(239,68,68,0.06)}
-
-    /* small screens */
-    @media (max-width:640px){
-      .vendor-card{min-height:90px}
-      h1{font-size:1.6rem}
-    }
+    footer{text-align:center;padding:10px;color:var(--muted);font-size:0.85rem}
   </style>
 </head>
 <body>
-  <div id="cyber-rain" aria-hidden="true"></div>
+  <div id="chat-container" role="log" aria-live="polite">
+    <div class="msg bot"><strong>EZM Cyber:</strong> Drop a link and I’ll analyze it against security vendors for threats 🔍</div>
+  </div>
 
-  <main class="wrap" role="main">
-    <div class="logo">EZM Cyber</div>
-    <h1>🔒 EZM Cyber — Link Checker</h1>
-    
+  <div id="input-bar">
+    <input id="url-input" type="text" placeholder="Type or paste a link..." autocomplete="off" />
+    <button id="send-btn">Send</button>
+  </div>
 
-    <section class="card" aria-labelledby="scan-heading">
-      <h2 id="scan-heading" style="margin-bottom:10px">🔍 Scan URL</h2>
-
-      <form id="scan-form" aria-describedby="scan-desc">
-        <input id="url-input" type="text" placeholder="Enter URL (example.com or https://example.com)" autocomplete="off" />
-        <button id="scan-btn" type="submit">SCAN URL</button>
-      </form>
-
-      <div id="scan-desc" class="summary" aria-live="polite" style="margin-top:12px">
-        <div class="badge">Mode: Live API with mock fallback</div>
-        <div id="last-action" class="badge" style="margin-left:auto;color:var(--muted)">Idle</div>
-      </div>
-
-      <div id="results" style="margin-top:18px"></div>
-    </section>
-
-    <section id="vendor-area" style="margin-top:14px"></section>
-  </main>
+  <footer>EZM Cyber — Link Checker</footer>
 
   <script>
-    // === Configuration ===
-const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
-const form = document.getElementById('scan-form');
-const urlInput = document.getElementById('url-input');
-const scanBtn = document.getElementById('scan-btn');
-const resultsDiv = document.getElementById('results');
-const vendorArea = document.getElementById('vendor-area');
-const lastAction = document.getElementById('last-action');
+    const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
+    const chat = document.getElementById('chat-container');
+    const input = document.getElementById('url-input');
+    const sendBtn = document.getElementById('send-btn');
 
-    // === Static mock vendor data (used as a fallback) ===
-    const MOCK_VENDORS = [
-      { name: "SOCRadar", verdict: "phish", note: "Phishing" }, { name: "alphaMountain.ai", verdict: "phish", note: "Phishing" }, { name: "Forcepoint ThreatSeeker", verdict: "suspicious", note: "Suspicious" }, { name: "Abusix", verdict: "clean", note: "Clean" }, { name: "Acronis", verdict: "clean", note: "Clean" }, { name: "ADMINUSLabs", verdict: "clean", note: "Clean" }, { name: "AlienVault", verdict: "clean", note: "Clean" }, { name: "BitDefender", verdict: "clean", note: "Clean" }, { name: "Phishtank", verdict: "clean", note: "Clean" }, { name: "OpenPhish", verdict: "clean", note: "Clean" }, { name: "Dr.Web", verdict: "clean", note: "Clean" }, { name: "Fortinet", verdict: "clean", note: "Clean" }, { name: "Kaspersky", verdict: "clean", note: "Clean" }, { name: "Google Safebrowsing", verdict: "clean", note: "Clean" }, { name: "Webroot", verdict: "clean", note: "Clean" }, { name: "Yandex Safebrowsing", verdict: "clean", note: "Clean" }, { name: "ZeroCERT", verdict: "clean", note: "Clean" }, { name: "EmergingThreats", verdict: "unrated", note: "Unrated" }, { name: "AlphaSOC", verdict: "unrated", note: "Unrated" }, { name: "Netcraft", verdict: "unrated", note: "Unrated" }, { name: "CrowdStrike Falcon", verdict: "clean", note: "No threats" }, { name: "ESET", verdict: "clean", note: "Clean site" }, { name: "Avira", verdict: "suspicious", note: "Potential phishing" }, { name: "McAfee", verdict: "clean", note: "Trusted" }, { name: "Sophos", verdict: "clean", note: "Clean" }, { name: "CheckPoint", verdict: "unrated", note: "No data" }, { name: "CyRadar", verdict: "clean", note: "Clean" }, { name: "CleanMX", verdict: "clean", note: "No issues" }, { name: "Trustwave", verdict: "clean", note: "Verified safe" }, { name: "ZScaler", verdict: "clean", note: "Clean" }, { name: "Tencent Safebrowsing", verdict: "clean", note: "Safe" }, { name: "Comodo Valkyrie", verdict: "suspicious", note: "Heuristic match" }, { name: "ThreatFabric", verdict: "clean", note: "Clean" }, { name: "URLHaus", verdict: "clean", note: "Clean" }, { name: "Spam404", verdict: "clean", note: "Clean" }, { name: "G-Data", verdict: "clean", note: "Clean" }, { name: "Avast", verdict: "clean", note: "Clean" }, { name: "Malwarebytes", verdict: "clean", note: "Clean" }, { name: "BitSight", verdict: "unrated", note: "Unrated" }, { name: "Cisco Talos", verdict: "clean", note: "Safe" }, { name: "IBM X-Force", verdict: "clean", note: "Safe" }, { name: "Norton SafeWeb", verdict: "clean", note: "Safe" }, { name: "Cloudflare Radar", verdict: "clean", note: "Safe" }, { name: "Certego", verdict: "clean", note: "Clean" }, { name: "DNS8", verdict: "clean", note: "Clean" }, { name: "QuickHeal", verdict: "clean", note: "Clean" }, { name: "TrendMicro", verdict: "clean", note: "Clean" }, { name: "SecureBrain", verdict: "clean", note: "Clean" }, { name: "BitScan", verdict: "clean", note: "Clean" }, { name: "PhishLabs", verdict: "clean", note: "Clean" }, { name: "NetSTAR", verdict: "clean", note: "Clean" }, { name: "ThreatBook", verdict: "clean", note: "Clean" }, { name: "CERT Polska", verdict: "clean", note: "Clean" }, { name: "Emsisoft", verdict: "clean", note: "Clean" }, { name: "CyberDefender", verdict: "clean", note: "Clean" }, { name: "Any.run", verdict: "clean", note: "Clean" }, { name: "MetaDefender", verdict: "clean", note: "Clean" }, { name: "SpamHaus", verdict: "clean", note: "Clean" }, { name: "ProofPoint", verdict: "clean", note: "Clean" }, { name: "AhnLab", verdict: "clean", note: "Clean" }, { name: "Cynet", verdict: "clean", note: "Clean" }, { name: "Sangfor", verdict: "clean", note: "Clean" }, { name: "GridinSoft", verdict: "clean", note: "Clean" }, { name: "ArmorBlox", verdict: "clean", note: "Clean" }, { name: "HybridAnalysis", verdict: "clean", note: "Clean" }, { name: "Cyble", verdict: "clean", note: "Clean" }, { name: "Vade", verdict: "clean", note: "Clean" }, { name: "DarkTrace", verdict: "clean", note: "Clean" }, { name: "McAfee GTI", verdict: "clean", note: "Clean" }, { name: "NANO Antivirus", verdict: "clean", note: "Clean" }, { name: "F-Secure", verdict: "clean", note: "Clean" }, { name: "Emsisoft Cloud", verdict: "clean", note: "Clean" }, { name: "ClamAV", verdict: "clean", note: "Clean" }, { name: "BlueCoat", verdict: "clean", note: "Clean" }, { name: "SpyEye", verdict: "clean", note: "Clean" }, { name: "CleanTalk", verdict: "clean", note: "Clean" }, { name: "ThreatMiner", verdict: "clean", note: "Clean" }, { name: "ReversingLabs", verdict: "clean", note: "Clean" }, { name: "Opswat", verdict: "clean", note: "Clean" }, { name: "SecureDNS", verdict: "clean", note: "Clean" }, { name: "ThreatGrid", verdict: "clean", note: "Clean" }, { name: "Cyren", verdict: "clean", note: "Clean" }, { name: "Malware Patrol", verdict: "clean", note: "Clean" }
-    ];
-
-    // --- UTILITY FUNCTIONS (no changes needed here) ---
-    function verdictClass(v) { if (!v) return 'unrated'; if (v === 'clean') return 'clean'; if (v === 'suspicious') return 'suspicious'; if (v === 'phish' || v === 'malicious') return 'phish'; return 'unrated'; }
-    function verdictLabel(v) { if (!v) return 'Unrated'; if (v === 'clean') return 'Clean'; if (v === 'suspicious') return 'Suspicious'; if (v === 'phish' || v === 'malicious') return 'Phishing'; return 'Unrated'; }
-    function escapeHtml(s){ return String(s || '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;'); }
-
-    // --- UI RENDERING FUNCTIONS (no changes needed here) ---
-    function renderVendorGrid(vendorList, isMock = false) {
-      const gridHtml = `
-        <div class="card" aria-hidden="true">
-          <div class="result-header" style="margin-bottom:10px">
-            <div>
-              <div class="result-title">Security Vendors — Analysis</div>
-              <div class="muted" style="margin-top:6px">${isMock ? 'This is a static preview of vendor verdicts (backend failed)' : 'Live results from security vendors'}</div>
-            </div>
-          </div>
-          <div class="vendor-grid" role="list" aria-label="Vendor verdicts">
-            ${vendorList.map(v => `
-              <div class="vendor-card" role="listitem" aria-label="${v.name} — ${verdictLabel(v.verdict)}">
-                <div>
-                  <div class="vendor-name">${escapeHtml(v.name)}</div>
-                  <div class="vendor-sub">${escapeHtml(v.note || '')}</div>
-                </div>
-                <div class="meta-row">
-                  <div class="muted">Engine</div>
-                  <div class="verdict ${verdictClass(v.verdict)}">${verdictLabel(v.verdict)}</div>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `;
-      vendorArea.innerHTML = gridHtml;
+    function addMessage(text, sender='bot') {
+      const div = document.createElement('div');
+      div.className = `msg ${sender}`;
+      div.innerHTML = text;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+      return div;
     }
 
-    function renderResultSummary(url, dataStats) {
-      const stats = dataStats || { malicious:0, suspicious:0, harmless:0, undetected:0 };
-      const threatCount = (stats.malicious || 0) + (stats.suspicious || 0);
-      const total = (stats.malicious || 0) + (stats.suspicious || 0) + (stats.harmless || 0) + (stats.undetected || 0) || MOCK_VENDORS.length;
-      const status = stats.malicious > 0 ? 'bad' : (stats.suspicious > 0 ? 'susp' : 'safe');
-      const statusClass = status === 'bad' ? 'status-bad' : (status === 'susp' ? 'status-susp' : 'status-safe');
-      const statusText = status === 'bad' ? 'MALICIOUS' : (status === 'susp' ? 'SUSPICIOUS' : 'CLEAN');
-
-      resultsDiv.innerHTML = `
-        <div class="card" role="region" aria-live="polite" aria-atomic="true">
-          <div class="result-header">
-            <div style="min-width:0">
-              <div class="result-title">Result: <span style="font-weight:800">${escapeHtml(url)}</span></div>
-              <div class="muted" style="margin-top:6px">Detection ratio: <strong>${threatCount}/${total}</strong></div>
-            </div>
-            <div class="result-status ${statusClass}">${statusText}</div>
-          </div>
-        </div>
-      `;
+    function verdictClass(v) {
+      if (v==='phish'||v==='malicious') return 'status-bad';
+      if (v==='suspicious') return 'status-susp';
+      return 'status-safe';
     }
 
-    // NEW: Function to show a clear "scanning" state
-    function showLoadingState(url) {
-      lastAction.textContent = 'Scanning...';
-      resultsDiv.innerHTML = `
-        <div class="card" role="status">
-          <div class="result-header">
-            <div class="result-title">Analyzing URL: <span style="font-weight:800">${escapeHtml(url)}</span></div>
-            <div class="muted" style="margin-top:6px">Please wait while we check the link against security vendors...</div>
-          </div>
-        </div>
-      `;
-      vendorArea.innerHTML = ''; // Ensure vendor area is clear during scan
+    function addTyping() {
+      const typingDiv = addMessage(`<span class="typing">EZM Cyber is scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, 'bot');
+      return typingDiv;
     }
-    
-    // --- MAIN LOGIC ---
-    // CHANGED: The main scan function is now rewritten for the correct flow.
-    async function runScan(url) {
-      // 1. Show a loading state immediately.
-      showLoadingState(url);
 
-      // 2. Try to fetch live results from the backend.
+    async function analyzeLink(url) {
+      const typingDiv = addTyping();
       try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 16000); // 16s timeout
-
         const resp = await fetch(BACKEND_API, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url }),
-          signal: controller.signal
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({url})
         });
-
-        clearTimeout(timeout);
-
-        if (!resp.ok) {
-          throw new Error(`Backend returned status ${resp.status}`);
-        }
-
-        const json = await resp.json().catch(() => null);
-        if (!json || !json.last_analysis_results) {
-          throw new Error('Backend returned invalid or empty data');
-        }
-
-        // --- SUCCESS PATH: Process and display live data ---
-        const backendVendors = Object.entries(json.last_analysis_results).map(([name, info]) => {
-          const cat = (info && info.category) ? info.category.toLowerCase() : 'undetected';
+        if (!resp.ok) throw new Error(`Error ${resp.status}`);
+        const data = await resp.json();
+        if (!data.last_analysis_results) throw new Error('Invalid response');
+        
+        const vendors = Object.entries(data.last_analysis_results).map(([name, info])=>{
+          const cat = info?.category?.toLowerCase() || 'unrated';
           let v = 'unrated';
-          if (cat === 'malicious' || cat === 'phishing') v = 'phish';
-          else if (cat === 'suspicious') v = 'suspicious';
-          else if (cat === 'harmless' || cat === 'clean') v = 'clean';
-          else v = 'unrated';
-          const note = info && (info.result || info.method || info.engine_version) ? `${info.result || ''} ${info.method || ''}`.trim() : '';
-          return { name, verdict: v, note };
+          if (cat==='malicious'||cat==='phishing') v='phish';
+          else if (cat==='suspicious') v='suspicious';
+          else if (cat==='harmless'||cat==='clean') v='clean';
+          return {name, verdict:v};
         });
 
-        const stats = { malicious:0, suspicious:0, harmless:0, undetected:0 };
-        backendVendors.forEach(v => {
-          if (v.verdict === 'phish') stats.malicious++;
-          else if (v.verdict === 'suspicious') stats.suspicious++;
-          else if (v.verdict === 'clean') stats.harmless++;
-          else stats.undetected++;
+        const stats = {mal:0,susp:0,clean:0};
+        vendors.forEach(v=>{
+          if (v.verdict==='phish') stats.mal++;
+          else if (v.verdict==='suspicious') stats.susp++;
+          else if (v.verdict==='clean') stats.clean++;
         });
 
-        // 3. Render the live results ONLY after they are ready.
-        renderResultSummary(url, stats);
-        renderVendorGrid(backendVendors, false); // `false` means it's not mock data
-        lastAction.textContent = 'Live results displayed';
+        const total = vendors.length;
+        const threatCount = stats.mal + stats.susp;
+        const status = stats.mal>0?'bad':(stats.susp>0?'susp':'safe');
+        const label = status==='bad'?'MALICIOUS':status==='susp'?'SUSPICIOUS':'CLEAN';
 
-      } catch (err) {
-        // --- FAILURE PATH: Display fallback mock data ---
-        if (err.name === 'AbortError') lastAction.textContent = 'Backend timed out — showing mock results';
-        else lastAction.textContent = 'Backend error — showing mock results';
-        console.error('Backend fetch error:', err);
+        let html = `<strong>Status:</strong> <span class="${'status-'+status}">${label}</span><br>
+        <small>Detections: ${threatCount}/${total}</small>`;
 
-        // 3. Render the mock results as a fallback.
-        renderResultSummary(url); // Renders summary with mock counts
-        renderVendorGrid(MOCK_VENDORS, true); // `true` means it IS mock data
+        html += `<div class="vendor-grid">` + vendors.slice(0,90).map(v=>`
+          <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
+        `).join('') + `</div>`;
+
+        typingDiv.remove();
+        addMessage(html,'bot');
+      } catch(e){
+        console.error(e);
+        typingDiv.remove();
+        addMessage(`⚠️ Backend error — unable to scan right now.`, 'bot');
       }
     }
 
-    // Form handling (no changes needed here)
-    form.addEventListener('submit', (ev) => {
-      ev.preventDefault();
-      const raw = (urlInput.value || '').trim();
-      if (!raw) { lastAction.textContent = 'Please enter a URL'; return; }
-      
-      let normalized = raw;
-      if (!/^https?:\/\//i.test(raw)) normalized = 'http://' + raw;
-      
-      try {
-        const parsed = new URL(normalized);
-        scanBtn.disabled = true;
-        runScan(parsed.href).finally(() => { scanBtn.disabled = false });
-      } catch (err) {
-        lastAction.textContent = 'Invalid URL format';
-      }
-    });
+    sendBtn.onclick = ()=>{
+      const val = input.value.trim();
+      if(!val) return;
+      addMessage(val,'user');
+      input.value='';
+      let normalized = val;
+      if(!/^https?:\/\//i.test(val)) normalized='http://'+val;
+      try{new URL(normalized); analyzeLink(normalized);}catch{addMessage('Invalid URL format','bot');}
+    };
 
-    // --- INITIALIZATION ---
-    // CHANGED: The initial state message is simpler now.
-    document.addEventListener('DOMContentLoaded', () => {
-      resultsDiv.innerHTML = `
-        <div class="card" role="region">
-          <div class="result-header">
-            <div class="result-title">Ready to Scan</div>
-            <div class="muted" style="margin-top:6px">Enter a URL above and press SCAN to begin.</div>
-          </div>
-        </div>
-      `;
-      vendorArea.innerHTML = ''; // Start with an empty vendor area
-      lastAction.textContent = 'Idle';
+    input.addEventListener('keypress', e=>{
+      if(e.key==='Enter'){sendBtn.click();}
     });
-
-    // Cyber rain (visual only - no changes needed)
-    (function initCyberRain(){
-      const container = document.getElementById('cyber-rain');
-      const drops = 28;
-      for (let i=0;i<drops;i++){
-        const d = document.createElement('div');
-        d.className = 'rain-drop';
-        d.style.left = Math.random()*100 + '%';
-        d.style.opacity = (Math.random()*0.6 + 0.15).toFixed(2);
-        d.style.animationDuration = (Math.random()*6 + 5).toFixed(2) + 's';
-        d.style.animationDelay = (Math.random()*5).toFixed(2) + 's';
-        container.appendChild(d);
-      }
-    })();
   </script>
 </body>
 </html>
