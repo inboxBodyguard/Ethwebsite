@@ -71,50 +71,71 @@ box-shadow:0 0 40px rgba(0,255,204,0.25);
 <footer>Secure • Protect • Respond</footer>
 
 <script>
-const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
+// Backend URLs
+const VT_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
+const URLSCAN_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/urlscan';
+
 const chat = document.getElementById('chat-container');
 const input = document.getElementById('url-input');
 const sendBtn = document.getElementById('send-btn');
 
 function addMessage(text, sender='bot') {
-  const div=document.createElement('div');
-  div.className=`msg ${sender}`;
-  div.innerHTML=text;
+  const div = document.createElement('div');
+  div.className = `msg ${sender}`;
+  div.innerHTML = text;
   chat.appendChild(div);
-  chat.scrollTop=chat.scrollHeight;
+  chat.scrollTop = chat.scrollHeight;
   return div;
 }
 
-function verdictClass(v){
+function verdictClass(v) {
   if(v==='phish'||v==='malicious') return 'status-bad';
   if(v==='suspicious') return 'status-susp';
   return 'status-safe';
 }
 
-function addTyping(){
+function addTyping() {
   return addMessage(`<span class="typing">Scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`,'bot');
 }
 
-async function analyzeLink(url){
-  const typingDiv=addTyping();
-  try{
-    const resp=await fetch(BACKEND_API,{
+async function analyzeLink(url) {
+  const typingDiv = addTyping();
+  let resultBox = document.getElementById('main-result');
+  if(!resultBox){
+    resultBox=document.createElement('div');
+    resultBox.id='main-result';
+    resultBox.style.padding='20px';
+    resultBox.style.margin='20px 0';
+    resultBox.style.borderRadius='12px';
+    resultBox.style.background='rgba(0,255,204,0.08)';
+    resultBox.style.border='1px solid rgba(0,255,204,0.2)';
+    resultBox.style.fontSize='1rem';
+    resultBox.style.textAlign='left';
+    resultBox.style.boxShadow='0 0 25px rgba(0,255,204,0.1)';
+    resultBox.style.animation='pop 0.4s ease-out';
+    chat.prepend(resultBox);
+  }
+
+  try {
+    // Step 1: VirusTotal scan
+    const vtResp = await fetch(VT_BACKEND, {
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({url})
+      body: JSON.stringify({url})
     });
-    if(!resp.ok) throw new Error(`Error ${resp.status}`);
-    const data=await resp.json();
-    if(!data.last_analysis_results) throw new Error('Invalid response');
+    if(!vtResp.ok) throw new Error(`VT Error ${vtResp.status}`);
+    const vtData = await vtResp.json();
 
-    const vendors=Object.entries(data.last_analysis_results).map(([name,info])=>{
-      const cat=info?.category?.toLowerCase()||'unrated';
-      let v='unrated';
-      if(cat==='malicious'||cat==='phishing') v='phish';
-      else if(cat==='suspicious') v='suspicious';
-      else if(cat==='harmless'||cat==='clean') v='clean';
-      return {name,verdict:v};
-    });
+    const vendors = vtData.last_analysis_results
+      ? Object.entries(vtData.last_analysis_results).map(([name,info])=>{
+          const cat = info?.category?.toLowerCase()||'unrated';
+          let v='unrated';
+          if(cat==='malicious'||cat==='phishing') v='phish';
+          else if(cat==='suspicious') v='suspicious';
+          else if(cat==='harmless'||cat==='clean') v='clean';
+          return {name,verdict:v};
+        })
+      : [];
 
     const stats={mal:0,susp:0,clean:0};
     vendors.forEach(v=>{
@@ -124,10 +145,10 @@ async function analyzeLink(url){
     });
 
     const total=vendors.length;
-    const threatCount=stats.mal+stats.susp;
-    let status='safe',label='CLEAN';
-    if(stats.mal>0){status='bad';label='MALICIOUS';}
-    else if(stats.susp>0){status='susp';label='SUSPICIOUS';}
+    const threatCount = stats.mal + stats.susp;
+    let status='safe', label='CLEAN';
+    if(stats.mal>0){status='bad'; label='MALICIOUS';}
+    else if(stats.susp>0){status='susp'; label='SUSPICIOUS';}
     if(stats.susp>0 && stats.mal===0){label=`Mostly Clean (${stats.susp} flagged)`;}
 
     let html=`<strong>Status:</strong> <span class="${'status-'+status}">${label}</span><br>
@@ -137,33 +158,29 @@ async function analyzeLink(url){
         <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
       `).join('')+`</div>`;
 
-    typingDiv.remove();
-
-    // ----- pinned dashboard-style result -----
-    let resultBox=document.getElementById('main-result');
-    if(!resultBox){
-      resultBox=document.createElement('div');
-      resultBox.id='main-result';
-      resultBox.style.padding='20px';
-      resultBox.style.margin='20px 0';
-      resultBox.style.borderRadius='12px';
-      resultBox.style.background='rgba(0,255,204,0.08)';
-      resultBox.style.border='1px solid rgba(0,255,204,0.2)';
-      resultBox.style.fontSize='1rem';
-      resultBox.style.textAlign='left';
-      resultBox.style.boxShadow='0 0 25px rgba(0,255,204,0.1)';
-      resultBox.style.animation='pop 0.4s ease-out';
-      chat.prepend(resultBox);
+    // Step 2: URLScan.io scan
+    const scanResp = await fetch(URLSCAN_BACKEND, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({url})
+    });
+    if(scanResp.ok){
+      const scanData = await scanResp.json();
+      if(scanData.result_url){
+        html += `<br><small>Full URLScan Report: <a href="${scanData.result_url}" target="_blank">${scanData.scan_id}</a></small>`;
+      }
     }
+
+    typingDiv.remove();
     resultBox.innerHTML=`<strong>🔍 Latest Scan Result</strong><br><br>${html}`;
 
-    // ----- save recent history (session only) -----
-    const saved=JSON.parse(sessionStorage.getItem('ezm_history')||'[]');
-    saved.unshift({url,verdict:status, detections:threatCount, total});
+    // Save history
+    const saved = JSON.parse(sessionStorage.getItem('ezm_history')||'[]');
+    saved.unshift({url,status,detections:threatCount,total});
     if(saved.length>50) saved.pop();
     sessionStorage.setItem('ezm_history',JSON.stringify(saved));
 
-  }catch(e){
+  } catch(e){
     console.error(e);
     typingDiv.remove();
     addMessage(`⚠️ Could not complete the scan right now.`,'bot');
@@ -177,12 +194,8 @@ sendBtn.onclick=()=>{
   input.value='';
   let normalized=val;
   if(!/^https?:\/\//i.test(val)) normalized='http://'+val;
-  try{
-    new URL(normalized);
-    analyzeLink(normalized);
-  }catch{
-    addMessage('Invalid URL format.','bot');
-  }
+  try{ new URL(normalized); analyzeLink(normalized); }
+  catch{ addMessage('Invalid URL format.','bot'); }
 };
 
 input.addEventListener('keypress',e=>{
