@@ -32,8 +32,7 @@ font-size:0.95rem;display:inline-block;position:relative;animation:pop 0.25s eas
 .bot strong{color:var(--accent)}
 #input-bar{display:flex;padding:12px;border-top:1px solid rgba(0,255,204,0.1);background:rgba(255,255,255,0.03)}
 #url-input{flex:1;padding:12px;border:none;background:rgba(0,0,0,0.3);color:#e6fff8;border-radius:8px;font-size:1rem}
-#send-btn{margin-left:8px;padding:12px 18px;background:var(--accent);color:#001517;font-weight:700;border:none;border-radius:8px;cursor:pointer;transition:0.2s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-#send-btn:active{transform:scale(0.95)}
+#send-btn{margin-left:8px;padding:12px 18px;background:var(--accent);color:#001517;font-weight:700;border:none;border-radius:8px;cursor:pointer;transition:0.2s}
 #send-btn:hover{filter:brightness(1.2)}
 .status-safe{color:var(--clean)}
 .status-susp{color:var(--suspicious)}
@@ -49,193 +48,120 @@ footer{text-align:center;padding:10px;color:var(--muted);font-size:0.8rem}
 #url-input{font-size:0.9rem}
 #send-btn{padding:10px 14px;font-size:0.9rem}
 .vendor-card{font-size:0.75rem}
-.msg{font-size:0.88rem}
 }
 </style>
 </head>
 <body>
 <div id="chat-container">
-<div class="msg bot"><strong>EZM:</strong> Send me a link 🔍</div>
+<div class="msg bot"><strong>EZM Cyber:</strong> Drop a link and I’ll analyze it across multiple security vendors 🔍</div>
 </div>
 <div id="input-bar">
-<input id="url-input" type="text" placeholder="Drop a link..." autocomplete="off">
+<input id="url-input" type="text" placeholder="Type or paste a link..." autocomplete="off">
 <button id="send-btn">Send</button>
 </div>
-<footer>EZM Cyber</footer>
+<footer>EZM Cyber — Threat Intelligence in Chat</footer>
 <script>
 const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
 const chat = document.getElementById('chat-container');
 const input = document.getElementById('url-input');
 const sendBtn = document.getElementById('send-btn');
 
-const scanningMessages = [
-“Checking…”,
-“Scanning 🔍”,
-“Running checks…”,
-“On it…”,
-“Analyzing…”
-];
-
-const cleanResponses = [
-“Clean ✅”,
-“Looks safe”,
-“All clear”,
-“You’re good”,
-“No threats”
-];
-
-const suspiciousResponses = [
-“Sketchy ⚠️”,
-“Suspicious”,
-“Be careful”,
-“Watch out”,
-“Not great”
-];
-
-const maliciousResponses = [
-“Dangerous! ❌”,
-“Threat detected”,
-“Stay away”,
-“Malicious”,
-“Don’t click”
-];
-
-const errorMessages = [
-“Error. Try again?”,
-“Couldn’t scan. Retry?”,
-“Something broke”,
-“Backend issue”
-];
-
-function getRandom(arr) {
-return arr[Math.floor(Math.random() * arr.length)];
-}
-
-function addMessage(text, sender=‘bot’){
-const div = document.createElement(‘div’);
-div.className = `msg ${sender}`;
-div.innerHTML = text;
+function addMessage(text,sender=‘bot’){
+const div=document.createElement(‘div’);
+div.className=`msg ${sender}`;
+div.innerHTML=text;
 chat.appendChild(div);
-chat.scrollTop = chat.scrollHeight;
+chat.scrollTop=chat.scrollHeight;
 return div;
 }
 
 function verdictClass(v){
-if(v === ‘phish’ || v === ‘malicious’) return ‘status-bad’;
-if(v === ‘suspicious’) return ‘status-susp’;
+if(v===‘phish’||v===‘malicious’) return ‘status-bad’;
+if(v===‘suspicious’) return ‘status-susp’;
 return ‘status-safe’;
 }
 
 function addTyping(){
-return addMessage(`<span class="typing">${getRandom(scanningMessages)}<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, ‘bot’);
-}
-
-function detectSiteType(url) {
-const lower = url.toLowerCase();
-if(lower.includes(‘bit.ly’) || lower.includes(‘tinyurl’)) return ‘shortener’;
-if(lower.includes(‘facebook’) || lower.includes(‘twitter’)) return ‘social’;
-return ‘general’;
+return addMessage(`<span class="typing">EZM Cyber is scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`,‘bot’);
 }
 
 async function analyzeLink(url){
-const typingDiv = addTyping();
-const siteType = detectSiteType(url);
-
+const typingDiv=addTyping();
 try{
-const resp = await fetch(BACKEND_API, {
-method: ‘POST’,
-headers: {‘Content-Type’: ‘application/json’},
-body: JSON.stringify({url})
+const resp=await fetch(BACKEND_API,{
+method:‘POST’,
+headers:{‘Content-Type’:‘application/json’},
+body:JSON.stringify({url})
 });
+if(!resp.ok) throw new Error(`Error ${resp.status}`);
+const data=await resp.json();
+if(!data.last_analysis_results) throw new Error(‘Invalid response’);
 
 ```
-if(!resp.ok) throw new Error(`Error ${resp.status}`);
-const data = await resp.json();
-if(!data.last_analysis_results) throw new Error('Invalid response');
-
-const vendors = Object.entries(data.last_analysis_results).map(([name, info]) => {
-  const cat = info?.category?.toLowerCase() || 'unrated';
-  let v = 'unrated';
-  if(cat === 'malicious' || cat === 'phishing') v = 'phish';
-  else if(cat === 'suspicious') v = 'suspicious';
-  else if(cat === 'harmless' || cat === 'clean') v = 'clean';
-  return {name, verdict: v};
+const vendors=Object.entries(data.last_analysis_results).map(([name,info])=>{
+  const cat=info?.category?.toLowerCase()||'unrated';
+  let v='unrated';
+  if(cat==='malicious'||cat==='phishing') v='phish';
+  else if(cat==='suspicious') v='suspicious';
+  else if(cat==='harmless'||cat==='clean') v='clean';
+  return {name,verdict:v};
 });
 
-const stats = {mal: 0, susp: 0, clean: 0};
-vendors.forEach(v => {
-  if(v.verdict === 'phish') stats.mal++;
-  else if(v.verdict === 'suspicious') stats.susp++;
-  else if(v.verdict === 'clean') stats.clean++;
+const stats={mal:0,susp:0,clean:0};
+vendors.forEach(v=>{
+  if(v.verdict==='phish') stats.mal++;
+  else if(v.verdict==='suspicious') stats.susp++;
+  else if(v.verdict==='clean') stats.clean++;
 });
 
-const total = vendors.length;
-const threatCount = stats.mal + stats.susp;
-let status = 'safe';
-let responseMsg = '';
+const total=vendors.length;
+const threatCount=stats.mal+stats.susp;
+let status='safe';
+let label='CLEAN';
+if(stats.mal>0) {status='bad'; label='MALICIOUS'}
+else if(stats.susp>0) {status='susp'; label='SUSPICIOUS'}
+else {status='safe'; label='CLEAN'}
 
-if(stats.mal > 0) {
-  status = 'bad';
-  responseMsg = getRandom(maliciousResponses);
-} else if(stats.susp > 0) {
-  status = 'susp';
-  responseMsg = getRandom(suspiciousResponses);
-} else {
-  status = 'safe';
-  responseMsg = getRandom(cleanResponses);
+// Friendly display for mostly clean
+if(stats.susp>0 && stats.mal===0){
+  label=`Mostly Clean (${stats.susp} flagged)`
 }
 
-let contextNote = '';
-if(siteType === 'shortener' && stats.mal === 0) {
-  contextNote = '<br><small>⚠️ URL shortener</small>';
-}
+let html=`<strong>Status:</strong> <span class="${'status-'+status}">${label}</span><br>
+<small>Detections: ${threatCount}/${total}</small>`;
 
-let html = `<strong>${responseMsg}</strong>${contextNote}<br>`;
-html += `<small>${threatCount}/${total} flagged</small>`;
-
-html += `<div class="vendor-grid">` + vendors.slice(0, 60).map(v => `
-  <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict}</span></div>
-`).join('') + `</div>`;
+html+=`<div class="vendor-grid">`+vendors.slice(0,90).map(v=>`
+  <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
+`).join('')+`</div>`;
 
 typingDiv.remove();
-addMessage(html, 'bot');
+addMessage(html,'bot');
 ```
 
-} catch(e) {
+}catch(e){
 console.error(e);
 typingDiv.remove();
-addMessage(`<strong>${getRandom(errorMessages)}</strong>`, ‘bot’);
+addMessage(`⚠️ Backend error — unable to scan right now.`,‘bot’);
 }
 }
 
-function handleSend() {
-const val = input.value.trim();
+sendBtn.onclick=()=>{
+const val=input.value.trim();
 if(!val) return;
-addMessage(val, ‘user’);
-input.value = ‘’;
-
-let normalized = val;
-if(!/^https?:///i.test(val)) normalized = ‘http://’ + val;
-
-try {
+addMessage(val,‘user’);
+input.value=’’;
+let normalized=val;
+if(!/^https?:///i.test(val)) normalized=‘http://’+val;
+try{
 new URL(normalized);
 analyzeLink(normalized);
-} catch {
-addMessage(’<strong>Invalid URL</strong>’, ‘bot’);
+}catch{
+addMessage(‘Invalid URL format.’,‘bot’);
 }
-}
+};
 
-sendBtn.addEventListener(‘click’, handleSend);
-sendBtn.addEventListener(‘touchend’, (e) => {
-e.preventDefault();
-handleSend();
-});
-
-input.addEventListener(‘keypress’, e => {
-if(e.key === ‘Enter’) {
-e.preventDefault();
-handleSend();
-}
+input.addEventListener(‘keypress’,e=>{
+if(e.key===‘Enter’) sendBtn.click();
 });
 </script>
 
