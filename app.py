@@ -36,7 +36,7 @@ logger.info(f"NOTIFY_EMAIL: {NOTIFY_EMAIL}")
 
 # -------------------- EMAIL FUNCTION --------------------
 def send_email(to_email, subject, html_content):
-    """Send email via Office365 SMTP"""
+    """Send email via Hostinger SMTP"""
     if not SENDER_EMAIL or not SENDER_PASSWORD:
         logger.error("Email credentials not configured!")
         return False, "Email credentials missing"
@@ -49,7 +49,7 @@ def send_email(to_email, subject, html_content):
 
     try:
         logger.info(f"Attempting to send email to {to_email}")
-        with smtplib.SMTP("smtp.office365.com", 587, timeout=10) as server:
+        with smtplib.SMTP("smtp.hostinger.com", 587, timeout=10) as server:
             server.starttls()
             server.login(SENDER_EMAIL, SENDER_PASSWORD)
             server.sendmail(SENDER_EMAIL, to_email, msg.as_string())
@@ -58,7 +58,6 @@ def send_email(to_email, subject, html_content):
     except Exception as e:
         logger.error(f"Email send failed: {str(e)}")
         return False, str(e)
-
 # -------------------- ROUTES --------------------
 @app.route("/", methods=["GET"])
 def health_check():
