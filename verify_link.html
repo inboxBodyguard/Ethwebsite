@@ -32,7 +32,8 @@ font-size:0.95rem;display:inline-block;position:relative;animation:pop 0.25s eas
 .bot strong{color:var(--accent)}
 #input-bar{display:flex;padding:12px;border-top:1px solid rgba(0,255,204,0.1);background:rgba(255,255,255,0.03)}
 #url-input{flex:1;padding:12px;border:none;background:rgba(0,0,0,0.3);color:#e6fff8;border-radius:8px;font-size:1rem}
-#send-btn{margin-left:8px;padding:12px 18px;background:var(--accent);color:#001517;font-weight:700;border:none;border-radius:8px;cursor:pointer;transition:0.2s}
+#send-btn{margin-left:8px;padding:12px 18px;background:var(--accent);color:#001517;font-weight:700;border:none;border-radius:8px;cursor:pointer;transition:0.2s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#send-btn:active{transform:scale(0.95)}
 #send-btn:hover{filter:brightness(1.2)}
 .status-safe{color:var(--clean)}
 .status-susp{color:var(--suspicious)}
@@ -48,68 +49,62 @@ footer{text-align:center;padding:10px;color:var(--muted);font-size:0.8rem}
 #url-input{font-size:0.9rem}
 #send-btn{padding:10px 14px;font-size:0.9rem}
 .vendor-card{font-size:0.75rem}
+.msg{font-size:0.88rem}
 }
 </style>
 </head>
 <body>
 <div id="chat-container">
-<div class="msg bot"><strong>EZM Cyber:</strong> Hey! Send me any link and I'll run it through my threat scanner. Let's see what we're dealing with 🔍</div>
+<div class="msg bot"><strong>EZM:</strong> Send me a link 🔍</div>
 </div>
 <div id="input-bar">
-<input id="url-input" type="text" placeholder="Drop a link, email, or domain..." autocomplete="off">
+<input id="url-input" type="text" placeholder="Drop a link..." autocomplete="off">
 <button id="send-btn">Send</button>
 </div>
-<footer>EZM Cyber — Real Threat Intel, Real Talk</footer>
+<footer>EZM Cyber</footer>
 <script>
 const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
 const chat = document.getElementById('chat-container');
 const input = document.getElementById('url-input');
 const sendBtn = document.getElementById('send-btn');
 
-// Random human-like responses
 const scanningMessages = [
-“Alright, running this through the scanner…”,
-“Got it, checking with the security engines now 🔍”,
-“Let me see what we’re working with here…”,
-“On it — pulling threat intel now…”,
-“Scanning across multiple vendors, hold tight…”,
-“Analyzing this one for you…”,
-“Let me check if this is legit or sus…”
+“Checking…”,
+“Scanning 🔍”,
+“Running checks…”,
+“On it…”,
+“Analyzing…”
 ];
 
 const cleanResponses = [
-“You’re good! This one checks out clean.”,
-“All clear — no threats detected here.”,
-“Looks safe to me. You’re in the clear.”,
-“Clean scan! Nothing sketchy found.”,
-“This one’s legit. No red flags.”,
-“Safe and sound — nothing to worry about.”
+“Clean ✅”,
+“Looks safe”,
+“All clear”,
+“You’re good”,
+“No threats”
 ];
 
 const suspiciousResponses = [
-“Hmm, this one’s a bit sketchy. I’d be careful.”,
-“Got some suspicious flags here. Proceed with caution.”,
-“Not the worst, but definitely questionable. Watch out.”,
-“A few vendors are side-eyeing this one. Be cautious.”,
-“Suspicious vibes — I wouldn’t trust it fully.”,
-“Some red flags popping up. Tread carefully.”
+“Sketchy ⚠️”,
+“Suspicious”,
+“Be careful”,
+“Watch out”,
+“Not great”
 ];
 
 const maliciousResponses = [
-“Yikes. This is flagged as malicious. Stay far away.”,
-“Hard pass on this one — it’s a threat.”,
-“This is bad news. Do NOT click it.”,
-“Major red flags. This is a confirmed threat.”,
-“Nope, this is dangerous. Avoid at all costs.”,
-“This one’s actively malicious. Don’t go near it.”
+“Dangerous! ❌”,
+“Threat detected”,
+“Stay away”,
+“Malicious”,
+“Don’t click”
 ];
 
 const errorMessages = [
-“Oof, something went wrong on my end. Try again?”,
-“Backend hiccup — couldn’t scan that one. Give it another shot.”,
-“Ran into an issue. Mind resending?”,
-“Hmm, that didn’t work. Let’s try again.”,
-“Error on my side — hit me with it one more time.”
+“Error. Try again?”,
+“Couldn’t scan. Retry?”,
+“Something broke”,
+“Backend issue”
 ];
 
 function getRandom(arr) {
@@ -137,10 +132,8 @@ return addMessage(`<span class="typing">${getRandom(scanningMessages)}<span clas
 
 function detectSiteType(url) {
 const lower = url.toLowerCase();
-if(lower.includes(‘amaz’) || lower.includes(‘ebay’) || lower.includes(‘shop’)) return ‘e-commerce’;
-if(lower.includes(‘facebook’) || lower.includes(‘twitter’) || lower.includes(‘instagram’)) return ‘social’;
-if(lower.includes(‘gov’) || lower.includes(’.edu’)) return ‘official’;
-if(lower.includes(‘bit.ly’) || lower.includes(‘tinyurl’) || lower.includes(‘short’)) return ‘shortener’;
+if(lower.includes(‘bit.ly’) || lower.includes(‘tinyurl’)) return ‘shortener’;
+if(lower.includes(‘facebook’) || lower.includes(‘twitter’)) return ‘social’;
 return ‘general’;
 }
 
@@ -192,21 +185,16 @@ if(stats.mal > 0) {
   responseMsg = getRandom(cleanResponses);
 }
 
-// Add context based on site type
 let contextNote = '';
 if(siteType === 'shortener' && stats.mal === 0) {
-  contextNote = '<br><small>⚠️ Heads up: URL shorteners can hide the real destination. Be cautious.</small>';
-} else if(siteType === 'social' && status === 'safe') {
-  contextNote = '<br><small>✅ Recognized social media domain.</small>';
-} else if(siteType === 'official' && status === 'safe') {
-  contextNote = '<br><small>✅ Looks like an official/educational site.</small>';
+  contextNote = '<br><small>⚠️ URL shortener</small>';
 }
 
-let html = `<strong>${responseMsg}</strong>${contextNote}<br><br>`;
-html += `<small>Detections: ${threatCount}/${total} vendors flagged this</small>`;
+let html = `<strong>${responseMsg}</strong>${contextNote}<br>`;
+html += `<small>${threatCount}/${total} flagged</small>`;
 
-html += `<div class="vendor-grid">` + vendors.slice(0, 90).map(v => `
-  <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
+html += `<div class="vendor-grid">` + vendors.slice(0, 60).map(v => `
+  <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict}</span></div>
 `).join('') + `</div>`;
 
 typingDiv.remove();
@@ -220,7 +208,7 @@ addMessage(`<strong>${getRandom(errorMessages)}</strong>`, ‘bot’);
 }
 }
 
-sendBtn.onclick = () => {
+function handleSend() {
 const val = input.value.trim();
 if(!val) return;
 addMessage(val, ‘user’);
@@ -233,12 +221,21 @@ try {
 new URL(normalized);
 analyzeLink(normalized);
 } catch {
-addMessage(’<strong>That doesn't look like a valid URL.</strong> Try something like “example.com” or paste a full link.’, ‘bot’);
+addMessage(’<strong>Invalid URL</strong>’, ‘bot’);
 }
-};
+}
+
+sendBtn.addEventListener(‘click’, handleSend);
+sendBtn.addEventListener(‘touchend’, (e) => {
+e.preventDefault();
+handleSend();
+});
 
 input.addEventListener(‘keypress’, e => {
-if(e.key === ‘Enter’) sendBtn.click();
+if(e.key === ‘Enter’) {
+e.preventDefault();
+handleSend();
+}
 });
 </script>
 
