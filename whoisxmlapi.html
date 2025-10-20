@@ -3,122 +3,129 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>WHOISXML Result</title>
+<title>WHOIS Lookup</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
 <style>
-    body { font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif; background: #f8fafc; }
-    .card { border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
-    .badge-soft { background: #eef2ff; color: #4f46e5; }
-    .muted { color: #64748b; }
-    .kv { display: grid; grid-template-columns: 220px 1fr; gap: 8px 16px; }
-    .kv div:first-child { color: #64748b; }
-    .spinner { display: none; }
+  body { font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif; background: #f8fafc; }
+  .card { border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+  .badge-soft { background: #eef2ff; color: #4f46e5; }
+  .muted { color: #64748b; }
+  .kv { display: grid; grid-template-columns: 220px 1fr; gap: 8px 16px; }
+  .kv div:first-child { color: #64748b; }
+  .spinner { display: none; }
+  footer { text-align:center; margin-top:2rem; color:#94a3b8; font-size:0.9rem; }
 </style>
 </head>
 <body class="py-4">
 <div class="container">
-    <div class="mb-4 d-flex align-items-center justify-content-between">
-        <h1 class="h3 m-0">WHOISXML Lookup</h1>
-        <a href="index.html" class="btn btn-outline-secondary btn-sm">← Back to Home</a>
+  <div class="mb-4 d-flex align-items-center justify-content-between">
+    <h1 class="h3 m-0">WHOIS Lookup</h1>
+    <a href="/" class="btn btn-outline-secondary btn-sm">← Back to Home</a>
+  </div>
+
+  <div class="card p-4 mb-3">
+    <form id="form" class="row g-2">
+      <div class="col-sm-9">
+        <input type="text" id="domain" class="form-control" placeholder="Enter domain (e.g., example.com)" required />
+      </div>
+      <div class="col-sm-3 d-grid">
+        <button class="btn btn-primary" type="submit">Check WHOIS</button>
+      </div>
+    </form>
+    <small class="muted">Data retrieved securely via your server’s API key 🔒</small>
+  </div>
+
+  <div class="alert alert-info spinner" id="loading">Fetching WHOIS data…</div>
+  <div id="error" class="alert alert-danger d-none"></div>
+
+  <div id="result" class="card p-4 d-none">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <div>
+        <h2 class="h4" id="res-domain"></h2>
+        <span class="badge badge-soft" id="res-status"></span>
+      </div>
+      <a id="raw-link" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener">Raw JSON</a>
     </div>
-
-    <div class="card p-4 mb-3">
-        <form id="form" class="row g-2">
-            <div class="col-sm-9">
-                <input type="text" id="domain" class="form-control" placeholder="Enter domain (e.g., example.com)" required />
-            </div>
-            <div class="col-sm-3 d-grid">
-                <button class="btn btn-primary" type="submit">Check WHOIS</button>
-            </div>
-        </form>
-        <small class="muted">Powered by WHOISXML API</small>
+    <hr />
+    <div class="kv">
+      <div>Registrar</div><div id="res-registrar"></div>
+      <div>Created</div><div id="res-created"></div>
+      <div>Updated</div><div id="res-updated"></div>
+      <div>Expires</div><div id="res-expires"></div>
+      <div>Registrant Country</div><div id="res-country"></div>
+      <div>Nameservers</div><div id="res-ns"></div>
     </div>
+  </div>
 
-    <div class="alert alert-info spinner" id="loading">Fetching WHOIS data…</div>
-
-    <div id="error" class="alert alert-danger d-none"></div>
-
-    <div id="result" class="card p-4 d-none">
-        <div class="d-flex align-items-center justify-content-between mb-2">
-            <div>
-                <h2 class="h4" id="res-domain"></h2>
-                <span class="badge badge-soft" id="res-status"></span>
-            </div>
-            <a id="raw-link" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener">Open Raw JSON</a>
-        </div>
-        <hr />
-        <div class="kv">
-            <div>Registrar</div><div id="res-registrar"></div>
-            <div>Created</div><div id="res-created"></div>
-            <div>Updated</div><div id="res-updated"></div>
-            <div>Expires</div><div id="res-expires"></div>
-            <div>Registrant Country</div><div id="res-country"></div>
-            <div>Nameservers</div><div id="res-ns"></div>
-        </div>
-    </div>
+  <footer>WHOIS Lookup — Securely served via your API backend</footer>
 </div>
 
 <script>
-const API_KEY = 'at_BKpZTxcXrBiVLHUmOFeocPyCpz244'; // your key (you asked to include it)
-
 function qs(name){
-    const p = new URLSearchParams(location.search);
-    return p.get(name) || '';
+  const p = new URLSearchParams(location.search);
+  return p.get(name) || '';
 }
 
 function fmtDate(s){
-    if(!s) return '';
-    const d = new Date(s);
-    return isNaN(d) ? s : d.toLocaleString();
+  if(!s) return '';
+  const d = new Date(s);
+  return isNaN(d) ? s : d.toLocaleString();
 }
 
 async function fetchWhois(domain){
-    const endpoint = `https://www.whoisxmlapi.com/whoisserver/WhoisService?apiKey=${encodeURIComponent(API_KEY)}&domainName=${encodeURIComponent(domain)}&outputFormat=JSON`;
-    document.getElementById('raw-link').href = endpoint;
+  const endpoint = '/api/whois'; // backend-protected endpoint
+  document.getElementById('raw-link').removeAttribute('href');
 
-    document.getElementById('loading').style.display = 'block';
-    document.getElementById('error').classList.add('d-none');
-    document.getElementById('result').classList.add('d-none');
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('error').classList.add('d-none');
+  document.getElementById('result').classList.add('d-none');
 
-    try{
-        const res = await fetch(endpoint, { mode: 'cors' });
-        if(!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ domain })
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
 
-        // Navigate JSON safely
-        const r = (data.WhoisRecord || {});
-        const regData = r.registrant || {};
-        const nsArr = (r.nameServers && r.nameServers.hostNames) ? r.nameServers.hostNames : [];
+    const r = data.WhoisRecord || {};
+    const regData = r.registrant || {};
+    const nsArr = (r.nameServers && r.nameServers.hostNames) ? r.nameServers.hostNames : [];
 
-        document.getElementById('res-domain').textContent = r.domainName || domain;
-        document.getElementById('res-status').textContent = (r.status || '').toString().slice(0,120) || '—';
-        document.getElementById('res-registrar').textContent = r.registrarName || '—';
-        document.getElementById('res-created').textContent = fmtDate(r.createdDate);
-        document.getElementById('res-updated').textContent = fmtDate(r.updatedDate);
-        document.getElementById('res-expires').textContent = fmtDate(r.expiresDate);
-        document.getElementById('res-country').textContent = regData.country || '—';
-        document.getElementById('res-ns').textContent = (nsArr && nsArr.length ? nsArr.join(', ') : '—');
+    document.getElementById('res-domain').textContent = r.domainName || domain;
+    document.getElementById('res-status').textContent = (r.status || '').toString().slice(0,120) || '—';
+    document.getElementById('res-registrar').textContent = r.registrarName || '—';
+    document.getElementById('res-created').textContent = fmtDate(r.createdDate);
+    document.getElementById('res-updated').textContent = fmtDate(r.updatedDate);
+    document.getElementById('res-expires').textContent = fmtDate(r.expiresDate);
+    document.getElementById('res-country').textContent = regData.country || '—';
+    document.getElementById('res-ns').textContent = (nsArr && nsArr.length ? nsArr.join(', ') : '—');
 
-        document.getElementById('result').classList.remove('d-none');
-    } catch(err){
-        document.getElementById('error').textContent = 'Unable to fetch WHOIS data. ' + err.message;
-        document.getElementById('error').classList.remove('d-none');
-    } finally {
-        document.getElementById('loading').style.display = 'none';
-    }
+    document.getElementById('result').classList.remove('d-none');
+    document.getElementById('raw-link').href = `https://www.whoisxmlapi.com/whoisserver/WhoisService?domainName=${encodeURIComponent(domain)}&outputFormat=JSON`;
+  } 
+  catch (err) {
+    document.getElementById('error').textContent = 'Unable to fetch WHOIS data. ' + err.message;
+    document.getElementById('error').classList.remove('d-none');
+  } 
+  finally {
+    document.getElementById('loading').style.display = 'none';
+  }
 }
 
-document.getElementById('form').addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const d = document.getElementById('domain').value.trim();
-    if(d) fetchWhois(d);
+document.getElementById('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const d = document.getElementById('domain').value.trim();
+  if (d) fetchWhois(d);
 });
 
-// If domain provided via query string, auto-run
+// Auto-run if ?domain= present
 const incoming = qs('domain');
-if(incoming){
-    document.getElementById('domain').value = incoming;
-    fetchWhois(incoming);
+if (incoming) {
+  document.getElementById('domain').value = incoming;
+  fetchWhois(incoming);
 }
 </script>
 </body>
