@@ -2,6 +2,6 @@ flask==3.0.0
 requests==2.31.0
 flask-cors==4.0.0
 sendgrid==6.12.0
-python-dotenv
-openai
-gunicorn
+python-dotenv==1.0.1
+openai==1.47.0
+gunicorn==23.0.0
