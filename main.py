@@ -67,21 +67,37 @@ def do_vt_check(url):
         raise Exception(f"VirusTotal API error: {response.status_code}")
 
 def send_welcome_email(to_email):
-    if not SENDGRID_API_KEY:
-        print("SendGrid API key not found.")
-        return
-    message = Mail(
-        from_email='you@yourdomain.com',  # Replace with your verified sender
-        to_emails=to_email,
-        subject='Welcome to EZM Cyber!',
-        html_content='<strong>Thanks for signing up! You are now protected by EZM Cyber.</strong>'
-    )
+    import smtplib
+    from email.mime.text import MIMEText
+    from email.mime.multipart import MIMEMultipart
+    import os
+
+    SENDER_EMAIL = os.getenv("SENDER_EMAIL")        # contact@ezmcyber.com
+    SENDER_PASSWORD = os.getenv("SENDER_PASSWORD")  # password from environment
+
+    if not SENDER_EMAIL or not SENDER_PASSWORD:
+        print("Email credentials missing!")
+        return False
+
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = "Welcome to EZM Cyber!"
+    msg["From"] = SENDER_EMAIL
+    msg["To"] = to_email
+    msg.attach(MIMEText(
+        "<strong>Thanks for signing up! You are now protected by EZM Cyber.</strong>", 
+        "html"
+    ))
+
     try:
-        sg = SendGridAPIClient(SENDGRID_API_KEY)
-        response = sg.send(message)
-        print("Email sent:", response.status_code)
+        with smtplib.SMTP("smtp.hostinger.com", 587, timeout=10) as server:
+            server.starttls()
+            server.login(SENDER_EMAIL, SENDER_PASSWORD)
+            server.sendmail(SENDER_EMAIL, to_email, msg.as_string())
+        print(f"Welcome email sent to {to_email}")
+        return True
     except Exception as e:
-        print("SendGrid error:", e)
+        print("Email send failed:", e)
+        return False
 
 # -------------------- ROUTES --------------------
 @app.route('/')
