@@ -989,6 +989,53 @@ window.addEventListener('resize', () => {
   </div>
 </section>
 
+<script>
+const URLSCAN_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/urlscan';
+const form = document.getElementById('linkForm');
+const input = document.getElementById('linkInput');
+const resultDiv = document.getElementById('result');
+
+function showResult(html) {
+  resultDiv.innerHTML = html;
+}
+
+function addTyping() {
+  showResult('<em>Scanning... please wait ⏳</em>');
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const url = input.value.trim();
+  if(!url) return;
+
+  addTyping();
+
+  try {
+    const resp = await fetch(URLSCAN_BACKEND, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({url})
+    });
+    if(!resp.ok) throw new Error(`Server error: ${resp.status}`);
+    const data = await resp.json();
+
+    if(data.uuid && data.scanUrl){
+      showResult(`
+        <strong>Scan submitted!</strong><br>
+        <small>Scan ID: <a href="${data.scanUrl}" target="_blank">${data.uuid}</a></small><br>
+        <small>Full report: <a href="${data.scanUrl}" target="_blank">View on URLScan.io</a></small>
+      `);
+    } else {
+      showResult('<span style="color:#f59e0b;">⚠️ Scan could not be completed. Try again later.</span>');
+    }
+
+  } catch(err) {
+    console.error(err);
+    showResult('<span style="color:#ef4444;">⚠️ Network or server error. Try again later.</span>');
+  }
+});
+</script>
+
     <!-- Additional Tools -->
         <section class="py-5 section-light scroll-fade">
             <div class="container">
