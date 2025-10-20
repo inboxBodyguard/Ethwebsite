@@ -3,80 +3,178 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Link Safety Checker</title>
+<title>EZM Cyber — Link Checker</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
---bg-1:#06060a; --bg-2:#0b0710;
---accent:#00ffcc; --muted:#9fb6b0;
---clean:#16a34a; --suspicious:#f59e0b; --phish:#ef4444; --unrated:#6b7280;
---bubble-user:#00ffcc25; --bubble-bot:#071218;
+  --bg1:#010409; --bg2:#051014;
+  --accent:#00ffcc; --muted:#9fb6b0;
+  --safe:#16a34a; --susp:#f59e0b; --bad:#ef4444;
 }
 body{
-background:linear-gradient(135deg,var(--bg-1),var(--bg-2));
-color:#e6fff8;font-family:"Orbitron",system-ui,sans-serif;
-height:100vh;display:flex;flex-direction:column;
+  font-family:"Orbitron",system-ui,sans-serif;
+  background: radial-gradient(circle at 20% 20%, #021018 0%, #000408 80%);
+  color:#e8fff7;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
 }
+
+/* Subtle animated background glow */
+body::before{
+  content:"";
+  position:fixed;
+  top:-50%;left:-50%;
+  width:200%;height:200%;
+  background:conic-gradient(from 90deg at 50% 50%, #00ffcc11, #001010, #00ffcc11);
+  animation:spin 12s linear infinite;
+  z-index:-1;
+  filter:blur(120px);
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
 #chat-container{
-flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;scroll-behavior:smooth;
+  flex:1;
+  overflow-y:auto;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  scroll-behavior:smooth;
 }
+
 .msg{
-max-width:85%;padding:12px 16px;border-radius:16px;line-height:1.5;word-wrap:break-word;
-font-size:0.95rem;display:inline-block;position:relative;animation:pop 0.25s ease-out;
+  max-width:85%;
+  padding:14px 18px;
+  border-radius:14px;
+  line-height:1.6;
+  word-wrap:break-word;
+  font-size:0.95rem;
+  display:inline-block;
+  animation:fadeIn 0.25s ease-out;
+  backdrop-filter:blur(3px);
 }
-@keyframes pop{0%{transform:scale(0.95);opacity:0}100%{transform:scale(1);opacity:1}}
-.user{align-self:flex-end;background:var(--bubble-user);border:1px solid rgba(0,255,204,0.3);color:#e6fff8}
-.bot{align-self:flex-start;background:var(--bubble-bot);border:1px solid rgba(0,255,204,0.1)}
-.bot strong{color:var(--accent)}
-#input-bar{display:flex;padding:12px;border-top:1px solid rgba(0,255,204,0.1);background:rgba(255,255,255,0.03)}
-#url-input{flex:1;padding:12px;border:none;background:rgba(0,0,0,0.3);color:#e6fff8;border-radius:8px;font-size:1rem}
-#send-btn{margin-left:8px;padding:12px 18px;background:var(--accent);color:#001517;font-weight:700;border:none;border-radius:8px;cursor:pointer;transition:0.2s}
-#send-btn:hover{filter:brightness(1.2)}
-.status-safe{color:var(--clean)}
-.status-susp{color:var(--suspicious)}
-.status-bad{color:var(--phish)}
-.vendor-grid{margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
-.vendor-card{padding:8px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,255,204,0.06);font-size:0.8rem;text-align:center}
-.typing{display:inline-block;font-style:italic;opacity:0.8}
+.user{
+  align-self:flex-end;
+  background:rgba(0,255,204,0.15);
+  border:1px solid rgba(0,255,204,0.3);
+}
+.bot{
+  align-self:flex-start;
+  background:rgba(0,255,204,0.05);
+  border:1px solid rgba(0,255,204,0.15);
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+.typing{opacity:0.7;font-style:italic}
 .dot{animation:blink 1.2s infinite}
 @keyframes blink{0%,20%{opacity:0}50%{opacity:1}100%{opacity:0}}
-footer{text-align:center;padding:10px;color:var(--muted);font-size:0.8rem}
+
+#input-bar{
+  display:flex;
+  padding:14px;
+  border-top:1px solid rgba(0,255,204,0.15);
+  background:rgba(0,255,204,0.02);
+}
+#url-input{
+  flex:1;
+  padding:14px;
+  background:rgba(0,0,0,0.4);
+  border:1px solid rgba(0,255,204,0.2);
+  color:#e8fff7;
+  border-radius:8px;
+  font-size:1rem;
+  outline:none;
+  transition:0.2s;
+}
+#url-input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 8px rgba(0,255,204,0.4);
+}
+#send-btn{
+  margin-left:10px;
+  padding:14px 20px;
+  background:var(--accent);
+  color:#001717;
+  font-weight:700;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.25s;
+}
+#send-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 18px rgba(0,255,204,0.6);
+}
+
+/* Main scan result panel */
 #main-result{
-transition:all 0.3s ease;
+  padding:22px;
+  border-radius:12px;
+  background:rgba(0,255,204,0.08);
+  border:1px solid rgba(0,255,204,0.2);
+  box-shadow:0 0 40px rgba(0,255,204,0.15);
+  animation:pop 0.5s ease-out;
 }
-#main-result:hover{
-transform:scale(1.02);
-box-shadow:0 0 40px rgba(0,255,204,0.25);
+@keyframes pop{from{transform:scale(0.96);opacity:0}to{transform:scale(1);opacity:1}}
+
+.status-safe{color:var(--safe)}
+.status-susp{color:var(--susp)}
+.status-bad{color:var(--bad)}
+
+.vendor-grid{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:8px;
 }
-@media (max-width:600px){
-#chat-container{padding:12px;gap:12px}
-#url-input{font-size:0.9rem}
-#send-btn{padding:10px 14px;font-size:0.9rem}
-.vendor-card{font-size:0.75rem}
+.vendor-card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(0,255,204,0.06);
+  border-radius:8px;
+  text-align:center;
+  padding:8px;
+  font-size:0.8rem;
+  transition:0.2s;
+}
+.vendor-card:hover{
+  background:rgba(0,255,204,0.12);
+  transform:scale(1.03);
+}
+
+footer{
+  text-align:center;
+  padding:10px;
+  font-size:0.8rem;
+  color:var(--muted);
+  background:rgba(0,255,204,0.02);
+  border-top:1px solid rgba(0,255,204,0.05);
 }
 </style>
 </head>
 <body>
 
 <div id="chat-container">
-  <div class="msg bot"><strong>Instructions:</strong> Drop any link and I’ll scan it with top security vendors to see if it’s safe 🔍</div>
+  <div class="msg bot">Drop any link and I’ll scan it with the top security vendors to see if it’s safe 🔍</div>
 </div>
 
 <div id="input-bar">
-  <input id="url-input" type="text" placeholder="Paste a link to check..." autocomplete="off">
-  <button id="send-btn">Send</button>
+  <input id="url-input" type="text" placeholder="Paste a link to analyze..." autocomplete="off">
+  <button id="send-btn">Scan</button>
 </div>
 
 <footer>Secure • Protect • Respond</footer>
 
 <script>
-const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
-const chat = document.getElementById('chat-container');
-const input = document.getElementById('url-input');
-const sendBtn = document.getElementById('send-btn');
+const BACKEND_API = 'https://your-backend-domain.com/api/scan'; // replace after deployment
 
-function addMessage(text, sender='bot') {
+const chat=document.getElementById('chat-container');
+const input=document.getElementById('url-input');
+const send=document.getElementById('send-btn');
+
+function addMessage(text,sender='bot'){
   const div=document.createElement('div');
   div.className=`msg ${sender}`;
   div.innerHTML=text;
@@ -84,111 +182,73 @@ function addMessage(text, sender='bot') {
   chat.scrollTop=chat.scrollHeight;
   return div;
 }
-
-function verdictClass(v){
-  if(v==='phish'||v==='malicious') return 'status-bad';
-  if(v==='suspicious') return 'status-susp';
-  return 'status-safe';
+function verdictColor(v){
+  if(v==='malicious'||v==='phish')return'bad';
+  if(v==='suspicious')return'susp';
+  return'safe';
 }
-
-function addTyping(){
+function typing(){
   return addMessage(`<span class="typing">Scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`,'bot');
 }
 
-async function analyzeLink(url){
-  const typingDiv=addTyping();
+async function analyze(url){
+  const t=typing();
   try{
-    const resp=await fetch(BACKEND_API,{
+    const r=await fetch(BACKEND_API,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({url})
     });
-    if(!resp.ok) throw new Error(`Error ${resp.status}`);
-    const data=await resp.json();
-    if(!data.last_analysis_results) throw new Error('Invalid response');
+    const d=await r.json();
+    t.remove();
 
-    const vendors=Object.entries(data.last_analysis_results).map(([name,info])=>{
-      const cat=info?.category?.toLowerCase()||'unrated';
-      let v='unrated';
-      if(cat==='malicious'||cat==='phishing') v='phish';
-      else if(cat==='suspicious') v='suspicious';
-      else if(cat==='harmless'||cat==='clean') v='clean';
-      return {name,verdict:v};
-    });
-
-    const stats={mal:0,susp:0,clean:0};
-    vendors.forEach(v=>{
-      if(v.verdict==='phish') stats.mal++;
-      else if(v.verdict==='suspicious') stats.susp++;
-      else if(v.verdict==='clean') stats.clean++;
+    if(!d.last_analysis_results)return addMessage('⚠️ Invalid scan result','bot');
+    const vendors=Object.entries(d.last_analysis_results).map(([n,v])=>{
+      const cat=v.category?.toLowerCase()||'unrated';
+      let status='unrated';
+      if(cat.includes('malicious')||cat.includes('phish'))status='phish';
+      else if(cat.includes('suspicious'))status='suspicious';
+      else if(cat.includes('clean')||cat.includes('harmless'))status='clean';
+      return {n,status};
     });
 
     const total=vendors.length;
-    const threatCount=stats.mal+stats.susp;
-    let status='safe',label='CLEAN';
-    if(stats.mal>0){status='bad';label='MALICIOUS';}
-    else if(stats.susp>0){status='susp';label='SUSPICIOUS';}
-    if(stats.susp>0 && stats.mal===0){label=`Mostly Clean (${stats.susp} flagged)`;}
+    const bad=vendors.filter(v=>v.status==='phish').length;
+    const susp=vendors.filter(v=>v.status==='suspicious').length;
 
-    let html=`<strong>Status:</strong> <span class="${'status-'+status}">${label}</span><br>
-      <small>Detections: ${threatCount}/${total}</small>`;
-    html+=`<div class="vendor-grid">`+
-      vendors.slice(0,90).map(v=>`
-        <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
-      `).join('')+`</div>`;
+    let overall='safe',label='CLEAN';
+    if(bad>0){overall='bad';label='MALICIOUS';}
+    else if(susp>0){overall='susp';label='SUSPICIOUS';}
 
-    typingDiv.remove();
+    const html=`<strong>Status:</strong> <span class="status-${overall}">${label}</span><br>
+    <small>Detections: ${bad+susp}/${total}</small>
+    <div class="vendor-grid">
+      ${vendors.slice(0,90).map(v=>`<div class="vendor-card">${v.n}<br><span class="status-${verdictColor(v.status)}">${v.status.toUpperCase()}</span></div>`).join('')}
+    </div>`;
 
-    // ----- pinned dashboard-style result -----
-    let resultBox=document.getElementById('main-result');
-    if(!resultBox){
-      resultBox=document.createElement('div');
-      resultBox.id='main-result';
-      resultBox.style.padding='20px';
-      resultBox.style.margin='20px 0';
-      resultBox.style.borderRadius='12px';
-      resultBox.style.background='rgba(0,255,204,0.08)';
-      resultBox.style.border='1px solid rgba(0,255,204,0.2)';
-      resultBox.style.fontSize='1rem';
-      resultBox.style.textAlign='left';
-      resultBox.style.boxShadow='0 0 25px rgba(0,255,204,0.1)';
-      resultBox.style.animation='pop 0.4s ease-out';
-      chat.prepend(resultBox);
+    let box=document.getElementById('main-result');
+    if(!box){
+      box=document.createElement('div');
+      box.id='main-result';
+      chat.prepend(box);
     }
-    resultBox.innerHTML=`<strong>🔍 Latest Scan Result</strong><br><br>${html}`;
-
-    // ----- save recent history (session only) -----
-    const saved=JSON.parse(sessionStorage.getItem('ezm_history')||'[]');
-    saved.unshift({url,verdict:status, detections:threatCount, total});
-    if(saved.length>50) saved.pop();
-    sessionStorage.setItem('ezm_history',JSON.stringify(saved));
-
-  }catch(e){
-    console.error(e);
-    typingDiv.remove();
-    addMessage(`⚠️ Could not complete the scan right now.`,'bot');
+    box.innerHTML=`<strong>🔍 Latest Scan Result</strong><br><br>${html}`;
+  }catch(err){
+    t.remove();
+    addMessage('⚠️ Unable to scan now.','bot');
   }
 }
 
-sendBtn.onclick=()=>{
-  const val=input.value.trim();
-  if(!val) return;
-  addMessage(val,'user');
+send.onclick=()=>{
+  const v=input.value.trim();
+  if(!v)return;
+  addMessage(v,'user');
   input.value='';
-  let normalized=val;
-  if(!/^https?:\/\//i.test(val)) normalized='http://'+val;
-  try{
-    new URL(normalized);
-    analyzeLink(normalized);
-  }catch{
-    addMessage('Invalid URL format.','bot');
-  }
+  let u=v;
+  if(!/^https?:\/\//i.test(v))u='http://'+v;
+  try{new URL(u);analyze(u);}catch{addMessage('Invalid URL','bot');}
 };
-
-input.addEventListener('keypress',e=>{
-  if(e.key==='Enter') sendBtn.click();
-});
+input.addEventListener('keypress',e=>{if(e.key==='Enter')send.click()});
 </script>
-
 </body>
 </html>
