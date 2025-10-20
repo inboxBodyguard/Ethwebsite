@@ -43,22 +43,6 @@ body {
   position: relative;
 }
 
-/* Full Page Cyber Rain Background */
-#cyber-bg {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  z-index: 0 !important;
-  pointer-events: none !important;
-}
-
-body > *:not(#cyber-bg) {
-  position: relative;
-  z-index: 1;
-}
-
 /* Banner */
 .banner {
   background-color: var(--primary-color);
@@ -74,66 +58,34 @@ body > *:not(#cyber-bg) {
   z-index: 10;
 }
 
-/* Sidebar with Cyber Rain Effect */
+/* Sidebar */
 .ezm-sidebar {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 320px;
   max-width: 92%;
-  height: 100vh !important;
-  background: black;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(10px);
   padding: 20px;
   overflow-y: auto;
   overflow-x: hidden;
-  transform: translateX(-100%) !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0.3s, opacity 300ms ease !important;
+  transform: translateX(-100%);
+  visibility: hidden;
+  opacity: 0;
+  transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0.3s, opacity 300ms ease;
   z-index: 1200;
   color: #00ffcc;
   font-family: monospace;
+  border-right: 1px solid rgba(139, 92, 246, 0.3);
 }
 
 .ezm-sidebar.open {
-  transform: translateX(0) !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0s, opacity 300ms ease !important;
-}
-
-.ezm-sidebar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(to bottom, rgba(0,255,128,0.3) 50%, transparent 50%);
-  background-size: 2px 20px;
-  animation: rainFall 0.4s linear infinite;
-  opacity: 0.6;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.ezm-sidebar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top, rgba(0,255,128,0.15), transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-@keyframes rainFall {
-  from { background-position-y: 0; }
-  to { background-position-y: 20px; }
-}
-
-.ezm-sidebar > * {
-  position: relative;
-  z-index: 1;
+  transform: translateX(0);
+  visibility: visible;
+  opacity: 1;
+  transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0s, opacity 300ms ease;
 }
 
 .ezm-sidebar-inner {
@@ -149,7 +101,7 @@ body > *:not(#cyber-bg) {
   background: transparent;
   font-size: 28px;
   cursor: pointer;
-  color: var(--text-primary);
+  color: var(--text-light);
   width: 40px;
   height: 40px;
   display: flex;
@@ -159,7 +111,7 @@ body > *:not(#cyber-bg) {
 }
 
 .ezm-sidebar-close:hover {
-  background: rgba(0,0,0,0.05);
+  background: rgba(255,255,255,0.1);
 }
 
 .ezm-sidebar-brand {
@@ -170,8 +122,9 @@ body > *:not(#cyber-bg) {
 .ezm-sidebar-brand a {
   font-weight: 800;
   font-size: 1.25rem;
-  color: var(--text-primary);
+  color: var(--accent-color);
   text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .ezm-sidebar-nav ul {
@@ -195,6 +148,9 @@ body > *:not(#cyber-bg) {
   color: #fff;
   background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   box-shadow: 0 8px 28px rgba(99,102,241,0.12);
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
 }
 
 .ezm-btn:hover {
@@ -207,17 +163,18 @@ body > *:not(#cyber-bg) {
   padding: 12px 14px;
   border-radius: 10px;
   background: transparent;
-  border: 1px solid rgba(16,24,40,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
   font-weight: 700;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--text-primary);
+  color: var(--text-light);
+  font-family: 'Inter', sans-serif;
 }
 
 .ezm-has-sub .ezm-sub-toggle:hover {
-  background: rgba(99,102,241,0.05);
+  background: rgba(99,102,241,0.1);
 }
 
 .ezm-has-sub .ezm-sub-toggle .ezm-caret {
@@ -250,22 +207,22 @@ body > *:not(#cyber-bg) {
   display: block;
   padding: 10px 12px;
   border-radius: 8px;
-  background: rgba(2,6,23,0.02);
-  color: var(--text-primary);
+  background: rgba(2,6,23,0.1);
+  color: var(--text-light);
   font-weight: 600;
   text-decoration: none;
   margin-bottom: 6px;
 }
 
 .ezm-submenu li a:hover {
-  background: rgba(2,6,23,0.04);
+  background: rgba(2,6,23,0.2);
   transform: translateX(4px);
 }
 
 .ezm-sidebar-footer {
   margin-top: 18px;
   padding-top: 8px;
-  border-top: 1px solid rgba(0,0,0,0.04);
+  border-top: 1px solid rgba(255,255,255,0.1);
   text-align: center;
 }
 
@@ -287,7 +244,7 @@ body > *:not(#cyber-bg) {
 .ezm-sidebar-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.36);
+  background: rgba(0,0,0,0.5);
   opacity: 0;
   visibility: hidden;
   transition: opacity 220ms ease;
@@ -308,9 +265,9 @@ body > *:not(#cyber-bg) {
   display: flex;
   align-items: center;
   z-index: 1100;
-  background: rgba(255,255,255,0.92);
+  background: rgba(15, 23, 42, 0.9);
   backdrop-filter: blur(6px);
-  border-bottom: 1px solid rgba(0,0,0,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .ezm-topbar .container {
@@ -324,8 +281,9 @@ body > *:not(#cyber-bg) {
 .ezm-topbar .navbar-brand {
   font-weight: 700;
   font-size: 1.25rem;
-  color: var(--text-primary);
+  color: var(--accent-color);
   text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .ezm-hamburger {
@@ -356,7 +314,7 @@ body > *:not(#cyber-bg) {
 .ezm-hamburger-inner::before,
 .ezm-hamburger-inner::after {
   display: block;
-  background: var(--text-primary);
+  background: var(--accent-color);
   height: 2px;
   border-radius: 2px;
   position: absolute;
@@ -406,34 +364,6 @@ body > *:not(#cyber-bg) {
   }
 }
 
-.falling-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
-}
-
-.falling-text {
-  position: absolute;
-  top: -50px;
-  font-size: 1.2rem;
-  font-family: 'Orbitron', sans-serif;
-  color: var(--accent-color);
-  text-shadow: var(--neon-glow);
-  animation: fall linear infinite;
-}
-
-@keyframes fall {
-  0% { transform: translateY(-50px); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(110vh); opacity: 0; }
-}
-
 /* Chat-specific styles */
 #chat-container {
   flex: 1;
@@ -445,6 +375,7 @@ body > *:not(#cyber-bg) {
   scroll-behavior: smooth;
   margin: 0 auto;
   max-width: 800px;
+  min-height: calc(100vh - 150px);
 }
 
 .msg {
@@ -469,6 +400,7 @@ body > *:not(#cyber-bg) {
   align-self: flex-start;
   background: var(--dark-card);
   color: var(--text-light);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
 .bot strong {
@@ -483,16 +415,26 @@ body > *:not(#cyber-bg) {
   position: sticky;
   bottom: 0;
   z-index: 10;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 #url-input {
   flex: 1;
   padding: 12px;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(139, 92, 246, 0.3);
   background: var(--dark-card);
   color: var(--text-light);
   border-radius: 8px;
   font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+#url-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
 }
 
 #send-btn {
@@ -504,6 +446,8 @@ body > *:not(#cyber-bg) {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
 }
 
 #send-btn:hover {
@@ -514,6 +458,7 @@ body > *:not(#cyber-bg) {
 #send-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .status-safe {
@@ -548,7 +493,7 @@ body > *:not(#cyber-bg) {
   padding: 8px;
   border-radius: 8px;
   background: var(--dark-bg);
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255,255,255,0.1);
   font-size: 0.8rem;
   text-align: center;
 }
@@ -574,12 +519,12 @@ footer {
   padding: 10px;
   color: var(--text-secondary);
   font-size: 0.8rem;
+  position: relative;
+  z-index: 1;
 }
 </style>
 </head>
 <body>
-<div id="cyber-bg"></div>
-<div class="falling-container"></div>
 <div class="banner">EZM Cyber AI — Link Scanner</div>
 <div class="ezm-topbar">
   <div class="container">
@@ -749,7 +694,8 @@ async function analyzeLink(url) {
   }
 }
 
-sendBtn.onclick = () => {
+// Fixed send button functionality
+sendBtn.addEventListener('click', () => {
   try {
     console.log('Scan button clicked');
     if (sendBtn.disabled) {
@@ -768,7 +714,7 @@ sendBtn.onclick = () => {
     addMessage(val, 'user');
     input.value = '';
     let normalized = val;
-    if (!/^https?:///i.test(val)) normalized = 'https://' + val;
+    if(!/^https?:\/\//i.test(val)) normalized='http://'+val;
     try {
       new URL(normalized);
       const timeoutPromise = new Promise((_, reject) => {
@@ -790,13 +736,54 @@ sendBtn.onclick = () => {
     sendBtn.textContent = 'Scan';
     addMessage('<strong>EZM Cyber AI:</strong> Something went wrong with the scan button. Try again? ⚠️', 'bot');
   }
-};
+});
 
 input.addEventListener('keypress', e => {
   if (e.key === 'Enter') {
     console.log('Enter key pressed, triggering button click');
     sendBtn.click();
   }
+});
+
+// Sidebar functionality
+const hamburger = document.querySelector('.ezm-hamburger');
+const sidebar = document.querySelector('.ezm-sidebar');
+const sidebarClose = document.querySelector('.ezm-sidebar-close');
+const sidebarOverlay = document.querySelector('.ezm-sidebar-overlay');
+
+hamburger.addEventListener('click', () => {
+  sidebar.classList.add('open');
+  sidebarOverlay.classList.add('visible');
+  hamburger.setAttribute('aria-expanded', 'true');
+});
+
+sidebarClose.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  sidebarOverlay.classList.remove('visible');
+  hamburger.setAttribute('aria-expanded', 'false');
+});
+
+sidebarOverlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  sidebarOverlay.classList.remove('visible');
+  hamburger.setAttribute('aria-expanded', 'false');
+});
+
+// Toggle submenus
+const subToggles = document.querySelectorAll('.ezm-sub-toggle');
+subToggles.forEach(toggle => {
+  toggle.addEventListener('click', () => {
+    const parent = toggle.parentElement;
+    const isExpanded = parent.getAttribute('aria-expanded') === 'true';
+    parent.setAttribute('aria-expanded', !isExpanded);
+    
+    const submenu = parent.querySelector('.ezm-submenu');
+    if (!isExpanded) {
+      submenu.setAttribute('aria-expanded', 'true');
+    } else {
+      submenu.setAttribute('aria-expanded', 'false');
+    }
+  });
 });
 </script>
 </body>
