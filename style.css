@@ -1,446 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EZM Cyber AI — Link Analyzer</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
 :root {
-–primary-color: #6366f1;
-–primary-dark: #4f46e5;
-–secondary-color: #8b5cf6;
-–accent-color: #06b6d4;
-–success-color: #10b981;
-–warning-color: #f59e0b;
-–danger-color: #ef4444;
-–dark-bg: #0f172a;
-–dark-card: #1e293b;
-–light-bg: #f8fafc;
-–light-card: #ffffff;
-–text-primary: #1e293b;
-–text-secondary: #64748b;
-–text-light: #94a3b8;
-–border-color: #e2e8f0;
-–neon-glow: 0 0 8px #8b5cf6, 0 0 16px #06b6d4;
+  --primary-color: #6366f1;
+  --primary-dark: #4f46e5;
+  --secondary-color: #8b5cf6;
+  --accent-color: #06b6d4;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --dark-bg: #0f172a;
+  --dark-card: #1e293b;
+  --light-bg: #f8fafc;
+  --light-card: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-light: #94a3b8;
+  --border-color: #e2e8f0;
+  --neon-glow: 0 0 8px #8b5cf6, 0 0 16px #06b6d4;
 }
 
-- {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+}
 
 body {
-font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, ‘Segoe UI’, sans-serif;
-background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-color: var(–text-light);
-line-height: 1.7;
-min-height: 100vh;
-padding-top: 72px;
-overflow-x: hidden;
-position: relative;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: var(--text-light);
+  line-height: 1.7;
+  min-height: 100vh;
+  padding-top: 72px;
+  overflow-x: hidden;
+  position: relative;
 }
 
-/* ===============================
-FULL PAGE CYBER RAIN BACKGROUND
-=============================== */
+/* Full Page Cyber Rain Background */
 #cyber-bg {
-position: fixed !important;
-top: 0 !important;
-left: 0 !important;
-width: 100vw !important;
-height: 100vh !important;
-z-index: 0 !important;
-pointer-events: none !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
 }
 
-/* Ensure all content sits above the cyber rain */
 body > *:not(#cyber-bg) {
-position: relative;
-z-index: 1;
+  position: relative;
+  z-index: 1;
 }
 
 /* Banner */
 .banner {
-background-color: var(–primary-color);
-color: white;
-padding: 16px;
-text-align: center;
-font-family: ‘Orbitron’, sans-serif;
-font-size: 1.5rem;
-font-weight: 700;
-box-shadow: var(–neon-glow);
-text-transform: uppercase;
-position: relative;
-z-index: 10;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 16px;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  box-shadow: var(--neon-glow);
+  text-transform: uppercase;
+  position: relative;
+  z-index: 10;
 }
 
-/* ===============================
-SIDEBAR WITH CYBER RAIN EFFECT
-=============================== */
+/* Sidebar with Cyber Rain Effect */
 .ezm-sidebar {
-position: fixed !important;
-top: 0 !important;
-left: 0 !important;
-width: 320px;
-max-width: 92%;
-height: 100vh !important;
-background: black;
-padding: 20px;
-overflow-y: auto;
-overflow-x: hidden;
-transform: translateX(-100%) !important;
-visibility: hidden !important;
-opacity: 0 !important;
-transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0.3s, opacity 300ms ease !important;
-z-index: 1200;
-color: #00ffcc;
-font-family: monospace;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 320px;
+  max-width: 92%;
+  height: 100vh !important;
+  background: black;
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transform: translateX(-100%) !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0.3s, opacity 300ms ease !important;
+  z-index: 1200;
+  color: #00ffcc;
+  font-family: monospace;
 }
 
 .ezm-sidebar.open {
-transform: translateX(0) !important;
-visibility: visible !important;
-opacity: 1 !important;
-transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0s, opacity 300ms ease !important;
+  transform: translateX(0) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), visibility 0s linear 0s, opacity 300ms ease !important;
 }
 
-/* Cyber rain particles in sidebar */
 .ezm-sidebar::before {
-content: “”;
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-image: linear-gradient(to bottom, rgba(0,255,128,0.3) 50%, transparent 50%);
-background-size: 2px 20px;
-animation: rainFall 0.4s linear infinite;
-opacity: 0.6;
-pointer-events: none;
-z-index: 0;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom, rgba(0,255,128,0.3) 50%, transparent 50%);
+  background-size: 2px 20px;
+  animation: rainFall 0.4s linear infinite;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* Subtle glow overlay in sidebar */
 .ezm-sidebar::after {
-content: “”;
-position: absolute;
-inset: 0;
-background: radial-gradient(circle at top, rgba(0,255,128,0.15), transparent 70%);
-pointer-events: none;
-z-index: 0;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(0,255,128,0.15), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* Rain movement animation */
 @keyframes rainFall {
-from { background-position-y: 0; }
-to { background-position-y: 20px; }
+  from { background-position-y: 0; }
+  to { background-position-y: 20px; }
 }
 
-/* Ensure sidebar content is above pseudo-elements */
 .ezm-sidebar > * {
-position: relative;
-z-index: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .ezm-sidebar-inner {
-padding: 88px 18px 28px;
-box-sizing: border-box;
+  padding: 88px 18px 28px;
+  box-sizing: border-box;
 }
 
 .ezm-sidebar-close {
-position: absolute;
-top: 12px;
-right: 12px;
-border: none;
-background: transparent;
-font-size: 28px;
-cursor: pointer;
-color: var(–text-primary);
-width: 40px;
-height: 40px;
-display: flex;
-align-items: center;
-justify-content: center;
-border-radius: 50%;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 
 .ezm-sidebar-close:hover {
-background: rgba(0,0,0,0.05);
+  background: rgba(0,0,0,0.05);
 }
 
 .ezm-sidebar-brand {
-margin-bottom: 1rem;
-text-align: left;
+  margin-bottom: 1rem;
+  text-align: left;
 }
 
 .ezm-sidebar-brand a {
-font-weight: 800;
-font-size: 1.25rem;
-color: var(–text-primary);
-text-decoration: none;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  text-decoration: none;
 }
 
-/* Sidebar nav */
 .ezm-sidebar-nav ul {
-list-style: none;
-padding: 0;
-margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .ezm-sidebar-nav li {
-margin-bottom: 6px;
+  margin-bottom: 6px;
 }
 
 .ezm-btn {
-display: block;
-width: 100%;
-text-align: left;
-padding: 12px 14px;
-border-radius: 10px;
-text-decoration: none;
-font-weight: 600;
-color: #fff;
-background: linear-gradient(135deg, var(–primary-color), var(–primary-dark));
-box-shadow: 0 8px 28px rgba(99,102,241,0.12);
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  box-shadow: 0 8px 28px rgba(99,102,241,0.12);
 }
 
 .ezm-btn:hover {
-box-shadow: 0 12px 36px rgba(99,102,241,0.16);
-transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(99,102,241,0.16);
+  transform: translateY(-2px);
 }
 
-/* Submenu */
 .ezm-has-sub .ezm-sub-toggle {
-width: 100%;
-padding: 12px 14px;
-border-radius: 10px;
-background: transparent;
-border: 1px solid rgba(16,24,40,0.08);
-font-weight: 700;
-cursor: pointer;
-display: flex;
-justify-content: space-between;
-align-items: center;
-color: var(–text-primary);
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid rgba(16,24,40,0.08);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-primary);
 }
 
 .ezm-has-sub .ezm-sub-toggle:hover {
-background: rgba(99,102,241,0.05);
+  background: rgba(99,102,241,0.05);
 }
 
 .ezm-has-sub .ezm-sub-toggle .ezm-caret {
-font-size: 0.9em;
-transition: transform 0.3s ease;
+  font-size: 0.9em;
+  transition: transform 0.3s ease;
 }
 
-.ezm-has-sub[aria-expanded=“true”] .ezm-sub-toggle .ezm-caret {
-transform: rotate(180deg);
+.ezm-has-sub[aria-expanded="true"] .ezm-sub-toggle .ezm-caret {
+  transform: rotate(180deg);
 }
 
 .ezm-submenu {
-list-style: none;
-margin: 8px 0 10px 0;
-padding-left: 8px;
-display: none;
-opacity: 0;
-max-height: 0;
-overflow: hidden;
-transition: all 0.3s ease;
+  list-style: none;
+  margin: 8px 0 10px 0;
+  padding-left: 8px;
+  display: none;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
-.ezm-submenu[aria-expanded=“true”] {
-display: block;
-opacity: 1;
-max-height: 300px;
+.ezm-submenu[aria-expanded="true"] {
+  display: block;
+  opacity: 1;
+  max-height: 300px;
 }
 
 .ezm-submenu li a {
-display: block;
-padding: 10px 12px;
-border-radius: 8px;
-background: rgba(2,6,23,0.02);
-color: var(–text-primary);
-font-weight: 600;
-text-decoration: none;
-margin-bottom: 6px;
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(2,6,23,0.02);
+  color: var(--text-primary);
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 6px;
 }
 
 .ezm-submenu li a:hover {
-background: rgba(2,6,23,0.04);
-transform: translateX(4px);
+  background: rgba(2,6,23,0.04);
+  transform: translateX(4px);
 }
 
-/* Sidebar footer */
 .ezm-sidebar-footer {
-margin-top: 18px;
-padding-top: 8px;
-border-top: 1px solid rgba(0,0,0,0.04);
-text-align: center;
+  margin-top: 18px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0,0,0,0.04);
+  text-align: center;
 }
 
 .ezm-cta {
-display: inline-block;
-padding: 10px 18px;
-border-radius: 10px;
-background: linear-gradient(135deg, var(–primary-color), var(–primary-dark));
-color: #fff;
-text-decoration: none;
-font-weight: 700;
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
 }
 
 .ezm-cta:hover {
-transform: translateY(-2px);
-box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
 }
 
-/* Overlay */
 .ezm-sidebar-overlay {
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,0.36);
-opacity: 0;
-visibility: hidden;
-transition: opacity 220ms ease;
-z-index: 1150;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.36);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 220ms ease;
+  z-index: 1150;
 }
 
 .ezm-sidebar-overlay.visible {
-opacity: 1;
-visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
-/* Topbar */
 .ezm-topbar {
-position: fixed;
-top: 0;
-left: 0;
-right: 0;
-height: 72px;
-display: flex;
-align-items: center;
-z-index: 1100;
-background: rgba(255,255,255,0.92);
-backdrop-filter: blur(6px);
-border-bottom: 1px solid rgba(0,0,0,0.04);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  z-index: 1100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
 }
 
 .ezm-topbar .container {
-display: flex;
-align-items: center;
-justify-content: space-between;
-width: 100%;
-padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 1rem;
 }
 
 .ezm-topbar .navbar-brand {
-font-weight: 700;
-font-size: 1.25rem;
-color: var(–text-primary);
-text-decoration: none;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  text-decoration: none;
 }
 
-/* Hamburger */
 .ezm-hamburger {
-background: transparent;
-border: none;
-padding: 8px;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
-width: 44px;
-height: 44px;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
 }
 
 .ezm-hamburger:focus {
-outline: 3px solid rgba(99,102,241,0.18);
-border-radius: 6px;
+  outline: 3px solid rgba(99,102,241,0.18);
+  border-radius: 6px;
 }
 
 .ezm-hamburger-box {
-display: inline-block;
-width: 22px;
-height: 16px;
-position: relative;
+  display: inline-block;
+  width: 22px;
+  height: 16px;
+  position: relative;
 }
 
 .ezm-hamburger-inner,
 .ezm-hamburger-inner::before,
 .ezm-hamburger-inner::after {
-display: block;
-background: var(–text-primary);
-height: 2px;
-border-radius: 2px;
-position: absolute;
-left: 0;
-right: 0;
-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+  background: var(--text-primary);
+  height: 2px;
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .ezm-hamburger-inner {
-top: 50%;
-transform: translateY(-50%);
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .ezm-hamburger-inner::before {
-content: ‘’;
-top: -7px;
+  content: '';
+  top: -7px;
 }
 
 .ezm-hamburger-inner::after {
-content: ‘’;
-top: 7px;
+  content: '';
+  top: 7px;
 }
 
-/* Hamburger animation when open */
-.ezm-hamburger[aria-expanded=“true”] .ezm-hamburger-inner {
-background: transparent;
+.ezm-hamburger[aria-expanded="true"] .ezm-hamburger-inner {
+  background: transparent;
 }
 
-.ezm-hamburger[aria-expanded=“true”] .ezm-hamburger-inner::before {
-transform: rotate(45deg);
-top: 0;
+.ezm-hamburger[aria-expanded="true"] .ezm-hamburger-inner::before {
+  transform: rotate(45deg);
+  top: 0;
 }
 
-.ezm-hamburger[aria-expanded=“true”] .ezm-hamburger-inner::after {
-transform: rotate(-45deg);
-top: 0;
+.ezm-hamburger[aria-expanded="true"] .ezm-hamburger-inner::after {
+  transform: rotate(-45deg);
+  top: 0;
 }
 
 @media (max-width: 768px) {
-.ezm-sidebar {
-width: 80%;
-}
+  .ezm-sidebar {
+    width: 80%;
+  }
 }
 
 @media (max-width: 600px) {
-.ezm-sidebar {
-width: 88%;
-}
+  .ezm-sidebar {
+    width: 88%;
+  }
 }
 
-/* ===============================
-FALLING TEXT EFFECT
-=============================== */
 .falling-container {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-pointer-events: none;
-overflow: hidden;
-z-index: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
 }
 
 .falling-text {
-position: absolute;
-top: -50px;
-font-size: 1.2rem;
-font-family: ‘Orbitron’, sans-serif;
-color: var(–accent-color);
-text-shadow: var(–neon-glow);
-animation: fall linear infinite;
+  position: absolute;
+  top: -50px;
+  font-size: 1.2rem;
+  font-family: 'Orbitron', sans-serif;
+  color: var(--accent-color);
+  text-shadow: var(--neon-glow);
+  animation: fall linear infinite;
 }
 
 @keyframes fall {
-0% { transform: translateY(-50px); opacity: 0; }
-10% { opacity: 1; }
-90% { opacity: 1; }
-100% { transform: translateY(110vh); opacity: 0; }
+  0% { transform: translateY(-50px); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0; }
 }
+
+/* Chat-specific styles */
+#chat-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.msg {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  font-size: 0.95rem;
+  display: inline-block;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.user {
+  align-self: flex-end;
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.bot {
+  align-self: flex-start;
+  background: var(--dark-card);
+  color: var(--text-light);
+}
+
+.bot strong {
+  color: var(--accent-color);
+}
+
+#input-bar {
+  display: flex;
+  padding: 12px;
+  background: var(--dark-bg);
+  border-top: 1px solid var(--border-color);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+#url-input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--dark-card);
+  color: var(--text-light);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+#send-btn {
+  margin-left: 8px;
+  padding: 12px 18px;
+  background: var(--accent-color);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#send-btn:hover {
+  background: var(--secondary-color);
+  box-shadow: var(--neon-glow);
+}
+
+#send-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.status-safe {
+  color: var(--success-color);
+}
+
+.status-susp {
+  color: var(--warning-color);
+}
+
+.status-bad {
+  color: var(--danger-color);
+}
+
+.warning {
+  font-weight: 900;
+  text-transform: uppercase;
+  background: var(--danger-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.vendor-grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.vendor-card {
+  padding: 8px;
+  border-radius: 8px;
+  background: var(--dark-bg);
+  border: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.typing {
+  display: inline-block;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.dot {
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+  0%, 20% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+</style>
+</head>
+<body>
+<div id="cyber-bg"></div>
+<div class="falling-container"></div>
+<div class="banner">EZM Cyber AI — Link Scanner</div>
+<div class="ezm-topbar">
+  <div class="container">
+    <a href="#" class="navbar-brand">EZM Cyber AI</a>
+    <button class="ezm-hamburger" aria-expanded="false" aria-label="Toggle sidebar">
+      <span class="ezm-hamburger-box">
+        <span class="ezm-hamburger-inner"></span>
+      </span>
+    </button>
+  </div>
+</div>
+<div class="ezm-sidebar">
+  <div class="ezm-sidebar-inner">
+    <button class="ezm-sidebar-close" aria-label="Close sidebar">&times;</button>
+    <div class="ezm-sidebar-brand">
+      <a href="#">EZM Cyber AI</a>
+    </div>
+    <nav class="ezm-sidebar-nav">
+      <ul>
+        <li><a href="#" class="ezm-btn">Home</a></li>
+        <li><a href="#" class="ezm-btn">Scan History</a></li>
+        <li class="ezm-has-sub" aria-expanded="false">
+          <button class="ezm-sub-toggle">Tools <span class="ezm-caret">▼</span></button>
+          <ul class="ezm-submenu">
+            <li><a href="#">Link Checker</a></li>
+            <li><a href="#">File Scanner</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div class="ezm-sidebar-footer">
+      <a href="#" class="ezm-cta">Upgrade to Pro</a>
+    </div>
+  </div>
+</div>
+<div class="ezm-sidebar-overlay"></div>
+<div id="chat-container" aria-live="polite">
+  <div class="msg bot"><strong>EZM Cyber AI:</strong> Yo, I'm your AI-powered link guardian! Drop a URL, and I'll scan it across top security vendors to keep you safe. Ready when you are! 🚀</div>
+</div>
+<div id="input-bar">
+  <input id="url-input" type="text" placeholder="Type or paste a link..." autocomplete="off" aria-label="Enter URL to scan">
+  <button id="send-btn" aria-label="Scan URL">Scan</button>
+</div>
+<footer>EZM Cyber AI — Your Smart Shield Against Threats</footer>
+<script>
+const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
+const chat = document.getElementById('chat-container');
+const input = document.getElementById('url-input');
+const sendBtn = document.getElementById('send-btn');
+
+// Array of conversational phrases for different statuses
+const phrases = {
+  safe: [
+    "Sweet, this link is clean as a whistle! No threats found.",
+    "All good here! I scanned it, and this link is safe to explore.",
+    "Looks legit! You're clear to check this one out."
+  ],
+  susp: [
+    "Hold up, this link's got some sketchy vibes. Proceed with caution.",
+    "Not entirely clean. A few vendors flagged it as suspicious.",
+    "Hmm, this one's a bit iffy. Maybe double-check before clicking."
+  ],
+  bad: [
+    "<span class='warning'>Don't click!</span> This link is dangerous—multiple vendors flagged it as malicious!",
+    "<span class='warning'>Don't click!</span> Red alert! This URL could harm your device.",
+    "<span class='warning'>Don't click!</span> Nope, this one's bad news. Steer clear!"
+  ]
+};
+
+function getRandomPhrase(status) {
+  const options = phrases[status] || ["I've got the scan results."];
+  return options[Math.floor(Math.random() * options.length)];
+}
+
+function addMessage(text, sender = 'bot') {
+  const div = document.createElement('div');
+  div.className = `msg ${sender}`;
+  div.innerHTML = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  return div;
+}
+
+function verdictClass(v) {
+  if (v === 'phish' || v === 'malicious') return 'status-bad';
+  if (v === 'suspicious') return 'status-susp';
+  return 'status-safe';
+}
+
+function addTyping() {
+  return addMessage(`<span class="typing">EZM Cyber AI is analyzing the link<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, 'bot');
+}
+
+async function analyzeLink(url) {
+  console.log('Analyzing URL:', url);
+  const typingDiv = addTyping();
+  // Simulate AI "thinking" delay (1.5-3 seconds)
+  await new Promise(resolve => setTimeout(resolve, Math.random() * 1500 + 1500));
+
+  try {
+    const resp = await fetch(BACKEND_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
+    if (!resp.ok) {
+      if (resp.status === 429) throw new Error('Rate limit exceeded. Please try again later.');
+      throw new Error(`HTTP error ${resp.status}`);
+    }
+    const data = await resp.json();
+    if (!data.last_analysis_results) throw new Error('Invalid response from API');
+
+    const vendors = Object.entries(data.last_analysis_results).map(([name, info]) => {
+      const cat = info?.category?.toLowerCase() || 'unrated';
+      let v = 'unrated';
+      if (cat === 'malicious' || cat === 'phishing') v = 'phish';
+      else if (cat === 'suspicious') v = 'suspicious';
+      else if (cat === 'harmless' || cat === 'clean') v = 'clean';
+      return { name, verdict: v };
+    });
+
+    const stats = { mal: 0, susp: 0, clean: 0 };
+    vendors.forEach(v => {
+      if (v.verdict === 'phish') stats.mal++;
+      else if (v.verdict === 'suspicious') stats.susp++;
+      else if (v.verdict === 'clean') stats.clean++;
+    });
+
+    const total = vendors.length;
+    const threatCount = stats.mal + stats.susp;
+    let status = 'safe';
+    let label = 'CLEAN';
+    if (stats.mal > 0) { status = 'bad'; label = 'MALICIOUS'; }
+    else if (stats.susp > 0) { status = 'susp'; label = 'SUSPICIOUS'; }
+    else { status = 'safe'; label = 'CLEAN'; }
+
+    if (stats.susp > 0 && stats.mal === 0) {
+      label = `Mostly Clean (${stats.susp} flagged)`;
+    }
+
+    const introPhrase = getRandomPhrase(status);
+    let html = `<strong>EZM Cyber AI:</strong> ${introPhrase}<br>
+    <strong>Status:</strong> <span class="${'status-' + status}">${label}</span><br>
+    <small>Detections: ${threatCount}/${total} vendors flagged it.</small><br><br>
+    Here's what the security vendors say:`;
+
+    html += `<div class="vendor-grid">` + vendors.slice(0, 90).map(v => `
+      <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
+    `).join('') + `</div>`;
+
+    html += `<br>Got another link? I'm ready to scan it! 🔒`;
+
+    typingDiv.remove();
+    addMessage(html, 'bot');
+  } catch (e) {
+    console.error('API Error:', e.message);
+    typingDiv.remove();
+    let errorMsg = '<strong>EZM Cyber AI:</strong> Uh-oh, I hit a snag! ';
+    if (e.message.includes('Rate limit')) {
+      errorMsg += 'Too many scans at once. Give me a sec and try again!';
+    } else if (e.message === 'Invalid response from API') {
+      errorMsg += 'The scan came back empty. This link might be too sneaky!';
+    } else {
+      errorMsg += 'Something broke on my end. Want to try another URL?';
+    }
+    addMessage(errorMsg + ' ⚠️', 'bot');
+  }
+}
+
+sendBtn.onclick = () => {
+  try {
+    console.log('Scan button clicked');
+    if (sendBtn.disabled) {
+      console.log('Button is disabled, ignoring click');
+      return;
+    }
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Scanning...';
+    const val = input.value.trim().replace(/[<>"']/g, '');
+    if (!val) {
+      console.log('Empty input, aborting');
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Scan';
+      return;
+    }
+    addMessage(val, 'user');
+    input.value = '';
+    let normalized = val;
+    if (!/^https?:///i.test(val)) normalized = 'https://' + val;
+    try {
+      new URL(normalized);
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Request timed out')), 10000);
+      });
+      Promise.race([analyzeLink(normalized), timeoutPromise]).finally(() => {
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Scan';
+      });
+    } catch {
+      console.log('Invalid URL format');
+      addMessage('<strong>EZM Cyber AI:</strong> Whoops, that URL doesn’t look right. Can you check the format?', 'bot');
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Scan';
+    }
+  } catch (e) {
+    console.error('Button click error:', e.message);
+    sendBtn.disabled = false;
+    sendBtn.textContent = 'Scan';
+    addMessage('<strong>EZM Cyber AI:</strong> Something went wrong with the scan button. Try again? ⚠️', 'bot');
+  }
+};
+
+input.addEventListener('keypress', e => {
+  if (e.key === 'Enter') {
+    console.log('Enter key pressed, triggering button click');
+    sendBtn.click();
+  }
+});
+</script>
+</body>
+</html>
