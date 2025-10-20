@@ -1,154 +1,315 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EZM Cyber — Link Checker</title>
+<title>EZM Cyber AI — Link Analyzer</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
---bg-1:#06060a; --bg-2:#0b0710;
---accent:#00ffcc; --muted:#9fb6b0;
---clean:#16a34a; --suspicious:#f59e0b; --phish:#ef4444;
---bubble-user:#00ffcc25; --bubble-bot:#071218;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg-1: #06060a;
+  --bg-2: #0b0710;
+  --accent: #00ffcc;
+  --muted: #9fb6b0;
+  --clean: #16a34a;
+  --suspicious: #f59e0b;
+  --phish: #ef4444;
+  --unrated: #6b7280;
+  --bubble-user: #00ffcc25;
+  --bubble-bot: #071218;
 }
-body{
-background:linear-gradient(135deg,var(--bg-1),var(--bg-2));
-color:#e6fff8;font-family:"Orbitron",system-ui,sans-serif;
-height:100vh;display:flex;flex-direction:column;
+body {
+  background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  color: #e6fff8;
+  font-family: "Orbitron", system-ui, sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-#chat-container{
-flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;
+#chat-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
 }
-.msg{
-max-width:85%;padding:12px 16px;border-radius:16px;line-height:1.5;word-wrap:break-word;
-font-size:0.95rem;animation:pop 0.25s ease-out;
+.msg {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  font-size: 0.95rem;
+  display: inline-block;
+  position: relative;
+  animation: pop 0.25s ease-out;
 }
-@keyframes pop{0%{transform:scale(0.95);opacity:0}100%{transform:scale(1);opacity:1}}
-.user{align-self:flex-end;background:var(--bubble-user);border:1px solid rgba(0,255,204,0.3);color:#e6fff8}
-.bot{align-self:flex-start;background:var(--bubble-bot);border:1px solid rgba(0,255,204,0.1)}
-.bot strong{color:var(--accent)}
-#input-bar{display:flex;padding:12px;border-top:1px solid rgba(0,255,204,0.1);background:rgba(255,255,255,0.03)}
-#url-input{flex:1;padding:12px;border:none;background:rgba(0,0,0,0.3);color:#e6fff8;border-radius:8px;font-size:1rem}
-#send-btn{margin-left:8px;padding:12px 18px;background:var(--accent);color:#001517;font-weight:700;border:none;border-radius:8px;cursor:pointer;user-select:none}
-#send-btn:active{opacity:0.8}
-.status-safe{color:var(--clean)}
-.status-susp{color:var(--suspicious)}
-.status-bad{color:var(--phish)}
-.vendor-grid{margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
-.vendor-card{padding:8px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,255,204,0.06);font-size:0.8rem;text-align:center}
-footer{text-align:center;padding:10px;color:var(--muted);font-size:0.8rem}
-@media (max-width:600px){
-#chat-container{padding:12px;gap:12px}
-#url-input{font-size:0.9rem}
-#send-btn{padding:10px 14px;font-size:0.9rem}
-.msg{font-size:0.88rem}
+@keyframes pop {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.user {
+  align-self: flex-end;
+  background: var(--bubble-user);
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  color: #e6fff8;
+}
+.bot {
+  align-self: flex-start;
+  background: var(--bubble-bot);
+  border: 1px solid rgba(0, 255, 204, 0.1);
+}
+.bot strong {
+  color: var(--accent);
+}
+#input-bar {
+  display: flex;
+  padding: 12px;
+  border-top: 1px solid rgba(0, 255, 204, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+#url-input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: rgba(0, 0, 0, 0.3);
+  color: #e6fff8;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+#send-btn {
+  margin-left: 8px;
+  padding: 12px 18px;
+  background: var(--accent);
+  color: #001517;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+#send-btn:hover {
+  filter: brightness(1.2);
+}
+.status-safe {
+  color: var(--clean);
+}
+.status-susp {
+  color: var(--suspicious);
+}
+.status-bad {
+  color: var(--phish);
+}
+.vendor-grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+}
+.vendor-card {
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 204, 0.06);
+  font-size: 0.8rem;
+  text-align: center;
+}
+.typing {
+  display: inline-block;
+  font-style: italic;
+  opacity: 0.8;
+}
+.dot {
+  animation: blink 1.2s infinite;
+}
+@keyframes blink {
+  0%, 20% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+footer {
+  text-align: center;
+  padding: 10px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+@media (max-width: 600px) {
+  #chat-container { padding: 12px; gap: 12px; }
+  #url-input { font-size: 0.9rem; }
+  #send-btn { padding: 10px 14px; font-size: 0.9rem; }
+  .vendor-card { font-size: 0.75rem; }
 }
 </style>
 </head>
 <body>
 <div id="chat-container">
-<div class="msg bot"><strong>EZM:</strong> Send me a link 🔍</div>
+  <div class="msg bot"><strong>EZM Cyber AI:</strong> Hey there! Drop a link, and I'll scan it with my AI-powered tools across multiple security vendors. Let's keep you safe! 🔍</div>
 </div>
 <div id="input-bar">
-<input id="url-input" type="text" placeholder="Drop a link..." autocomplete="off">
-<button id="send-btn" type="button">Send</button>
+  <input id="url-input" type="text" placeholder="Type or paste a link..." autocomplete="off">
+  <button id="send-btn">Send</button>
 </div>
-<footer>EZM Cyber</footer>
+<footer>EZM Cyber AI — Intelligent Threat Intelligence Chat</footer>
 <script>
-const API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
+const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
 const chat = document.getElementById('chat-container');
 const input = document.getElementById('url-input');
-const btn = document.getElementById('send-btn');
+const sendBtn = document.getElementById('send-btn');
 
-const scanning = [“Checking…”,“Scanning 🔍”,“Running checks…”,“On it…”,“Analyzing…”];
-const clean = [“Clean ✅”,“Looks safe”,“All clear”,“You’re good”,“No threats”];
-const sus = [“Sketchy ⚠️”,“Suspicious”,“Be careful”,“Watch out”,“Not great”];
-const bad = [“Dangerous! ❌”,“Threat detected”,“Stay away”,“Malicious”,“Don’t click”];
-const err = [“Error. Try again?”,“Couldn’t scan. Retry?”,“Something broke”,“Backend issue”];
+// Array of conversational phrases for different statuses
+const phrases = {
+  safe: [
+    "Good news! This link looks totally clean. No threats detected.",
+    "All clear! I've scanned it, and it's safe to visit.",
+    "Phew, nothing suspicious here. You're good to go!"
+  ],
+  susp: [
+    "Hmm, this one raised a few flags. It might be suspicious—proceed with caution.",
+    "Not fully clean. Some vendors flagged it as potentially risky.",
+    "Interesting... It's mostly okay, but there are some concerns. Better double-check."
+  ],
+  bad: [
+    "Whoa, red alert! This link appears malicious. Stay away!",
+    "Danger detected! Multiple scans show this could be harmful.",
+    "Yikes, this one's bad news. I'd avoid clicking it if I were you."
+  ]
+};
 
-function rand(a){return a[Math.floor(Math.random()*a.length)]}
-
-function add(text,sender=‘bot’){
-const d=document.createElement(‘div’);
-d.className=`msg ${sender}`;
-d.innerHTML=text;
-chat.appendChild(d);
-chat.scrollTop=chat.scrollHeight;
-return d;
+function getRandomPhrase(status) {
+  const options = phrases[status] || ["I've got the results back."];
+  return options[Math.floor(Math.random() * options.length)];
 }
 
-function vc(v){
-if(v===‘phish’||v===‘malicious’)return ‘status-bad’;
-if(v===‘suspicious’)return ‘status-susp’;
-return ‘status-safe’;
+function addMessage(text, sender = 'bot') {
+  const div = document.createElement('div');
+  div.className = `msg ${sender}`;
+  div.innerHTML = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  return div;
 }
 
-async function scan(url){
-const t=add(`${rand(scanning)}...`,‘bot’);
-try{
-const r=await fetch(API,{method:‘POST’,headers:{‘Content-Type’:‘application/json’},body:JSON.stringify({url})});
-if(!r.ok)throw new Error();
-const d=await r.json();
-if(!d.last_analysis_results)throw new Error();
+function verdictClass(v) {
+  if (v === 'phish' || v === 'malicious') return 'status-bad';
+  if (v === 'suspicious') return 'status-susp';
+  return 'status-safe';
+}
 
-```
-const v=Object.entries(d.last_analysis_results).map(([n,i])=>{
-  const c=i?.category?.toLowerCase()||'unrated';
-  let vd='unrated';
-  if(c==='malicious'||c==='phishing')vd='phish';
-  else if(c==='suspicious')vd='suspicious';
-  else if(c==='harmless'||c==='clean')vd='clean';
-  return{name:n,verdict:vd};
+function addTyping() {
+  return addMessage(`<span class="typing">EZM Cyber AI is thinking and scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, 'bot');
+}
+
+async function analyzeLink(url) {
+  const typingDiv = addTyping();
+  // Simulate AI "thinking" delay for a more natural feel (1-3 seconds)
+  await new Promise(resolve => setTimeout(resolve, Math.random() * 2000 + 1000));
+
+  try {
+    const resp = await fetch(BACKEND_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
+    if (!resp.ok) {
+      if (resp.status === 429) throw new Error('Rate limit exceeded. Please try again later.');
+      throw new Error(`Error ${resp.status}`);
+    }
+    const data = await resp.json();
+    if (!data.last_analysis_results) throw new Error('Invalid response');
+
+    const vendors = Object.entries(data.last_analysis_results).map(([name, info]) => {
+      const cat = info?.category?.toLowerCase() || 'unrated';
+      let v = 'unrated';
+      if (cat === 'malicious' || cat === 'phishing') v = 'phish';
+      else if (cat === 'suspicious') v = 'suspicious';
+      else if (cat === 'harmless' || cat === 'clean') v = 'clean';
+      return { name, verdict: v };
+    });
+
+    const stats = { mal: 0, susp: 0, clean: 0 };
+    vendors.forEach(v => {
+      if (v.verdict === 'phish') stats.mal++;
+      else if (v.verdict === 'suspicious') stats.susp++;
+      else if (v.verdict === 'clean') stats.clean++;
+    });
+
+    const total = vendors.length;
+    const threatCount = stats.mal + stats.susp;
+    let status = 'safe';
+    let label = 'CLEAN';
+    if (stats.mal > 0) { status = 'bad'; label = 'MALICIOUS'; }
+    else if (stats.susp > 0) { status = 'susp'; label = 'SUSPICIOUS'; }
+    else { status = 'safe'; label = 'CLEAN'; }
+
+    // Friendly display for mostly clean
+    if (stats.susp > 0 && stats.mal === 0) {
+      label = `Mostly Clean (${stats.susp} flagged)`;
+    }
+
+    // Build conversational response
+    const introPhrase = getRandomPhrase(status);
+    let html = `<strong>EZM Cyber AI:</strong> ${introPhrase}<br>
+    <strong>Overall Status:</strong> <span class="${'status-' + status}">${label}</span><br>
+    <small>Detections: ${threatCount}/${total} vendors flagged it.</small><br><br>
+    Here's the detailed breakdown from the scans:`;
+
+    html += `<div class="vendor-grid">` + vendors.slice(0, 90).map(v => `
+      <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
+    `).join('') + `</div>`;
+
+    // Add a closing remark for AI feel
+    html += `<br>Got more links or questions? I'm here to help! 😊`;
+
+    typingDiv.remove();
+    addMessage(html, 'bot');
+  } catch (e) {
+    console.error('API Error:', e.message);
+    typingDiv.remove();
+    let errorMsg = '<strong>EZM Cyber AI:</strong> Oops, something went wrong on my end! ';
+    if (e.message.includes('Rate limit')) {
+      errorMsg += 'Looks like I hit a scanning limit. Mind trying again in a bit?';
+    } else if (e.message === 'Invalid response') {
+      errorMsg += 'The scan didn’t return usable data. Could be a tricky link!';
+    } else {
+      errorMsg += 'Might be a network glitch. Want to try another link?';
+    }
+    addMessage(errorMsg + ' ⚠️', 'bot');
+  }
+}
+
+sendBtn.onclick = () => {
+  if (sendBtn.disabled) return;
+  sendBtn.disabled = true;
+  sendBtn.textContent = 'Scanning...';
+  const val = input.value.trim().replace(/[<>"']/g, ''); // Basic sanitization
+  if (!val) {
+    sendBtn.disabled = false;
+    sendBtn.textContent = 'Send';
+    return;
+  }
+  addMessage(val, 'user');
+  input.value = '';
+  let normalized = val;
+  if (!/^https?:///i.test(val)) normalized = 'https://' + val; // Default to HTTPS
+  try {
+    new URL(normalized);
+    analyzeLink(normalized).finally(() => {
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send';
+    });
+  } catch {
+    addMessage('<strong>EZM Cyber AI:</strong> Hmm, that doesn\'t look like a valid URL. Mind checking the format?', 'bot');
+    sendBtn.disabled = false;
+    sendBtn.textContent = 'Send';
+  }
+};
+
+input.addEventListener('keypress', e => {
+  if (e.key === 'Enter') sendBtn.click();
 });
-
-const s={mal:0,susp:0,clean:0};
-v.forEach(x=>{
-  if(x.verdict==='phish')s.mal++;
-  else if(x.verdict==='suspicious')s.susp++;
-  else if(x.verdict==='clean')s.clean++;
-});
-
-const tot=v.length;
-const tc=s.mal+s.susp;
-let msg='';
-if(s.mal>0)msg=rand(bad);
-else if(s.susp>0)msg=rand(sus);
-else msg=rand(clean);
-
-let h=`<strong>${msg}</strong><br><small>${tc}/${tot} flagged</small>`;
-h+=`<div class="vendor-grid">`+v.slice(0,60).map(x=>`<div class="vendor-card">${x.name}<br><span class="${vc(x.verdict)}">${x.verdict}</span></div>`).join('')+`</div>`;
-
-t.remove();
-add(h,'bot');
-```
-
-}catch{
-t.remove();
-add(`<strong>${rand(err)}</strong>`,‘bot’);
-}
-}
-
-function go(){
-const v=input.value.trim();
-if(!v)return;
-add(v,‘user’);
-input.value=’’;
-let u=v;
-if(!/^https?:///i.test(v))u=‘http://’+v;
-try{
-new URL(u);
-scan(u);
-}catch{
-add(’<strong>Invalid URL</strong>’,‘bot’);
-}
-}
-
-btn.onclick=go;
-input.onkeydown=e=>{if(e.key===‘Enter’)go()};
 </script>
-
 </body>
 </html>
