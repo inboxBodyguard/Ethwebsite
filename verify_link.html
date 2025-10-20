@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EZM Cyber — Link Checker</title>
+<title>EZM Cyber — Link Intelligence Chat</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -42,6 +42,27 @@ font-size:0.95rem;display:inline-block;position:relative;animation:pop 0.25s eas
 .dot{animation:blink 1.2s infinite}
 @keyframes blink{0%,20%{opacity:0}50%{opacity:1}100%{opacity:0}}
 footer{text-align:center;padding:10px;color:var(--muted);font-size:0.8rem}
+#dashboard{
+border-top:1px solid rgba(0,255,204,0.1);
+background:rgba(255,255,255,0.02);
+padding:10px 16px;
+font-size:0.85rem;
+display:flex;
+flex-direction:column;
+gap:6px;
+overflow-y:auto;
+max-height:150px;
+}
+.dash-item{
+display:flex;justify-content:space-between;
+padding:6px 10px;
+background:rgba(255,255,255,0.04);
+border:1px solid rgba(0,255,204,0.08);
+border-radius:8px;cursor:pointer;
+transition:0.2s;
+}
+.dash-item:hover{background:rgba(0,255,204,0.08)}
+.dash-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:10px}
 @media (max-width:600px){
 #chat-container{padding:12px;gap:12px}
 #url-input{font-size:0.9rem}
@@ -52,19 +73,23 @@ footer{text-align:center;padding:10px;color:var(--muted);font-size:0.8rem}
 </head>
 <body>
 <div id="chat-container">
-  <div class="msg bot"><strong>EZM Cyber:</strong> Drop a link and I’ll analyze it across multiple security vendors 🔍</div>
+  <div class="msg bot"><strong>EZM Cyber:</strong> Hey 👋 I'm your link intelligence bot. Drop any link and I’ll scan it with top vendors to see if it’s safe 🔍</div>
 </div>
+
+<div id="dashboard"></div>
+
 <div id="input-bar">
   <input id="url-input" type="text" placeholder="Type or paste a link..." autocomplete="off">
   <button id="send-btn">Send</button>
 </div>
-<footer>EZM Cyber — Threat Intelligence in Chat</footer>
+<footer>EZM Cyber — AI-Powered Threat Chat + Dashboard</footer>
 
 <script>
 const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
 const chat = document.getElementById('chat-container');
 const input = document.getElementById('url-input');
 const sendBtn = document.getElementById('send-btn');
+const dashboard = document.getElementById('dashboard');
 
 function addMessage(text, sender = 'bot') {
   const div = document.createElement('div');
@@ -82,10 +107,38 @@ function verdictClass(v) {
 }
 
 function addTyping() {
-  return addMessage(
-    `<span class="typing">EZM Cyber is scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`,
-    'bot'
-  );
+  return addMessage(`<span class="typing">EZM Cyber is thinking<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, 'bot');
+}
+
+function aiResponse(ratio, detections, total) {
+  if (detections === 0) return `✅ Looks clean — no vendors flagged it.`;
+  if (ratio < 0.1) return `🟡 Minor caution — only ${detections}/${total} vendors flagged this link. Might be false positives.`;
+  if (ratio < 0.3) return `⚠️ Suspicious — ${detections}/${total} vendors raised concerns. Proceed carefully.`;
+  return `🚨 High risk — ${detections}/${total} vendors flagged it as malicious. Avoid this link.`;
+}
+
+function saveToDashboard(url, verdict, detections, total) {
+  const saved = JSON.parse(localStorage.getItem('ezm_history') || '[]');
+  const entry = { url, verdict, detections, total, time: new Date().toISOString() };
+  saved.unshift(entry);
+  if (saved.length > 50) saved.pop();
+  localStorage.setItem('ezm_history', JSON.stringify(saved));
+  renderDashboard();
+}
+
+function renderDashboard() {
+  const saved = JSON.parse(sessionStorage.getItem('ezm_history') || '[]');
+  dashboard.innerHTML = saved.length ? '<strong>Recent Scans:</strong>' : '';
+  saved.forEach((e) => {
+    const div = document.createElement('div');
+    div.className = 'dash-item';
+    div.innerHTML = `
+      <span class="dash-label">${e.url}</span>
+      <span class="${'status-' + e.verdict}">${e.verdict.toUpperCase()} (${e.detections}/${e.total})</span>
+    `;
+    div.onclick = () => analyzeLink(e.url);
+    dashboard.appendChild(div);
+  });
 }
 
 async function analyzeLink(url) {
@@ -118,16 +171,15 @@ async function analyzeLink(url) {
 
     const total = vendors.length;
     const threatCount = stats.mal + stats.susp;
+    const ratio = threatCount / total;
     let status = 'safe';
-    let label = 'CLEAN';
-    if (stats.mal > 0) { status = 'bad'; label = 'MALICIOUS'; }
-    else if (stats.susp > 0) { status = 'susp'; label = 'SUSPICIOUS'; }
+    if (ratio > 0.3) status = 'bad';
+    else if (ratio > 0.05) status = 'susp';
 
-    if (stats.susp > 0 && stats.mal === 0) {
-      label = `Mostly Clean (${stats.susp} flagged)`;
-    }
+    typingDiv.remove();
+    addMessage(aiResponse(ratio, threatCount, total), 'bot');
 
-    let html = `<strong>Status:</strong> <span class="${'status-' + status}">${label}</span><br>
+    let html = `<strong>Status:</strong> <span class="${'status-' + status}">${status.toUpperCase()}</span><br>
     <small>Detections: ${threatCount}/${total}</small>`;
 
     html += `<div class="vendor-grid">` +
@@ -135,13 +187,13 @@ async function analyzeLink(url) {
         <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
       `).join('') + `</div>`;
 
-    typingDiv.remove();
     addMessage(html, 'bot');
+    saveToDashboard(url, status, threatCount, total);
 
   } catch (e) {
     console.error(e);
     typingDiv.remove();
-    addMessage(`⚠️ Backend error — unable to scan right now.`, 'bot');
+    addMessage(`⚠️ Backend error — unable to scan right now. Try again soon.`, 'bot');
   }
 }
 
@@ -156,14 +208,15 @@ sendBtn.onclick = () => {
     new URL(normalized);
     analyzeLink(normalized);
   } catch {
-    addMessage('Invalid URL format.', 'bot');
+    addMessage('❌ Invalid URL format. Try again with a full link.', 'bot');
   }
 };
 
 input.addEventListener('keypress', e => {
   if (e.key === 'Enter') sendBtn.click();
 });
-</script>
 
+renderDashboard();
+</script>
 </body>
 </html>
