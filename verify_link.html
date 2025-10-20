@@ -52,115 +52,116 @@ footer{text-align:center;padding:10px;color:var(--muted);font-size:0.8rem}
 </head>
 <body>
 <div id="chat-container">
-<div class="msg bot"><strong>EZM Cyber:</strong> Drop a link and I’ll analyze it across multiple security vendors 🔍</div>
+  <div class="msg bot"><strong>EZM Cyber:</strong> Drop a link and I’ll analyze it across multiple security vendors 🔍</div>
 </div>
 <div id="input-bar">
-<input id="url-input" type="text" placeholder="Type or paste a link..." autocomplete="off">
-<button id="send-btn">Send</button>
+  <input id="url-input" type="text" placeholder="Type or paste a link..." autocomplete="off">
+  <button id="send-btn">Send</button>
 </div>
 <footer>EZM Cyber — Threat Intelligence in Chat</footer>
+
 <script>
 const BACKEND_API = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
 const chat = document.getElementById('chat-container');
 const input = document.getElementById('url-input');
 const sendBtn = document.getElementById('send-btn');
 
-function addMessage(text,sender=‘bot’){
-const div=document.createElement(‘div’);
-div.className=`msg ${sender}`;
-div.innerHTML=text;
-chat.appendChild(div);
-chat.scrollTop=chat.scrollHeight;
-return div;
+function addMessage(text, sender = 'bot') {
+  const div = document.createElement('div');
+  div.className = `msg ${sender}`;
+  div.innerHTML = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  return div;
 }
 
-function verdictClass(v){
-if(v===‘phish’||v===‘malicious’) return ‘status-bad’;
-if(v===‘suspicious’) return ‘status-susp’;
-return ‘status-safe’;
+function verdictClass(v) {
+  if (v === 'phish' || v === 'malicious') return 'status-bad';
+  if (v === 'suspicious') return 'status-susp';
+  return 'status-safe';
 }
 
-function addTyping(){
-return addMessage(`<span class="typing">EZM Cyber is scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`,‘bot’);
+function addTyping() {
+  return addMessage(
+    `<span class="typing">EZM Cyber is scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`,
+    'bot'
+  );
 }
 
-async function analyzeLink(url){
-const typingDiv=addTyping();
-try{
-const resp=await fetch(BACKEND_API,{
-method:‘POST’,
-headers:{‘Content-Type’:‘application/json’},
-body:JSON.stringify({url})
-});
-if(!resp.ok) throw new Error(`Error ${resp.status}`);
-const data=await resp.json();
-if(!data.last_analysis_results) throw new Error(‘Invalid response’);
+async function analyzeLink(url) {
+  const typingDiv = addTyping();
+  try {
+    const resp = await fetch(BACKEND_API, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ url })
+    });
+    if (!resp.ok) throw new Error(`Error ${resp.status}`);
+    const data = await resp.json();
+    if (!data.last_analysis_results) throw new Error('Invalid response');
 
-```
-const vendors=Object.entries(data.last_analysis_results).map(([name,info])=>{
-  const cat=info?.category?.toLowerCase()||'unrated';
-  let v='unrated';
-  if(cat==='malicious'||cat==='phishing') v='phish';
-  else if(cat==='suspicious') v='suspicious';
-  else if(cat==='harmless'||cat==='clean') v='clean';
-  return {name,verdict:v};
-});
+    const vendors = Object.entries(data.last_analysis_results).map(([name, info]) => {
+      const cat = info?.category?.toLowerCase() || 'unrated';
+      let v = 'unrated';
+      if (cat === 'malicious' || cat === 'phishing') v = 'phish';
+      else if (cat === 'suspicious') v = 'suspicious';
+      else if (cat === 'harmless' || cat === 'clean') v = 'clean';
+      return { name, verdict: v };
+    });
 
-const stats={mal:0,susp:0,clean:0};
-vendors.forEach(v=>{
-  if(v.verdict==='phish') stats.mal++;
-  else if(v.verdict==='suspicious') stats.susp++;
-  else if(v.verdict==='clean') stats.clean++;
-});
+    const stats = { mal: 0, susp: 0, clean: 0 };
+    vendors.forEach(v => {
+      if (v.verdict === 'phish') stats.mal++;
+      else if (v.verdict === 'suspicious') stats.susp++;
+      else if (v.verdict === 'clean') stats.clean++;
+    });
 
-const total=vendors.length;
-const threatCount=stats.mal+stats.susp;
-let status='safe';
-let label='CLEAN';
-if(stats.mal>0) {status='bad'; label='MALICIOUS'}
-else if(stats.susp>0) {status='susp'; label='SUSPICIOUS'}
-else {status='safe'; label='CLEAN'}
+    const total = vendors.length;
+    const threatCount = stats.mal + stats.susp;
+    let status = 'safe';
+    let label = 'CLEAN';
+    if (stats.mal > 0) { status = 'bad'; label = 'MALICIOUS'; }
+    else if (stats.susp > 0) { status = 'susp'; label = 'SUSPICIOUS'; }
 
-// Friendly display for mostly clean
-if(stats.susp>0 && stats.mal===0){
-  label=`Mostly Clean (${stats.susp} flagged)`
+    if (stats.susp > 0 && stats.mal === 0) {
+      label = `Mostly Clean (${stats.susp} flagged)`;
+    }
+
+    let html = `<strong>Status:</strong> <span class="${'status-' + status}">${label}</span><br>
+    <small>Detections: ${threatCount}/${total}</small>`;
+
+    html += `<div class="vendor-grid">` +
+      vendors.slice(0, 90).map(v => `
+        <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
+      `).join('') + `</div>`;
+
+    typingDiv.remove();
+    addMessage(html, 'bot');
+
+  } catch (e) {
+    console.error(e);
+    typingDiv.remove();
+    addMessage(`⚠️ Backend error — unable to scan right now.`, 'bot');
+  }
 }
 
-let html=`<strong>Status:</strong> <span class="${'status-'+status}">${label}</span><br>
-<small>Detections: ${threatCount}/${total}</small>`;
-
-html+=`<div class="vendor-grid">`+vendors.slice(0,90).map(v=>`
-  <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
-`).join('')+`</div>`;
-
-typingDiv.remove();
-addMessage(html,'bot');
-```
-
-}catch(e){
-console.error(e);
-typingDiv.remove();
-addMessage(`⚠️ Backend error — unable to scan right now.`,‘bot’);
-}
-}
-
-sendBtn.onclick=()=>{
-const val=input.value.trim();
-if(!val) return;
-addMessage(val,‘user’);
-input.value=’’;
-let normalized=val;
-if(!/^https?:///i.test(val)) normalized=‘http://’+val;
-try{
-new URL(normalized);
-analyzeLink(normalized);
-}catch{
-addMessage(‘Invalid URL format.’,‘bot’);
-}
+sendBtn.onclick = () => {
+  const val = input.value.trim();
+  if (!val) return;
+  addMessage(val, 'user');
+  input.value = '';
+  let normalized = val;
+  if (!/^https?:\/\//i.test(val)) normalized = 'http://' + val;
+  try {
+    new URL(normalized);
+    analyzeLink(normalized);
+  } catch {
+    addMessage('Invalid URL format.', 'bot');
+  }
 };
 
-input.addEventListener(‘keypress’,e=>{
-if(e.key===‘Enter’) sendBtn.click();
+input.addEventListener('keypress', e => {
+  if (e.key === 'Enter') sendBtn.click();
 });
 </script>
 
