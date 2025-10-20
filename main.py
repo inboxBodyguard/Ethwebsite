@@ -2,18 +2,19 @@ import os
 import base64
 import time
 import requests
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, render_template
 from flask_cors import CORS
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
-app = Flask(__name__, static_folder='.')  # Static files in same folder
+app = Flask(__name__, static_folder='.', template_folder='.')  # serves index.html, whois.html, etc.
 CORS(app)
 
-# --- VirusTotal Configuration ---
+# -------------------- VIRUSTOTAL CONFIG --------------------
 VT_API = os.getenv("VIRUSTOTAL_API_KEY")
 HEADERS = {"x-apikey": VT_API} if VT_API else {}
 VT_BASE = "https://www.virustotal.com/api/v3"
+
 
 def normalize_url(url):
     url = url.strip()
@@ -21,13 +22,15 @@ def normalize_url(url):
         url = "http://" + url
     return url
 
+
 def url_id_from_url(url):
     return base64.urlsafe_b64encode(url.encode()).decode().rstrip("=")
+
 
 def do_vt_check(url):
     if not VT_API:
         raise Exception("VirusTotal API key not found. Set the VIRUSTOTAL_API_KEY environment variable.")
-    
+
     url = normalize_url(url)
     url_id = url_id_from_url(url)
 
@@ -57,10 +60,7 @@ def do_vt_check(url):
         raise Exception(f"VirusTotal API error: {response.status_code}")
 
 
-import openai
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
-# --- SendGrid Welcome Email ---
+# -------------------- SENDGRID CONFIG --------------------
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 
 def send_welcome_email(to_email):
@@ -80,27 +80,28 @@ def send_welcome_email(to_email):
     except Exception as e:
         print("SendGrid error:", e)
 
-# --- Routes ---
+
+# -------------------- ROUTES --------------------
 @app.route('/')
-def index():
+def home():
     return send_from_directory('.', 'index.html')
 
 @app.route('/verify-link')
 def verify_link():
     return send_from_directory('.', 'verify_link.html')
 
+# VirusTotal API route
 @app.route('/api/virustotal', methods=['POST'])
 def check_url():
     try:
         data = request.get_json()
         url = data.get('url')
-        email = data.get('email')  # Optional: pass email to send welcome
+        email = data.get('email')  # optional
         if not url:
             return jsonify({"error": "Missing URL parameter"}), 400
-        
+
         result = do_vt_check(url)
 
-        # Send welcome email if email provided
         if email:
             send_welcome_email(email)
 
@@ -111,6 +112,37 @@ def check_url():
             return jsonify({"error": error_msg}), 429
         return jsonify({"error": error_msg}), 500
 
+
+# -------------------- WHOIS CONFIG --------------------
+WHOIS_API_KEY = os.getenv("WHOISXML_API_KEY")  # do NOT hardcode it
+
+@app.route('/whois')
+def whois_page():
+    return send_from_directory('.', 'whois.html')
+
+
+@app.route('/api/whois', methods=['POST'])
+def whois_lookup():
+    try:
+        data = request.get_json()
+        domain = data.get('domain')
+        if not domain:
+            return jsonify({'error': 'Domain missing'}), 400
+
+        endpoint = (
+            f"https://www.whoisxmlapi.com/whoisserver/WhoisService"
+            f"?apiKey={WHOIS_API_KEY}&domainName={domain}&outputFormat=JSON"
+        )
+
+        r = requests.get(endpoint, timeout=10)
+        r.raise_for_status()
+        return jsonify(r.json())
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# -------------------- RUN APP --------------------
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
