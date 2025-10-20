@@ -2,12 +2,13 @@ import os
 import base64
 import time
 import requests
-from flask import Flask, request, jsonify, send_from_directory, render_template
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
-app = Flask(__name__, static_folder='.', template_folder='.')  # serves index.html, whois.html, etc.
+# -------------------- SETUP --------------------
+app = Flask(__name__, static_folder='.', template_folder='.')
 CORS(app)
 
 # -------------------- VIRUSTOTAL CONFIG --------------------
@@ -18,45 +19,18 @@ VT_BASE = "https://www.virustotal.com/api/v3"
 # -------------------- URLSCAN CONFIG --------------------
 URLSCAN_API = os.getenv("URLSCAN_API_KEY")
 
-@app.route('/api/urlscan', methods=['POST'])
-def urlscan_check():
-    try:
-        data = request.get_json()
-        url = data.get('url')
-        if not url:
-            return jsonify({"error": "Missing URL parameter"}), 400
+# -------------------- SENDGRID CONFIG --------------------
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
-        headers = {
-            "API-Key": URLSCAN_API,
-            "Content-Type": "application/json"
-        }
-        payload = {"url": url, "visibility": "private"}
-        response = requests.post("https://urlscan.io/api/v1/scan/", headers=headers, json=payload, timeout=20)
-
-        if response.status_code not in (200, 201):
-            return jsonify({"error": f"URLScan API error {response.status_code}", "details": response.text}), response.status_code
-
-        data = response.json()
-        return jsonify({
-            "scan_id": data.get("uuid"),
-            "result_url": data.get("result"),
-            "message": "Scan started successfully. Use 'result_url' to view full analysis."
-        })
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
+# -------------------- HELPERS --------------------
 def normalize_url(url):
     url = url.strip()
     if not url.startswith(("http://", "https://")):
         url = "http://" + url
     return url
 
-
 def url_id_from_url(url):
     return base64.urlsafe_b64encode(url.encode()).decode().rstrip("=")
-
 
 def do_vt_check(url):
     if not VT_API:
@@ -65,10 +39,12 @@ def do_vt_check(url):
     url = normalize_url(url)
     url_id = url_id_from_url(url)
 
+    # Try getting existing report
     response = requests.get(f"{VT_BASE}/urls/{url_id}", headers=HEADERS, timeout=15)
     if response.status_code == 200:
         return response.json().get("data", {}).get("attributes", {})
 
+    # Submit URL for analysis
     response = requests.post(f"{VT_BASE}/urls", headers=HEADERS, data={"url": url}, timeout=15)
     if response.status_code in (200, 201):
         analysis_id = response.json()["data"]["id"]
@@ -90,10 +66,6 @@ def do_vt_check(url):
     else:
         raise Exception(f"VirusTotal API error: {response.status_code}")
 
-
-# -------------------- SENDGRID CONFIG --------------------
-SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
-
 def send_welcome_email(to_email):
     if not SENDGRID_API_KEY:
         print("SendGrid API key not found.")
@@ -111,7 +83,6 @@ def send_welcome_email(to_email):
     except Exception as e:
         print("SendGrid error:", e)
 
-
 # -------------------- ROUTES --------------------
 @app.route('/')
 def home():
@@ -121,7 +92,30 @@ def home():
 def verify_link():
     return send_from_directory('.', 'verify_link.html')
 
-# VirusTotal API route
+@app.route('/api/urlscan', methods=['POST'])
+def urlscan_check():
+    try:
+        data = request.get_json()
+        url = data.get('url')
+        if not url:
+            return jsonify({"error": "Missing URL parameter"}), 400
+
+        headers = {"API-Key": URLSCAN_API, "Content-Type": "application/json"}
+        payload = {"url": url, "visibility": "private"}
+        response = requests.post("https://urlscan.io/api/v1/scan/", headers=headers, json=payload, timeout=20)
+
+        if response.status_code not in (200, 201):
+            return jsonify({"error": f"URLScan API error {response.status_code}", "details": response.text}), response.status_code
+
+        data = response.json()
+        return jsonify({
+            "scan_id": data.get("uuid"),
+            "result_url": data.get("result"),
+            "message": "Scan started successfully. Use 'result_url' to view full analysis."
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/api/virustotal', methods=['POST'])
 def check_url():
     try:
@@ -143,14 +137,12 @@ def check_url():
             return jsonify({"error": error_msg}), 429
         return jsonify({"error": error_msg}), 500
 
-
-# -------------------- WHOIS CONFIG --------------------
-WHOIS_API_KEY = os.getenv("WHOISXML_API_KEY")  # do NOT hardcode it
+# -------------------- WHOIS --------------------
+WHOIS_API_KEY = os.getenv("WHOISXML_API_KEY")
 
 @app.route('/whois')
 def whois_page():
     return send_from_directory('.', 'whois.html')
-
 
 @app.route('/api/whois', methods=['POST'])
 def whois_lookup():
@@ -164,14 +156,11 @@ def whois_lookup():
             f"https://www.whoisxmlapi.com/whoisserver/WhoisService"
             f"?apiKey={WHOIS_API_KEY}&domainName={domain}&outputFormat=JSON"
         )
-
         r = requests.get(endpoint, timeout=10)
         r.raise_for_status()
         return jsonify(r.json())
-
     except requests.exceptions.RequestException as e:
         return jsonify({'error': str(e)}), 500
-
 
 # -------------------- RUN APP --------------------
 if __name__ == '__main__':
