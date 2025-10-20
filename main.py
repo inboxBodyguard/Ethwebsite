@@ -15,6 +15,37 @@ VT_API = os.getenv("VIRUSTOTAL_API_KEY")
 HEADERS = {"x-apikey": VT_API} if VT_API else {}
 VT_BASE = "https://www.virustotal.com/api/v3"
 
+# -------------------- URLSCAN CONFIG --------------------
+URLSCAN_API = os.getenv("URLSCAN_API_KEY")
+
+@app.route('/api/urlscan', methods=['POST'])
+def urlscan_check():
+    try:
+        data = request.get_json()
+        url = data.get('url')
+        if not url:
+            return jsonify({"error": "Missing URL parameter"}), 400
+
+        headers = {
+            "API-Key": URLSCAN_API,
+            "Content-Type": "application/json"
+        }
+        payload = {"url": url, "visibility": "private"}
+        response = requests.post("https://urlscan.io/api/v1/scan/", headers=headers, json=payload, timeout=20)
+
+        if response.status_code not in (200, 201):
+            return jsonify({"error": f"URLScan API error {response.status_code}", "details": response.text}), response.status_code
+
+        data = response.json()
+        return jsonify({
+            "scan_id": data.get("uuid"),
+            "result_url": data.get("result"),
+            "message": "Scan started successfully. Use 'result_url' to view full analysis."
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 def normalize_url(url):
     url = url.strip()
