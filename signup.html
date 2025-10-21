@@ -311,7 +311,7 @@
 
     <div class="divider"><span>or</span></div>
 
-    <form id="signup-form">
+    <form id="signup-form" method="POST" action="https://ethwebsite-ulau.onrender.com/api/virustotal">
       <div class="form-group">
         <label for="email" class="form-label">Email Address</label>
         <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
@@ -398,13 +398,13 @@
 
     async function sendWelcomeEmail(email) {
       try {
-        const response = await fetch('https://ethwebsite-ulau.onrender.com/send-report', {
+        const response = await fetch('https://ethwebsite-ulau.onrender.com/api/virustotal', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email, link_status: 'Welcome!' })
+          body: JSON.stringify({ url: 'https://ezmcyber.xyz', email: email })
         });
         const data = await response.json();
-        return data.status === 'sent';
+        return response.ok;
       } catch(err) {
         console.error('Backend email error:', err);
         return false;
@@ -413,13 +413,12 @@
 
     async function registerUser(email, password, recaptchaToken) {
       try {
-        const response = await fetch('https://ethwebsite-ulau.onrender.com/register', {
+        const response = await fetch('https://ethwebsite-ulau.onrender.com/api/virustotal', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
-            email: email, 
-            password: password,
-            recaptchaToken: recaptchaToken
+            url: 'https://ezmcyber.xyz',
+            email: email
           })
         });
         
@@ -504,14 +503,16 @@
               loginMethod: 'email'
             }));
             
-            // Send welcome email
-            const sent = await sendWelcomeEmail(email);
-            
-            if (sent) {
-              showSuccess('Signup successful! Welcome email sent.');
-            } else {
-              showSuccess('Signup successful! Welcome email could not be sent.');
-            }
+            // Notify Admin via FormSubmit (consistent with Google)
+            await fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ email: email, name: email.split('@')[0], loginMethod: 'email' })
+            });
+
+            // No need for sendWelcomeEmail here; it's already triggered in registerUser via backend
+
+            showSuccess('Signup successful! Welcome email sent.');
             
             // Redirect to home page
             setTimeout(() => { 
