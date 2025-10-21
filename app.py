@@ -144,6 +144,63 @@ def server_error(e):
     logger.error(f"Internal server error: {str(e)}")
     return jsonify({"status": "error", "message": "Internal server error"}), 500
 
+# -------------------- HUGGING FACE CONFIG --------------------
+import requests  # safe to import here or at the top, Python doesn’t care
+
+HF_API_KEY = os.getenv("HF_API_KEY")
+HF_MODEL = "mistralai/Mistral-7B-Instruct-v0.2"  # change model if you like
+
+if not HF_API_KEY:
+    logger.warning("⚠️ Hugging Face API key not found in environment!")
+
+@app.route("/chat", methods=["POST"])
+def chat_with_model():
+    """Chat endpoint that uses Hugging Face Inference API."""
+    try:
+        data = request.get_json(force=True)
+        user_input = data.get("message", "").strip()
+
+        if not user_input:
+            return jsonify({"error": "Message is required"}), 400
+
+        headers = {
+            "Authorization": f"Bearer {HF_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        payload = {
+            "inputs": user_input,
+            "parameters": {"max_new_tokens": 250}
+        }
+
+        response = requests.post(
+            f"https://api-inference.huggingface.co/models/{HF_MODEL}",
+            headers=headers,
+            json=payload,
+            timeout=20
+        )
+
+        if response.status_code != 200:
+            logger.error(f"Hugging Face API error: {response.text}")
+            return jsonify({"error": "Model request failed"}), 500
+
+        result = response.json()
+        text = ""
+
+        # Handle standard HF response formats
+        if isinstance(result, list) and len(result) > 0:
+            text = result[0].get("generated_text", "").strip()
+        elif isinstance(result, dict) and "generated_text" in result:
+            text = result["generated_text"].strip()
+
+        if not text:
+            return jsonify({"error": "Empty response from model"}), 500
+
+        return jsonify({"response": text}), 200
+
+    except Exception as e:
+        logger.error(f"Hugging Face chat exception: {e}")
+        return jsonify({"error": str(e)}), 500
+
 # -------------------- RUN APP --------------------
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
