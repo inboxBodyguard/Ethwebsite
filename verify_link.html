@@ -1,207 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Link Safety Checker</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
---bg-1:#06060a; --bg-2:#0b0710;
---accent:#00ffcc; --muted:#9fb6b0;
---clean:#16a34a; --suspicious:#f59e0b; --phish:#ef4444; --unrated:#6b7280;
---bubble-user:#00ffcc25; --bubble-bot:#071218;
-}
-body{
-background:linear-gradient(135deg,var(--bg-1),var(--bg-2));
-color:#e6fff8;font-family:"Orbitron",system-ui,sans-serif;
-height:100vh;display:flex;flex-direction:column;
-}
-#chat-container{
-flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;scroll-behavior:smooth;
-}
-.msg{
-max-width:85%;padding:12px 16px;border-radius:16px;line-height:1.5;word-wrap:break-word;
-font-size:0.95rem;display:inline-block;position:relative;animation:pop 0.25s ease-out;
-}
-@keyframes pop{0%{transform:scale(0.95);opacity:0}100%{transform:scale(1);opacity:1}}
-.user{align-self:flex-end;background:var(--bubble-user);border:1px solid rgba(0,255,204,0.3);color:#e6fff8}
-.bot{align-self:flex-start;background:var(--bubble-bot);border:1px solid rgba(0,255,204,0.1)}
-.bot strong{color:var(--accent)}
-#input-bar{display:flex;padding:12px;border-top:1px solid rgba(0,255,204,0.1);background:rgba(255,255,255,0.03)}
-#url-input{flex:1;padding:12px;border:none;background:rgba(0,0,0,0.3);color:#e6fff8;border-radius:8px;font-size:1rem}
-#send-btn{margin-left:8px;padding:12px 18px;background:var(--accent);color:#001517;font-weight:700;border:none;border-radius:8px;cursor:pointer;transition:0.2s}
-#send-btn:hover{filter:brightness(1.2)}
-.status-safe{color:var(--clean)}
-.status-susp{color:var(--suspicious)}
-.status-bad{color:var(--phish)}
-.vendor-grid{margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
-.vendor-card{padding:8px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,255,204,0.06);font-size:0.8rem;text-align:center}
-.typing{display:inline-block;font-style:italic;opacity:0.8}
-.dot{animation:blink 1.2s infinite}
-@keyframes blink{0%,20%{opacity:0}50%{opacity:1}100%{opacity:0}}
-footer{text-align:center;padding:10px;color:var(--muted);font-size:0.8rem}
-#main-result{
-transition:all 0.3s ease;
-}
-#main-result:hover{
-transform:scale(1.02);
-box-shadow:0 0 40px rgba(0,255,204,0.25);
-}
-@media (max-width:600px){
-#chat-container{padding:12px;gap:12px}
-#url-input{font-size:0.9rem}
-#send-btn{padding:10px 14px;font-size:0.9rem}
-.vendor-card{font-size:0.75rem}
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Link Safety Checker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-1: #06060a; --bg-2: #0b0710;
+      --accent: #00ffcc; --muted: #9fb6b0;
+      --clean: #16a34a; --suspicious: #f59e0b; --phish: #ef4444; --unrated: #6b7280;
+      --bubble-user: #00ffcc25; --bubble-bot: #071218;
+    }
+    body {
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      color: #e6fff8; font-family: "Orbitron", system-ui, sans-serif;
+      min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden;
+    }
+    #chat-container {
+      flex: 1; overflow-y: auto; padding: 20px 20px 80px; display: flex; flex-direction: column; gap: 16px;
+      scroll-behavior: smooth; max-width: 800px; margin: 0 auto;
+    }
+    .msg {
+      max-width: 80%; padding: 12px 16px; border-radius: 16px; line-height: 1.5; word-wrap: break-word;
+      font-size: 0.95rem; position: relative; animation: pop 0.25s ease-out;
+    }
+    @keyframes pop { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .user { align-self: flex-end; background: var(--bubble-user); border: 1px solid rgba(0,255,204,0.3); color: #e6fff8; }
+    .bot { align-self: flex-start; background: var(--bubble-bot); border: 1px solid rgba(0,255,204,0.1); }
+    .bot strong { color: var(--accent); }
+    #input-bar {
+      position: sticky; bottom: 0; display: flex; padding: 12px; border-top: 1px solid rgba(0,255,204,0.1);
+      background: rgba(255,255,255,0.03); max-width: 800px; margin: 0 auto;
+    }
+    #url-input {
+      flex: 1; padding: 12px 16px; border: none; background: rgba(0,0,0,0.3); color: #e6fff8;
+      border-radius: 8px; font-size: 1rem; outline: none;
+    }
+    #url-input:focus { box-shadow: 0 0 5px rgba(0,255,204,0.5); }
+    #send-btn {
+      margin-left: 8px; padding: 12px 20px; background: var(--accent); color: #001517; font-weight: 700;
+      border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; min-width: 80px; font-size: 1rem;
+    }
+    #send-btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
+    #send-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .status-safe { color: var(--clean); }
+    .status-susp { color: var(--suspicious); }
+    .status-bad { color: var(--phish); }
+    .vendor-grid {
+      margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;
+    }
+    .vendor-card {
+      padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(0,255,204,0.06);
+      font-size: 0.85rem; text-align: center; transition: transform 0.2s;
+    }
+    .vendor-card:hover { transform: scale(1.05); }
+    .typing { display: inline-block; font-style: italic; opacity: 0.8; }
+    .dot { animation: blink 1.2s infinite; }
+    @keyframes blink { 0%, 20% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+    footer { text-align: center; padding: 10px; color: var(--muted); font-size: 0.8rem; }
+    #main-result {
+      padding: 20px; margin: 20px 0; border-radius: 12px; background: rgba(0,255,204,0.08);
+      border: 1px solid rgba(0,255,204,0.2); font-size: 1rem; text-align: left;
+      box-shadow: 0 0 25px rgba(0,255,204,0.1); animation: pop 0.4s ease-out;
+      transition: all 0.3s ease;
+    }
+    #main-result:hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(0,255,204,0.25); }
+    #clear-history {
+      margin-top: 10px; padding: 8px 16px; background: rgba(255,255,255,0.1); color: var(--accent);
+      border: 1px solid rgba(0,255,204,0.3); border-radius: 8px; cursor: pointer; font-size: 0.9rem;
+    }
+    #clear-history:hover { background: rgba(255,255,255,0.2); }
+    @media (max-width: 600px) {
+      #chat-container { padding: 12px 12px 70px; gap: 12px; }
+      #url-input { font-size: 0.9rem; padding: 10px 12px; }
+      #send-btn { padding: 10px 16px; font-size: 0.9rem; min-width: 70px; }
+      .vendor-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; }
+      .vendor-card { font-size: 0.75rem; padding: 8px; }
+      .msg { max-width: 85%; font-size: 0.9rem; }
+      #main-result { padding: 15px; font-size: 0.95rem; }
+    }
+    @media (max-width: 400px) {
+      #input-bar { padding: 10px; }
+      #url-input { font-size: 0.85rem; }
+      #send-btn { padding: 8px 12px; font-size: 0.85rem; }
+    }
+  </style>
 </head>
 <body>
+  <div id="chat-container">
+    <div class="msg bot"><strong>⚡️ Yo!</strong> Toss me any link, and I’ll hit it with a full security scan to keep you safe! 🔍</div>
+  </div>
+  <div id="input-bar">
+    <input id="url-input" type="text" placeholder="Paste a link to check..." autocomplete="off">
+    <button id="send-btn">Send</button>
+  </div>
+  <footer>Secure • Protect • Respond</footer>
 
-<div id="chat-container">
-  <div class="msg bot"><strong>⚡️:</strong> Drop any link and I’ll scan it with top security vendors to see if it’s safe 🔍</div>
-</div>
+  <script>
+    const VT_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
+    const URLSCAN_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/urlscan';
+    const chat = document.getElementById('chat-container');
+    const input = document.getElementById('url-input');
+    const sendBtn = document.getElementById('send-btn');
 
-<div id="input-bar">
-  <input id="url-input" type="text" placeholder="Paste a link to check..." autocomplete="off">
-  <button id="send-btn">Send</button>
-</div>
+    function addMessage(text, sender = 'bot') {
+      const div = document.createElement('div');
+      div.className = `msg ${sender}`;
+      div.innerHTML = text;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+      return div;
+    }
 
-<footer>Secure • Protect • Respond</footer>
+    function verdictClass(v) {
+      if (v === 'phish' || v === 'malicious') return 'status-bad';
+      if (v === 'suspicious') return 'status-susp';
+      return 'status-safe';
+    }
 
-<script>
-// Backend URLs
-const VT_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
-const URLSCAN_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/urlscan';
+    function addTyping() {
+      return addMessage(`<span class="typing">Scanning that link for you<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, 'bot');
+    }
 
-const chat = document.getElementById('chat-container');
-const input = document.getElementById('url-input');
-const sendBtn = document.getElementById('send-btn');
+    async function analyzeLink(url) {
+      const typingDiv = addTyping();
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Scanning...';
+      let resultBox = document.getElementById('main-result');
+      if (!resultBox) {
+        resultBox = document.createElement('div');
+        resultBox.id = 'main-result';
+        chat.prepend(resultBox);
+      }
 
-function addMessage(text, sender='bot') {
-  const div = document.createElement('div');
-  div.className = `msg ${sender}`;
-  div.innerHTML = text;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-  return div;
-}
+      try {
+        // Step 1: VirusTotal scan
+        const vtResp = await fetch(VT_BACKEND, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
+        if (!vtResp.ok) {
+          throw new Error(`VirusTotal error ${vtResp.status}: ${await vtResp.text()}`);
+        }
+        const vtData = await vtResp.json();
 
-function verdictClass(v) {
-  if(v==='phish'||v==='malicious') return 'status-bad';
-  if(v==='suspicious') return 'status-susp';
-  return 'status-safe';
-}
+        const vendors = vtData.last_analysis_results
+          ? Object.entries(vtData.last_analysis_results).map(([name, info]) => {
+              const cat = info?.category?.toLowerCase() || 'unrated';
+              let v = 'unrated';
+              if (cat === 'malicious' || cat === 'phishing') v = 'phish';
+              else if (cat === 'suspicious') v = 'suspicious';
+              else if (cat === 'harmless' || cat === 'clean') v = 'clean';
+              return { name, verdict: v };
+            })
+          : [];
 
-function addTyping() {
-  return addMessage(`<span class="typing">Scanning<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`,'bot');
-}
+        const stats = { mal: 0, susp: 0, clean: 0 };
+        vendors.forEach(v => {
+          if (v.verdict === 'phish') stats.mal++;
+          else if (v.verdict === 'suspicious') stats.susp++;
+          else if (v.verdict === 'clean') stats.clean++;
+        });
 
-async function analyzeLink(url) {
-  const typingDiv = addTyping();
-  let resultBox = document.getElementById('main-result');
-  if(!resultBox){
-    resultBox=document.createElement('div');
-    resultBox.id='main-result';
-    resultBox.style.padding='20px';
-    resultBox.style.margin='20px 0';
-    resultBox.style.borderRadius='12px';
-    resultBox.style.background='rgba(0,255,204,0.08)';
-    resultBox.style.border='1px solid rgba(0,255,204,0.2)';
-    resultBox.style.fontSize='1rem';
-    resultBox.style.textAlign='left';
-    resultBox.style.boxShadow='0 0 25px rgba(0,255,204,0.1)';
-    resultBox.style.animation='pop 0.4s ease-out';
-    chat.prepend(resultBox);
-  }
+        const total = vendors.length;
+        const threatCount = stats.mal + stats.susp;
+        let status = 'safe', label = 'CLEAN', message = 'Looks good! This link is safe to visit. 😎';
+        if (stats.mal > 0) {
+          status = 'bad';
+          label = 'MALICIOUS';
+          message = 'Yikes! This link is dangerous. Steer clear! 🚨';
+        } else if (stats.susp > 0) {
+          status = 'susp';
+          label = `SUSPICIOUS (${stats.susp} flagged)`;
+          message = 'Hmm, this link looks a bit sketchy. Proceed with caution! ⚠️';
+        }
 
-  try {
-    // Step 1: VirusTotal scan
-    const vtResp = await fetch(VT_BACKEND, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({url})
-    });
-    if(!vtResp.ok) throw new Error(`VT Error ${vtResp.status}`);
-    const vtData = await vtResp.json();
+        let html = `<strong>🔍 Status:</strong> <span class="${'status-' + status}">${label}</span><br>
+          <small>Detections: ${threatCount}/${total}</small><br>
+          <small>${message}</small>`;
+        html += `<div class="vendor-grid">` +
+          vendors.slice(0, 90).map(v => `
+            <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
+          `).join('') + `</div>`;
 
-    const vendors = vtData.last_analysis_results
-      ? Object.entries(vtData.last_analysis_results).map(([name,info])=>{
-          const cat = info?.category?.toLowerCase()||'unrated';
-          let v='unrated';
-          if(cat==='malicious'||cat==='phishing') v='phish';
-          else if(cat==='suspicious') v='suspicious';
-          else if(cat==='harmless'||cat==='clean') v='clean';
-          return {name,verdict:v};
-        })
-      : [];
+        // Step 2: URLScan.io scan
+        const scanResp = await fetch(URLSCAN_BACKEND, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
+        if (scanResp.ok) {
+          const scanData = await scanResp.json();
+          if (scanData.result_url) {
+            html += `<br><small>Full URLScan Report: <a href="${scanData.result_url}" target="_blank">${scanData.scan_id}</a></small>`;
+          }
+        } else {
+          const errorData = await scanResp.json();
+          html += `<br><small>URLScan failed: ${errorData.error || 'Unknown error'}</small>`;
+        }
 
-    const stats={mal:0,susp:0,clean:0};
-    vendors.forEach(v=>{
-      if(v.verdict==='phish') stats.mal++;
-      else if(v.verdict==='suspicious') stats.susp++;
-      else if(v.verdict==='clean') stats.clean++;
-    });
+        typingDiv.remove();
+        resultBox.innerHTML = `<strong>🔍 Latest Scan Result</strong><br><br>${html}`;
+        addMessage(message, 'bot');
 
-    const total=vendors.length;
-    const threatCount = stats.mal + stats.susp;
-    let status='safe', label='CLEAN';
-    if(stats.mal>0){status='bad'; label='MALICIOUS';}
-    else if(stats.susp>0){status='susp'; label='SUSPICIOUS';}
-    if(stats.susp>0 && stats.mal===0){label=`Mostly Clean (${stats.susp} flagged)`;}
+        // Save history
+        const saved = JSON.parse(sessionStorage.getItem('ezm_history') || '[]');
+        saved.unshift({ url, status, detections: threatCount, total, timestamp: new Date().toISOString() });
+        if (saved.length > 50) saved.pop();
+        sessionStorage.setItem('ezm_history', JSON.stringify(saved));
 
-    let html=`<strong>Status:</strong> <span class="${'status-'+status}">${label}</span><br>
-      <small>Detections: ${threatCount}/${total}</small>`;
-    html+=`<div class="vendor-grid">`+
-      vendors.slice(0,90).map(v=>`
-        <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
-      `).join('')+`</div>`;
+        // Add Clear History button if history exists
+        if (saved.length > 0 && !document.getElementById('clear-history')) {
+          const clearBtn = document.createElement('button');
+          clearBtn.id = 'clear-history';
+          clearBtn.textContent = 'Clear Scan History';
+          clearBtn.onclick = () => {
+            sessionStorage.removeItem('ezm_history');
+            clearBtn.remove();
+            addMessage('Scan history cleared! Ready for a fresh start. 🚀', 'bot');
+          };
+          resultBox.appendChild(clearBtn);
+        }
 
-    // Step 2: URLScan.io scan
-    const scanResp = await fetch(URLSCAN_BACKEND, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({url})
-    });
-    if(scanResp.ok){
-      const scanData = await scanResp.json();
-      if(scanData.result_url){
-        html += `<br><small>Full URLScan Report: <a href="${scanData.result_url}" target="_blank">${scanData.scan_id}</a></small>`;
+        input.value = ''; // Clear input
+      } catch (e) {
+        console.error('Scan error:', e);
+        typingDiv.remove();
+        addMessage(`Whoops, something broke! ${e.message.includes('401') ? 'API key issue.' : e.message.includes('429') ? 'Hit a rate limit.' : 'Try again later.'} 😅`, 'bot');
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Send';
       }
     }
 
-    typingDiv.remove();
-    resultBox.innerHTML=`<strong>🔍 Latest Scan Result</strong><br><br>${html}`;
+    sendBtn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) return;
+      addMessage(val, 'user');
+      let normalized = val;
+      if (!/^https?:\/\//i.test(val)) normalized = 'http://' + val;
+      try {
+        new URL(normalized);
+        analyzeLink(normalized);
+      } catch {
+        addMessage('Oops, that’s not a valid URL. Try something like https://example.com! 😬', 'bot');
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Send';
+      }
+    };
 
-    // Save history
-    const saved = JSON.parse(sessionStorage.getItem('ezm_history')||'[]');
-    saved.unshift({url,status,detections:threatCount,total});
-    if(saved.length>50) saved.pop();
-    sessionStorage.setItem('ezm_history',JSON.stringify(saved));
-
-  } catch(e){
-    console.error(e);
-    typingDiv.remove();
-    addMessage(`⚠️ Could not complete the scan right now.`,'bot');
-  }
-}
-
-sendBtn.onclick=()=>{
-  const val=input.value.trim();
-  if(!val) return;
-  addMessage(val,'user');
-  input.value='';
-  let normalized=val;
-  if(!/^https?:\/\//i.test(val)) normalized='http://'+val;
-  try{ new URL(normalized); analyzeLink(normalized); }
-  catch{ addMessage('Invalid URL format.','bot'); }
-};
-
-input.addEventListener('keypress',e=>{
-  if(e.key==='Enter') sendBtn.click();
-});
-</script>
-
+    input.addEventListener('keypress', e => {
+      if (e.key === 'Enter') sendBtn.click();
+    });
+  </script>
 </body>
 </html>
