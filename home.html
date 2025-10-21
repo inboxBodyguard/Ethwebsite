@@ -1006,32 +1006,32 @@ function addTyping() {
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const url = input.value.trim();
-  if(!url) return;
+  if (!url) return;
 
   addTyping();
 
   try {
     const resp = await fetch(URLSCAN_BACKEND, {
       method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({url})
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
     });
-    if(!resp.ok) throw new Error(`Server error: ${resp.status}`);
     const data = await resp.json();
 
-    if(data.uuid && data.scanUrl){
+    if (resp.ok && data.scan_id && data.result_url) {
       showResult(`
         <strong>Scan submitted!</strong><br>
-        <small>Scan ID: <a href="${data.scanUrl}" target="_blank">${data.uuid}</a></small><br>
-        <small>Full report: <a href="${data.scanUrl}" target="_blank">View on URLScan.io</a></small>
+        <small>Scan ID: <a href="${data.result_url}" target="_blank">${data.scan_id}</a></small><br>
+        <small>Full report: <a href="${data.result_url}" target="_blank">View on URLScan.io</a></small>
       `);
     } else {
-      showResult('<span style="color:#f59e0b;">⚠️ Scan could not be completed. Try again later.</span>');
+      const errorMsg = data.error || 'Scan could not be completed';
+      const details = data.details ? `<br><small>Details: ${data.details}</small>` : '';
+      showResult(`<span style="color:#f59e0b;">⚠️ ${errorMsg}${details}</span>`);
     }
-
-  } catch(err) {
-    console.error(err);
-    showResult('<span style="color:#ef4444;">⚠️ Network or server error. Try again later.</span>');
+  } catch (err) {
+    console.error('URLScan error:', err);
+    showResult('<span style="color:#ef4444;">⚠️ Network error: Unable to connect to server. Try again later.</span>');
   }
 });
 </script>
