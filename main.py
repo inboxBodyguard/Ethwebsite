@@ -1,557 +1,214 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Signup | EZM Cyber - Your Digital Security Partner</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
-      color: #fff;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      position: relative;
-    }
-    
-    #rain-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-    
-    .rain-column {
-      position: absolute;
-      top: -100px;
-      color: rgba(0, 255, 170, 0.7);
-      font-size: 14px;
-      font-family: monospace;
-      animation: rainFall linear infinite, fadeOut linear forwards;
-      line-height: 1.2;
-    }
-    
-    @keyframes rainFall {
-      0% { transform: translateY(-100px); }
-      100% { transform: translateY(100vh); }
-    }
-    
-    @keyframes fadeOut {
-      0% { opacity: 0.7; }
-      100% { opacity: 0; }
-    }
-    
-    .back-home {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 10;
-    }
-    
-    .back-home a {
-      color: #00ffaa;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    
-    .back-home a:hover {
-      color: #00cc88;
-    }
-    
-    .login-container {
-      position: relative;
-      z-index: 2;
-      max-width: 420px;
-      margin: 60px auto;
-      padding: 40px;
-      background: rgba(15, 15, 35, 0.85);
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(0, 255, 170, 0.2);
-    }
-    
-    .brand-logo {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    
-    .brand-logo h1 {
-      font-weight: 700;
-      font-size: 32px;
-      margin-bottom: 5px;
-      background: linear-gradient(90deg, #00ffaa, #00ccff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    .brand-logo p {
-      font-weight: 400;
-      color: #aaa;
-      margin-bottom: 0;
-    }
-    
-    .social-btn {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(30, 30, 60, 0.7);
-      color: white;
-      font-weight: 500;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-    
-    .social-btn:hover {
-      background: rgba(40, 40, 80, 0.9);
-      transform: translateY(-2px);
-    }
-    
-    .social-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-    
-    .google-btn {
-      border-color: rgba(220, 78, 65, 0.5);
-    }
-    
-    .microsoft-btn {
-      border-color: rgba(0, 120, 215, 0.5);
-    }
-    
-    .github-btn {
-      border-color: rgba(36, 41, 46, 0.5);
-    }
-    
-    .google-icon, .microsoft-icon, .github-icon {
-      width: 20px;
-      height: 20px;
-      margin-right: 12px;
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-    
-    .google-icon {
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=');
-    }
-    
-    .microsoft-icon {
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGgxMHYxMEgweiIgZmlsbD0iI2YyNTAyMiIvPjxwYXRoIGQ9Ik0xMSAwaDEwdjEwSDExeiIgZmlsbD0iIzgwYzQ0ZiIvPjxwYXRoIGQ9Ik0wIDExaDEwdjEwSDB6IiBmaWxsPSIjMDBhOWY0Ii8+PHBhdGggZD0iTTExIDExaDEwdjEwSDExeiIgZmlsbD0iI2ZmYjkwMCIvPjwvc3ZnPg==');
-    }
-    
-    .github-icon {
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTggMEMzLjU4IDAgMCAzLjU4IDAgOHMzLjU4IDggOCA4IDgtMy41OCA4LTgtMy41OC04LTgtOHptLjgxIDEyLjUyYy4wMi4wMi4wNC4wMy4wNi4wNC4wNy4wNC4xNS4wOC4yNC4xLjEuMDMuMi4wNS4zMS4wNy4xMS4wMi4yMi4wMy4zNC4wMy4xOCAwIC4zNS0uMDMuNTEtLjA4LjE2LS4wNS4zLS4xMi40My0uMjEuMTMtLjA5LjIzLS4yMS4zMS0uMzUuMDgtLjE0LjEzLS4zLjE2LS40OC4wMy0uMTguMDQtLjM4LjA0LS41OSAwLS4yNC0uMDUtLjQ3LS4xNS0uNjktLjEtLjIyLS4yNS0uNDEtLjQ0LS41Ny0uMTktLjE2LS40Mi0uMjktLjY4LS4zOS0uMTEtLjA0LS4yMy0uMDgtLjM1LS4xMS0uMTItLjAzLS4yNS0uMDUtLjM5LS4wNi0uMDggMC0uMTYtLjAxLS4yNC0uMDEtLjA4IDAtLjE1LjAxLS4yMS4wMi0uMDYuMDEtLjExLjAzLS4xNS4wNS0uMDQuMDItLjA3LjA1LS4wOC4wOWwtLjAyLjA2LS4wMy4wN2MtLjAyLjA1LS4wMy4xLS4wMy4xNSAwIC4wNS4wMS4xLjAzLjE0LjAyLjA1LjA1LjA5LjA5LjEzLjA0LjA0LjA5LjA3LjE1LjA5LjA2LjAyLjEzLjAzLjIxLjAzLjA4IDAgLjE1LS4wMS4yMi0uMDMuMDctLjAyLjEzLS4wNS4xOC0uMDkuMDUtLjA0LjA5LS4wOS4xMi0uMTUuMDMtLjA2LjA0LS4xMy4wNC0uMiAwLS4wNy0uMDItLjEzLS4wNS0uMTgtLjAzLS4wNS0uMDgtLjA5LS4xMy0uMTItLjA1LS4wMy0uMTEtLjA1LS4xOC0uMDUtLjA2IDAtLjExLjAxLS4xNi4wMy0uMDUuMDItLjA5LjA0LS4xMi4wNy0uMDMuMDMtLjA1LjA2LS4wNi4xIDAgLjAzLS4wMS4wNi0uMDEuMDggMCAuMDIuMDEuMDQuMDIuMDYuMDEuMDIuMDMuMDQuMDUuMDUuMDIuMDEuMDQuMDIuMDcuMDIuMDMgMCAuMDUtLjAxLjA4LS4wMi4wMi0uMDEuMDQtLjAzLjA1LS4wNS4wMS0uMDIuMDItLjA0LjAyLS4wNyAwLS4wMy0uMDEtLjA1LS4wMy0uMDctLjAyLS4wMi0uMDQtLjAzLS4wNy0uMDMtLjAzIDAtLjA1LjAxLS4wOC4wMi0uMDIuMDEtLjA0LjAzLS4wNS4wNS0uMDEuMDItLjAyLjA0LS4wMi4wNyAwIC4wNC4wMS4wNy4wNC4wOS4wMy4wMi4wNi4wMy4xMS4wMy4wNiAwIC4xMS0uMDEuMTYtLjAzLjA1LS4wMi4xLS4wNS4xNC0uMDkuMDQtLjA0LjA3LS4wOS4wOS0uMTUuMDItLjA2LjAzLS4xMy4wMy0uMiAwLS4xLS4wMi0uMTktLjA3LS4yNy0uMDUtLjA4LS4xMi0uMTUtLjIxLS4yMS0uMDktLjA2LS4yLS4xLS4zMy0uMTItLjEzLS4wMi0uMjctLjAyLS40Mi4wMS0uMTUuMDMtLjI5LjA4LS4zMi4xNS0uMTMuMDctLjI0LjE2LS4zMy4yNy0uMDkuMTEtLjE2LjI0LS4yLjM5LS4wNC4xNS0uMDYuMzEtLjA2LjQ4IDAgLjIyLjAzLjQzLjA4LjYzLjA1LjIuMTMuMzguMjMuNTUuMS4xNy4yMy4zMi4zOC40NC4xNS4xMi4zMi4yMi41MS4yOS4xOS4wNy4zOS4xMi42MS4xNC4wOC4wMS4xNi4wMi4yNC4wMi4wNyAwIC4xMy0uMDEuMTktLjAyem0tNC4zLTIuODZjLS4wNC0uMDQtLjA4LS4wNy0uMTMtLjA5LS4wNS0uMDItLjEtLjAzLS4xNi0uMDMtLjA2IDAtLjExLjAxLS4xNi4wMy0uMDUuMDItLjEuMDUtLjEzLjA5LS4wMy4wNC0uMDUuMDgtLjA2LjEzLS4wMS4wNS0uMDEuMSAwIC4xNS4wMS4wNS4wMy4wOS4wNi4xMy4wMy4wNC4wNy4wNy4xMi4wOS4wNS4wMi4xLjAzLjE2LjAzLjA2IDAgLjExLS4wMS4xNi0uMDMuMDUtLjAyLjA5LS4wNS4xMy0uMDkuMDQtLjA0LjA2LS4wOC4wNy0uMTMuMDEtLjA1LjAxLS4xIDAtLjE1LS4wMS0uMDUtLjAzLS4wOS0uMDYtLjEzeiIgZmlsbPSJ3aGl0ZSIvPjwvc3ZnPg==');
-    }
-    
-    .divider {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      margin: 25px 0;
-      color: #666;
-    }
-    
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .divider span {
-      padding: 0 15px;
-      font-size: 14px;
-    }
-    
-    .form-group {
-      margin-bottom: 20px;
-    }
-    
-    .form-label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-      color: #ddd;
-    }
-    
-    .form-control {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(20, 20, 40, 0.7);
-      color: white;
-      font-size: 16px;
-      transition: all 0.3s;
-    }
-    
-    .form-control:focus {
-      outline: none;
-      border-color: #00ffaa;
-      box-shadow: 0 0 0 2px rgba(0, 255, 170, 0.2);
-    }
-    
-    .form-control::placeholder {
-      color: #888;
-    }
-    
-    #recaptcha-container {
-      margin: 20px 0;
-      display: flex;
-      justify-content: center;
-    }
-    
-    .btn-primary {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      background: linear-gradient(90deg, #00ffaa, #00ccff);
-      color: #000;
-      font-weight: 600;
-      font-size: 16px;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin-top: 10px;
-    }
-    
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 255, 170, 0.4);
-    }
-    
-    .btn-primary:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-    
-    .signin-link {
-      text-align: center;
-      margin-top: 25px;
-      color: #aaa;
-    }
-    
-    .signin-link a {
-      color: #00ffaa;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    
-    .signin-link a:hover {
-      text-decoration: underline;
-    }
-    
-    .error-message, .success-message {
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      display: none;
-    }
-    
-    .error-message {
-      background: rgba(220, 53, 69, 0.2);
-      border: 1px solid rgba(220, 53, 69, 0.5);
-      color: #f8d7da;
-    }
-    
-    .success-message {
-      background: rgba(40, 167, 69, 0.2);
-      border: 1px solid rgba(40, 167, 69, 0.5);
-      color: #d4edda;
-    }
-    
-    @media (max-width: 576px) {
-      .login-container {
-        margin: 30px 15px;
-        padding: 25px;
-      }
-      
-      .back-home {
-        left: 15px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div id="rain-container"></div>
-  <div class="back-home"><a href="index.html">←🏘️</a></div>
-  <div class="login-container">
-    <div class="brand-logo">
-      <h1>EZM Cyber</h1>
-      <p>Secure Signup</p>
-    </div>
+import os
+import base64
+import time
+import requests
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
-    <div id="error-message" class="error-message"></div>
-    <div id="success-message" class="success-message"></div>
+# -------------------- SETUP --------------------
+app = Flask(__name__, static_folder='.', template_folder='.')
+CORS(app)
 
-    <button id="google-signin-btn" class="social-btn google-btn" onclick="handleGoogleSignIn()">
-      <div class="google-icon"></div><span>Continue with Google</span>
-    </button>
+# -------------------- VIRUSTOTAL CONFIG --------------------
+VT_API = os.getenv("VIRUSTOTAL_API_KEY")
+HEADERS = {"x-apikey": VT_API} if VT_API else {}
+VT_BASE = "https://www.virustotal.com/api/v3"
 
-    <button id="microsoft-signin-btn" class="social-btn microsoft-btn" onclick="handleMicrosoftSignIn()">
-      <div class="microsoft-icon"></div><span>Continue with Microsoft</span>
-    </button>
+# -------------------- URLSCAN CONFIG --------------------
+URLSCAN_API = os.getenv("URLSCAN_API_KEY")
 
-    <div class="divider"><span>or</span></div>
+# -------------------- SENDGRID CONFIG --------------------
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
-    <form id="signup-form" method="POST" action="https://ethwebsite-ulau.onrender.com/register">
-      <div class="form-group">
-        <label for="email" class="form-label">Email Address</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
-      </div>
-      <div class="form-group">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
-      </div>
-      <div id="recaptcha-container"></div>
-      <button type="submit" id="verify-btn" class="btn-primary">
-        <span id="verify-btn-text">Sign Up with Email</span>
-      </button>
-    </form>
+# -------------------- RECAPTCHA CONFIG --------------------
+RECAPTCHA_SECRET = os.getenv("RECAPTCHA_SECRET_KEY")  # Added for reCAPTCHA verification
 
-    <div class="signin-link">
-      Already have an account? <a href="login.html">Sign in here</a>
-    </div>
-  </div>
+# -------------------- HELPERS --------------------
+def normalize_url(url):
+    url = url.strip()
+    if not url.startswith(("http://", "https://")):
+        url = "http://" + url
+    return url
 
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+def url_id_from_url(url):
+    return base64.urlsafe_b64encode(url.encode()).decode().rstrip("=")
 
-  <script>
-    const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com';
-    const MICROSOFT_CLIENT_ID = 'YOUR_MICROSOFT_CLIENT_ID';
-    const RECAPTCHA_SITE_KEY = '6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG';
-    let recaptchaWidgetId = null;
+def do_vt_check(url):
+    if not VT_API:
+        raise Exception("VirusTotal API key not found. Set the VIRUSTOTAL_API_KEY environment variable.")
 
-    function showError(msg) {
-      const e = document.getElementById('error-message');
-      e.textContent = msg;
-      e.style.display = 'block';
-      document.getElementById('success-message').style.display = 'none';
-      setTimeout(() => { e.style.display = 'none'; }, 5000);
-    }
+    url = normalize_url(url)
+    url_id = url_id_from_url(url)
 
-    function showSuccess(msg) {
-      const s = document.getElementById('success-message');
-      s.textContent = msg;
-      s.style.display = 'block';
-      document.getElementById('error-message').style.display = 'none';
-    }
+    # Try getting existing report
+    response = requests.get(f"{VT_BASE}/urls/{url_id}", headers=HEADERS, timeout=15)
+    if response.status_code == 200:
+        return response.json().get("data", {}).get("attributes", {})
 
-    function parseJwt(token) {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-      return JSON.parse(jsonPayload);
-    }
+    # Submit URL for analysis
+    response = requests.post(f"{VT_BASE}/urls", headers=HEADERS, data={"url": url}, timeout=15)
+    if response.status_code in (200, 201):
+        analysis_id = response.json()["data"]["id"]
+        for _ in range(6):
+            time.sleep(1)
+            analysis_response = requests.get(f"{VT_BASE}/analyses/{analysis_id}", headers=HEADERS, timeout=15)
+            if analysis_response.status_code == 200:
+                analysis_data = analysis_response.json()
+                status = analysis_data.get("data", {}).get("attributes", {}).get("status")
+                if status == "completed":
+                    url_report = requests.get(f"{VT_BASE}/urls/{url_id}", headers=HEADERS, timeout=15)
+                    if url_report.status_code == 200:
+                        return url_report.json().get("data", {}).get("attributes", {})
+                    stats = analysis_data.get("data", {}).get("attributes", {}).get("stats", {})
+                    return {"last_analysis_stats": stats}
+        return {"last_analysis_stats": {"malicious": 0, "suspicious": 0, "undetected": 0, "harmless": 0}}
+    elif response.status_code == 429:
+        raise Exception("VirusTotal rate limit exceeded. Please try again later.")
+    else:
+        raise Exception(f"VirusTotal API error: {response.status_code}")
 
-    function handleCredentialResponse(response) {
-      handleGoogleSignInResponse(response);
-    }
+def send_welcome_email(to_email):
+    import smtplib
+    from email.mime.text import MIMEText
+    from email.mime.multipart import MIMEMultipart
+    import os
 
-    async function handleGoogleSignInResponse(response) {
-      try {
-        const user = parseJwt(response.credential);
-        sessionStorage.setItem('user', JSON.stringify({name: user.name, email: user.email, picture: user.picture, loginMethod: 'google'}));
-        showSuccess('Successfully signed up with Google!');
+    SENDER_EMAIL = os.getenv("SENDER_EMAIL")        # contact@ezmcyber.com
+    SENDER_PASSWORD = os.getenv("SENDER_PASSWORD")  # password from environment
 
-        // Notify Admin via FormSubmit
-        await fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ email: user.email, name: user.name, loginMethod: 'google' })
-        });
+    if not SENDER_EMAIL or not SENDER_PASSWORD:
+        print("Email credentials missing!")
+        return False
 
-        // Trigger backend welcome email
-        const sent = await sendWelcomeEmail(user.email);
-        if (sent) {
-          console.log('Welcome email sent via backend.');
-        } else {
-          console.warn('Failed to send welcome email.');
-        }
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = "Welcome to EZM Cyber!"
+    msg["From"] = SENDER_EMAIL
+    msg["To"] = to_email
+    msg.attach(MIMEText(
+        "<strong>Thanks for signing up! You are now protected by EZM Cyber.</strong>", 
+        "html"
+    ))
 
-        setTimeout(() => { window.location.href = 'home.html'; }, 1500);
-      } catch (error) {
-        console.error('Error in Google sign-in:', error);
-        showError('An error occurred during Google sign-in. Please try again.');
-      }
-    }
+    try:
+        with smtplib.SMTP("smtp.hostinger.com", 587, timeout=10) as server:
+            server.starttls()
+            server.login(SENDER_EMAIL, SENDER_PASSWORD)
+            server.sendmail(SENDER_EMAIL, to_email, msg.as_string())
+        print(f"Welcome email sent to {to_email}")
+        return True
+    except Exception as e:
+        print("Email send failed:", e)
+        return False
 
-    async function sendWelcomeEmail(email) {
-      try {
-        const response = await fetch('https://ethwebsite-ulau.onrender.com/api/virustotal', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: 'https://ezmcyber.xyz', email: email })
-        });
-        const data = await response.json();
-        return response.ok;
-      } catch(err) {
-        console.error('Backend email error:', err);
-        return false;
-      }
-    }
+# -------------------- ROUTES --------------------
+@app.route('/')
+def home():
+    return send_from_directory('.', 'index.html')
 
-    async function registerUser(email, password, recaptchaToken) {
-      try {
-        const response = await fetch('https://ethwebsite-ulau.onrender.com/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            email: email, 
-            password: password,
-            recaptchaToken: recaptchaToken
-          })
-        });
+@app.route('/verify-link')
+def verify_link():
+    return send_from_directory('.', 'verify_link.html')
+
+@app.route('/api/urlscan', methods=['POST'])
+def urlscan_check():
+    try:
+        data = request.get_json()
+        url = data.get('url')
+        if not url:
+            return jsonify({"error": "Missing URL parameter"}), 400
+
+        headers = {"API-Key": URLSCAN_API, "Content-Type": "application/json"}
+        payload = {"url": url, "visibility": "private"}
+        response = requests.post("https://urlscan.io/api/v1/scan/", headers=headers, json=payload, timeout=20)
+
+        if response.status_code not in (200, 201):
+            return jsonify({"error": f"URLScan API error {response.status_code}", "details": response.text}), response.status_code
+
+        data = response.json()
+        return jsonify({
+            "scan_id": data.get("uuid"),
+            "result_url": data.get("result"),
+            "message": "Scan started successfully. Use 'result_url' to view full analysis."
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/virustotal', methods=['POST'])
+def check_url():
+    try:
+        data = request.get_json()
+        url = data.get('url')
+        email = data.get('email')  # optional
+        if not url:
+            return jsonify({"error": "Missing URL parameter"}), 400
+
+        result = do_vt_check(url)
+
+        if email:
+            send_welcome_email(email)
+
+        return jsonify(result)
+    except Exception as e:
+        error_msg = str(e)
+        if "rate limit" in error_msg.lower():
+            return jsonify({"error": error_msg}), 429
+        return jsonify({"error": error_msg}), 500
+
+# -------------------- WHOIS --------------------
+WHOIS_API_KEY = os.getenv("WHOISXML_API_KEY")
+
+@app.route('/whois')
+def whois_page():
+    return send_from_directory('.', 'whois.html')
+
+@app.route('/api/whois', methods=['POST'])
+def whois_lookup():
+    try:
+        data = request.get_json()
+        domain = data.get('domain')
+        if not domain:
+            return jsonify({'error': 'Domain missing'}), 400
+
+        endpoint = (
+            f"https://www.whoisxmlapi.com/whoisserver/WhoisService"
+            f"?apiKey={WHOIS_API_KEY}&domainName={domain}&outputFormat=JSON"
+        )
+        r = requests.get(endpoint, timeout=10)
+        r.raise_for_status()
+        return jsonify(r.json())
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
+
+# -------------------- REGISTER --------------------
+@app.route('/register', methods=['POST'])
+def register():
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')  # Unused for now; hash/store if adding DB
+        recaptcha_token = data.get('recaptchaToken')
         
-        const data = await response.json();
+        if not email:
+            return jsonify({"error": "Email required"}), 400
         
-        if (response.ok) {
-          return { success: true, data };
-        } else {
-          return { success: false, error: data.error || 'Registration failed' };
-        }
-      } catch (error) {
-        console.error('Registration error:', error);
-        return { success: false, error: 'Network error: ' + error.message };
-      }
-    }
-
-    function handleGoogleSignIn() {
-      const btn = document.getElementById('google-signin-btn');
-      btn.disabled = true;
-      try {
-        google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleCredentialResponse });
-        google.accounts.id.prompt((n) => {
-          if (n.isNotDisplayed() || n.isSkippedMoment()) { 
-            btn.disabled = false; 
-            showError('Google Sign-In popup could not be displayed.'); 
-          }
-        });
-      } catch(e) { 
-        console.error(e); 
-        showError('Google Sign-In unavailable.'); 
-        btn.disabled = false; 
-      }
-    }
-
-    function handleMicrosoftSignIn() {
-      showError('Microsoft Sign-In requires backend server to complete OAuth.');
-    }
-
-    function onRecaptchaLoad() {
-      if (document.getElementById('recaptcha-container')) {
-        recaptchaWidgetId = grecaptcha.render('recaptcha-container', {
-          sitekey: RECAPTCHA_SITE_KEY,
-          theme: 'dark'
-        });
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      if (sessionStorage.getItem('user')) { 
-        window.location.href = 'home.html'; 
-      }
-
-      const form = document.getElementById('signup-form');
-      form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const verifyBtn = document.getElementById('verify-btn');
-        verifyBtn.disabled = true;
-        verifyBtn.innerHTML = '<span>Signing Up...</span>';
-
-        const email = form.email.value;
-        const password = form.password.value;
+        # Verify reCAPTCHA
+        if RECAPTCHA_SECRET:
+            recaptcha_resp = requests.post(
+                "https://www.google.com/recaptcha/api/siteverify",
+                data={"secret": RECAPTCHA_SECRET, "response": recaptcha_token}
+            ).json()
+            if not recaptcha_resp.get("success"):
+                return jsonify({"error": f"reCAPTCHA failed: {recaptcha_resp.get('error-codes', ['Unknown error'])}"}), 400
         
-        // Get reCAPTCHA token
-        const recaptchaToken = grecaptcha.getResponse(recaptchaWidgetId);
-        
-        if (!recaptchaToken) {
-          showError('Please complete the reCAPTCHA verification.');
-          verifyBtn.disabled = false;
-          verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
-          return;
-        }
+        # Send welcome email (add admin notify here if needed)
+        sent = send_welcome_email(email)
+        return jsonify({"status": "success" if sent else "error", "message": "Welcome email sent" if sent else "Failed to send welcome email"}), 200 if sent else 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-        try {
-          // Register user with backend
-          const result = await registerUser(email, password, recaptchaToken);
-          
-          if (result.success) {
-            // Store user info in session
-            sessionStorage.setItem('user', JSON.stringify({
-              email: email,
-              name: email.split('@')[0],
-              loginMethod: 'email'
-            }));
-            
-            // Notify Admin via FormSubmit
-            await fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
-              method: 'POST',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({ email: email, name: email.split('@')[0], loginMethod: 'email' })
-            });
-
-            showSuccess('Signup successful! Welcome email sent.');
-            
-            // Redirect to home page
-            setTimeout(() => { 
-              window.location.href = 'home.html'; 
-            }, 1500);
-          } else {
-            showError(result.error);
-            verifyBtn.disabled = false;
-            verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
-          }
-        } catch (error) {
-          console.error('Signup error:', error);
-          showError('An unexpected error occurred: ' + error.message);
-          verifyBtn.disabled = false;
-          verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
-        }
-      });
-
-      // Cyber Rain Effect
-      (function() {
-        const container = document.getElementById('rain-container');
-        if (!container) return;
-        const createRainColumn = () => {
-          const col = document.createElement('div');
-          col.className = 'rain-column';
-          col.style.left = Math.random() * 100 + 'vw';
-          const duration = Math.random() * 3 + 2;
-          col.style.animationDuration = duration + 's,1.5s';
-          col.style.animationDelay = Math.random() * 2 + 's';
-          col.style.opacity = Math.random() * 0.5 + 0.3;
-          let text = '';
-          const charCount = Math.floor(Math.random() * 20 + 10);
-          for (let i = 0; i < charCount; i++) { 
-            text += '10'[Math.floor(Math.random() * 2)] + '<br>'; 
-          }
-          col.innerHTML = text;
-          container.appendChild(col);
-          setTimeout(() => { col.remove(); }, duration * 1000);
-        };
-        setInterval(createRainColumn, 100);
-      })();
-    });
-  </script>
-</body>
-</html>
+# -------------------- RUN APP --------------------
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
