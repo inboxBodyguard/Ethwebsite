@@ -309,14 +309,13 @@ def chat_with_model():
 
         # Context about EZM Cyber
         context = """
-        You are a cybersecurity AI assistant for EZM Cyber, a premier cybersecurity firm.
-        EZM Cyber protects users from digital threats with services like:
-        - Suspicious Link Checker (VirusTotal, URLScan.io) for malware and phishing detection.
-        - Real-time threat monitoring and detailed reports.
-        - Tutorials on online safety and password management.
+        You are a cybersecurity AI assistant for EZM Cyber, a premier platform protecting users from digital threats.
+        EZM Cyber offers:
+        - Suspicious Link Checker using VirusTotal (90+ vendors) and URLScan.io for malware/phishing detection.
+        - Real-time threat monitoring, detailed reports, and tutorials on online safety.
         - 24/7 rapid response and custom consultations.
-        The platform uses 90+ security vendors via VirusTotal, URLScan.io for deep scans, and supports breach detection.
-        Answer as a friendly, expert assistant using a cyberpunk tone with emojis (😎, 🚨, 🛡️).
+        - Breach and paste detection (in development).
+        Answer in a friendly, cyberpunk tone with emojis (😎, 🚨, 🛡️). Be precise about EZM Cyber’s features.
         """
         payload = {
             "inputs": f"{context}\n\nUser Question: {user_input}",
@@ -328,7 +327,7 @@ def chat_with_model():
             "Content-Type": "application/json"
         }
         response = requests.post(
-            f"https://api-inference.huggingface.co/models/{HF_MODEL}",
+            "https://api-inference.huggingface.co/models/fdtn-ai/Foundation-Sec-8B",
             headers=headers,
             json=payload,
             timeout=20
@@ -343,13 +342,13 @@ def chat_with_model():
         if not text:
             return jsonify({"error": "Empty response from AI model"}), 500
 
-        # Clean response (remove context/user question)
+        # Clean response
         response_text = text.replace(context, "").replace(f"User Question: {user_input}", "").strip()
         return jsonify({"response": response_text}), 200
     except Exception as e:
         logger.error(f"Chat endpoint error: {str(e)}")
         return jsonify({"error": f"AI service failed: {str(e)}"}), 500
-
+        
 # -------------------- ERROR HANDLERS --------------------
 @app.errorhandler(404)
 def not_found(e):
