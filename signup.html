@@ -17,7 +17,6 @@
       overflow-x: hidden;
       position: relative;
     }
-    
     #rain-container {
       position: fixed;
       top: 0;
@@ -27,7 +26,6 @@
       pointer-events: none;
       z-index: 1;
     }
-    
     .rain-column {
       position: absolute;
       top: -100px;
@@ -37,35 +35,29 @@
       animation: rainFall linear infinite, fadeOut linear forwards;
       line-height: 1.2;
     }
-    
     @keyframes rainFall {
       0% { transform: translateY(-100px); }
       100% { transform: translateY(100vh); }
     }
-    
     @keyframes fadeOut {
       0% { opacity: 0.7; }
       100% { opacity: 0; }
     }
-    
     .back-home {
       position: absolute;
       top: 20px;
       left: 20px;
       z-index: 10;
     }
-    
     .back-home a {
       color: #00ffaa;
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s;
     }
-    
     .back-home a:hover {
       color: #00cc88;
     }
-    
     .login-container {
       position: relative;
       z-index: 2;
@@ -78,12 +70,10 @@
       backdrop-filter: blur(10px);
       border: 1px solid rgba(0, 255, 170, 0.2);
     }
-    
     .brand-logo {
       text-align: center;
       margin-bottom: 30px;
     }
-    
     .brand-logo h1 {
       font-weight: 700;
       font-size: 32px;
@@ -92,13 +82,11 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    
     .brand-logo p {
       font-weight: 400;
       color: #aaa;
       margin-bottom: 0;
     }
-    
     .social-btn {
       width: 100%;
       padding: 12px 16px;
@@ -114,50 +102,30 @@
       transition: all 0.3s;
       cursor: pointer;
     }
-    
     .social-btn:hover {
       background: rgba(40, 40, 80, 0.9);
       transform: translateY(-2px);
     }
-    
     .social-btn:disabled {
       opacity: 0.6;
       cursor: not-allowed;
       transform: none;
     }
-    
-    .google-btn {
-      border-color: rgba(220, 78, 65, 0.5);
-    }
-    
-    .microsoft-btn {
-      border-color: rgba(0, 120, 215, 0.5);
-    }
-    
-    .github-btn {
-      border-color: rgba(36, 41, 46, 0.5);
-    }
-    
-    .google-icon, .microsoft-icon, .github-icon {
+    .google-btn { border-color: rgba(220, 78, 65, 0.5); }
+    .microsoft-btn { border-color: rgba(0, 120, 215, 0.5); }
+    .google-icon, .microsoft-icon {
       width: 20px;
       height: 20px;
       margin-right: 12px;
       background-size: contain;
       background-repeat: no-repeat;
     }
-    
     .google-icon {
       background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=');
     }
-    
     .microsoft-icon {
       background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGgxMHYxMEgweiIgZmlsbD0iI2YyNTAyMiIvPjxwYXRoIGQ9Ik0xMSAwaDEwdjEwSDExeiIgZmlsbD0iIzgwYzQ0ZiIvPjxwYXRoIGQ9Ik0wIDExaDEwdjEwSDB6IiBmaWxsPSIjMDBhOWY0Ii8+PHBhdGggZD0iTTExIDExaDEwdjEwSDExeiIgZmlsbD0iI2ZmYjkwMCIvPjwvc3ZnPg==');
     }
-    
-    .github-icon {
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTggMEMzLjU4IDAgMCAzLjU4IDAgOHMzLjU4IDggOCA4IDgtMy41OCA4LTgtMy41OC04LTgtOHptLjgxIDEyLjUyYy4wMi4wMi4wNC4wMy4wNi4wNC4wNy4wNC4xNS4wOC4yNC4xLjEuMDMuMi4wNS4zMS4wNy4xMS4wMi4yMi4wMy4zNC4wMy4xOCAwIC4zNS0uMDMuNTEtLjA4LjE2LS4wNS4zLS4xMi40My0uMjEuMTMtLjA5LjIzLS4yMS4zMS0uMzUuMDgtLjE0LjEzLS4zLjE2LS40OC4wMy0uMTguMDQtLjM4LjA0LS41OSAwLS4yNC0uMDUtLjQ3LS4xNS0uNjktLjEtLjIyLS4yNS0uNDEtLjQ0LS41Ny0uMTktLjE2LS40Mi0uMjktLjY4LS4zOS0uMTEtLjA0LS4yMy0uMDgtLjM1LS4xMS0uMTItLjAzLS4yNS0uMDUtLjM5LS4wNi0uMDggMC0uMTYtLjAxLS4yNC0uMDEtLjA4IDAtLjE1LjAxLS4yMS4wMi0uMDYuMDEtLjExLjAzLS4xNS4wNS0uMDQuMDItLjA3LjA1LS4wOC4wOWwtLjAyLjA2LS4wMy4wN2MtLjAyLjA1LS4wMy4xLS4wMy4xNSAwIC4wNS4wMS4xLjAzLjE0LjAyLjA1LjA1LjA5LjA5LjEzLjA0LjA0LjA5LjA3LjE1LjA5LjA2LjAyLjEzLjAzLjIxLjAzLjA4IDAgLjE1LS4wMS4yMi0uMDMuMDctLjAyLjEzLS4wNS4xOC0uMDkuMDUtLjA0LjA5LS4wOS4xMi0uMTUuMDMtLjA2LjA0LS4xMy4wNC0uMiAwLS4wNy0uMDItLjEzLS4wNS0uMTgtLjAzLS4wNS0uMDgtLjA5LS4xMy0uMTItLjA1LS4wMy0uMTEtLjA1LS4xOC0uMDUtLjA2IDAtLjExLjAxLS4xNi4wMy0uMDUuMDItLjA5LjA0LS4xMi4wNy0uMDMuMDMtLjA1LjA2LS4wNi4xIDAgLjAzLS4wMS4wNi0uMDEuMDggMCAuMDIuMDEuMDQuMDIuMDYuMDEuMDIuMDMuMDQuMDUuMDUuMDIuMDEuMDQuMDIuMDcuMDIuMDMgMCAuMDUtLjAxLjA4LS4wMi4wMi0uMDEuMDQtLjAzLjA1LS4wNS4wMS0uMDIuMDItLjA0LjAyLS4wNyAwLS4wMy0uMDEtLjA1LS4wMy0uMDctLjAyLS4wMi0uMDQtLjAzLS4wNy0uMDMtLjAzIDAtLjA1LjAxLS4wOC4wMi0uMDIuMDEtLjA0LjAzLS4wNS4wNS0uMDEuMDItLjAyLjA0LS4wMi4wNyAwIC4wNC4wMS4wNy4wNC4wOS4wMy4wMi4wNi4wMy4xMS4wMy4wNiAwIC4xMS0uMDEuMTYtLjAzLjA1LS4wMi4xLS4wNS4xNC0uMDkuMDQtLjA0LjA3LS4wOS4wOS0uMTUuMDItLjA2LjAzLS4xMy4wMy0uMiAwLS4xLS4wMi0uMTktLjA3LS4yNy0uMDUtLjA4LS4xMi0uMTUtLjIxLS4yMS0uMDktLjA2LS4yLS4xLS4zMy0uMTItLjEzLS4wMi0uMjctLjAyLS40Mi4wMS0uMTUuMDMtLjI5LjA4LS4zMi4xNS0uMTMuMDctLjI0LjE2LS4zMy4yNy0uMDkuMTEtLjE2LjI0LS4yLjM5LS4wNC4xNS0uMDYuMzEtLjA2LjQ4IDAgLjIyLjAzLjQzLjA4LjYzLjA1LjIuMTMuMzguMjMuNTUuMS4xNy4yMy4zMi4zOC40NC4xNS4xMi4zMi4yMi41MS4yOS4xOS4wNy4zOS4xMi42MS4xNC4wOC4wMS4xNi4wMi4yNC4wMi4wNyAwIC4xMy0uMDEuMTktLjAyem0tNC4zLTIuODZjLS4wNC0uMDQtLjA4LS4wNy0uMTMtLjA5LS4wNS0uMDItLjEtLjAzLS4xNi0uMDMtLjA2IDAtLjExLjAxLS4xNi4wMy0uMDUuMDItLjEuMDUtLjEzLjA5LS4wMy4wNC0uMDUuMDgtLjA2LjEzLS4wMS4wNS0uMDEuMSAwIC4xNS4wMS4wNS4wMy4wOS4wNi4xMy4wMy4wNC4wNy4wNy4xMi4wOS4wNS4wMi4xLjAzLjE2LjAzLjA2IDAgLjExLS4wMS4xNi0uMDMuMDUtLjAyLjA5LS4wNS4xMy0uMDkuMDQtLjA0LjA2LS4wOC4wNy0uMTMuMDEtLjA1LjAxLS4xIDAtLjE1LS4wMS0uMDUtLjAzLS4wOS0uMDYtLjEzeiIgZmlsbPSJ3aGl0ZSIvPjwvc3ZnPg==');
-    }
-    
     .divider {
       display: flex;
       align-items: center;
@@ -165,30 +133,24 @@
       margin: 25px 0;
       color: #666;
     }
-    
-    .divider::before,
-    .divider::after {
+    .divider::before, .divider::after {
       content: '';
       flex: 1;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-    
     .divider span {
       padding: 0 15px;
       font-size: 14px;
     }
-    
     .form-group {
       margin-bottom: 20px;
     }
-    
     .form-label {
       display: block;
       margin-bottom: 8px;
       font-weight: 500;
       color: #ddd;
     }
-    
     .form-control {
       width: 100%;
       padding: 12px 16px;
@@ -199,23 +161,19 @@
       font-size: 16px;
       transition: all 0.3s;
     }
-    
     .form-control:focus {
       outline: none;
       border-color: #00ffaa;
       box-shadow: 0 0 0 2px rgba(0, 255, 170, 0.2);
     }
-    
     .form-control::placeholder {
       color: #888;
     }
-    
     #recaptcha-container {
       margin: 20px 0;
       display: flex;
       justify-content: center;
     }
-    
     .btn-primary {
       width: 100%;
       padding: 14px;
@@ -229,63 +187,52 @@
       transition: all 0.3s;
       margin-top: 10px;
     }
-    
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(0, 255, 170, 0.4);
     }
-    
     .btn-primary:disabled {
       opacity: 0.6;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
     }
-    
     .signin-link {
       text-align: center;
       margin-top: 25px;
       color: #aaa;
     }
-    
     .signin-link a {
       color: #00ffaa;
       text-decoration: none;
       font-weight: 500;
     }
-    
     .signin-link a:hover {
       text-decoration: underline;
     }
-    
     .error-message, .success-message {
       padding: 12px 16px;
       border-radius: 8px;
       margin-bottom: 20px;
       display: none;
     }
-    
     .error-message {
       background: rgba(220, 53, 69, 0.2);
       border: 1px solid rgba(220, 53, 69, 0.5);
       color: #f8d7da;
     }
-    
     .success-message {
       background: rgba(40, 167, 69, 0.2);
       border: 1px solid rgba(40, 167, 69, 0.5);
       color: #d4edda;
     }
-    
     @media (max-width: 576px) {
       .login-container {
         margin: 30px 15px;
         padding: 25px;
       }
-      
-      .back-home {
-        left: 15px;
-      }
+      .back-home { left: 15px; }
+      .form-control, .btn-primary, .social-btn { font-size: 0.9rem; padding: 10px; }
     }
   </style>
 </head>
@@ -297,21 +244,16 @@
       <h1>EZM Cyber</h1>
       <p>Secure Signup</p>
     </div>
-
     <div id="error-message" class="error-message"></div>
     <div id="success-message" class="success-message"></div>
-
     <button id="google-signin-btn" class="social-btn google-btn" onclick="handleGoogleSignIn()">
       <div class="google-icon"></div><span>Continue with Google</span>
     </button>
-
     <button id="microsoft-signin-btn" class="social-btn microsoft-btn" onclick="handleMicrosoftSignIn()">
       <div class="microsoft-icon"></div><span>Continue with Microsoft</span>
     </button>
-
     <div class="divider"><span>or</span></div>
-
-    <form id="signup-form" method="POST" action="https://ethwebsite-ulau.onrender.com/register">
+    <form id="signup-form" method="POST">
       <div class="form-group">
         <label for="email" class="form-label">Email Address</label>
         <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
@@ -325,7 +267,6 @@
         <span id="verify-btn-text">Sign Up with Email</span>
       </button>
     </form>
-
     <div class="signin-link">
       Already have an account? <a href="login.html">Sign in here</a>
     </div>
@@ -336,8 +277,8 @@
 
   <script>
     const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com';
-    const MICROSOFT_CLIENT_ID = 'YOUR_MICROSOFT_CLIENT_ID';
-    const RECAPTCHA_SITE_KEY = '6Lei2PIrAAAAAOz3D0mCSpWJ0f36Q_9GjKUFYXfv';
+    const RECAPTCHA_SITE_KEY = '6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG';
+    const BACKEND_URL = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
     let recaptchaWidgetId = null;
 
     function showError(msg) {
@@ -353,6 +294,7 @@
       s.textContent = msg;
       s.style.display = 'block';
       document.getElementById('error-message').style.display = 'none';
+      setTimeout(() => { s.style.display = 'none'; }, 5000);
     }
 
     function parseJwt(token) {
@@ -362,75 +304,36 @@
       return JSON.parse(jsonPayload);
     }
 
-    function handleCredentialResponse(response) {
-      handleGoogleSignInResponse(response);
-    }
-
-    async function handleGoogleSignInResponse(response) {
-      try {
-        const user = parseJwt(response.credential);
-        sessionStorage.setItem('user', JSON.stringify({name: user.name, email: user.email, picture: user.picture, loginMethod: 'google'}));
-        showSuccess('Successfully signed up with Google!');
-
-        // Notify Admin via FormSubmit
-        await fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ email: user.email, name: user.name, loginMethod: 'google' })
-        });
-
-        // Trigger backend welcome email
-        const sent = await sendWelcomeEmail(user.email);
-        if (sent) {
-          console.log('Welcome email sent via backend.');
-        } else {
-          console.warn('Failed to send welcome email.');
-        }
-
-        setTimeout(() => { window.location.href = 'home.html'; }, 1500);
-      } catch (error) {
-        console.error('Error in Google sign-in:', error);
-        showError('An error occurred during Google sign-in. Please try again.');
-      }
-    }
-
     async function sendWelcomeEmail(email) {
       try {
-        const response = await fetch('https://ethwebsite-ulau.onrender.com/api/virustotal', {
+        const response = await fetch(BACKEND_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: 'https://ezmcyber.xyz', email: email })
+          body: JSON.stringify({ url: 'https://ezmcyber.xyz', email })
         });
-        const data = await response.json();
-        return response.ok;
-      } catch(err) {
-        console.error('Backend email error:', err);
+        if (!response.ok) {
+          throw new Error(`Backend error ${response.status}: ${await response.text()}`);
+        }
+        return true;
+      } catch (err) {
+        console.error('Email error:', err);
         return false;
       }
     }
 
-    async function registerUser(email, password, recaptchaToken) {
-      try {
-        const response = await fetch('https://ethwebsite-ulau.onrender.com/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            email: email, 
-            password: password,
-            recaptchaToken: recaptchaToken
-          })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-          return { success: true, data };
-        } else {
-          return { success: false, error: data.error || 'Registration failed' };
+    async function retryFetch(url, options, retries = 2, delay = 1000) {
+      for (let i = 0; i <= retries; i++) {
+        try {
+          const response = await fetch(url, options);
+          if (response.ok) return response;
+          throw new Error(`Fetch failed: ${response.status}`);
+        } catch (err) {
+          if (i < retries) {
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+          throw err;
         }
-      } catch (error) {
-        console.error('Registration error:', error);
-        return { success: false, error: 'Network error: ' + error.message };
       }
     }
 
@@ -438,22 +341,47 @@
       const btn = document.getElementById('google-signin-btn');
       btn.disabled = true;
       try {
-        google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleCredentialResponse });
-        google.accounts.id.prompt((n) => {
-          if (n.isNotDisplayed() || n.isSkippedMoment()) { 
-            btn.disabled = false; 
-            showError('Google Sign-In popup could not be displayed.'); 
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: async (response) => {
+            try {
+              const user = parseJwt(response.credential);
+              sessionStorage.setItem('user', JSON.stringify({
+                name: user.name,
+                email: user.email,
+                picture: user.picture,
+                loginMethod: 'google'
+              }));
+              showSuccess('Signed up with Google! Redirecting...');
+              await fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: user.email, name: user.name, loginMethod: 'google' })
+              });
+              const sent = await sendWelcomeEmail(user.email);
+              if (!sent) console.warn('Google signup email failed');
+              setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+            } catch (error) {
+              showError('Google Sign-In failed. Try again.');
+              console.error('Google error:', error);
+              btn.disabled = false;
+            }
           }
         });
-      } catch(e) { 
-        console.error(e); 
-        showError('Google Sign-In unavailable.'); 
-        btn.disabled = false; 
+        google.accounts.id.prompt((n) => {
+          if (n.isNotDisplayed() || n.isSkippedMoment()) {
+            showError('Google Sign-In popup blocked. Allow popups or try again.');
+            btn.disabled = false;
+          }
+        });
+      } catch (e) {
+        showError('Google Sign-In unavailable. Try email signup.');
+        btn.disabled = false;
       }
     }
 
     function handleMicrosoftSignIn() {
-      showError('Microsoft Sign-In requires backend server to complete OAuth.');
+      showError('Microsoft Sign-In not set up yet. Use Google or email.');
     }
 
     function onRecaptchaLoad() {
@@ -466,12 +394,12 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      if (sessionStorage.getItem('user')) { 
-        window.location.href = 'home.html'; 
+      if (sessionStorage.getItem('user')) {
+        window.location.href = 'home.html';
       }
 
       const form = document.getElementById('signup-form');
-      form.addEventListener('submit', async function(e) {
+      form.addEventListener('submit', async function (e) {
         e.preventDefault();
         const verifyBtn = document.getElementById('verify-btn');
         verifyBtn.disabled = true;
@@ -479,57 +407,46 @@
 
         const email = form.email.value;
         const password = form.password.value;
-        
-        // Get reCAPTCHA token
         const recaptchaToken = grecaptcha.getResponse(recaptchaWidgetId);
-        
+
         if (!recaptchaToken) {
-          showError('Please complete the reCAPTCHA verification.');
+          showError('Please complete the reCAPTCHA.');
           verifyBtn.disabled = false;
           verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
           return;
         }
 
         try {
-          // Register user with backend
-          const result = await registerUser(email, password, recaptchaToken);
-          
-          if (result.success) {
-            // Store user info in session
-            sessionStorage.setItem('user', JSON.stringify({
-              email: email,
-              name: email.split('@')[0],
-              loginMethod: 'email'
-            }));
-            
-            // Notify Admin via FormSubmit
-            await fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
-              method: 'POST',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({ email: email, name: email.split('@')[0], loginMethod: 'email' })
-            });
-
-            showSuccess('Signup successful! Welcome email sent.');
-            
-            // Redirect to home page
-            setTimeout(() => { 
-              window.location.href = 'home.html'; 
-            }, 1500);
-          } else {
-            showError(result.error);
-            verifyBtn.disabled = false;
-            verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
-          }
+          const response = await retryFetch(BACKEND_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: 'https://ezmcyber.xyz', email })
+          });
+          const data = await response.json();
+          sessionStorage.setItem('user', JSON.stringify({
+            email,
+            name: email.split('@')[0],
+            loginMethod: 'email'
+          }));
+          await fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, name: email.split('@')[0], loginMethod: 'email' })
+          });
+          showSuccess('Signup successful! Check your email.');
+          setTimeout(() => { window.location.href = 'home.html'; }, 1500);
         } catch (error) {
           console.error('Signup error:', error);
-          showError('An unexpected error occurred: ' + error.message);
+          showError(error.message.includes('429') ? 'Rate limit hit. Try again in a minute.' :
+                    error.message.includes('401') ? 'API key issue. Contact support.' :
+                    'Signup failed. Try again or use Google.');
           verifyBtn.disabled = false;
           verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
         }
       });
 
       // Cyber Rain Effect
-      (function() {
+      (function () {
         const container = document.getElementById('rain-container');
         if (!container) return;
         const createRainColumn = () => {
@@ -542,8 +459,8 @@
           col.style.opacity = Math.random() * 0.5 + 0.3;
           let text = '';
           const charCount = Math.floor(Math.random() * 20 + 10);
-          for (let i = 0; i < charCount; i++) { 
-            text += '10'[Math.floor(Math.random() * 2)] + '<br>'; 
+          for (let i = 0; i < charCount; i++) {
+            text += '10'[Math.floor(Math.random() * 2)] + '<br>';
           }
           col.innerHTML = text;
           container.appendChild(col);
@@ -554,4 +471,4 @@
     });
   </script>
 </body>
-</html> 
+</html>
