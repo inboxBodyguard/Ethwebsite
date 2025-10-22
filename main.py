@@ -25,6 +25,9 @@ SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 # -------------------- RECAPTCHA CONFIG --------------------
 RECAPTCHA_SECRET = os.getenv("RECAPTCHA_SECRET_KEY")
 
+# -------------------- HUGGINGFACE CONFIG --------------------
+HF_API_KEY = os.getenv("HF_API_KEY")
+
 # -------------------- HELPERS --------------------
 def normalize_url(url):
     url = url.strip()
