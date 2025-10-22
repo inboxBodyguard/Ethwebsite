@@ -1,559 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Signup | EZM Cyber - Your Digital Security Partner</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Link Safety Checker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-1: #06060a; --bg-2: #0b0710;
+      --accent: #00ffcc; --muted: #9fb6b0;
+      --clean: #16a34a; --suspicious: #f59e0b; --phish: #ef4444; --unrated: #6b7280;
+      --bubble-user: #00ffcc25; --bubble-bot: #071218;
+    }
     body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
-      color: #fff;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      position: relative;
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      color: #e6fff8; font-family: "Orbitron", system-ui, sans-serif;
+      min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden;
     }
-    
-    #rain-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
+    #chat-container {
+      flex: 1; overflow-y: auto; padding: 20px 20px 80px; display: flex; flex-direction: column; gap: 16px;
+      scroll-behavior: smooth; max-width: 800px; margin: 0 auto;
     }
-    
-    .rain-column {
-      position: absolute;
-      top: -100px;
-      color: rgba(0, 255, 170, 0.7);
-      font-size: 14px;
-      font-family: monospace;
-      animation: rainFall linear infinite, fadeOut linear forwards;
-      line-height: 1.2;
+    .msg {
+      max-width: 80%; padding: 12px 16px; border-radius: 16px; line-height: 1.5; word-wrap: break-word;
+      font-size: 0.95rem; position: relative; animation: pop 0.25s ease-out;
     }
-    
-    @keyframes rainFall {
-      0% { transform: translateY(-100px); }
-      100% { transform: translateY(100vh); }
+    @keyframes pop { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .user { align-self: flex-end; background: var(--bubble-user); border: 1px solid rgba(0,255,204,0.3); color: #e6fff8; }
+    .bot { align-self: flex-start; background: var(--bubble-bot); border: 1px solid rgba(0,255,204,0.1); }
+    .bot strong { color: var(--accent); }
+    #input-bar {
+      position: sticky; bottom: 0; display: flex; padding: 12px; border-top: 1px solid rgba(0,255,204,0.1);
+      background: rgba(255,255,255,0.03); max-width: 800px; margin: 0 auto;
     }
-    
-    @keyframes fadeOut {
-      0% { opacity: 0.7; }
-      100% { opacity: 0; }
+    #url-input {
+      flex: 1; padding: 12px 16px; border: none; background: rgba(0,0,0,0.3); color: #e6fff8;
+      border-radius: 8px; font-size: 1rem; outline: none;
     }
-    
-    .back-home {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 10;
+    #url-input:focus { box-shadow: 0 0 5px rgba(0,255,204,0.5); }
+    #send-btn {
+      margin-left: 8px; padding: 12px 20px; background: var(--accent); color: #001517; font-weight: 700;
+      border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; min-width: 80px; font-size: 1rem;
     }
-    
-    .back-home a {
-      color: #00ffaa;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
+    #send-btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
+    #send-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .status-safe { color: var(--clean); }
+    .status-susp { color: var(--suspicious); }
+    .status-bad { color: var(--phish); }
+    .vendor-grid {
+      margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;
     }
-    
-    .back-home a:hover {
-      color: #00cc88;
+    .vendor-card {
+      padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(0,255,204,0.06);
+      font-size: 0.85rem; text-align: center; transition: transform 0.2s;
     }
-    
-    .login-container {
-      position: relative;
-      z-index: 2;
-      max-width: 420px;
-      margin: 60px auto;
-      padding: 40px;
-      background: rgba(15, 15, 35, 0.85);
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(0, 255, 170, 0.2);
+    .vendor-card:hover { transform: scale(1.05); }
+    .typing { display: inline-block; font-style: italic; opacity: 0.8; }
+    .dot { animation: blink 1.2s infinite; }
+    @keyframes blink { 0%, 20% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+    footer { text-align: center; padding: 10px; color: var(--muted); font-size: 0.8rem; }
+    #main-result {
+      padding: 20px; margin: 20px 0; border-radius: 12px; background: rgba(0,255,204,0.08);
+      border: 1px solid rgba(0,255,204,0.2); font-size: 1rem; text-align: left;
+      box-shadow: 0 0 25px rgba(0,255,204,0.1); animation: pop 0.4s ease-out;
+      transition: all 0.3s ease;
     }
-    
-    .brand-logo {
-      text-align: center;
-      margin-bottom: 30px;
+    #main-result:hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(0,255,204,0.25); }
+    #clear-history {
+      margin-top: 10px; padding: 8px 16px; background: rgba(255,255,255,0.1); color: var(--accent);
+      border: 1px solid rgba(0,255,204,0.3); border-radius: 8px; cursor: pointer; font-size: 0.9rem;
     }
-    
-    .brand-logo h1 {
-      font-weight: 700;
-      font-size: 32px;
-      margin-bottom: 5px;
-      background: linear-gradient(90deg, #00ffaa, #00ccff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    #clear-history:hover { background: rgba(255,255,255,0.2); }
+    #ai-toggle-btn {
+      margin-left: 8px; padding: 12px 16px; background: rgba(0, 255, 204, 0.2); color: var(--accent);
+      border: 1px solid rgba(0, 255, 204, 0.3); border-radius: 8px; cursor: pointer; transition: 0.2s;
+      font-size: 0.9rem; font-family: "Orbitron", system-ui, sans-serif;
     }
-    
-    .brand-logo p {
-      font-weight: 400;
-      color: #aaa;
-      margin-bottom: 0;
+    #ai-toggle-btn:hover { background: rgba(0, 255, 204, 0.3); }
+    @media (max-width: 600px) {
+      #chat-container { padding: 12px 12px 70px; gap: 12px; }
+      #url-input { font-size: 0.9rem; padding: 10px 12px; }
+      #send-btn { padding: 10px 16px; font-size: 0.9rem; min-width: 70px; }
+      .vendor-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; }
+      .vendor-card { font-size: 0.75rem; padding: 8px; }
+      .msg { max-width: 85%; font-size: 0.9rem; }
+      #main-result { padding: 15px; font-size: 0.95rem; }
+      #ai-toggle-btn { padding: 10px 12px; font-size: 0.8rem; }
     }
-    
-    .social-btn {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(30, 30, 60, 0.7);
-      color: white;
-      font-weight: 500;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-    
-    .social-btn:hover {
-      background: rgba(40, 40, 80, 0.9);
-      transform: translateY(-2px);
-    }
-    
-    .social-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-    
-    .google-btn {
-      border-color: rgba(220, 78, 65, 0.5);
-    }
-    
-    .microsoft-btn {
-      border-color: rgba(0, 120, 215, 0.5);
-    }
-    
-    .github-btn {
-      border-color: rgba(36, 41, 46, 0.5);
-    }
-    
-    .google-icon, .microsoft-icon, .github-icon {
-      width: 20px;
-      height: 20px;
-      margin-right: 12px;
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-    
-    .google-icon {
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=');
-    }
-    
-    .microsoft-icon {
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGgxMHYxMEgweiIgZmlsbD0iI2YyNTAyMiIvPjxwYXRoIGQ9Ik0xMSAwaDEwdjEwSDExeiIgZmlsbD0iIzgwYzQ0ZiIvPjxwYXRoIGQ9Ik0wIDExaDEwdjEwSDB6IiBmaWxsPSIjMDBhOWY0Ii8+PHBhdGggZD0iTTExIDExaDEwdjEwSDExeiIgZmlsbD0iI2ZmYjkwMCIvPjwvc3ZnPg==');
-    }
-    
-    .github-icon {
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTggMEMzLjU4IDAgMCAzLjU4IDAgOHMzLjU4IDggOCA4IDgtMy41OCA4LTgtMy41OC04LTgtOHptLjgxIDEyLjUyYy4wMi4wMi4wNC4wMy4wNi4wNC4wNy4wNC4xNS4wOC4yNC4xLjEuMDMuMi4wNS4zMS4wNy4xMS4wMi4yMi4wMy4zNC4wMy4xOCAwIC4zNS0uMDMuNTEtLjA4LjE2LS4wNS4zLS4xMi40My0uMjEuMTMtLjA5LjIzLS4yMS4zMS0uMzUuMDgtLjE0LjEzLS4zLjE2LS40OC4wMy0uMTguMDQtLjM4LjA0LS41OSAwLS4yNC0uMDUtLjQ3LS4xNS0uNjktLjEtLjIyLS4yNS0uNDEtLjQ0LS41Ny0uMTktLjE2LS40Mi0uMjktLjY4LS4zOS0uMTEtLjA0LS4yMy0uMDgtLjM1LS4xMS0uMTItLjAzLS4yNS0uMDUtLjM5LS4wNi0uMDggMC0uMTYtLjAxLS4yNC0uMDEtLjA4IDAtLjE1LjAxLS4yMS4wMi0uMDYuMDEtLjExLjAzLS4xNS4wNS0uMDQuMDItLjA3LjA1LS4wOC4wOWwtLjAyLjA2LS4wMy4wN2MtLjAyLjA1LS4wMy4xLS4wMy4xNSAwIC4wNS4wMS4xLjAzLjE0LjAyLjA1LjA1LjA5LjA5LjEzLjA0LjA0LjA5LjA3LjE1LjA5LjA2LjAyLjEzLjAzLjIxLjAzLjA4IDAgLjE1LS4wMS4yMi0uMDMuMDctLjAyLjEzLS4wNS4xOC0uMDkuMDUtLjA0LjA5LS4wOS4xMi0uMTUuMDMtLjA2LjA0LS4xMy4wNC0uMiAwLS4wNy0uMDItLjEzLS4wNS0uMTgtLjAzLS4wNS0uMDgtLjA5LS4xMy0uMTItLjA1LS4wMy0uMTEtLjA1LS4xOC0uMDUtLjA2IDAtLjExLjAxLS4xNi4wMy0uMDUuMDItLjA5LjA0LS4xMi4wNy0uMDMuMDMtLjA1LjA2LS4wNi4xIDAgLjAzLS4wMS4wNi0uMDEuMDggMCAuMDIuMDEuMDQuMDIuMDYuMDEuMDIuMDMuMDQuMDUuMDUuMDIuMDEuMDQuMDIuMDcuMDIuMDMgMCAuMDUtLjAxLjA4LS4wMi4wMi0uMDEuMDQtLjAzLjA1LS4wNS4wMS0uMDIuMDItLjA0LjAyLS4wNyAwLS4wMy0uMDEtLjA1LS4wMy0uMDctLjAyLS4wMi0uMDQtLjAzLS4wNy0uMDMtLjAzIDAtLjA1LjAxLS4wOC4wMi0uMDIuMDEtLjA0LjAzLS4wNS4wNS0uMDEuMDItLjAyLjA0LS4wMi4wNyAwIC4wNC4wMS4wNy4wNC4wOS4wMy4wMi4wNi4wMy4xMS4wMy4wNiAwIC4xMS0uMDEuMTYtLjAzLjA1LS4wMi4xLS4wNS4xNC0uMDkuMDQtLjA0LjA3LS4wOS4wOS0uMTUuMDItLjA2LjAzLS4xMy4wMy0uMiAwLS4xLS4wMi0uMTktLjA3LS4yNy0uMDUtLjA4LS4xMi0uMTUtLjIxLS4yMS0uMDktLjA2LS4yLS4xLS4zMy0uMTItLjEzLS4wMi0uMjctLjAyLS40Mi4wMS0uMTUuMDMtLjI5LjA4LS40Mi4xNS0uMTMuMDctLjI0LjE2LS4zMy4yNy0uMDkuMTEtLjE2LjI0LS4yLjM5LS4wNC4xNS0uMDYuMzEtLjA2LjQ4IDAgLjIyLjAzLjQzLjA4LjYzLjA1LjIuMTMuMzguMjMuNTUuMS4xNy4yMy4zMi4zOC40NC4xNS4xMi4zMi4yMi41MS4yOS4xOS4wNy4zOS4xMi42MS4xNC4wOC4wMS4xNi4wMi4yNC4wMi4wNyAwIC4xMy0uMDEuMTktLjAyem0tNC4zLTIuODZjLS4wNC0uMDQtLjA4LS4wNy0uMTMtLjA5LS4wNS0uMDItLjEtLjAzLS4xNi0uMDMtLjA2IDAtLjExLjAxLS4xNi4wMy0uMDUuMDItLjEuMDUtLjEzLjA5LS4wMy4wNC0uMDUuMDgtLjA2LjEzLS4wMS4wNS0uMDEuMSAwIC4xNS4wMS4wNS4wMy4wOS4wNi4xMy4wMy4wNC4wNy4wNy4xMi4wOS4wNS4wMi4xLjAzLjE2LjAzLjA2IDAgLjExLS4wMS4xNi0uMDMuMDUtLjAyLjA5LS4wNS4xMy0uMDkuMDQtLjA0LjA2LS4wOC4wNy0uMTMuMDEtLjA1LjAxLS4xIDAtLjE1LS4wMS0uMDUtLjAzLS4wOS0uMDYtLjEzeiIgZmlsbPSJ3aGl0ZSIvPjwvc3ZnPg==');
-    }
-    
-    .divider {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      margin: 25px 0;
-      color: #666;
-    }
-    
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .divider span {
-      padding: 0 15px;
-      font-size: 14px;
-    }
-    
-    .form-group {
-      margin-bottom: 20px;
-    }
-    
-    .form-label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-      color: #ddd;
-    }
-    
-    .form-control {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(20, 20, 40, 0.7);
-      color: white;
-      font-size: 16px;
-      transition: all 0.3s;
-    }
-    
-    .form-control:focus {
-      outline: none;
-      border-color: #00ffaa;
-      box-shadow: 0 0 0 2px rgba(0, 255, 170, 0.2);
-    }
-    
-    .form-control::placeholder {
-      color: #888;
-    }
-    
-    #recaptcha-container {
-      margin: 20px 0;
-      display: flex;
-      justify-content: center;
-    }
-    
-    .btn-primary {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      background: linear-gradient(90deg, #00ffaa, #00ccff);
-      color: #000;
-      font-weight: 600;
-      font-size: 16px;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin-top: 10px;
-    }
-    
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 255, 170, 0.4);
-    }
-    
-    .btn-primary:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-    
-    .signin-link {
-      text-align: center;
-      margin-top: 25px;
-      color: #aaa;
-    }
-    
-    .signin-link a {
-      color: #00ffaa;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    
-    .signin-link a:hover {
-      text-decoration: underline;
-    }
-    
-    .error-message, .success-message {
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      display: none;
-    }
-    
-    .error-message {
-      background: rgba(220, 53, 69, 0.2);
-      border: 1px solid rgba(220, 53, 69, 0.5);
-      color: #f8d7da;
-    }
-    
-    .success-message {
-      background: rgba(40, 167, 69, 0.2);
-      border: 1px solid rgba(40, 167, 69, 0.5);
-      color: #d4edda;
-    }
-    
-    @media (max-width: 576px) {
-      .login-container {
-        margin: 30px 15px;
-        padding: 25px;
-      }
-      
-      .back-home {
-        left: 15px;
-      }
+    @media (max-width: 400px) {
+      #input-bar { padding: 10px; }
+      #url-input { font-size: 0.85rem; }
+      #send-btn { padding: 8px 12px; font-size: 0.85rem; }
+      #ai-toggle-btn { padding: 8px 10px; font-size: 0.75rem; }
     }
   </style>
 </head>
 <body>
-  <div id="rain-container"></div>
-  <div class="back-home"><a href="index.html">←🏘️</a></div>
-  <div class="login-container">
-    <div class="brand-logo">
-      <h1>EZM Cyber</h1>
-      <p>Secure Signup</p>
-    </div>
-
-    <div id="error-message" class="error-message"></div>
-    <div id="success-message" class="success-message"></div>
-
-    <button id="google-signin-btn" class="social-btn google-btn" onclick="handleGoogleSignIn()">
-      <div class="google-icon"></div><span>Continue with Google</span>
-    </button>
-
-    <button id="microsoft-signin-btn" class="social-btn microsoft-btn" onclick="handleMicrosoftSignIn()">
-      <div class="microsoft-icon"></div><span>Continue with Microsoft</span>
-    </button>
-
-    <div class="divider"><span>or</span></div>
-
-    <form id="signup-form" method="POST" action="https://ethwebsite-ulau.onrender.com/api/virustotal">
-      <div class="form-group">
-        <label for="email" class="form-label">Email Address</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
-      </div>
-      <div class="form-group">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
-      </div>
-      <div id="recaptcha-container"></div>
-      <button type="submit" id="verify-btn" class="btn-primary">
-        <span id="verify-btn-text">Sign Up with Email</span>
-      </button>
-    </form>
-
-    <div class="signin-link">
-      Already have an account? <a href="login.html">Sign in here</a>
-    </div>
+  <div id="chat-container">
+    <div class="msg bot"><strong>⚡️ Yo!</strong> Toss me any link, and I'll hit it with a full security scan to keep you safe! 🔍</div>
   </div>
-
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
+  <div id="input-bar">
+    <input id="url-input" type="text" placeholder="Paste a link to check..." autocomplete="off">
+    <button id="send-btn">Send</button>
+  </div>
+  <footer>Secure • Protect • Respond</footer>
 
   <script>
-    const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com';
-    const MICROSOFT_CLIENT_ID = 'YOUR_MICROSOFT_CLIENT_ID';
-    const RECAPTCHA_SITE_KEY = '6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG';
-    let recaptchaWidgetId = null;
+    // API endpoints - FIXED variable names
+    const VT_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
+    const URLSCAN_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/urlscan';
+    const HUGGINGFACE_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/huggingface';
+    
+    const chat = document.getElementById('chat-container');
+    const input = document.getElementById('url-input');
+    const sendBtn = document.getElementById('send-btn');
 
-    function showError(msg) {
-      const e = document.getElementById('error-message');
-      e.textContent = msg;
-      e.style.display = 'block';
-      document.getElementById('success-message').style.display = 'none';
-      setTimeout(() => { e.style.display = 'none'; }, 5000);
+    // AI Chat System
+    let aiChatActive = false;
+    
+    // Knowledge base about your website
+    const WEBSITE_KNOWLEDGE = `
+      This is a comprehensive security scanning website that analyzes URLs for potential threats, breaches, and malicious content.
+      
+      Core Features:
+      - VirusTotal integration for multi-engine malware detection
+      - URLScan.io for detailed website analysis and screenshots
+      - Real-time security threat assessment
+      - Vendor reputation analysis from 90+ security vendors
+      - Phishing and malicious link detection
+      - Clean, suspicious, and malicious classification system
+      
+      Security Capabilities:
+      - Detects malware, viruses, trojans, and ransomware
+      - Identifies phishing attempts and scam websites
+      - Analyzes suspicious behavior and patterns
+      - Provides comprehensive security reports
+      - Scans for data breaches and leaks
+      - Monitors blacklisted domains and IPs
+      
+      How it works:
+      1. Users submit any URL for analysis
+      2. System queries multiple security databases
+      3. Aggregates results from VirusTotal's 90+ security vendors
+      4. Provides detailed threat assessment with vendor breakdown
+      5. Offers URLScan.io integration for deeper analysis
+      
+      The website is built with modern web technologies and focuses on user security and privacy.
+      It helps protect users from online threats by providing instant security assessments.
+    `;
+
+    function addMessage(text, sender = 'bot') {
+      const div = document.createElement('div');
+      div.className = `msg ${sender}`;
+      div.innerHTML = text;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+      return div;
     }
 
-    function showSuccess(msg) {
-      const s = document.getElementById('success-message');
-      s.textContent = msg;
-      s.style.display = 'block';
-      document.getElementById('error-message').style.display = 'none';
+    function verdictClass(v) {
+      if (v === 'phish' || v === 'malicious') return 'status-bad';
+      if (v === 'suspicious') return 'status-susp';
+      return 'status-safe';
     }
 
-    function parseJwt(token) {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-      return JSON.parse(jsonPayload);
-    }
-
-    // Convert handleCredentialResponse to normal function that calls async function
-    function handleCredentialResponse(response) {
-      handleGoogleSignInResponse(response);
-    }
-
-    // New async function for handling Google sign-in
-    async function handleGoogleSignInResponse(response) {
-      try {
-        const user = parseJwt(response.credential);
-        sessionStorage.setItem('user', JSON.stringify({name: user.name, email: user.email, picture: user.picture, loginMethod: 'google'}));
-        showSuccess('Successfully signed up with Google!');
-
-        // Notify Admin via FormSubmit
-        await fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ email: user.email, name: user.name, loginMethod: 'google' })
-        });
-
-        // Trigger backend welcome email
-        const sent = await sendWelcomeEmail(user.email);
-        if (sent) {
-          console.log('Welcome email sent via backend.');
-        } else {
-          console.warn('Failed to send welcome email.');
-        }
-
-        setTimeout(() => { window.location.href = 'home.html'; }, 1500);
-      } catch (error) {
-        console.error('Error in Google sign-in:', error);
-        showError('An error occurred during Google sign-in. Please try again.');
+    function addTyping() {
+      if (aiChatActive) {
+        return addMessage(`<span class="typing">Analyzing security question<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, 'bot');
       }
+      return addMessage(`<span class="typing">Scanning that link for you<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, 'bot');
     }
 
-    async function sendWelcomeEmail(email) {
-      try {
-        const response = await fetch('https://ethwebsite-ulau.onrender.com/api/virustotal', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: 'https://ezmcyber.xyz', email: email })
-        });
-        const data = await response.json();
-        return response.ok;
-      } catch(err) {
-        console.error('Backend email error:', err);
-        return false;
-      }
-    }
+    // AI Question Handler
+    async function askAISecurityQuestion(question) {
+      const typingDiv = addTyping();
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Thinking...';
 
-    async function registerUser(email, password, recaptchaToken) {
       try {
-        const response = await fetch('https://ethwebsite-ulau.onrender.com/api/virustotal', {
+        const context = `
+          You are a security expert AI assistant for a comprehensive security scanning website.
+          
+          WEBSITE KNOWLEDGE BASE:
+          ${WEBSITE_KNOWLEDGE}
+          
+          USER QUESTION: ${question}
+          
+          Please provide a helpful, accurate response about security scanning, threat detection, breaches, 
+          or how this website works. Be specific about our capabilities and features.
+        `;
+
+        const response = await fetch(HUGGINGFACE_BACKEND, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
-            url: 'https://ezmcyber.xyz',
-            email: email
+            prompt: context,
+            max_tokens: 500,
+            temperature: 0.7
           })
         });
+
+        if (!response.ok) {
+          throw new Error(`AI service error: ${response.status}`);
+        }
+
+        const aiData = await response.json();
         
-        const data = await response.json();
+        typingDiv.remove();
         
-        if (response.ok) {
-          return { success: true, data };
+        if (aiData.response) {
+          addMessage(aiData.response, 'bot');
         } else {
-          return { success: false, error: data.message || 'Registration failed' };
+          addMessage("I understand you're asking about security scanning. Our system analyzes URLs using multiple security engines to detect malware, phishing, and other threats. We integrate with VirusTotal and URLScan.io to provide comprehensive protection. 🔒", 'bot');
         }
+
       } catch (error) {
-        console.error('Registration error:', error);
-        return { success: false, error: 'Network error. Please try again.' };
+        console.error('AI query error:', error);
+        typingDiv.remove();
+        addMessage(`I'm currently learning about security threats and breaches. Right now, I can tell you that our system scans URLs using VirusTotal's 90+ security vendors and URLScan.io for detailed analysis. We detect malware, phishing, suspicious behavior, and help prevent data breaches. 🛡️`, 'bot');
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = aiChatActive ? 'Ask AI' : 'Send';
       }
     }
 
-    function handleGoogleSignIn() {
-      const btn = document.getElementById('google-signin-btn');
-      btn.disabled = true;
+    async function analyzeLink(url) {
+      const typingDiv = addTyping();
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Scanning...';
+      let resultBox = document.getElementById('main-result');
+      if (!resultBox) {
+        resultBox = document.createElement('div');
+        resultBox.id = 'main-result';
+        chat.prepend(resultBox);
+      }
+
       try {
-        google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleCredentialResponse });
-        google.accounts.id.prompt((n) => {
-          if (n.isNotDisplayed() || n.isSkippedMoment()) { 
-            btn.disabled = false; 
-            showError('Google Sign-In popup could not be displayed.'); 
-          }
+        // Step 1: VirusTotal scan
+        const vtResp = await fetch(VT_BACKEND, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
         });
-      } catch(e) { 
-        console.error(e); 
-        showError('Google Sign-In unavailable.'); 
-        btn.disabled = false; 
-      }
-    }
+        if (!vtResp.ok) {
+          throw new Error(`VirusTotal error ${vtResp.status}: ${await vtResp.text()}`);
+        }
+        const vtData = await vtResp.json();
 
-    function handleMicrosoftSignIn() {
-      showError('Microsoft Sign-In requires backend server to complete OAuth.');
-    }
+        const vendors = vtData.last_analysis_results
+          ? Object.entries(vtData.last_analysis_results).map(([name, info]) => {
+              const cat = info?.category?.toLowerCase() || 'unrated';
+              let v = 'unrated';
+              if (cat === 'malicious' || cat === 'phishing') v = 'phish';
+              else if (cat === 'suspicious') v = 'suspicious';
+              else if (cat === 'harmless' || cat === 'clean') v = 'clean';
+              return { name, verdict: v };
+            })
+          : [];
 
-    function onRecaptchaLoad() {
-      if (document.getElementById('recaptcha-container')) {
-        recaptchaWidgetId = grecaptcha.render('recaptcha-container', {
-          sitekey: RECAPTCHA_SITE_KEY,
-          theme: 'dark'
+        const stats = { mal: 0, susp: 0, clean: 0 };
+        vendors.forEach(v => {
+          if (v.verdict === 'phish') stats.mal++;
+          else if (v.verdict === 'suspicious') stats.susp++;
+          else if (v.verdict === 'clean') stats.clean++;
         });
-      }
-    }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      if (sessionStorage.getItem('user')) { 
-        window.location.href = 'home.html'; 
-      }
-
-      const form = document.getElementById('signup-form');
-      form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const verifyBtn = document.getElementById('verify-btn');
-        verifyBtn.disabled = true;
-        verifyBtn.innerHTML = '<span>Signing Up...</span>';
-
-        const email = form.email.value;
-        const password = form.password.value;
-        
-        // Get reCAPTCHA token
-        const recaptchaToken = grecaptcha.getResponse(recaptchaWidgetId);
-        
-        if (!recaptchaToken) {
-          showError('Please complete the reCAPTCHA verification.');
-          verifyBtn.disabled = false;
-          verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
-          return;
+        const total = vendors.length;
+        const threatCount = stats.mal + stats.susp;
+        let status = 'safe', label = 'CLEAN', message = 'Looks good! This link is safe to visit. 😎';
+        if (stats.mal > 0) {
+          status = 'bad';
+          label = 'MALICIOUS';
+          message = 'Yikes! This link is dangerous. Steer clear! 🚨';
+        } else if (stats.susp > 0) {
+          status = 'susp';
+          label = `SUSPICIOUS (${stats.susp} flagged)`;
+          message = 'Hmm, this link looks a bit sketchy. Proceed with caution! ⚠️';
         }
 
-        try {
-          // Register user with backend
-          const result = await registerUser(email, password, recaptchaToken);
+        let html = `<strong>🔍 Status:</strong> <span class="${'status-' + status}">${label}</span><br>
+          <small>Detections: ${threatCount}/${total}</small><br>
+          <small>${message}</small>`;
+        html += `<div class="vendor-grid">` +
+          vendors.slice(0, 90).map(v => `
+            <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
+          `).join('') + `</div>`;
+
+        // Step 2: URLScan.io scan
+        const scanResp = await fetch(URLSCAN_BACKEND, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
+        if (scanResp.ok) {
+          const scanData = await scanResp.json();
+          if (scanData.result_url) {
+            html += `<br><small>Full URLScan Report: <a href="${scanData.result_url}" target="_blank">${scanData.scan_id}</a></small>`;
+          }
+        } else {
+          const errorData = await scanResp.json();
+          html += `<br><small>URLScan failed: ${errorData.error || 'Unknown error'}</small>`;
+        }
+
+        typingDiv.remove();
+        resultBox.innerHTML = `<strong>🔍 Latest Scan Result</strong><br><br>${html}`;
+        addMessage(message, 'bot');
+
+        // Save history
+        const saved = JSON.parse(sessionStorage.getItem('ezm_history') || '[]');
+        saved.unshift({ url, status, detections: threatCount, total, timestamp: new Date().toISOString() });
+        if (saved.length > 50) saved.pop();
+        sessionStorage.setItem('ezm_history', JSON.stringify(saved));
+
+        // Add Clear History button if history exists
+        if (saved.length > 0 && !document.getElementById('clear-history')) {
+          const clearBtn = document.createElement('button');
+          clearBtn.id = 'clear-history';
+          clearBtn.textContent = 'Clear Scan History';
+          clearBtn.onclick = () => {
+            sessionStorage.removeItem('ezm_history');
+            clearBtn.remove();
+            addMessage('Scan history cleared! Ready for a fresh start. 🚀', 'bot');
+          };
+          resultBox.appendChild(clearBtn);
+        }
+
+        input.value = ''; // Clear input
+      } catch (e) {
+        console.error('Scan error:', e);
+        typingDiv.remove();
+        addMessage(`Whoops, something broke! ${e.message.includes('401') ? 'API key issue.' : e.message.includes('429') ? 'Hit a rate limit.' : 'Try again later.'} 😅`, 'bot');
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = aiChatActive ? 'Ask AI' : 'Send';
+      }
+    }
+
+    function toggleAIChat() {
+      aiChatActive = !aiChatActive;
+      const chatContainer = document.getElementById('chat-container');
+      const urlInput = document.getElementById('url-input');
+      const sendBtn = document.getElementById('send-btn');
+      
+      if (aiChatActive) {
+        // Switch to AI Chat mode
+        urlInput.placeholder = "Ask me anything about security scanning, breaches, or this website...";
+        sendBtn.textContent = 'Ask AI';
+        
+        // Clear previous messages and show AI welcome
+        chatContainer.innerHTML = '';
+        addMessage(`<strong>🛡️ Security AI Assistant</strong><br>Hello! I'm your security AI assistant. I can help you understand:<br>
+          • How our security scanning works<br>
+          • Types of threats we detect<br>
+          • Breach and leak detection<br>
+          • Website security features<br>
+          • API integrations and capabilities<br><br>
+          Ask me anything about security! 🔍`, 'bot');
           
-          if (result.success) {
-            // Store user info in session
-            sessionStorage.setItem('user', JSON.stringify({
-              email: email,
-              name: email.split('@')[0],
-              loginMethod: 'email'
-            }));
-            
-            // Notify Admin via FormSubmit (consistent with Google)
-            await fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
-              method: 'POST',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({ email: email, name: email.split('@')[0], loginMethod: 'email' })
-            });
+      } else {
+        // Switch back to URL scanning mode
+        urlInput.placeholder = "Paste a link to check...";
+        sendBtn.textContent = 'Send';
+        
+        // Clear and show scanning welcome
+        chatContainer.innerHTML = '';
+        addMessage(`<strong>⚡️ Yo!</strong> Toss me any link, and I'll hit it with a full security scan to keep you safe! 🔍`, 'bot');
+      }
+    }
 
-            // No need for sendWelcomeEmail here; it's already triggered in registerUser via backend
-
-            showSuccess('Signup successful! Welcome email sent.');
-            
-            // Redirect to home page
-            setTimeout(() => { 
-              window.location.href = 'home.html'; 
-            }, 1500);
-          } else {
-            showError(result.error);
-            verifyBtn.disabled = false;
-            verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
-          }
-        } catch (error) {
-          console.error('Signup error:', error);
-          showError('An unexpected error occurred. Please try again.');
-          verifyBtn.disabled = false;
-          verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
+    // Unified send button handler
+    sendBtn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) return;
+      
+      addMessage(val, 'user');
+      
+      if (aiChatActive) {
+        // Handle AI questions
+        askAISecurityQuestion(val);
+      } else {
+        // Handle URL scanning
+        let normalized = val;
+        if (!/^https?:\/\//i.test(val)) normalized = 'http://' + val;
+        try {
+          new URL(normalized);
+          analyzeLink(normalized);
+        } catch {
+          addMessage('Oops, that\'s not a valid URL. Try something like https://example.com! 😬', 'bot');
+          sendBtn.disabled = false;
+          sendBtn.textContent = aiChatActive ? 'Ask AI' : 'Send';
         }
-      });
+      }
+    };
 
-      // Cyber Rain Effect
-      (function() {
-        const container = document.getElementById('rain-container');
-        if (!container) return;
-        const createRainColumn = () => {
-          const col = document.createElement('div');
-          col.className = 'rain-column';
-          col.style.left = Math.random() * 100 + 'vw';
-          const duration = Math.random() * 3 + 2;
-          col.style.animationDuration = duration + 's,1.5s';
-          col.style.animationDelay = Math.random() * 2 + 's';
-          col.style.opacity = Math.random() * 0.5 + 0.3;
-          let text = '';
-          const charCount = Math.floor(Math.random() * 20 + 10);
-          for (let i = 0; i < charCount; i++) { 
-            text += '10'[Math.floor(Math.random() * 2)] + '<br>'; 
-          }
-          col.innerHTML = text;
-          container.appendChild(col);
-          setTimeout(() => { col.remove(); }, duration * 1000);
-        };
-        setInterval(createRainColumn, 100);
-      })();
+    // Add AI toggle button
+    const aiToggleBtn = document.createElement('button');
+    aiToggleBtn.id = 'ai-toggle-btn';
+    aiToggleBtn.textContent = '🤖 AI Mode';
+    aiToggleBtn.onclick = toggleAIChat;
+    
+    // Insert AI toggle button before send button
+    const inputBar = document.getElementById('input-bar');
+    inputBar.insertBefore(aiToggleBtn, sendBtn);
+
+    // Update input placeholder
+    input.placeholder = "Paste a link to check or click 🤖 for AI questions...";
+
+    // Enhanced keypress handler
+    input.addEventListener('keypress', e => {
+      if (e.key === 'Enter') sendBtn.click();
     });
   </script>
 </body>
