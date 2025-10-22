@@ -256,5 +256,204 @@
       if (e.key === 'Enter') sendBtn.click();
     });
   </script>
+  <script>
+  // AI Training and Chat System
+  const HUGGINGFACE_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/huggingface';
+  
+  // Knowledge base about your website
+  const WEBSITE_KNOWLEDGE = `
+    This is a comprehensive security scanning website that analyzes URLs for potential threats, breaches, and malicious content.
+    
+    Core Features:
+    - VirusTotal integration for multi-engine malware detection
+    - URLScan.io for detailed website analysis and screenshots
+    - Real-time security threat assessment
+    - Vendor reputation analysis from 90+ security vendors
+    - Phishing and malicious link detection
+    - Clean, suspicious, and malicious classification system
+    
+    Security Capabilities:
+    - Detects malware, viruses, trojans, and ransomware
+    - Identifies phishing attempts and scam websites
+    - Analyzes suspicious behavior and patterns
+    - Provides comprehensive security reports
+    - Scans for data breaches and leaks
+    - Monitors blacklisted domains and IPs
+    
+    How it works:
+    1. Users submit any URL for analysis
+    2. System queries multiple security databases
+    3. Aggregates results from VirusTotal's 90+ security vendors
+    4. Provides detailed threat assessment with vendor breakdown
+    5. Offers URLScan.io integration for deeper analysis
+    
+    The website is built with modern web technologies and focuses on user security and privacy.
+    It helps protect users from online threats by providing instant security assessments.
+  `;
+
+  // AI Chat System
+  let aiChatActive = false;
+  
+  function toggleAIChat() {
+    aiChatActive = !aiChatActive;
+    const chatContainer = document.getElementById('chat-container');
+    const inputBar = document.getElementById('input-bar');
+    const urlInput = document.getElementById('url-input');
+    const sendBtn = document.getElementById('send-btn');
+    
+    if (aiChatActive) {
+      // Switch to AI Chat mode
+      urlInput.placeholder = "Ask me anything about security scanning, breaches, or this website...";
+      sendBtn.textContent = 'Ask AI';
+      
+      // Clear previous messages and show AI welcome
+      chatContainer.innerHTML = '';
+      addMessage(`<strong>🛡️ Security AI Assistant</strong><br>Hello! I'm your security AI assistant. I can help you understand:<br>
+        • How our security scanning works<br>
+        • Types of threats we detect<br>
+        • Breach and leak detection<br>
+        • Website security features<br>
+        • API integrations and capabilities<br><br>
+        Ask me anything about security! 🔍`, 'bot');
+        
+    } else {
+      // Switch back to URL scanning mode
+      urlInput.placeholder = "Paste a link to check...";
+      sendBtn.textContent = 'Send';
+      
+      // Clear and show scanning welcome
+      chatContainer.innerHTML = '';
+      addMessage(`<strong>⚡️ Yo!</strong> Toss me any link, and I'll hit it with a full security scan to keep you safe! 🔍`, 'bot');
+    }
+  }
+
+  // AI Question Handler
+  async function askAISecurityQuestion(question) {
+    const typingDiv = addTyping();
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Thinking...';
+
+    try {
+      // Prepare the context for the AI
+      const context = `
+        You are a security expert AI assistant for a comprehensive security scanning website.
+        
+        WEBSITE KNOWLEDGE BASE:
+        ${WEBSITE_KNOWLEDGE}
+        
+        USER QUESTION: ${question}
+        
+        Please provide a helpful, accurate response about security scanning, threat detection, breaches, 
+        or how this website works. Be specific about our capabilities and features.
+      `;
+
+      const response = await fetch(HUGGINGFACE_BACKEND, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          prompt: context,
+          max_tokens: 500,
+          temperature: 0.7
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`AI service error: ${response.status}`);
+      }
+
+      const aiData = await response.json();
+      
+      typingDiv.remove();
+      
+      if (aiData.response) {
+        addMessage(aiData.response, 'bot');
+      } else {
+        addMessage("I understand you're asking about security scanning. Our system analyzes URLs using multiple security engines to detect malware, phishing, and other threats. We integrate with VirusTotal and URLScan.io to provide comprehensive protection. 🔒", 'bot');
+      }
+
+    } catch (error) {
+      console.error('AI query error:', error);
+      typingDiv.remove();
+      addMessage(`I'm currently learning about security threats and breaches. Right now, I can tell you that our system scans URLs using VirusTotal's 90+ security vendors and URLScan.io for detailed analysis. We detect malware, phishing, suspicious behavior, and help prevent data breaches. 🛡️`, 'bot');
+    } finally {
+      sendBtn.disabled = false;
+      sendBtn.textContent = aiChatActive ? 'Ask AI' : 'Send';
+    }
+  }
+
+  // Enhanced send button handler
+  sendBtn.onclick = () => {
+    const val = input.value.trim();
+    if (!val) return;
+    
+    addMessage(val, 'user');
+    
+    if (aiChatActive) {
+      // Handle AI questions
+      askAISecurityQuestion(val);
+    } else {
+      // Handle URL scanning (existing functionality)
+      let normalized = val;
+      if (!/^https?:\/\//i.test(val)) normalized = 'http://' + val;
+      try {
+        new URL(normalized);
+        analyzeLink(normalized);
+      } catch {
+        addMessage('Oops, that's not a valid URL. Try something like https://example.com! 😬', 'bot');
+        sendBtn.disabled = false;
+        sendBtn.textContent = aiChatActive ? 'Ask AI' : 'Send';
+      }
+    }
+  };
+
+  // Add AI toggle button to the input bar
+  const aiToggleBtn = document.createElement('button');
+  aiToggleBtn.id = 'ai-toggle-btn';
+  aiToggleBtn.textContent = '🤖 AI Mode';
+  aiToggleBtn.style.cssText = `
+    margin-left: 8px;
+    padding: 12px 16px;
+    background: rgba(0, 255, 204, 0.2);
+    color: var(--accent);
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.9rem;
+    font-family: "Orbitron", system-ui, sans-serif;
+  `;
+  
+  aiToggleBtn.onmouseover = () => {
+    aiToggleBtn.style.background = 'rgba(0, 255, 204, 0.3)';
+  };
+  
+  aiToggleBtn.onmouseout = () => {
+    aiToggleBtn.style.background = 'rgba(0, 255, 204, 0.2)';
+  };
+  
+  aiToggleBtn.onclick = toggleAIChat;
+  
+  // Insert AI toggle button before send button
+  const inputBar = document.getElementById('input-bar');
+  inputBar.insertBefore(aiToggleBtn, sendBtn);
+
+  // Update input placeholder to show both modes
+  input.placeholder = "Paste a link to check or click 🤖 for AI questions...";
+
+  // Enhanced keypress handler
+  input.addEventListener('keypress', e => {
+    if (e.key === 'Enter') sendBtn.click();
+  });
+
+  // Update the addTyping function for AI mode
+  const originalAddTyping = addTyping;
+  addTyping = function() {
+    if (aiChatActive) {
+      return addMessage(`<span class="typing">Analyzing security question<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, 'bot');
+    }
+    return originalAddTyping();
+  };
+
+</script>
 </body>
 </html>
