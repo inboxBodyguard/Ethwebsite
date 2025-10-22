@@ -211,6 +211,62 @@ def register():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# -------------------- HUGGING FACE CHAT --------------------
+@app.route("/chat", methods=["POST"])
+def chat_with_model():
+    try:
+        data = request.get_json(force=True)
+        user_input = data.get("prompt") or data.get("message")  # Support both
+        if not user_input:
+            return jsonify({"error": "Prompt or message is required"}), 400
+
+        if not HF_API_KEY:
+            logger.error("Hugging Face API key missing")
+            return jsonify({"error": "AI service unavailable: API key missing"}), 500
+
+        # Context about EZM Cyber
+        context = """
+        You are a cybersecurity AI assistant for EZM Cyber, a premier cybersecurity firm.
+        EZM Cyber protects users from digital threats with services like:
+        - Suspicious Link Checker (VirusTotal, URLScan.io) for malware and phishing detection.
+        - Real-time threat monitoring and detailed reports.
+        - Tutorials on online safety and password management.
+        - 24/7 rapid response and custom consultations.
+        The platform uses 90+ security vendors via VirusTotal, URLScan.io for deep scans, and supports breach detection.
+        Answer as a friendly, expert assistant using a cyberpunk tone with emojis (😎, 🚨, 🛡️).
+        """
+        payload = {
+            "inputs": f"{context}\n\nUser Question: {user_input}",
+            "parameters": {"max_new_tokens": 500, "temperature": 0.7}
+        }
+
+        headers = {
+            "Authorization": f"Bearer {HF_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        response = requests.post(
+            f"https://api-inference.huggingface.co/models/{HF_MODEL}",
+            headers=headers,
+            json=payload,
+            timeout=20
+        )
+
+        if response.status_code != 200:
+            logger.error(f"Hugging Face API error: {response.status_code} - {response.text}")
+            return jsonify({"error": f"AI service error: {response.status_code}"}), response.status_code
+
+        result = response.json()
+        text = result[0].get("generated_text", "").strip() if isinstance(result, list) else result.get("generated_text", "").strip()
+        if not text:
+            return jsonify({"error": "Empty response from AI model"}), 500
+
+        # Clean response (remove context/user question)
+        response_text = text.replace(context, "").replace(f"User Question: {user_input}", "").strip()
+        return jsonify({"response": response_text}), 200
+    except Exception as e:
+        logger.error(f"Chat endpoint error: {str(e)}")
+        return jsonify({"error": f"AI service failed: {str(e)}"}), 500
+
 # -------------------- RUN APP --------------------
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
