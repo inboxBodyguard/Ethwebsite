@@ -83,7 +83,7 @@ elif response.status_code == 429:
     raise Exception("VirusTotal rate limit exceeded. Please try again later.")
 else:
     raise Exception(f"VirusTotal API error: {response.status_code}")
-```
+
 
 def send_welcome_email(to_email):
 import smtplib
@@ -91,7 +91,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 
-```
+
 SENDER_EMAIL = os.getenv("SENDER_EMAIL")
 SENDER_PASSWORD = os.getenv("SENDER_PASSWORD")
 
@@ -118,7 +118,7 @@ try:
 except Exception as e:
     print("Email send failed:", e)
     return False
-```
+
 
 # –––––––––– ROUTES ––––––––––
 
@@ -138,7 +138,7 @@ url = data.get(‘url’)
 if not url:
 return jsonify({“error”: “Missing URL parameter”}), 400
 
-```
+
     if not URLSCAN_API:
         return jsonify({"error": "URLScan API key not configured"}), 500
 
@@ -161,7 +161,7 @@ return jsonify({“error”: “Missing URL parameter”}), 400
 except Exception as e:
     logger.error(f"URLScan endpoint error: {str(e)}")
     return jsonify({"error": str(e)}), 500
-```
+
 
 @app.route(’/api/virustotal’, methods=[‘POST’])
 def check_url():
@@ -172,7 +172,7 @@ email = data.get(‘email’)
 if not url:
 return jsonify({“error”: “Missing URL parameter”}), 400
 
-```
+
     result = do_vt_check(url)
 
     if email:
@@ -184,7 +184,6 @@ except Exception as e:
     if "rate limit" in error_msg.lower():
         return jsonify({"error": error_msg}), 429
     return jsonify({"error": error_msg}), 500
-```
 
 # –––––––––– WHOIS ––––––––––
 
@@ -202,7 +201,7 @@ domain = data.get(‘domain’)
 if not domain:
 return jsonify({‘error’: ‘Domain missing’}), 400
 
-```
+
     endpoint = (
         f"https://www.whoisxmlapi.com/whoisserver/WhoisService"
         f"?apiKey={WHOIS_API_KEY}&domainName={domain}&outputFormat=JSON"
@@ -212,7 +211,7 @@ return jsonify({‘error’: ‘Domain missing’}), 400
     return jsonify(r.json())
 except requests.exceptions.RequestException as e:
     return jsonify({'error': str(e)}), 500
-```
+
 
 # –––––––––– REGISTER ––––––––––
 
@@ -224,7 +223,7 @@ email = data.get(‘email’)
 password = data.get(‘password’)
 recaptcha_token = data.get(‘recaptchaToken’)
 
-```
+
     if not email:
         return jsonify({"error": "Email required"}), 400
     
@@ -240,7 +239,7 @@ recaptcha_token = data.get(‘recaptchaToken’)
     return jsonify({"status": "success" if sent else "error", "message": "Welcome email sent" if sent else "Failed to send welcome email"}), 200 if sent else 500
 except Exception as e:
     return jsonify({"error": str(e)}), 500
-```
+
 
 # –––––––––– HUGGING FACE CHAT (FIXED) ––––––––––
 
@@ -248,7 +247,7 @@ except Exception as e:
 def chat_with_model():
 logger.info(”=== CHAT ENDPOINT HIT ===”)
 
-```
+
 try:
     data = request.get_json(force=True)
     user_input = data.get("prompt") or data.get("message")
@@ -269,12 +268,12 @@ try:
 
     # Simplified, focused context
     context = """You are a cybersecurity expert assistant for EZM Cyber security platform.
-```
+
 
 Key features: URL scanning with VirusTotal (90+ security vendors), URLScan.io integration,
 malware/phishing detection, breach monitoring. Answer security questions clearly and concisely.”””
 
-```
+
     payload = {
         "inputs": f"{context}\n\nUser: {user_input}\nAssistant:",
         "parameters": {
@@ -354,7 +353,6 @@ except Exception as e:
     return jsonify({
         "response": "🛡️ I'm your security assistant! Our platform uses industry-leading tools (VirusTotal, URLScan.io) to scan links for malware, phishing, and data breaches. We analyze URLs against 90+ security engines in real-time. How can I help you stay secure?"
     }), 200
-```
 
 # –––––––––– RUN APP ––––––––––
 
