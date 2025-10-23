@@ -151,47 +151,56 @@
 
     // AI Chat Handler
     async function askAIQuestion(question) {
-      const typingDiv = addTyping();
-      sendBtn.disabled = true;
-      sendBtn.textContent = 'Thinking...';
+  const typingDiv = addTyping();
+  sendBtn.disabled = true;
+  sendBtn.textContent = 'Thinking...';
 
-      try {
-        console.log('Sending to AI:', question);
-        
-        const response = await fetch(CHAT_BACKEND, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            prompt: question,
-            message: question
-          })
-        });
+  try {
+    console.log('Sending to AI:', question);
+    
+    const response = await fetch(CHAT_BACKEND, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: question, message: question })
+    });
 
-        console.log('AI Response status:', response.status);
-        
-        const aiData = await response.json();
-        console.log('AI Response data:', aiData);
-        
-        typingDiv.remove();
-        
-        if (aiData.response) {
-          addMessage(aiData.response, 'bot');
-        } else if (aiData.error) {
-          addMessage(`🤖 ${aiData.error}`, 'bot');
-        } else {
-          addMessage("🔐 I'm here to help with security questions! Our platform uses VirusTotal (90+ vendors) and URLScan.io to detect threats. What would you like to know?", 'bot');
-        }
-
-      } catch (error) {
-        console.error('AI Error:', error);
-        typingDiv.remove();
-        addMessage(`🛡️ I'm currently learning about security threats and breaches.Right now, I can tell you that our system scans URLs using VirusTotal's 90+ security vendors and URLScan.io for detailed analysis. We detect malware,phishing, suspicious behavior, and help prevent data breaches.`, 'bot');
-      } finally {
-        sendBtn.disabled = false;
-        sendBtn.textContent = 'Ask';
-        input.value = '';
-      }
+    console.log('AI Response status:', response.status);
+    
+    const aiData = await response.json();
+    console.log('AI Response data:', aiData);
+    
+    typingDiv.remove();
+    
+    if (aiData.response) {
+      addMessage(aiData.response, 'bot');
+    } else if (aiData.error) {
+      addMessage(`🤖 ${aiData.error}`, 'bot');
+    } else {
+      addMessage("🔐 I'm here to help with security questions! Our platform uses VirusTotal (90+ vendors) and URLScan.io to detect threats. What would you like to know?", 'bot');
     }
+
+  } catch (error) {
+    console.error('AI Error:', error);
+    typingDiv.remove();
+
+    const fallbackMessage = `
+        🛡️ I'm currently learning about security threats and breaches. 
+        Here's what I can do right now:
+        <ul>
+          <li>Scan URLs using VirusTotal (90+ security vendors)</li>
+          <li>Analyze links with URLScan.io for in-depth results</li>
+          <li>Detect malware, phishing, suspicious behavior</li>
+          <li>Help prevent data breaches</li>
+        </ul>
+        Ask me about a URL or a security topic, and I’ll provide details I can access. 🔍
+    `;
+    addMessage(fallbackMessage, 'bot');
+  } finally {
+    sendBtn.disabled = false;
+    sendBtn.textContent = 'Ask';
+    input.value = '';
+  }
+}
 
     // URL Scanning Handler
     async function analyzeLink(url) {
