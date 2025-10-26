@@ -174,17 +174,34 @@
         
         typingDiv.remove();
         
-        if (aiData.response && typeof aiData.response === 'string' && aiData.response.trim()) {
+        // Check for specific error indicating model unavailability
+        if (aiData.error && aiData.error.includes('AI model temporarily unavailable')) {
+          addMessage(
+            `<strong>⚠️ AI Temporarily Unavailable:</strong><br>The AI model (fdtn-ai/Foundation-Sec-8B) is currently down. This could be due to server maintenance or connectivity issues. 
+            In the meantime, you can:<br>
+            <ul>
+              <li>Scan URLs using VirusTotal or URLScan.io</li>
+              <li>Ask about general security practices, and I'll provide a local response</li>
+              <li>Try again later</li>
+            </ul>
+            For example, ask: "How does URL scanning work?" or paste a URL to scan.`,
+            'bot'
+          );
+        } else if (aiData.response && typeof aiData.response === 'string' && aiData.response.trim()) {
           addMessage(`<strong>🤖 AI Response:</strong><br>${aiData.response}`, 'bot');
         } else if (aiData.error) {
           addMessage(`<strong>⚠️ AI Error:</strong> ${aiData.error}`, 'bot');
         } else {
+          // Fallback for unexpected response format
           addMessage(
-            `<strong>🤖 AI Response:</strong><br>Sorry, I couldn't generate a clear answer for that. Try asking about:<br>
-            • How URL scanning works<br>
-            • Types of threats (malware, phishing, breaches)<br>
-            • VirusTotal or URLScan.io features<br>
-            • Online security best practices`,
+            `<strong>🤖 AI Response:</strong><br>Sorry, I couldn't process that request. Try asking about:<br>
+            <ul>
+              <li>How URL scanning works</li>
+              <li>Types of threats (malware, phishing, breaches)</li>
+              <li>VirusTotal or URLScan.io features</li>
+              <li>Online security best practices</li>
+            </ul>
+            Alternatively, switch to URL scanning mode to check a link.`,
             'bot'
           );
         }
@@ -193,14 +210,14 @@
         console.error('AI Error:', error);
         typingDiv.remove();
         addMessage(
-          `<strong>⚠️ Connection Issue:</strong><br>Couldn't reach the AI service. This could be due to a server issue or rate limiting. 
-          Try asking again or switch to URL scanning mode. Here's what I can do:<br>
+          `<strong>⚠️ Connection Issue:</strong><br>Couldn't connect to the AI service (fdtn-ai/Foundation-Sec-8B). 
+          This might be due to:<br>
           <ul>
-            <li>Scan URLs using VirusTotal (90+ vendors)</li>
-            <li>Analyze links with URLScan.io for in-depth results</li>
-            <li>Detect malware, phishing, suspicious behavior</li>
-            <li>Help prevent data breaches</li>
-          </ul>`,
+            <li>Server downtime or maintenance</li>
+            <li>Rate limiting</li>
+            <li>Network issues</li>
+          </ul>
+          Try again later or switch to URL scanning mode. You can also ask about general security topics, like "What is phishing?" or "How to stay safe online?"`,
           'bot'
         );
       } finally {
