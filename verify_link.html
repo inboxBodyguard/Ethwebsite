@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -151,56 +150,65 @@
 
     // AI Chat Handler
     async function askAIQuestion(question) {
-  const typingDiv = addTyping();
-  sendBtn.disabled = true;
-  sendBtn.textContent = 'Thinking...';
+      const typingDiv = addTyping();
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Thinking...';
 
-  try {
-    console.log('Sending to AI:', question);
-    
-    const response = await fetch(CHAT_BACKEND, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: question, message: question })
-    });
+      try {
+        console.log('Sending to AI:', question);
+        
+        const response = await fetch(CHAT_BACKEND, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: question, message: question })
+        });
 
-    console.log('AI Response status:', response.status);
-    
-    const aiData = await response.json();
-    console.log('AI Response data:', aiData);
-    
-    typingDiv.remove();
-    
-    if (aiData.response) {
-      addMessage(aiData.response, 'bot');
-    } else if (aiData.error) {
-      addMessage(`🤖 ${aiData.error}`, 'bot');
-    } else {
-      addMessage("🔐 I'm here to help with security questions! Our platform uses VirusTotal (90+ vendors) and URLScan.io to detect threats. What would you like to know?", 'bot');
+        console.log('AI Response status:', response.status);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const aiData = await response.json();
+        console.log('AI Response data:', aiData);
+        
+        typingDiv.remove();
+        
+        if (aiData.response && typeof aiData.response === 'string' && aiData.response.trim()) {
+          addMessage(`<strong>🤖 AI Response:</strong><br>${aiData.response}`, 'bot');
+        } else if (aiData.error) {
+          addMessage(`<strong>⚠️ AI Error:</strong> ${aiData.error}`, 'bot');
+        } else {
+          addMessage(
+            `<strong>🤖 AI Response:</strong><br>Sorry, I couldn't generate a clear answer for that. Try asking about:<br>
+            • How URL scanning works<br>
+            • Types of threats (malware, phishing, breaches)<br>
+            • VirusTotal or URLScan.io features<br>
+            • Online security best practices`,
+            'bot'
+          );
+        }
+
+      } catch (error) {
+        console.error('AI Error:', error);
+        typingDiv.remove();
+        addMessage(
+          `<strong>⚠️ Connection Issue:</strong><br>Couldn't reach the AI service. This could be due to a server issue or rate limiting. 
+          Try asking again or switch to URL scanning mode. Here's what I can do:<br>
+          <ul>
+            <li>Scan URLs using VirusTotal (90+ vendors)</li>
+            <li>Analyze links with URLScan.io for in-depth results</li>
+            <li>Detect malware, phishing, suspicious behavior</li>
+            <li>Help prevent data breaches</li>
+          </ul>`,
+          'bot'
+        );
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Ask';
+        input.value = '';
+      }
     }
-
-  } catch (error) {
-    console.error('AI Error:', error);
-    typingDiv.remove();
-
-    const fallbackMessage = `
-        🛡️ I'm currently learning about security threats and breaches. 
-        Here's what I can do right now:
-        <ul>
-          <li>Scan URLs using VirusTotal (90+ security vendors)</li>
-          <li>Analyze links with URLScan.io for in-depth results</li>
-          <li>Detect malware, phishing, suspicious behavior</li>
-          <li>Help prevent data breaches</li>
-        </ul>
-        Ask me about a URL or a security topic, and I’ll provide details I can access. 🔍
-    `;
-    addMessage(fallbackMessage, 'bot');
-  } finally {
-    sendBtn.disabled = false;
-    sendBtn.textContent = 'Ask';
-    input.value = '';
-  }
-}
 
     // URL Scanning Handler
     async function analyzeLink(url) {
@@ -373,6 +381,5 @@
     console.log('URLScan Backend:', URLSCAN_BACKEND);
     console.log('Chat Backend:', CHAT_BACKEND);
   </script>
-
 </body>
 </html>
