@@ -1,39 +1,51 @@
-import requests
-import smtplib
-from email.message import EmailMessage
+# alert_webhook.py
 import os
-from demo_request import DemoRequest  # your existing model
+import time
+import requests
+import logging
+from typing import Optional
+from demo_request import DemoRequest
 
-def send_alert_email(req: DemoRequest):
-    # --- Email Alert ---
-    SMTP_HOST = os.getenv("SMTP_HOST")
-    SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
-    SMTP_USER = os.getenv("SMTP_USER")
-    SMTP_PASS = os.getenv("SMTP_PASS")
-    ALERT_TO = os.getenv("ALERT_TO")  # your team email
+LOG = logging.getLogger(__name__)
+MAX_CONTENT_LEN = 1800  # keep well under Discord 2000 char limit
+RETRIES = 3
+BACKOFF = 0.5
 
-    if SMTP_HOST and SMTP_USER and SMTP_PASS and ALERT_TO:
+def _safe_text(s: Optional[str], max_len: int = 400) -> str:
+    if not s:
+        return ""
+    s = s.strip()
+    if len(s) > max_len:
+        return s[: max_len - 3] + "..."
+    return s
+
+def send_webhook_alert(req: DemoRequest) -> bool:
+    url = os.getenv("DISCORD_WEBHOOK_URL") or os.getenv("SLACK_WEBHOOK_URL")
+    if not url:
+        LOG.warning("No webhook URL configured")
+        return False
+
+    name = _safe_text(req.name, 60) or "—"
+    email = _safe_text(req.email, 120) or "—"
+    message = _safe_text(req.message, 800) or "—"
+
+    content = f"**New Demo Request**\n**Name:** {name}\n**Email:** {email}\n**Message:** {message}"
+    if len(content) > MAX_CONTENT_LEN:
+        content = content[:MAX_CONTENT_LEN - 3] + "..."
+
+    payload = {"content": content}
+
+    for attempt in range(1, RETRIES + 1):
         try:
-            msg = EmailMessage()
-            msg["Subject"] = f"Demo request from {req.email}"
-            msg["From"] = SMTP_USER
-            msg["To"] = ALERT_TO
-            body = f"Name: {req.name}\nEmail: {req.email}\nMessage: {req.message}\nTime: {req.created_at}"
-            msg.set_content(body)
+            r = requests.post(url, json=payload, timeout=5)
+            if 200 <= r.status_code < 300:
+                return True
+            LOG.warning("Webhook returned %s: %s", r.status_code, r.text)
+        except requests.RequestException as exc:
+            LOG.exception("Webhook request failed (attempt %s): %s", attempt, exc)
 
-            with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as s:
-                s.starttls()
-                s.login(SMTP_USER, SMTP_PASS)
-                s.send_message(msg)
-        except Exception as e:
-            print("Email alert failed:", e)
+        time.sleep(BACKOFF * attempt)
 
-    # --- Discord/Slack Webhook Alert ---
-    WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")  # or SLACK_WEBHOOK_URL
-    if WEBHOOK_URL:
-        try:
-            requests.post(WEBHOOK_URL, json={
-                "content": f"🧠 New Demo Request!\n👤 Name: {req.name}\n📧 Email: {req.email}\n💬 Message: {req.message}"
-            })
-        except Exception as e:
-            print("Webhook alert failed:", e)
+    # Final fallback: record failure in DB or logfile for manual followup
+    LOG.error("Webhook alert failed after %s attempts for demo request id=%s email=%s", RETRIES, getattr(req, "id", None), email)
+    return False
