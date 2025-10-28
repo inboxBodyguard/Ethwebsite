@@ -7,3 +7,4 @@ openai==1.47.0
 gunicorn==23.0.0
 huggingface-hub==0.24.6
 validators==0.20.0
+Flask-SQLAlchemy==3.0.3
