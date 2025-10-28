@@ -999,38 +999,81 @@
 </div>
 
 <script>
-document.getElementById("demoForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const btn = document.getElementById("demoSubmit");
-  btn.disabled = true;
-  btn.textContent = "Sending...";
-  const payload = {
-    name: document.getElementById("demoName").value,
-    email: document.getElementById("demoEmail").value,
-    message: document.getElementById("demoMessage").value
-  };
+const form = document.getElementById("demoForm");
+const submitBtn = document.getElementById("demoSubmit");
+
+async function postJSON(url, data, timeout = 8000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
   try {
-    const res = await fetch("/api/demo-request", {
+    const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(data),
+      signal: controller.signal
     });
-    const j = await res.json();
+    clearTimeout(id);
+    return res;
+  } catch (err) {
+    clearTimeout(id);
+    throw err;
+  }
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // Basic client-side rate-limit: disable button immediately
+  submitBtn.disabled = true;
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = "Sending...";
+
+  // Honeypot anti-bot check (add an invisible input with name="hp" in the form)
+  const honeypot = form.querySelector('input[name="hp"]');
+  if (honeypot && honeypot.value) {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+    return;
+  }
+
+  const payload = {
+    name: (document.getElementById("demoName").value || "").trim(),
+    email: (document.getElementById("demoEmail").value || "").trim(),
+    message: (document.getElementById("demoMessage").value || "").trim()
+  };
+
+  // small client-side validation
+  if (!payload.email || !/\S+@\S+\.\S+/.test(payload.email)) {
+    alert("Please enter a valid email.");
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
+    return;
+  }
+
+  try {
+    const res = await postJSON("https://ethwebsite-ulau.onrender.com/api/demo-request", payload, 10000);
+    const j = await res.json().catch(() => ({}));
+
     if (res.ok && j.ok) {
-      btn.textContent = "Requested ✓";
-      setTimeout(() => { window.location.reload(); }, 1000);
+      submitBtn.textContent = "Requested ✓";
+      // Close Bootstrap modal cleanly
+      const modalEl = document.getElementById("demoModal");
+      const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+      setTimeout(() => modal.hide(), 700);
+      // optionally show a small toast or inline success message instead of reload
+      setTimeout(() => window.location.reload(), 1000);
     } else {
-      btn.disabled = false;
-      btn.textContent = "Submit Request";
-      alert(j.error || "Request failed");
+      throw new Error(j.error || `Server returned ${res.status}`);
     }
   } catch (err) {
-    btn.disabled = false;
-    btn.textContent = "Submit Request";
-    alert("Network error");
+    console.error("Demo request failed:", err);
+    alert("Request failed. Please try again shortly.");
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
   }
 });
 </script>
+
 
   <!-- Bootstrap 5 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
