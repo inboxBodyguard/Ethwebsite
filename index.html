@@ -1002,7 +1002,7 @@
 const form = document.getElementById("demoForm");
 const submitBtn = document.getElementById("demoSubmit");
 
-async function postJSON(url, data, timeout = 8000) {
+async function postJSON(url, data, timeout = 10000) {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
   try {
@@ -1023,12 +1023,10 @@ async function postJSON(url, data, timeout = 8000) {
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // Basic client-side rate-limit: disable button immediately
   submitBtn.disabled = true;
   const originalText = submitBtn.textContent;
   submitBtn.textContent = "Sending...";
 
-  // Honeypot anti-bot check (add an invisible input with name="hp" in the form)
   const honeypot = form.querySelector('input[name="hp"]');
   if (honeypot && honeypot.value) {
     submitBtn.textContent = originalText;
@@ -1042,7 +1040,6 @@ form.addEventListener("submit", async (e) => {
     message: (document.getElementById("demoMessage").value || "").trim()
   };
 
-  // small client-side validation
   if (!payload.email || !/\S+@\S+\.\S+/.test(payload.email)) {
     alert("Please enter a valid email.");
     submitBtn.disabled = false;
@@ -1051,17 +1048,23 @@ form.addEventListener("submit", async (e) => {
   }
 
   try {
-    const res = await postJSON("https://ethwebsite-ulau.onrender.com/api/demo-request", payload, 10000);
+    const res = await postJSON("/api/demo-request", payload, 10000);
     const j = await res.json().catch(() => ({}));
 
     if (res.ok && j.ok) {
       submitBtn.textContent = "Requested ✓";
-      // Close Bootstrap modal cleanly
+
+      // Close modal smoothly
       const modalEl = document.getElementById("demoModal");
       const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
       setTimeout(() => modal.hide(), 700);
-      // optionally show a small toast or inline success message instead of reload
-      setTimeout(() => window.location.reload(), 1000);
+
+      // Wait a second for smooth transition, then redirect user
+      setTimeout(() => {
+        const redirectUrl = j.redirect ? j.redirect : "/demo_thank_you.html";
+        const withId = j.id ? `${redirectUrl}?id=${encodeURIComponent(j.id)}` : redirectUrl;
+        window.location.href = withId;
+      }, 900);
     } else {
       throw new Error(j.error || `Server returned ${res.status}`);
     }
