@@ -1,4 +1,3 @@
-# ——— IMPORTS ———
 import os
 import base64
 import time
@@ -290,5 +289,9 @@ def demo_request_route():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     logger.info(f"Starting Flask app on port {port}")
-    db.create_all()
+
+    # ✅ Create database tables safely
+    with app.app_context():
+        db.create_all()
+
     app.run(host='0.0.0.0', port=port, debug=False)
