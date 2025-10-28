@@ -274,17 +274,26 @@ def demo_request_route():
     db.session.add(req)
     db.session.commit()
 
-    # Background webhook alert
+    # ✅ Background webhook alert (safe inside app context)
     def _bg_send(rid):
-        try:
-            r = DemoRequest.query.get(rid)
-            send_webhook_alert(r)
-        except Exception:
-            logger.exception("Failed to send webhook for demo request id=%s", rid)
+        with app.app_context():
+            try:
+                r = db.session.get(DemoRequest, rid)
+                if r:
+                    send_webhook_alert(r)
+                    logger.info(f"✅ Webhook sent for id={rid}")
+            except Exception as e:
+                logger.exception(f"❌ Webhook failed for id={rid}: {e}")
+
     Thread(target=_bg_send, args=(req.id,), daemon=True).start()
 
-    return jsonify({"ok": True, "id": req.id}), 200
-
+    # ✅ Include redirect info (frontend will handle it)
+    return jsonify({"ok": True, "id": req.id, "redirect": "/demo_thank_you.html"}), 200
+    
+    @app.route('/demo_thank_you.html')
+def demo_thank_you():
+    return send_from_directory('.', 'demo_thank_you.html')
+    
 # ——— RUN APP ———
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
