@@ -999,83 +999,88 @@
 </div>
 
 <script>
-const form = document.getElementById("demoForm");
-const submitBtn = document.getElementById("demoSubmit");
+  const API_BASE = "https://ethwebsite-ulau.onrender.com";
+  
+  const form = document.getElementById("demoForm");
+  const submitBtn = document.getElementById("demoSubmit");
 
-async function postJSON(url, data, timeout = 10000) {
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-      signal: controller.signal
-    });
-    clearTimeout(id);
-    return res;
-  } catch (err) {
-    clearTimeout(id);
-    throw err;
-  }
-}
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  submitBtn.disabled = true;
-  const originalText = submitBtn.textContent;
-  submitBtn.textContent = "Sending...";
-
-  const honeypot = form.querySelector('input[name="hp"]');
-  if (honeypot && honeypot.value) {
-    submitBtn.textContent = originalText;
-    submitBtn.disabled = false;
-    return;
-  }
-
-  const payload = {
-    name: (document.getElementById("demoName").value || "").trim(),
-    email: (document.getElementById("demoEmail").value || "").trim(),
-    message: (document.getElementById("demoMessage").value || "").trim()
-  };
-
-  if (!payload.email || !/\S+@\S+\.\S+/.test(payload.email)) {
-    alert("Please enter a valid email.");
-    submitBtn.disabled = false;
-    submitBtn.textContent = originalText;
-    return;
-  }
-
-  try {
-    const res = await postJSON("/api/demo-request", payload, 10000);
-    const j = await res.json().catch(() => ({}));
-
-    if (res.ok && j.ok) {
-      submitBtn.textContent = "Requested ✓";
-
-      // Close modal smoothly
-      const modalEl = document.getElementById("demoModal");
-      const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-      setTimeout(() => modal.hide(), 700);
-
-      // Wait a second for smooth transition, then redirect user
-      setTimeout(() => {
-        const redirectUrl = j.redirect ? j.redirect : "/demo_thank_you.html";
-        const withId = j.id ? `${redirectUrl}?id=${encodeURIComponent(j.id)}` : redirectUrl;
-        window.location.href = withId;
-      }, 900);
-    } else {
-      throw new Error(j.error || `Server returned ${res.status}`);
+  async function postJSON(url, data, timeout = 10000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+        signal: controller.signal
+      });
+      clearTimeout(id);
+      return res;
+    } catch (err) {
+      clearTimeout(id);
+      throw err;
     }
-  } catch (err) {
-    console.error("Demo request failed:", err);
-    alert("Request failed. Please try again shortly.");
-    submitBtn.disabled = false;
-    submitBtn.textContent = originalText;
   }
-});
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    submitBtn.disabled = true;
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Sending...";
+
+    const honeypot = form.querySelector('input[name="hp"]');
+    if (honeypot && honeypot.value) {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+      return;
+    }
+
+    const payload = {
+      name: (document.getElementById("demoName").value || "").trim(),
+      email: (document.getElementById("demoEmail").value || "").trim(),
+      message: (document.getElementById("demoMessage").value || "").trim()
+    };
+
+    if (!payload.email || !/\S+@\S+\.\S+/.test(payload.email)) {
+      alert("Please enter a valid email.");
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+      return;
+    }
+
+    try {
+      // --- MODIFIED THIS LINE ---
+      const res = await postJSON(`${API_BASE}/api/demo-request`, payload, 10000);
+      
+      const j = await res.json().catch(() => ({}));
+
+      if (res.ok && j.ok) {
+        submitBtn.textContent = "Requested ✓";
+
+        // Close modal smoothly
+        const modalEl = document.getElementById("demoModal");
+        const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+        setTimeout(() => modal.hide(), 700);
+
+        // Wait a second for smooth transition, then redirect user
+        setTimeout(() => {
+          const redirectUrl = j.redirect ? j.redirect : "/demo_thank_you.html";
+          const withId = j.id ? `${redirectUrl}?id=${encodeURIComponent(j.id)}` : redirectUrl;
+          window.location.href = withId;
+        }, 900);
+      } else {
+        throw new Error(j.error || `Server returned ${res.status}`);
+      }
+    } catch (err) {
+      console.error("Demo request failed:", err);
+      alert("Request failed. Please try again shortly.");
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
+  });
 </script>
+
 
 
   <!-- Bootstrap 5 JS Bundle -->
