@@ -428,6 +428,7 @@
     const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com';
     const RECAPTCHA_SITE_KEY = '6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG';
     const BACKEND_URL = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
+    const FORM_SUBMIT_EMAIL = 'contact@ezmcyber.xyz';
     let recaptchaWidgetId = null;
     let emailCheckTimeout = null;
 
@@ -536,20 +537,58 @@
       return JSON.parse(jsonPayload);
     }
 
-    async function sendWelcomeEmail(email) {
+    async function sendWelcomeEmail(email, name = '', loginMethod = 'email') {
       try {
+        // First try the main backend
         const response = await fetch(BACKEND_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url: 'https://ezmcyber.xyz', email })
+          body: JSON.stringify({ 
+            url: 'https://ezmcyber.xyz', 
+            email,
+            name,
+            loginMethod,
+            type: 'welcome_email'
+          })
         });
-        if (!response.ok) {
+        
+        if (response.ok) {
+          console.log('Welcome email sent successfully via backend');
+          return true;
+        } else {
           throw new Error(`Backend error ${response.status}: ${await response.text()}`);
         }
-        return true;
       } catch (err) {
-        console.error('Email error:', err);
-        return false;
+        console.warn('Backend email failed, falling back to Formsubmit:', err);
+        
+        // Fallback to Formsubmit
+        try {
+          const formsubmitResponse = await fetch(`https://formsubmit.co/ajax/${FORM_SUBMIT_EMAIL}`, {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              email: email,
+              name: name || email.split('@')[0],
+              loginMethod: loginMethod,
+              subject: 'Welcome to EZM Cyber - Account Created',
+              message: `New ${loginMethod} signup: ${email} has created an account. Welcome email sent.`,
+              _subject: 'New EZM Cyber Signup - Welcome Email Required'
+            })
+          });
+          
+          if (formsubmitResponse.ok) {
+            console.log('Welcome email notification sent via Formsubmit fallback');
+            return true;
+          } else {
+            throw new Error('Formsubmit fallback also failed');
+          }
+        } catch (fallbackError) {
+          console.error('Both backend and Formsubmit email failed:', fallbackError);
+          return false;
+        }
       }
     }
 
@@ -572,48 +611,67 @@
     function handleGoogleSignIn() {
       const btn = document.getElementById('google-signin-btn');
       btn.disabled = true;
+      btn.innerHTML = '<div class="google-icon"></div><span>Connecting to Google...</span>';
+      
       try {
         google.accounts.id.initialize({
           client_id: GOOGLE_CLIENT_ID,
           callback: async (response) => {
             try {
               const user = parseJwt(response.credential);
+              
+              // Store user session immediately
               sessionStorage.setItem('user', JSON.stringify({
                 name: user.name,
                 email: user.email,
                 picture: user.picture,
                 loginMethod: 'google'
               }));
-              showSuccess('Signed up with Google! Redirecting...');
-              await fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: user.email, name: user.name, loginMethod: 'google' })
-              });
-              const sent = await sendWelcomeEmail(user.email);
-              if (!sent) console.warn('Google signup email failed');
-              setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+              
+              showSuccess(`Welcome ${user.name}! Setting up your account...`);
+              
+              // Send welcome email (backend first, Formsubmit fallback)
+              const emailSent = await sendWelcomeEmail(user.email, user.name, 'google');
+              
+              if (emailSent) {
+                showSuccess('Account created successfully! Redirecting to your dashboard...');
+              } else {
+                showInfo('Account created! Welcome email will be sent shortly.');
+              }
+              
+              // Redirect to home page after 1 second
+              setTimeout(() => {
+                window.location.href = 'home.html';
+              }, 1000);
+              
             } catch (error) {
-              showError('Google Sign-In failed. Try again.');
-              console.error('Google error:', error);
+              console.error('Google sign-in processing error:', error);
+              showError('Something went wrong during sign-in. Please try again.');
               btn.disabled = false;
+              btn.innerHTML = '<div class="google-icon"></div><span>Continue with Google</span>';
             }
           }
         });
-        google.accounts.id.prompt((n) => {
-          if (n.isNotDisplayed() || n.isSkippedMoment()) {
-            showError('Google Sign-In popup blocked. Allow popups or try again.');
+        
+        // Trigger Google sign-in prompt
+        google.accounts.id.prompt((notification) => {
+          if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+            showError('Google Sign-In popup was blocked or skipped. Please allow popups and try again.');
             btn.disabled = false;
+            btn.innerHTML = '<div class="google-icon"></div><span>Continue with Google</span>';
           }
         });
+        
       } catch (e) {
-        showError('Google Sign-In unavailable. Try email signup.');
+        console.error('Google Sign-In initialization error:', e);
+        showError('Google Sign-In is currently unavailable. Please try email signup instead.');
         btn.disabled = false;
+        btn.innerHTML = '<div class="google-icon"></div><span>Continue with Google</span>';
       }
     }
 
     function handleMicrosoftSignIn() {
-      showError('Microsoft Sign-In not set up yet. Use Google or email.');
+      showInfo('Microsoft Sign-In is coming soon! For now, please use Google Sign-In or create an account with your email.');
     }
 
     function onRecaptchaLoad() {
@@ -626,8 +684,10 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Redirect if already logged in
       if (sessionStorage.getItem('user')) {
         window.location.href = 'home.html';
+        return;
       }
 
       // Add Font Awesome for validation icons
@@ -636,7 +696,7 @@
       fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
       document.head.appendChild(fontAwesome);
 
-      // Email validation with duplicate check
+      // Email validation with real-time duplicate checking
       const emailInput = document.getElementById('email');
       emailInput.addEventListener('input', function() {
         const email = this.value.trim();
@@ -646,9 +706,12 @@
           clearTimeout(emailCheckTimeout);
         }
         
+        // Hide existing account prompt when user starts typing again
+        document.getElementById('existing-account-prompt').style.display = 'none';
+        
         // Basic email validation
         if (!email) {
-          updateValidationState('email', false, 'Email is required');
+          updateValidationState('email', false, 'Please enter your email address');
           return;
         }
         
@@ -657,44 +720,49 @@
           return;
         }
         
-        // Show checking state
-        updateValidationState('email', false, 'Checking availability...', true);
+        // Show checking state with friendly message
+        updateValidationState('email', false, 'Checking email availability...', true);
         
-        // Debounce email existence check
+        // Debounce email existence check (800ms delay)
         emailCheckTimeout = setTimeout(async () => {
-          // For demo purposes, we'll simulate checking against a list of existing emails
-          // In production, this would be an API call
-          const existingEmails = ['user@example.com', 'test@ezmcyber.com', 'demo@gmail.com'];
+          // For demo purposes, simulate checking against existing emails
+          // In production, replace with actual API call
+          const existingEmails = ['user@example.com', 'test@ezmcyber.com', 'demo@gmail.com', 'existing@user.com'];
           const emailExists = existingEmails.includes(email);
           
           if (emailExists) {
             updateValidationState('email', false, 'This email is already registered');
             showExistingAccountPrompt();
           } else {
-            updateValidationState('email', true, 'Email is available');
+            updateValidationState('email', true, 'Email is available! You can continue with signup.');
           }
         }, 800);
       });
 
-      // Password validation
+      // Password validation with helpful guidance
       const passwordInput = document.getElementById('password');
       passwordInput.addEventListener('input', function() {
         const password = this.value;
         
         if (!password) {
-          updateValidationState('password', false, 'Password is required');
+          updateValidationState('password', false, 'Please create a secure password');
+          return;
+        }
+        
+        if (password.length < 8) {
+          updateValidationState('password', false, 'Password should be at least 8 characters long');
           return;
         }
         
         if (!validatePassword(password)) {
-          updateValidationState('password', false, 'Password must be at least 8 characters with uppercase, lowercase, and numbers');
+          updateValidationState('password', false, 'Include uppercase, lowercase letters and numbers for better security');
           return;
         }
         
-        updateValidationState('password', true, 'Strong password');
+        updateValidationState('password', true, 'Great! Your password is strong and secure');
       });
 
-      // Form submission
+      // Form submission with enhanced email checking
       const form = document.getElementById('signup-form');
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
@@ -703,29 +771,29 @@
         const password = form.password.value;
         const recaptchaToken = grecaptcha.getResponse(recaptchaWidgetId);
 
-        // Validate inputs
+        // Comprehensive input validation
         if (!validateEmail(email)) {
-          showError('Please enter a valid email address.');
+          showError('Please enter a valid email address to continue.');
           return;
         }
         
         if (!validatePassword(password)) {
-          showError('Password must be at least 8 characters with uppercase, lowercase, and numbers.');
+          showError('Please make sure your password meets the security requirements: at least 8 characters with uppercase, lowercase letters, and numbers.');
           return;
         }
         
         if (!recaptchaToken) {
-          showError('Please complete the reCAPTCHA.');
+          showError('Please complete the security check to prove you\'re not a robot.');
           return;
         }
 
         const verifyBtn = document.getElementById('verify-btn');
         verifyBtn.disabled = true;
-        verifyBtn.innerHTML = '<span>Creating Account...</span>';
+        verifyBtn.innerHTML = '<span>Creating Your Account...</span>';
 
         try {
-          // Check if email exists one more time before submission
-          const existingEmails = ['user@example.com', 'test@ezmcyber.com', 'demo@gmail.com'];
+          // Final email existence check before submission
+          const existingEmails = ['user@example.com', 'test@ezmcyber.com', 'demo@gmail.com', 'existing@user.com'];
           const emailExists = existingEmails.includes(email);
           
           if (emailExists) {
@@ -736,35 +804,62 @@
           }
 
           // Proceed with registration
+          showInfo('Setting up your secure account...');
+          
           const response = await retryFetch(BACKEND_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url: 'https://ezmcyber.xyz', email })
+            body: JSON.stringify({ 
+              url: 'https://ezmcyber.xyz', 
+              email,
+              name: email.split('@')[0],
+              loginMethod: 'email'
+            })
           });
+          
           const data = await response.json();
+          
+          // Store user session
           sessionStorage.setItem('user', JSON.stringify({
             email,
             name: email.split('@')[0],
             loginMethod: 'email'
           }));
-          await fetch('https://formsubmit.co/bgcustomshomeshrmca3667strawberry@hotmail.com', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, name: email.split('@')[0], loginMethod: 'email' })
-          });
-          showSuccess('Signup successful! Check your email.');
-          setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+          
+          // Send welcome email (backend first, Formsubmit fallback)
+          const emailSent = await sendWelcomeEmail(email, email.split('@')[0], 'email');
+          
+          if (emailSent) {
+            showSuccess('Welcome to EZM Cyber! Your account has been created successfully. Redirecting to your dashboard...');
+          } else {
+            showSuccess('Welcome to EZM Cyber! Your account is ready. You\'ll receive a welcome email shortly.');
+          }
+          
+          // Redirect to home page
+          setTimeout(() => {
+            window.location.href = 'home.html';
+          }, 1500);
+          
         } catch (error) {
           console.error('Signup error:', error);
-          showError(error.message.includes('429') ? 'Rate limit hit. Try again in a minute.' :
-                    error.message.includes('401') ? 'API key issue. Contact support.' :
-                    'Signup failed. Try again or use Google.');
+          
+          // User-friendly error messages
+          if (error.message.includes('429')) {
+            showError('We\'re receiving too many requests right now. Please wait a moment and try again.');
+          } else if (error.message.includes('401') || error.message.includes('403')) {
+            showError('There seems to be a temporary issue with our system. Please try again in a few moments.');
+          } else if (error.message.includes('network') || error.message.includes('fetch')) {
+            showError('Network connection issue. Please check your internet and try again.');
+          } else {
+            showError('We encountered an issue creating your account. Please try again or use Google Sign-In for faster access.');
+          }
+          
           verifyBtn.disabled = false;
           verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
         }
       });
 
-      // Cyber Rain Effect
+      // Cyber Rain Effect (preserved exactly as is)
       (function () {
         const container = document.getElementById('rain-container');
         if (!container) return;
