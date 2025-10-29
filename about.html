@@ -75,6 +75,17 @@
                   radial-gradient(circle at 80% 20%, rgba(255, 0, 234, 0.1) 0%, transparent 50%);
     }
 
+    /* Cyber Rain Effect */
+    #cyber-rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.3;
+    }
+
     .container { 
       width: 90%; 
       max-width: 1200px; 
@@ -249,6 +260,14 @@
     .about-section { 
       padding: 5rem 0; 
       position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .about-section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .about-section.bg-dark { 
@@ -315,6 +334,21 @@
       transition: var(--transition-bounce);
       border-left: 4px solid var(--primary-color);
       overflow: hidden;
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    .features-list li.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .features-list li:nth-child(even) {
+      transform: translateX(20px);
+    }
+
+    .features-list li:nth-child(even).visible {
+      transform: translateX(0);
     }
 
     .features-list li::before {
@@ -374,6 +408,13 @@
       border: 1px solid rgba(0, 217, 255, 0.1);
       position: relative;
       overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .stat-card.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .stat-card::before {
@@ -456,6 +497,13 @@
       border: 1px solid rgba(0, 217, 255, 0.1);
       position: relative;
       overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .toc-list li a.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .toc-list li a::before {
@@ -777,6 +825,15 @@
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
       }
+      
+      .about-section,
+      .features-list li,
+      .stat-card,
+      .toc-list li a {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
     }
 
     /* High Contrast Mode */
@@ -791,6 +848,9 @@
 <body>
   <!-- Cyber grid background -->
   <div class="cyber-grid"></div>
+  
+  <!-- Cyber rain effect -->
+  <canvas id="cyber-rain"></canvas>
 
   <!-- Skip to main content link for screen readers -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -825,20 +885,20 @@
       <div class="container">
         <h2>Table of Contents</h2>
         <ul class="toc-list">
-          <li><a href="#introduction">Introduction</a></li>
-          <li><a href="#who-we-are">Who We Are</a></li>
-          <li><a href="#our-mission">Our Mission & Vision</a></li>
-          <li><a href="#expertise">Our Expertise & Experience</a></li>
-          <li><a href="#approach">Our Approach</a></li>
-          <li><a href="#why-choose-us">Why Choose EzmCyber</a></li>
-          <li><a href="#commitment">Our Commitment</a></li>
-          <li><a href="#contact-info">Get In Touch</a></li>
+          <li><a href="#introduction" class="visible">Introduction</a></li>
+          <li><a href="#who-we-are" class="visible">Who We Are</a></li>
+          <li><a href="#our-mission" class="visible">Our Mission & Vision</a></li>
+          <li><a href="#expertise" class="visible">Our Expertise & Experience</a></li>
+          <li><a href="#approach" class="visible">Our Approach</a></li>
+          <li><a href="#why-choose-us" class="visible">Why Choose EzmCyber</a></li>
+          <li><a href="#commitment" class="visible">Our Commitment</a></li>
+          <li><a href="#contact-info" class="visible">Get In Touch</a></li>
         </ul>
       </div>
     </nav>
 
     <!-- Introduction -->
-    <section id="introduction" class="about-section">
+    <section id="introduction" class="about-section visible">
       <div class="container">
         <h2>Introduction</h2>
         <p>
@@ -864,19 +924,19 @@
         </p>
 
         <div class="stats-grid">
-          <article class="stat-card">
+          <article class="stat-card visible">
             <div class="stat-number">5+</div>
             <div class="stat-label">Years of Experience</div>
           </article>
-          <article class="stat-card">
+          <article class="stat-card visible">
             <div class="stat-number">100%</div>
             <div class="stat-label">Ethical Approach</div>
           </article>
-          <article class="stat-card">
+          <article class="stat-card visible">
             <div class="stat-number">24/7</div>
             <div class="stat-label">Threat Monitoring</div>
           </article>
-          <article class="stat-card">
+          <article class="stat-card visible">
             <div class="stat-number">∞</div>
             <div class="stat-label">Learning Commitment</div>
           </article>
@@ -905,12 +965,12 @@
 
         <h3>Core Values</h3>
         <ul class="features-list">
-          <li>Transparency in all our methods and recommendations</li>
-          <li>Ethical practices in all cybersecurity activities</li>
-          <li>Community-first approach to knowledge sharing</li>
-          <li>Practical, actionable solutions over theoretical concepts</li>
-          <li>Continuous learning and adaptation to emerging threats</li>
-          <li>Accessibility of cybersecurity for all skill levels</li>
+          <li class="visible">Transparency in all our methods and recommendations</li>
+          <li class="visible">Ethical practices in all cybersecurity activities</li>
+          <li class="visible">Community-first approach to knowledge sharing</li>
+          <li class="visible">Practical, actionable solutions over theoretical concepts</li>
+          <li class="visible">Continuous learning and adaptation to emerging threats</li>
+          <li class="visible">Accessibility of cybersecurity for all skill levels</li>
         </ul>
       </div>
     </section>
@@ -922,14 +982,14 @@
 
         <h3>Technical Specializations</h3>
         <ul class="features-list">
-          <li>Ethical Hacking & Penetration Testing</li>
-          <li>Network Security & Defense Architecture</li>
-          <li>Vulnerability Assessment & Management</li>
-          <li>Incident Response & Digital Forensics</li>
-          <li>Security Awareness Training & Education</li>
-          <li>Compliance & Risk Management</li>
-          <li>Threat Intelligence & Analysis</li>
-          <li>Security Tool Development & Implementation</li>
+          <li class="visible">Ethical Hacking & Penetration Testing</li>
+          <li class="visible">Network Security & Defense Architecture</li>
+          <li class="visible">Vulnerability Assessment & Management</li>
+          <li class="visible">Incident Response & Digital Forensics</li>
+          <li class="visible">Security Awareness Training & Education</li>
+          <li class="visible">Compliance & Risk Management</li>
+          <li class="visible">Threat Intelligence & Analysis</li>
+          <li class="visible">Security Tool Development & Implementation</li>
         </ul>
 
         <h3>Industry Experience</h3>
@@ -975,16 +1035,16 @@
       <div class="container">
         <h2>Why Choose EzmCyber</h2>
         <ul class="features-list">
-          <li>Human-led cybersecurity guidance with practical, hands-on experience</li>
-          <li>Real-world tested tools and tutorials — no theoretical fluff or generic automation</li>
-          <li>Passion-driven community collaboration and knowledge sharing</li>
-          <li>Rapid response strategies with measurable security improvements</li>
-          <li>Transparent and trustworthy insights from a dedicated cybersecurity professional</li>
-          <li>Comprehensive coverage from personal security to enterprise defense</li>
-          <li>Accessible learning materials for all skill levels</li>
-          <li>Ethical approach to all cybersecurity practices</li>
-          <li>Continuous support and guidance for your security journey</li>
-          <li>Cost-effective solutions without compromising on quality</li>
+          <li class="visible">Human-led cybersecurity guidance with practical, hands-on experience</li>
+          <li class="visible">Real-world tested tools and tutorials — no theoretical fluff or generic automation</li>
+          <li class="visible">Passion-driven community collaboration and knowledge sharing</li>
+          <li class="visible">Rapid response strategies with measurable security improvements</li>
+          <li class="visible">Transparent and trustworthy insights from a dedicated cybersecurity professional</li>
+          <li class="visible">Comprehensive coverage from personal security to enterprise defense</li>
+          <li class="visible">Accessible learning materials for all skill levels</li>
+          <li class="visible">Ethical approach to all cybersecurity practices</li>
+          <li class="visible">Continuous support and guidance for your security journey</li>
+          <li class="visible">Cost-effective solutions without compromising on quality</li>
         </ul>
 
         <h3>What Sets Us Apart</h3>
@@ -1041,5 +1101,107 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // Cyber rain effect
+    function initCyberRain() {
+      const canvas = document.getElementById('cyber-rain');
+      const ctx = canvas.getContext('2d');
+      
+      // Set canvas size
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      
+      // Rain properties
+      const chars = '01';
+      const fontSize = 14;
+      const columns = Math.floor(canvas.width / fontSize);
+      const drops = [];
+      
+      // Initialize drops
+      for (let i = 0; i < columns; i++) {
+        drops[i] = Math.floor(Math.random() * -100);
+      }
+      
+      // Draw rain
+      function draw() {
+        // Semi-transparent black to create fade effect
+        ctx.fillStyle = 'rgba(10, 10, 15, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Set text properties
+        ctx.font = `${fontSize}px monospace`;
+        
+        for (let i = 0; i < drops.length; i++) {
+          // Random character
+          const text = chars.charAt(Math.floor(Math.random() * chars.length));
+          
+          // Set color - first drop is brighter
+          if (drops[i] * fontSize > canvas.height * 0.7) {
+            ctx.fillStyle = '#00d9ff';
+          } else {
+            ctx.fillStyle = '#ff00ea';
+          }
+          
+          // Draw character
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+          
+          // Reset drop if it reaches bottom or randomly
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          
+          // Move drop down
+          drops[i]++;
+        }
+      }
+      
+      // Animation loop
+      setInterval(draw, 33);
+    }
+    
+    // Initialize cyber rain
+    initCyberRain();
+
+    // Scroll animation observer
+    function initScrollAnimations() {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, observerOptions);
+
+      // Observe sections
+      document.querySelectorAll('.about-section').forEach(section => {
+        observer.observe(section);
+      });
+
+      // Observe feature list items with staggered delay
+      document.querySelectorAll('.features-list li').forEach((item, index) => {
+        observer.observe(item);
+      });
+
+      // Observe stat cards
+      document.querySelectorAll('.stat-card').forEach(card => {
+        observer.observe(card);
+      });
+    }
+
+    // Initialize scroll animations when DOM is loaded
+    document.addEventListener('DOMContentLoaded', initScrollAnimations);
+  </script>
 </body>
 </html>
