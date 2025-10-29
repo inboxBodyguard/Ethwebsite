@@ -398,6 +398,9 @@
                 cancelAnimationFrame(animationId);
                 animationId = null;
             }
+            // Clear the canvas completely
+            ctx.fillStyle = '#0a0a0a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
         // =============================================================================
@@ -585,7 +588,7 @@
          * This is the KEY fix for your issue
          */
         async function smoothRedirect(url) {
-            // STOP the matrix animation BEFORE redirecting
+            // CRITICAL: Stop the matrix animation immediately
             stopMatrixAnimation();
             
             // Get overlay and container elements
@@ -601,11 +604,21 @@
             // Fade in the black overlay
             overlay.classList.add('active');
             
-            // Wait for overlay fade
-            await new Promise(resolve => setTimeout(resolve, 500));
+            // Wait for overlay to be fully visible
+            await new Promise(resolve => setTimeout(resolve, 600));
+            
+            // IMPORTANT: Add a small delay to ensure everything is stable
+            await new Promise(resolve => setTimeout(resolve, 100));
             
             // NOW redirect (screen is completely black, no flicker)
             window.location.href = url;
+            
+            // Fallback redirect in case the above doesn't work
+            setTimeout(() => {
+                if (window.location.href.indexOf('home.html') === -1) {
+                    window.location.replace(url);
+                }
+            }, 2000);
         }
         
         // =============================================================================
@@ -618,7 +631,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Check if already logged in
             if (sessionStorage.getItem('currentUser')) {
-                // Already logged in - redirect immediately
+                // Already logged in - redirect immediately without animation
+                stopMatrixAnimation();
                 window.location.href = 'home.html';
                 return;
             }
@@ -659,6 +673,13 @@
          * This prevents flickering during navigation
          */
         window.addEventListener('beforeunload', function() {
+            stopMatrixAnimation();
+        });
+        
+        /**
+         * Additional safety measure: Stop animation on page hide
+         */
+        window.addEventListener('pagehide', function() {
             stopMatrixAnimation();
         });
     </script>
