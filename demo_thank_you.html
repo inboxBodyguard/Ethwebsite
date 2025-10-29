@@ -7,75 +7,315 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--bg1:#0c0c0c;--bg2:#1a1a2e;--accent1:#00ffaa;--accent2:#00ccff;--muted:#aaa}
-    body{
-      font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-      background:linear-gradient(135deg,var(--bg1) 0%,var(--bg2) 100%);
-      color:#fff;
-      min-height:100vh;
-      margin:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
+    :root {
+      --bg1: #0c0c0c;
+      --bg2: #1a1a2e;
+      --accent1: #00ffaa;
+      --accent2: #00ccff;
+      --accent3: #ff00aa;
+      --muted: #aaa;
     }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+      color: #fff;
+      min-height: 100vh;
+      margin: 0;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Cyber rain canvas */
+    #cyber-rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.7;
+    }
+    
     .card {
-      width:100%;
-      max-width:720px;
-      background:rgba(12,12,20,0.88);
-      border:1px solid rgba(0,255,170,0.08);
-      border-radius:14px;
-      padding:32px;
-      box-shadow:0 18px 40px rgba(0,0,0,0.6);
-      text-align:center;
+      width: 100%;
+      max-width: 720px;
+      background: rgba(12, 12, 20, 0.88);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 170, 0.2);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), 
+                  0 0 0 1px rgba(0, 255, 170, 0.1),
+                  inset 0 0 20px rgba(0, 255, 170, 0.05);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+    
+    /* Animated border effect */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--accent1), var(--accent2), var(--accent3), var(--accent1));
+      z-index: -1;
+      border-radius: 22px;
+      animation: borderAnimation 4s linear infinite;
+      opacity: 0.7;
+    }
+    
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      bottom: 2px;
+      background: rgba(12, 12, 20, 0.95);
+      z-index: -1;
+      border-radius: 18px;
+    }
+    
+    @keyframes borderAnimation {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+    
     .logo {
-      font-weight:800;
-      font-size:28px;
-      margin-bottom:4px;
-      background:linear-gradient(90deg,var(--accent1),var(--accent2));
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
+      font-weight: 800;
+      font-size: 32px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 20px rgba(0, 255, 170, 0.3);
     }
-    .subtitle { color:var(--muted); margin-bottom:18px; }
+    
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 24px;
+      font-size: 18px;
+    }
+    
     .hero {
-      background:rgba(0,255,170,0.03);
-      border:1px solid rgba(0,255,170,0.04);
-      padding:20px;
-      border-radius:10px;
-      margin:18px 0;
+      background: rgba(0, 255, 170, 0.05);
+      border: 1px solid rgba(0, 255, 170, 0.1);
+      padding: 24px;
+      border-radius: 12px;
+      margin: 24px 0;
+      position: relative;
+      overflow: hidden;
     }
-    .hero h2 { margin:0 0 8px 0; font-size:20px; }
-    .hero p { margin:0; color:#dfeff0; opacity:0.95; }
-    .actions { margin-top:22px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--accent1), var(--accent2));
+    }
+    
+    .hero h2 {
+      margin: 0 0 12px 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+    
+    .hero p {
+      margin: 0;
+      color: #dfeff0;
+      opacity: 0.95;
+      line-height: 1.6;
+    }
+    
+    .actions {
+      margin-top: 28px;
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
     .btn-primary {
-      background:linear-gradient(90deg,var(--accent1),var(--accent2));
-      border:none;
-      color:#000;
-      padding:12px 18px;
-      border-radius:10px;
-      font-weight:700;
-      cursor:pointer;
-      text-decoration:none;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      border: none;
+      color: #000;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 255, 170, 0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 255, 170, 0.5);
+    }
+    
     .btn-ghost {
-      background:transparent;
-      border:1px solid rgba(255,255,255,0.08);
-      color:var(--muted);
-      padding:10px 16px;
-      border-radius:10px;
-      text-decoration:none;
-      cursor:pointer;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--muted);
+      padding: 12px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
-    .note { color:var(--muted); font-size:14px; margin-top:14px; }
-    @media (max-width:520px){
-      .card{padding:20px}
-      .logo{font-size:22px}
+    
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(0, 255, 170, 0.3);
+      color: #fff;
+    }
+    
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 20px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+    }
+    
+    /* Success animation */
+    .success-check {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+      position: relative;
+    }
+    
+    .success-check::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgba(0, 255, 170, 0.1);
+      animation: pulse 2s infinite;
+    }
+    
+    .success-check svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: var(--accent1);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: drawCheck 1s ease-in-out 0.5s forwards;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(0.8); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+      100% { transform: scale(0.8); opacity: 1; }
+    }
+    
+    @keyframes drawCheck {
+      to { stroke-dashoffset: 0; }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .card {
+        padding: 24px 20px;
+        border-radius: 16px;
+      }
+      
+      .logo {
+        font-size: 28px;
+      }
+      
+      .subtitle {
+        font-size: 16px;
+      }
+      
+      .hero {
+        padding: 20px;
+      }
+      
+      .hero h2 {
+        font-size: 22px;
+      }
+      
+      .actions {
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .btn-primary, .btn-ghost {
+        width: 100%;
+        padding: 16px 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      body {
+        padding: 12px;
+      }
+      
+      .card {
+        padding: 20px 16px;
+      }
+      
+      .logo {
+        font-size: 24px;
+      }
+      
+      .hero {
+        padding: 16px;
+      }
+      
+      .hero h2 {
+        font-size: 20px;
+      }
+      
+      .success-check {
+        width: 50px;
+        height: 50px;
+      }
     }
   </style>
 </head>
 <body>
+  <canvas id="cyber-rain"></canvas>
+  
   <main class="card" role="main" aria-labelledby="thankyou-title">
+    <div class="success-check">
+      <svg viewBox="0 0 24 24">
+        <path d="M20 6L9 17l-5-5" />
+      </svg>
+    </div>
+    
     <div class="logo">EZM Cyber</div>
     <div class="subtitle">Thanks — demo request received</div>
 
@@ -88,8 +328,19 @@
     </section>
 
     <div class="actions" role="region" aria-label="navigation actions">
-      <a id="back-home" class="btn-primary" href="index.html">Back to Home</a>
-      <button id="support-btn" class="btn-ghost" type="button">Contact Support</button>
+      <a id="back-home" class="btn-primary" href="index.html">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 12L2 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14 8H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to Home
+      </a>
+      <button id="support-btn" class="btn-ghost" type="button">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 10C14 10.3536 13.8595 10.6928 13.6095 10.9428C13.3594 11.1929 13.0203 11.3333 12.6667 11.3333H4.66667L2 14V3.33333C2 2.97971 2.14048 2.64057 2.39052 2.39052C2.64057 2.14048 2.97971 2 3.33333 2H12.6667C13.0203 2 13.3594 2.14048 13.6095 2.39052C13.8595 2.64057 14 2.97971 14 3.33333V10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Contact Support
+      </button>
     </div>
 
     <div class="note" id="extra-note">
@@ -98,14 +349,79 @@
   </main>
 
   <script>
-    // support button opens mailto with a prefilled subject for quick contact
+    // Cyber rain effect
+    function initCyberRain() {
+      const canvas = document.getElementById('cyber-rain');
+      const ctx = canvas.getContext('2d');
+      
+      // Set canvas size
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      
+      // Rain properties
+      const chars = '01';
+      const fontSize = 14;
+      const columns = Math.floor(canvas.width / fontSize);
+      const drops = [];
+      
+      // Initialize drops
+      for (let i = 0; i < columns; i++) {
+        drops[i] = Math.floor(Math.random() * -100);
+      }
+      
+      // Draw rain
+      function draw() {
+        // Semi-transparent black to create fade effect
+        ctx.fillStyle = 'rgba(12, 12, 20, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Set text properties
+        ctx.font = `${fontSize}px monospace`;
+        
+        for (let i = 0; i < drops.length; i++) {
+          // Random character
+          const text = chars.charAt(Math.floor(Math.random() * chars.length));
+          
+          // Set color - first drop is brighter
+          if (drops[i] * fontSize > canvas.height * 0.7) {
+            ctx.fillStyle = '#00ffaa';
+          } else {
+            ctx.fillStyle = '#00ccff';
+          }
+          
+          // Draw character
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+          
+          // Reset drop if it reaches bottom or randomly
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          
+          // Move drop down
+          drops[i]++;
+        }
+      }
+      
+      // Animation loop
+      setInterval(draw, 33);
+    }
+    
+    // Initialize cyber rain
+    initCyberRain();
+    
+    // Support button opens mailto with a prefilled subject for quick contact
     document.getElementById('support-btn').addEventListener('click', function () {
       const subject = encodeURIComponent('EZM Cyber — Demo request / Support');
       const body = encodeURIComponent('Hi EZM team,\n\nI requested a demo but need assistance. My email: \n\nThanks,\n');
       window.location.href = `mailto:contact@ezmcyber.xyz?subject=${subject}&body=${body}`;
     });
 
-    // optional: if frontend passes ?id=123 in querystring, show id in the page briefly
+    // Optional: if frontend passes ?id=123 in querystring, show id in the page briefly
     (function showIdFromQuery() {
       try {
         const params = new URLSearchParams(location.search);
