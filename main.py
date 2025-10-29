@@ -274,7 +274,6 @@ def demo_request_route():
     db.session.add(req)
     db.session.commit()
 
-    # ✅ Background webhook alert (safe inside app context)
     def _bg_send(rid):
         with app.app_context():
             try:
@@ -287,15 +286,27 @@ def demo_request_route():
 
     Thread(target=_bg_send, args=(req.id,), daemon=True).start()
 
-    # ✅ Include redirect info (frontend will handle it)
     return jsonify({"ok": True, "id": req.id, "redirect": "/demo_thank_you.html"}), 200
-    
+
+# ——— FIXED SIGNUP ROUTE ———
+@app.route('/api/signup', methods=['POST'])
+def signup():
+    data = request.get_json(force=True) or {}
+    email = (data.get("email") or "").strip().lower()
+    if not email or not validators.email(email):
+        return jsonify({"ok": False, "error": "Invalid email"}), 400
+
+    success = send_welcome_email(email)
+    if not success:
+        return jsonify({"ok": False, "error": "Email failed"}), 500
+
+    return jsonify({"ok": True, "message": "Signup successful, email sent"}), 200
+
 # ——— RUN APP ———
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     logger.info(f"Starting Flask app on port {port}")
 
-    # ✅ Create database tables safely
     with app.app_context():
         db.create_all()
 
