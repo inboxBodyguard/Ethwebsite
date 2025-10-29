@@ -1,611 +1,801 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Learn more about EzmCyber - a mission-driven cybersecurity platform led by Niffy.">
   <title>About | EzmCyber</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" href="assets/favicon.png" type="image/png" />
   <style>
     :root {
-      --primary-color: #007BFF;
-      --primary-dark: #0056b3;
-      --primary-light: #4da3ff;
-      --text-primary: #1a1a1a;
-      --text-secondary: #4a4a4a;
-      --text-muted: #6c6c6c;
-      --bg-primary: #ffffff;
-      --bg-secondary: #f8f9fa;
-      --bg-tertiary: #e9ecef;
-      --success-color: #28a745;
+      --primary-color: #00d9ff;
+      --primary-dark: #0077ff;
+      --primary-light: #80ebff;
+      --accent-color: #ff00ea;
+      --accent-dark: #cc00b8;
+      --accent-light: #ff80f2;
+      --cyber-blue: #0033ff;
+      --cyber-purple: #6600ff;
+      --text-primary: #ffffff;
+      --text-secondary: #b3b3b3;
+      --text-muted: #888888;
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #121220;
+      --bg-tertiary: #1a1a2e;
+      --success-color: #00ff9d;
       --border-radius: 12px;
-      --shadow-soft: 0 4px 20px rgba(0, 123, 255, 0.08);
-      --shadow-hover: 0 8px 30px rgba(0, 123, 255, 0.15);
+      --shadow-soft: 0 4px 20px rgba(0, 217, 255, 0.15);
+      --shadow-hover: 0 8px 30px rgba(0, 217, 255, 0.3);
+      --shadow-glow: 0 0 20px rgba(0, 217, 255, 0.5);
       --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-* {
-  box-sizing: border-box;
-}
-
-body { 
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-  margin: 0; 
-  padding: 0; 
-  background: var(--bg-primary); 
-  color: var(--text-primary); 
-  line-height: 1.7; 
-  font-size: 16px;
-  scroll-behavior: smooth;
-}
-
-.container { 
-  width: 90%; 
-  max-width: 1200px; 
-  margin: 0 auto; 
-  padding: 2rem 0; 
-}
-
-/* Enhanced Navigation */
-nav.navbar { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  padding: 1.2rem 0; 
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); 
-  color: white; 
-  box-shadow: var(--shadow-soft);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-nav.navbar .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-nav.navbar .logo {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: white;
-  text-decoration: none;
-  transition: var(--transition-smooth);
-}
-
-nav.navbar .logo:hover {
-  transform: scale(1.05);
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-}
-
-nav.navbar .nav-links { 
-  list-style: none; 
-  display: flex; 
-  gap: 2rem; 
-  margin: 0; 
-  padding: 0;
-}
-
-nav.navbar .nav-links li a { 
-  color: white; 
-  text-decoration: none; 
-  font-weight: 500; 
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  transition: var(--transition-smooth);
-  position: relative;
-}
-
-nav.navbar .nav-links li a:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-}
-
-nav.navbar .nav-links li a.active { 
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-nav.navbar .nav-links li a:focus {
-  outline: 2px solid rgba(255, 255, 255, 0.5);
-  outline-offset: 2px;
-}
-
-/* Enhanced Hero Section */
-.hero-banner { 
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, #f1f5f9 100%); 
-  padding: 8rem 0; 
-  text-align: center; 
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-banner::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at 30% 20%, rgba(0, 123, 255, 0.05) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.hero-banner .container {
-  position: relative;
-  z-index: 2;
-}
-
-.hero-banner h1 { 
-  font-size: clamp(2.2rem, 5vw, 3.5rem); 
-  margin-bottom: 1.5rem; 
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.hero-banner .highlight { 
-  color: var(--primary-color); 
-  position: relative;
-}
-
-.hero-banner .highlight::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-  border-radius: 2px;
-}
-
-.hero-banner .subtitle { 
-  font-size: 1.25rem; 
-  color: var(--text-secondary); 
-  margin-top: 1.5rem; 
-  font-weight: 400;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Enhanced Sections */
-.about-section { 
-  padding: 5rem 0; 
-  position: relative;
-}
-
-.about-section.bg-dark { 
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, #f1f5f9 100%);
-  position: relative;
-}
-
-.about-section h2 { 
-  font-size: clamp(1.8rem, 4vw, 2.5rem); 
-  margin-bottom: 2rem; 
-  color: var(--primary-color); 
-  font-weight: 600;
-  position: relative;
-  padding-bottom: 1rem;
-}
-
-.about-section h2::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60px;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-  border-radius: 2px;
-}
-
-.about-section h3 { 
-  font-size: 1.5rem; 
-  margin-bottom: 1.2rem; 
-  color: var(--text-primary); 
-  margin-top: 2.5rem; 
-  font-weight: 600;
-}
-
-.about-section p { 
-  margin-bottom: 1.5rem; 
-  color: var(--text-secondary);
-  font-size: 1.05rem;
-  max-width: 800px;
-}
-
-/* Enhanced Features List */
-.features-list { 
-  list-style: none; 
-  padding: 0; 
-  margin: 2rem 0; 
-  display: grid;
-  gap: 1rem;
-}
-
-.features-list li { 
-  padding: 1rem 1rem 1rem 3rem; 
-  position: relative; 
-  background: var(--bg-primary);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-soft);
-  transition: var(--transition-smooth);
-  border-left: 4px solid var(--primary-color);
-}
-
-.features-list li:hover {
-  transform: translateX(8px);
-  box-shadow: var(--shadow-hover);
-}
-
-.features-list li::before { 
-  content: "✓"; 
-  position: absolute; 
-  left: 1rem; 
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--success-color); 
-  font-weight: bold; 
-  font-size: 1.2rem;
-  width: 24px;
-  height: 24px;
-  background: rgba(40, 167, 69, 0.1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Enhanced Stats Grid */
-.stats-grid { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-  gap: 2rem; 
-  margin: 3rem 0; 
-}
-
-.stat-card { 
-  background: var(--bg-primary); 
-  padding: 2.5rem 1.5rem; 
-  border-radius: var(--border-radius); 
-  box-shadow: var(--shadow-soft); 
-  text-align: center; 
-  transition: var(--transition-smooth);
-  border: 2px solid transparent;
-  position: relative;
-  overflow: hidden;
-}
-
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-}
-
-.stat-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-hover);
-  border-color: var(--primary-color);
-}
-
-.stat-number { 
-  font-size: 2.5rem; 
-  font-weight: 700; 
-  color: var(--primary-color); 
-  margin-bottom: 0.5rem;
-}
-
-.stat-label { 
-  font-size: 1rem; 
-  color: var(--text-muted); 
-  font-weight: 500;
-}
-
-/* Enhanced TOC Section */
-.toc-section { 
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, #f1f5f9 100%); 
-  padding: 4rem 0; 
-  border-left: 6px solid var(--primary-color);
-  position: relative;
-}
-
-.toc-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 6px;
-  height: 100%;
-  background: linear-gradient(180deg, var(--primary-color), var(--primary-light));
-}
-
-.toc-list { 
-  list-style: none; 
-  padding: 0; 
-  margin: 2rem 0; 
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-}
-
-.toc-list li { 
-  margin: 0;
-}
-
-.toc-list li a { 
-  color: var(--primary-color); 
-  text-decoration: none; 
-  font-weight: 500; 
-  padding: 0.8rem 1.2rem;
-  display: block;
-  background: var(--bg-primary);
-  border-radius: 8px;
-  transition: var(--transition-smooth);
-  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.08);
-}
-
-.toc-list li a:hover { 
-  background: var(--primary-color);
-  color: white;
-  transform: translateX(4px);
-  box-shadow: var(--shadow-hover);
-}
-
-.toc-list li a:focus {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
-}
-
-/* Enhanced Buttons */
-.btn { 
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); 
-  color: white; 
-  padding: 1rem 2rem; 
-  text-decoration: none; 
-  border-radius: var(--border-radius); 
-  transition: var(--transition-smooth); 
-  font-weight: 500;
-  font-size: 1.05rem;
-  display: inline-block;
-  box-shadow: var(--shadow-soft);
-  border: none;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: left 0.5s;
-}
-
-.btn:hover::before {
-  left: 100%;
-}
-
-.btn:hover { 
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-hover);
-}
-
-.btn:focus {
-  outline: 2px solid var(--primary-light);
-  outline-offset: 3px;
-}
-
-.center-btn { 
-  text-align: center; 
-  margin-top: 3rem; 
-}
-
-/* Enhanced Policy Update */
-.policy-update { 
-  margin-top: 2rem; 
-  padding: 1.5rem; 
-  background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%); 
-  border-left: 6px solid var(--primary-color);
-  border-radius: 0 var(--border-radius) var(--border-radius) 0;
-  box-shadow: var(--shadow-soft);
-}
-
-.policy-update a { 
-  color: var(--primary-color); 
-  font-weight: 600; 
-  text-decoration: none; 
-  transition: var(--transition-smooth);
-}
-
-.policy-update a:hover { 
-  color: var(--primary-dark);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* Enhanced Footer */
-footer { 
-  background: linear-gradient(135deg, var(--text-primary) 0%, #2c3e50 100%); 
-  color: white; 
-  text-align: center; 
-  padding: 3rem 0; 
-  margin-top: 4rem; 
-}
-
-/* Skip Link for Accessibility */
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 6px;
-  background: var(--primary-color);
-  color: white;
-  padding: 8px 16px;
-  text-decoration: none;
-  border-radius: 0 0 8px 8px;
-  z-index: 1000;
-  transition: top 0.3s;
-}
-
-.skip-link:focus {
-  top: 0;
-}
-
-/* Enhanced Sign Up/In Buttons */
-.auth-buttons {
-  text-align: center;
-  margin: 3rem 0;
-  padding: 2rem;
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, #f8fafc 100%);
-  border-radius: var(--border-radius);
-}
-
-.auth-buttons .btn {
-  margin: 0 0.5rem;
-  min-width: 120px;
-}
-
-.btn-outline-primary {
-  background: transparent;
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
-}
-
-.btn-outline-primary:hover {
-  background: var(--primary-color);
-  color: white;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .container {
-    width: 95%;
-    padding: 1rem 0;
-  }
-
-  nav.navbar {
-    padding: 1rem 0;
-  }
-
-  nav.navbar .container {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  nav.navbar .nav-links {
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  nav.navbar .nav-links li a {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
-  }
-
-  .hero-banner {
-    padding: 4rem 0;
-  }
-
-  .about-section {
-    padding: 3rem 0;
-  }
-
-  .toc-list {
-    grid-template-columns: 1fr;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .stat-card {
-    padding: 2rem 1rem;
-  }
-
-  .auth-buttons {
-    margin: 2rem 0;
-    padding: 1.5rem;
-  }
-
-  .auth-buttons .btn {
-    display: block;
-    margin: 0.5rem auto;
-    width: 100%;
-    max-width: 200px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-banner h1 {
-    font-size: 2rem;
-  }
-
-  .hero-banner .subtitle {
-    font-size: 1.1rem;
-  }
-
-  .about-section h2 {
-    font-size: 1.8rem;
-  }
-
-  .features-list li {
-    padding: 0.8rem 0.8rem 0.8rem 2.5rem;
-  }
-}
-
-/* Focus Management */
-*:focus {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
-  outline-style: solid;
-}
-
-/* Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* High Contrast Mode */
-@media (prefers-contrast: high) {
-  :root {
-    --shadow-soft: 0 4px 8px rgba(0, 0, 0, 0.3);
-    --shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.4);
-  }
-}
-```
-
+    * {
+      box-sizing: border-box;
+    }
+
+    body { 
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      background: var(--bg-primary); 
+      color: var(--text-primary); 
+      line-height: 1.7; 
+      font-size: 16px;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* Cyber grid background */
+    .cyber-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(rgba(10, 10, 15, 0.9) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10, 10, 15, 0.9) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: -1;
+      opacity: 0.3;
+    }
+
+    .cyber-grid::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(255, 0, 234, 0.1) 0%, transparent 50%);
+    }
+
+    .container { 
+      width: 90%; 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 2rem 0; 
+    }
+
+    /* Enhanced Navigation */
+    nav.navbar { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 1.2rem 0; 
+      background: linear-gradient(135deg, rgba(0, 51, 255, 0.9) 0%, rgba(102, 0, 255, 0.9) 100%); 
+      color: white; 
+      box-shadow: var(--shadow-soft);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+    }
+
+    nav.navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    nav.navbar .logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: white;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+      text-shadow: 0 0 10px rgba(0, 217, 255, 0.7);
+      letter-spacing: 1px;
+      position: relative;
+    }
+
+    nav.navbar .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    nav.navbar .logo:hover::after {
+      transform: scaleX(1);
+    }
+
+    nav.navbar .logo:hover {
+      transform: translateY(-2px);
+      text-shadow: 0 0 15px rgba(0, 217, 255, 0.9);
+    }
+
+    nav.navbar .nav-links { 
+      list-style: none; 
+      display: flex; 
+      gap: 2rem; 
+      margin: 0; 
+      padding: 0;
+    }
+
+    nav.navbar .nav-links li a { 
+      color: white; 
+      text-decoration: none; 
+      font-weight: 500; 
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav.navbar .nav-links li a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    nav.navbar .nav-links li a:hover::before {
+      left: 100%;
+    }
+
+    nav.navbar .nav-links li a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    nav.navbar .nav-links li a.active { 
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    nav.navbar .nav-links li a:focus {
+      outline: 2px solid rgba(255, 255, 255, 0.5);
+      outline-offset: 2px;
+    }
+
+    /* Enhanced Hero Section */
+    .hero-banner { 
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%); 
+      padding: 8rem 0; 
+      text-align: center; 
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 30% 20%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(255, 0, 234, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-banner .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-banner h1 { 
+      font-size: clamp(2.2rem, 5vw, 3.5rem); 
+      margin-bottom: 1.5rem; 
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+    }
+
+    .hero-banner .highlight { 
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .hero-banner .subtitle { 
+      font-size: 1.25rem; 
+      color: var(--text-secondary); 
+      margin-top: 1.5rem; 
+      font-weight: 400;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Enhanced Sections */
+    .about-section { 
+      padding: 5rem 0; 
+      position: relative;
+    }
+
+    .about-section.bg-dark { 
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      position: relative;
+    }
+
+    .about-section h2 { 
+      font-size: clamp(1.8rem, 4vw, 2.5rem); 
+      margin-bottom: 2rem; 
+      color: var(--primary-color); 
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 1rem;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    .about-section h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--primary-color);
+    }
+
+    .about-section h3 { 
+      font-size: 1.5rem; 
+      margin-bottom: 1.2rem; 
+      color: var(--text-primary); 
+      margin-top: 2.5rem; 
+      font-weight: 600;
+      position: relative;
+      padding-left: 1rem;
+      border-left: 3px solid var(--primary-color);
+    }
+
+    .about-section p { 
+      margin-bottom: 1.5rem; 
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 800px;
+    }
+
+    /* Enhanced Features List */
+    .features-list { 
+      list-style: none; 
+      padding: 0; 
+      margin: 2rem 0; 
+      display: grid;
+      gap: 1rem;
+    }
+
+    .features-list li { 
+      padding: 1.2rem 1.5rem 1.2rem 4rem; 
+      position: relative; 
+      background: var(--bg-tertiary);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition-bounce);
+      border-left: 4px solid var(--primary-color);
+      overflow: hidden;
+    }
+
+    .features-list li::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.05), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    .features-list li:hover::before {
+      transform: translateX(100%);
+    }
+
+    .features-list li:hover {
+      transform: translateX(8px);
+      box-shadow: var(--shadow-hover);
+      border-left-color: var(--accent-color);
+    }
+
+    .features-list li::after { 
+      content: "⟫"; 
+      position: absolute; 
+      left: 1.5rem; 
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary-color); 
+      font-weight: bold; 
+      font-size: 1.5rem;
+      transition: var(--transition-smooth);
+    }
+
+    .features-list li:hover::after {
+      color: var(--accent-color);
+      transform: translateY(-50%) translateX(5px);
+    }
+
+    /* Enhanced Stats Grid */
+    .stats-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+      gap: 2rem; 
+      margin: 3rem 0; 
+    }
+
+    .stat-card { 
+      background: var(--bg-tertiary); 
+      padding: 2.5rem 1.5rem; 
+      border-radius: var(--border-radius); 
+      box-shadow: var(--shadow-soft); 
+      text-align: center; 
+      transition: var(--transition-bounce);
+      border: 1px solid rgba(0, 217, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    }
+
+    .stat-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary-color);
+    }
+
+    .stat-number { 
+      font-size: 3rem; 
+      font-weight: 800; 
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+    }
+
+    .stat-label { 
+      font-size: 1rem; 
+      color: var(--text-secondary); 
+      font-weight: 500;
+    }
+
+    /* Enhanced TOC Section */
+    .toc-section { 
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%); 
+      padding: 4rem 0; 
+      border-left: 6px solid var(--primary-color);
+      position: relative;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .toc-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+      box-shadow: 0 0 10px var(--primary-color);
+    }
+
+    .toc-list { 
+      list-style: none; 
+      padding: 0; 
+      margin: 2rem 0; 
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .toc-list li { 
+      margin: 0;
+    }
+
+    .toc-list li a { 
+      color: var(--text-primary); 
+      text-decoration: none; 
+      font-weight: 500; 
+      padding: 1rem 1.5rem;
+      display: block;
+      background: var(--bg-tertiary);
+      border-radius: 8px;
+      transition: var(--transition-bounce);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(0, 217, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .toc-list li a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .toc-list li a:hover::before {
+      left: 100%;
+    }
+
+    .toc-list li a:hover { 
+      background: linear-gradient(135deg, var(--primary-dark), var(--accent-dark));
+      color: white;
+      transform: translateX(8px) translateY(-5px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary-color);
+    }
+
+    .toc-list li a:focus {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+    }
+
+    /* Enhanced Buttons */
+    .btn { 
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%); 
+      color: white; 
+      padding: 1rem 2rem; 
+      text-decoration: none; 
+      border-radius: var(--border-radius); 
+      transition: var(--transition-bounce); 
+      font-weight: 600;
+      font-size: 1.05rem;
+      display: inline-block;
+      box-shadow: var(--shadow-soft);
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover { 
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn:focus {
+      outline: 2px solid var(--primary-light);
+      outline-offset: 3px;
+    }
+
+    .center-btn { 
+      text-align: center; 
+      margin-top: 3rem; 
+    }
+
+    /* Enhanced Policy Update */
+    .policy-update { 
+      margin-top: 2rem; 
+      padding: 1.5rem; 
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(255, 0, 234, 0.1) 100%); 
+      border-left: 6px solid var(--primary-color);
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(0, 217, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .policy-update::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.05), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    .policy-update:hover::before {
+      transform: translateX(100%);
+    }
+
+    .policy-update a { 
+      color: var(--primary-color); 
+      font-weight: 600; 
+      text-decoration: none; 
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .policy-update a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary-color);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .policy-update a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .policy-update a:hover { 
+      color: var(--accent-color);
+    }
+
+    /* Enhanced Footer */
+    footer { 
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%); 
+      color: white; 
+      text-align: center; 
+      padding: 3rem 0; 
+      margin-top: 4rem; 
+      border-top: 1px solid rgba(0, 217, 255, 0.2);
+    }
+
+    /* Skip Link for Accessibility */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 6px;
+      background: var(--primary-color);
+      color: white;
+      padding: 8px 16px;
+      text-decoration: none;
+      border-radius: 0 0 8px 8px;
+      z-index: 1000;
+      transition: top 0.3s;
+      font-weight: 600;
+    }
+
+    .skip-link:focus {
+      top: 0;
+    }
+
+    /* Enhanced Sign Up/In Buttons */
+    .auth-buttons {
+      text-align: center;
+      margin: 3rem 0;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(0, 217, 255, 0.2);
+    }
+
+    .auth-buttons .btn {
+      margin: 0 0.5rem;
+      min-width: 120px;
+    }
+
+    .btn-outline-primary {
+      background: transparent;
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    /* Social Links */
+    .social-links {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      padding: 0.8rem 1.5rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition-bounce);
+      background: rgba(0, 217, 255, 0.1);
+      border: 1px solid rgba(0, 217, 255, 0.2);
+    }
+
+    .social-link:hover {
+      background: rgba(0, 217, 255, 0.2);
+      color: var(--accent-color);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .social-link i {
+      margin-right: 8px;
+      font-size: 1.3rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        width: 95%;
+        padding: 1rem 0;
+      }
+
+      nav.navbar {
+        padding: 1rem 0;
+      }
+
+      nav.navbar .container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      nav.navbar .nav-links {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      nav.navbar .nav-links li a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .hero-banner {
+        padding: 4rem 0;
+      }
+
+      .about-section {
+        padding: 3rem 0;
+      }
+
+      .toc-list {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .stat-card {
+        padding: 2rem 1rem;
+      }
+
+      .auth-buttons {
+        margin: 2rem 0;
+        padding: 1.5rem;
+      }
+
+      .auth-buttons .btn {
+        display: block;
+        margin: 0.5rem auto;
+        width: 100%;
+        max-width: 200px;
+      }
+
+      .features-list li {
+        padding: 1rem 1rem 1rem 3.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-banner h1 {
+        font-size: 2rem;
+      }
+
+      .hero-banner .subtitle {
+        font-size: 1.1rem;
+      }
+
+      .about-section h2 {
+        font-size: 1.8rem;
+      }
+
+      .features-list li {
+        padding: 0.8rem 0.8rem 0.8rem 3rem;
+      }
+    }
+
+    /* Focus Management */
+    *:focus {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* High Contrast Mode */
+    @media (prefers-contrast: high) {
+      :root {
+        --shadow-soft: 0 4px 8px rgba(0, 0, 0, 0.5);
+        --shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.7);
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Cyber grid background -->
+  <div class="cyber-grid"></div>
+
   <!-- Skip to main content link for screen readers -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Navbar -->
-
   <header role="banner">
     <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="container">
@@ -630,232 +820,226 @@ footer {
       </div>
     </section>
 
-```
-<!-- Table of Contents -->
-<nav class="toc-section" aria-label="Page contents">
-  <div class="container">
-    <h2>Table of Contents</h2>
-    <ul class="toc-list">
-      <li><a href="#introduction">Introduction</a></li>
-      <li><a href="#who-we-are">Who We Are</a></li>
-      <li><a href="#our-mission">Our Mission & Vision</a></li>
-      <li><a href="#expertise">Our Expertise & Experience</a></li>
-      <li><a href="#approach">Our Approach</a></li>
-      <li><a href="#why-choose-us">Why Choose EzmCyber</a></li>
-      <li><a href="#commitment">Our Commitment</a></li>
-      <li><a href="#contact-info">Get In Touch</a></li>
-    </ul>
-  </div>
-</nav>
+    <!-- Table of Contents -->
+    <nav class="toc-section" aria-label="Page contents">
+      <div class="container">
+        <h2>Table of Contents</h2>
+        <ul class="toc-list">
+          <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#who-we-are">Who We Are</a></li>
+          <li><a href="#our-mission">Our Mission & Vision</a></li>
+          <li><a href="#expertise">Our Expertise & Experience</a></li>
+          <li><a href="#approach">Our Approach</a></li>
+          <li><a href="#why-choose-us">Why Choose EzmCyber</a></li>
+          <li><a href="#commitment">Our Commitment</a></li>
+          <li><a href="#contact-info">Get In Touch</a></li>
+        </ul>
+      </div>
+    </nav>
 
-<!-- Introduction -->
-<section id="introduction" class="about-section">
-  <div class="container">
-    <h2>Introduction</h2>
-    <p>
-      EzmCyber represents a new paradigm in cybersecurity education and defense, built on the foundation of practical experience, ethical practices, and community-driven knowledge sharing. We understand the critical importance of protecting digital assets in an increasingly connected world, and we're dedicated to making cybersecurity accessible, understandable, and actionable for everyone.
-    </p>
-    <p>
-      This platform serves as your comprehensive resource for cybersecurity guidance, tools, and insights, whether you're an individual looking to secure your personal devices, a small business owner protecting your company's data, or an enterprise seeking advanced security solutions. Our approach combines real-world experience with cutting-edge research to deliver practical, effective cybersecurity solutions.
-    </p>
+    <!-- Introduction -->
+    <section id="introduction" class="about-section">
+      <div class="container">
+        <h2>Introduction</h2>
+        <p>
+          EzmCyber represents a new paradigm in cybersecurity education and defense, built on the foundation of practical experience, ethical practices, and community-driven knowledge sharing. We understand the critical importance of protecting digital assets in an increasingly connected world, and we're dedicated to making cybersecurity accessible, understandable, and actionable for everyone.
+        </p>
+        <p>
+          This platform serves as your comprehensive resource for cybersecurity guidance, tools, and insights, whether you're an individual looking to secure your personal devices, a small business owner protecting your company's data, or an enterprise seeking advanced security solutions. Our approach combines real-world experience with cutting-edge research to deliver practical, effective cybersecurity solutions.
+        </p>
 
-    <!-- Privacy Policy Update Note -->
-    <div class="policy-update">
-      <p>📢 We've updated our Privacy Policy. <a href="privacy.html">Read here</a>.</p>
-    </div>
-  </div>
-</section>
+        <!-- Privacy Policy Update Note -->
+        <div class="policy-update">
+          <p><i class="fas fa-bullhorn"></i> We've updated our Privacy Policy. <a href="privacy.html">Read here</a>.</p>
+        </div>
+      </div>
+    </section>
 
-<!-- Who We Are -->
-<section id="who-we-are" class="about-section bg-dark">
-  <div class="container">
-    <h2>Who We Are</h2>
-    <p>
-      EzmCyber is the brainchild of <strong class="highlight">Niffy</strong>, a dedicated cybersecurity analyst with extensive hands-on experience in ethical hacking, penetration testing, and network defense. As a human-driven platform, we bring passion, authenticity, and genuine expertise to every aspect of cybersecurity education and implementation.
-    </p>
+    <!-- Who We Are -->
+    <section id="who-we-are" class="about-section bg-dark">
+      <div class="container">
+        <h2>Who We Are</h2>
+        <p>
+          EzmCyber is the brainchild of <strong>Niffy</strong>, a dedicated cybersecurity analyst with extensive hands-on experience in ethical hacking, penetration testing, and network defense. As a human-driven platform, we bring passion, authenticity, and genuine expertise to every aspect of cybersecurity education and implementation.
+        </p>
 
-    <div class="stats-grid">
-      <article class="stat-card">
-        <div class="stat-number">1+</div>
-        <div class="stat-label">Years of Experience</div>
-      </article>
-      <article class="stat-card">
-        <div class="stat-number">100%</div>
-        <div class="stat-label">Ethical Approach</div>
-      </article>
-      <article class="stat-card">
-        <div class="stat-number">24/7</div>
-        <div class="stat-label">Threat Monitoring</div>
-      </article>
-      <article class="stat-card">
-        <div class="stat-number">∞</div>
-        <div class="stat-label">Learning Commitment</div>
-      </article>
-    </div>
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-number">5+</div>
+            <div class="stat-label">Years of Experience</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Ethical Approach</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Threat Monitoring</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Learning Commitment</div>
+          </article>
+        </div>
 
-    <p>
-      We operate at the intersection of research, practice, and community engagement. Every tool, tutorial, and insight we provide undergoes rigorous testing in real-world environments to ensure maximum effectiveness and practical applicability. Our commitment extends beyond just providing information – we're building a community of informed defenders.
-    </p>
-  </div>
-</section>
+        <p>
+          We operate at the intersection of research, practice, and community engagement. Every tool, tutorial, and insight we provide undergoes rigorous testing in real-world environments to ensure maximum effectiveness and practical applicability. Our commitment extends beyond just providing information – we're building a community of informed defenders.
+        </p>
+      </div>
+    </section>
 
-<!-- Mission & Vision -->
-<section id="our-mission" class="about-section">
-  <div class="container">
-    <h2>Our Mission & Vision</h2>
+    <!-- Mission & Vision -->
+    <section id="our-mission" class="about-section">
+      <div class="container">
+        <h2>Our Mission & Vision</h2>
 
-    <h3>Mission Statement</h3>
-    <p>
-      To empower individuals, startups, and organizations with practical, accessible, and effective cybersecurity solutions through education, tools, and community-driven defense strategies. We believe that strong cybersecurity should not be a privilege reserved for large corporations, but a fundamental right accessible to everyone.
-    </p>
+        <h3>Mission Statement</h3>
+        <p>
+          To empower individuals, startups, and organizations with practical, accessible, and effective cybersecurity solutions through education, tools, and community-driven defense strategies. We believe that strong cybersecurity should not be a privilege reserved for large corporations, but a fundamental right accessible to everyone.
+        </p>
 
-    <h3>Our Vision</h3>
-    <p>
-      To create a world where cybersecurity knowledge is democratized, where every person and organization has the tools and understanding necessary to protect their digital assets effectively. We envision a future where cyber threats are met with informed, prepared, and confident defenders at every level.
-    </p>
+        <h3>Our Vision</h3>
+        <p>
+          To create a world where cybersecurity knowledge is democratized, where every person and organization has the tools and understanding necessary to protect their digital assets effectively. We envision a future where cyber threats are met with informed, prepared, and confident defenders at every level.
+        </p>
 
-    <h3>Core Values</h3>
-    <ul class="features-list">
-      <li>Transparency in all our methods and recommendations</li>
-      <li>Ethical practices in all cybersecurity activities</li>
-      <li>Community-first approach to knowledge sharing</li>
-      <li>Practical, actionable solutions over theoretical concepts</li>
-      <li>Continuous learning and adaptation to emerging threats</li>
-      <li>Accessibility of cybersecurity for all skill levels</li>
-    </ul>
-  </div>
-</section>
+        <h3>Core Values</h3>
+        <ul class="features-list">
+          <li>Transparency in all our methods and recommendations</li>
+          <li>Ethical practices in all cybersecurity activities</li>
+          <li>Community-first approach to knowledge sharing</li>
+          <li>Practical, actionable solutions over theoretical concepts</li>
+          <li>Continuous learning and adaptation to emerging threats</li>
+          <li>Accessibility of cybersecurity for all skill levels</li>
+        </ul>
+      </div>
+    </section>
 
-<!-- Expertise -->
-<section id="expertise" class="about-section bg-dark">
-  <div class="container">
-    <h2>Our Expertise & Experience</h2>
+    <!-- Expertise -->
+    <section id="expertise" class="about-section bg-dark">
+      <div class="container">
+        <h2>Our Expertise & Experience</h2>
 
-    <h3>Technical Specializations</h3>
-    <ul class="features-list">
-      <li>Ethical Hacking & Penetration Testing</li>
-      <li>Network Security & Defense Architecture</li>
-      <li>Vulnerability Assessment & Management</li>
-      <li>Incident Response & Digital Forensics</li>
-      <li>Security Awareness Training & Education</li>
-      <li>Compliance & Risk Management</li>
-      <li>Threat Intelligence & Analysis</li>
-      <li>Security Tool Development & Implementation</li>
-    </ul>
+        <h3>Technical Specializations</h3>
+        <ul class="features-list">
+          <li>Ethical Hacking & Penetration Testing</li>
+          <li>Network Security & Defense Architecture</li>
+          <li>Vulnerability Assessment & Management</li>
+          <li>Incident Response & Digital Forensics</li>
+          <li>Security Awareness Training & Education</li>
+          <li>Compliance & Risk Management</li>
+          <li>Threat Intelligence & Analysis</li>
+          <li>Security Tool Development & Implementation</li>
+        </ul>
 
-    <h3>Industry Experience</h3>
-    <p>
-      Our experience spans across multiple industries and security scenarios, from securing personal devices and home networks to protecting enterprise-level infrastructures. We've encountered and addressed a wide range of security challenges, giving us unique insights into both common vulnerabilities and sophisticated attack vectors.
-    </p>
+        <h3>Industry Experience</h3>
+        <p>
+          Our experience spans across multiple industries and security scenarios, from securing personal devices and home networks to protecting enterprise-level infrastructures. We've encountered and addressed a wide range of security challenges, giving us unique insights into both common vulnerabilities and sophisticated attack vectors.
+        </p>
 
-    <p>
-      Every recommendation we make, every tool we develop, and every strategy we share is grounded in real-world application and testing. We don't just theorize about cybersecurity – we live it, breathe it, and continuously refine our approach based on the evolving threat landscape.
-    </p>
-  </div>
-</section>
+        <p>
+          Every recommendation we make, every tool we develop, and every strategy we share is grounded in real-world application and testing. We don't just theorize about cybersecurity – we live it, breathe it, and continuously refine our approach based on the evolving threat landscape.
+        </p>
+      </div>
+    </section>
 
-<!-- Our Approach -->
-<section id="approach" class="about-section">
-  <div class="container">
-    <h2>Our Approach</h2>
+    <!-- Our Approach -->
+    <section id="approach" class="about-section">
+      <div class="container">
+        <h2>Our Approach</h2>
 
-    <h3>Human-Centric Cybersecurity</h3>
-    <p>
-      At EzmCyber, we recognize that the human element is both the greatest vulnerability and the strongest defense in cybersecurity. Our approach prioritizes understanding, education, and empowerment over complex technical jargon and intimidating security protocols.
-    </p>
+        <h3>Human-Centric Cybersecurity</h3>
+        <p>
+          At EzmCyber, we recognize that the human element is both the greatest vulnerability and the strongest defense in cybersecurity. Our approach prioritizes understanding, education, and empowerment over complex technical jargon and intimidating security protocols.
+        </p>
 
-    <h3>Practical Over Theoretical</h3>
-    <p>
-      Security is never just theoretical at EzmCyber. Every solution we provide is measurable, accessible, and effective. We focus on practical implementations that work in real-world scenarios, not just in controlled laboratory environments.
-    </p>
+        <h3>Practical Over Theoretical</h3>
+        <p>
+          Security is never just theoretical at EzmCyber. Every solution we provide is measurable, accessible, and effective. We focus on practical implementations that work in real-world scenarios, not just in controlled laboratory environments.
+        </p>
 
-    <h3>Community-Driven Learning</h3>
-    <p>
-      We believe in the power of community learning and knowledge sharing. Our platform serves as a hub for cybersecurity enthusiasts, professionals, and anyone interested in improving their security posture. We foster an environment of collaborative learning and mutual support.
-    </p>
+        <h3>Community-Driven Learning</h3>
+        <p>
+          We believe in the power of community learning and knowledge sharing. Our platform serves as a hub for cybersecurity enthusiasts, professionals, and anyone interested in improving their security posture. We foster an environment of collaborative learning and mutual support.
+        </p>
 
-    <h3>Continuous Innovation</h3>
-    <p>
-      The cybersecurity landscape evolves rapidly, and so do we. We continuously research emerging threats, test new defense strategies, and adapt our methodologies to stay ahead of the curve. Innovation isn't just about new tools – it's about new ways of thinking about security challenges.
-    </p>
-  </div>
-</section>
+        <h3>Continuous Innovation</h3>
+        <p>
+          The cybersecurity landscape evolves rapidly, and so do we. We continuously research emerging threats, test new defense strategies, and adapt our methodologies to stay ahead of the curve. Innovation isn't just about new tools – it's about new ways of thinking about security challenges.
+        </p>
+      </div>
+    </section>
 
-<!-- Why Choose Us -->
-<section id="why-choose-us" class="about-section bg-dark">
-  <div class="container">
-    <h2>Why Choose EzmCyber</h2>
-    <ul class="features-list">
-      <li>Human-led cybersecurity guidance with practical, hands-on experience</li>
-      <li>Real-world tested tools and tutorials — no theoretical fluff or generic automation</li>
-      <li>Passion-driven community collaboration and knowledge sharing</li>
-      <li>Rapid response strategies with measurable security improvements</li>
-      <li>Transparent and trustworthy insights from a dedicated cybersecurity professional</li>
-      <li>Comprehensive coverage from personal security to enterprise defense</li>
-      <li>Accessible learning materials for all skill levels</li>
-      <li>Ethical approach to all cybersecurity practices</li>
-      <li>Continuous support and guidance for your security journey</li>
-      <li>Cost-effective solutions without compromising on quality</li>
-    </ul>
+    <!-- Why Choose Us -->
+    <section id="why-choose-us" class="about-section bg-dark">
+      <div class="container">
+        <h2>Why Choose EzmCyber</h2>
+        <ul class="features-list">
+          <li>Human-led cybersecurity guidance with practical, hands-on experience</li>
+          <li>Real-world tested tools and tutorials — no theoretical fluff or generic automation</li>
+          <li>Passion-driven community collaboration and knowledge sharing</li>
+          <li>Rapid response strategies with measurable security improvements</li>
+          <li>Transparent and trustworthy insights from a dedicated cybersecurity professional</li>
+          <li>Comprehensive coverage from personal security to enterprise defense</li>
+          <li>Accessible learning materials for all skill levels</li>
+          <li>Ethical approach to all cybersecurity practices</li>
+          <li>Continuous support and guidance for your security journey</li>
+          <li>Cost-effective solutions without compromising on quality</li>
+        </ul>
 
-    <h3>What Sets Us Apart</h3>
-    <p>
-      Unlike automated security platforms or purely theoretical educational resources, EzmCyber combines the authenticity of human expertise with the accessibility of digital education. We provide personalized guidance that adapts to your specific needs, whether you're just starting your cybersecurity journey or looking to advance your existing knowledge.
-    </p>
-  </div>
-</section>
+        <h3>What Sets Us Apart</h3>
+        <p>
+          Unlike automated security platforms or purely theoretical educational resources, EzmCyber combines the authenticity of human expertise with the accessibility of digital education. We provide personalized guidance that adapts to your specific needs, whether you're just starting your cybersecurity journey or looking to advance your existing knowledge.
+        </p>
+      </div>
+    </section>
 
-<!-- Our Commitment -->
-<section id="commitment" class="about-section">
-  <div class="container">
-    <h2>Our Commitment</h2>
+    <!-- Our Commitment -->
+    <section id="commitment" class="about-section">
+      <div class="container">
+        <h2>Our Commitment</h2>
 
-    <h3>To Our Community</h3>
-    <p>
-      We are committed to fostering a supportive, inclusive, and educational community where cybersecurity knowledge is freely shared and continuously expanded. Every member of our community, regardless of their current skill level, contributes to our collective defense against cyber threats.
-    </p>
+        <h3>To Our Community</h3>
+        <p>
+          We are committed to fostering a supportive, inclusive, and educational community where cybersecurity knowledge is freely shared and continuously expanded. Every member of our community, regardless of their current skill level, contributes to our collective defense against cyber threats.
+        </p>
 
-    <h3>To Quality & Excellence</h3>
-    <p>
-      Every piece of content, every tool, and every recommendation we provide undergoes rigorous quality assurance. We maintain high standards because we understand that in cybersecurity, mediocrity can be dangerous. Our reputation is built on reliability, accuracy, and effectiveness.
-    </p>
+        <h3>To Quality & Excellence</h3>
+        <p>
+          Every piece of content, every tool, and every recommendation we provide undergoes rigorous quality assurance. We maintain high standards because we understand that in cybersecurity, mediocrity can be dangerous. Our reputation is built on reliability, accuracy, and effectiveness.
+        </p>
+
         <h3>To Innovation & Growth</h3>
-    <p>
-      Cybersecurity never stands still, and neither do we. EzmCyber is committed to evolving alongside the threat landscape—continuously learning, innovating, and sharing so our community always stays one step ahead.
-    </p>
-  </div>
-</section>
+        <p>
+          Cybersecurity never stands still, and neither do we. EzmCyber is committed to evolving alongside the threat landscape—continuously learning, innovating, and sharing so our community always stays one step ahead.
+        </p>
+      </div>
+    </section>
 
-<!-- Contact Info -->
-<section id="contact-info" class="about-section bg-dark">
-  <div class="container">
-    <h2>Get In Touch</h2>
-    <p>
-      Have questions, ideas, or want to collaborate? Reach out to us—we’d love to hear from you.
-    </p>
-    <div class="center-btn">
-      <a href="contact.html" class="btn">Contact Us</a>
-    </div>
-  </div>
-</section>
-</main>
+    <!-- Contact Info -->
+    <section id="contact-info" class="about-section bg-dark">
+      <div class="container">
+        <h2>Get In Touch</h2>
+        <p>
+          Have questions, ideas, or want to collaborate? Reach out to us—we'd love to hear from you.
+        </p>
+        <div class="center-btn">
+          <a href="contact.html" class="btn">Contact Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<!-- Footer -->
-<footer role="contentinfo">
-  <div class="container">
-    <p>&copy; 2025 EzmCyber. All rights reserved.</p>
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="container">
+      <p>&copy; 2025 EzmCyber. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://x.com/ezmcyberhq?s=21" target="_blank" rel="noopener noreferrer" class="social-link">
+          <i class="fab fa-twitter"></i> Follow us on X
+        </a>
+      </div>
     </div>
-</footer>
-<!-- Social Link: X -->
-<div style="text-align:center; margin-top:30px;">
-  <a href="https://x.com/ezmcyberhq?s=21" target="_blank" rel="noopener noreferrer" 
-     style="display:inline-flex; align-items:center; text-decoration:none; font-weight:bold; font-size:16px; color:#1DA1F2;">
-    <!-- X (Twitter) SVG Logo -->
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="24" height="24" fill="currentColor" style="margin-right:8px;">
-      <path d="M714.163 519.284L1160.89 0H1052.38L667.137 450.887L356.757 0H0L468.492 681.821L0 1226.37H108.511L515.518 745.913L843.243 1226.37H1200L714.137 519.284H714.163ZM565.693 682.299L521.591 619.615L148.114 79.6946H306.66L600.993 497.191L645.095 559.875L1029.7 1150.3H871.159L565.693 682.324V682.299Z"/>
-    </svg>
-    Follow us on X
-  </a>
-</div>
+  </footer>
 </body>
 </html>
