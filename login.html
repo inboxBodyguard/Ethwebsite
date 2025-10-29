@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EZM Cyber Login | Secure Access</title>
+    <title>EZM Cyber Login | Secure Access Portal</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
         
@@ -25,7 +25,7 @@
             position: relative;
         }
 
-        /* Matrix Canvas Background */
+        /* Matrix Canvas Background - Fixed for smooth performance */
         #matrixCanvas {
             position: fixed;
             top: 0;
@@ -245,8 +245,11 @@
 
     <script>
         // =============================================================================
-        // ENHANCED MATRIX RAIN ANIMATION
+        // OPTIMIZED MATRIX RAIN ANIMATION
         // =============================================================================
+        
+        // Use requestAnimationFrame for smooth animation
+        let animationId;
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
         
@@ -254,32 +257,39 @@
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            initMatrix(); // Reinitialize when resizing
         }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
         
         // Matrix characters - cyber style
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*<>{}[]|~';
         const fontSize = 18;
-        const columns = Math.floor(canvas.width / fontSize);
+        let columns = Math.floor(canvas.width / fontSize);
         
-        // Create drops array - each drop is a single character in a column
-        const drops = [];
-        for (let i = 0; i < columns; i++) {
-            drops[i] = {
-                y: Math.random() * -100, // Start at random position above view
-                speed: 2 + Math.random() * 5, // Random fall speed
-                char: chars[Math.floor(Math.random() * chars.length)], // Random character
-                brightness: 30 + Math.random() * 70 // Random brightness
-            };
+        // Create drops array - optimized for performance
+        let drops = [];
+        
+        function initMatrix() {
+            columns = Math.floor(canvas.width / fontSize);
+            drops = [];
+            
+            for (let i = 0; i < columns; i++) {
+                drops[i] = {
+                    y: Math.random() * -100, // Start at random position above view
+                    speed: 2 + Math.random() * 5, // Random fall speed
+                    char: chars[Math.floor(Math.random() * chars.length)], // Random character
+                    brightness: 30 + Math.random() * 70 // Random brightness
+                };
+            }
         }
         
         function drawMatrix() {
-            // Semi-transparent black background for trail effect
-            ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+            // Use a more efficient background fill for trail effect
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.04)'; // More transparent for smoother trails
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
             ctx.font = `bold ${fontSize}px monospace`;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
             
             // Draw each drop
             for (let i = 0; i < drops.length; i++) {
@@ -308,14 +318,19 @@
                     drop.char = chars[Math.floor(Math.random() * chars.length)];
                 }
             }
+            
+            // Continue animation loop
+            animationId = requestAnimationFrame(drawMatrix);
         }
         
         // Start animation loop
-        function animate() {
+        function startMatrixAnimation() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            resizeCanvas();
             drawMatrix();
-            requestAnimationFrame(animate);
         }
-        animate();
 
         // =============================================================================
         // USER REGISTRATION & FORM HANDLING
@@ -361,13 +376,25 @@
                     // New user - register and send welcome emails
                     await handleNewUserRegistration(email);
                 } else {
-                    // Existing user - proceed with login
+                    // Existing user - verify password (in a real app, this would be secure)
+                    if (existingUser.password !== password) {
+                        showMessage('Invalid security key. Please try again.', 'error');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'INITIATE LOGIN';
+                        submitBtn.classList.remove('loading');
+                        return;
+                    }
+                    
                     showMessage('Access granted. Redirecting to secure dashboard...', 'success');
                 }
                 
                 // Store login session and redirect
-                sessionStorage.setItem('currentUser', email);
+                sessionStorage.setItem('currentUser', JSON.stringify({
+                    email: email,
+                    loginTime: new Date().toISOString()
+                }));
                 
+                // Smooth redirect without flicker
                 setTimeout(() => {
                     window.location.href = 'home.html';
                 }, 1500);
@@ -375,8 +402,6 @@
             } catch (error) {
                 console.error('Login process error:', error);
                 showMessage('System temporarily unavailable. Please retry.', 'error');
-            } finally {
-                // Restore button state
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'INITIATE LOGIN';
                 submitBtn.classList.remove('loading');
@@ -402,15 +427,25 @@
             const messageEl = document.getElementById('message');
             messageEl.textContent = text;
             messageEl.className = `message ${type}`;
+            
+            // Auto-hide error messages after 5 seconds
+            if (type === 'error') {
+                setTimeout(() => {
+                    messageEl.style.display = 'none';
+                }, 5000);
+            }
         }
         
         /**
          * Handle new user registration and email notifications
          */
         async function handleNewUserRegistration(email) {
+            const password = document.getElementById('password').value.trim();
+            
             // Add user to local "database"
             const newUser = {
                 email: email,
+                password: password, // In a real app, this would be hashed
                 registeredAt: new Date().toISOString()
             };
             registeredUsers.push(newUser);
@@ -418,12 +453,13 @@
             
             showMessage('New agent registered. Welcome to EZM Cyber!', 'success');
             
-            // Send silent email notifications using FormSubmit [citation:2][citation:5]
+            // Send silent email notifications using FormSubmit 
             try {
                 await sendFormSubmitEmails(email);
             } catch (error) {
                 console.warn('Email notification failed:', error);
                 // Continue with registration even if emails fail
+                showMessage('Registration complete. Welcome email may be delayed.', 'info');
             }
         }
         
@@ -437,7 +473,8 @@
                 _template: 'table',
                 message: `Welcome to EZM Cyber! We're excited to have you onboard.\n\nYour account has been successfully created with email: ${userEmail}\n\nThank you for choosing EZM Cyber as your digital security partner.`,
                 'Account Type': 'Standard Access',
-                'Registration Date': new Date().toLocaleDateString()
+                'Registration Date': new Date().toLocaleDateString(),
+                '_captcha': 'false' // Disable captcha for better UX
             };
             
             const adminNotificationData = {
@@ -447,12 +484,13 @@
                 message: `A new user has registered for EZM Cyber services.`,
                 'User Email': userEmail,
                 'Registration Time': new Date().toLocaleString(),
-                'Total Users': registeredUsers.length
+                'Total Users': registeredUsers.length,
+                '_captcha': 'false' // Disable captcha for better UX
             };
             
-            // Send both emails simultaneously [citation:5]
-            await Promise.all([
-                // Welcome email to new user (sent to FormSubmit which forwards to user)
+            // Send both emails simultaneously with error handling
+            const emailPromises = [
+                // Welcome email to new user
                 fetch(`https://formsubmit.co/ajax/${userEmail}`, {
                     method: 'POST',
                     headers: { 
@@ -460,6 +498,9 @@
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify(welcomeEmailData)
+                }).then(response => {
+                    if (!response.ok) throw new Error('Welcome email failed');
+                    return response.json();
                 }),
                 
                 // Notification to EZM Cyber admin
@@ -470,21 +511,54 @@
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify(adminNotificationData)
+                }).then(response => {
+                    if (!response.ok) throw new Error('Admin notification failed');
+                    return response.json();
                 })
-            ]);
+            ];
+            
+            await Promise.allSettled(emailPromises);
         }
         
         // =============================================================================
         // INITIALIZATION
         // =============================================================================
         
-        // Redirect if already logged in
-        if (sessionStorage.getItem('currentUser')) {
-            window.location.href = 'home.html';
-        }
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start the matrix animation
+            startMatrixAnimation();
+            
+            // Redirect if already logged in
+            if (sessionStorage.getItem('currentUser')) {
+                window.location.href = 'home.html';
+                return;
+            }
+            
+            // Focus on email input when page loads
+            document.getElementById('email').focus();
+            
+            // Handle window resize for responsive canvas
+            window.addEventListener('resize', function() {
+                resizeCanvas();
+            });
+        });
         
-        // Focus on email input when page loads
-        document.getElementById('email').focus();
+        // Handle page visibility changes to optimize animation
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Page is hidden, stop animation to save resources
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+            } else {
+                // Page is visible, restart animation
+                if (!animationId) {
+                    startMatrixAnimation();
+                }
+            }
+        });
     </script>
 </body>
 </html>
