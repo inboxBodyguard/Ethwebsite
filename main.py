@@ -290,10 +290,6 @@ def demo_request_route():
     # ✅ Include redirect info (frontend will handle it)
     return jsonify({"ok": True, "id": req.id, "redirect": "/demo_thank_you.html"}), 200
     
-    @app.route('/demo_thank_you.html')
-def demo_thank_you():
-    return send_from_directory('.', 'demo_thank_you.html')
-    
 # ——— RUN APP ———
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
