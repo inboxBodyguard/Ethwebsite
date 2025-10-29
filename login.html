@@ -58,12 +58,6 @@
             transform: translateY(-5px);
         }
 
-        /* Smooth fade-out transition for redirect */
-        .login-container.fade-out {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-
         /* Header Styles */
         .brand-header {
             margin-bottom: 2rem;
@@ -231,11 +225,7 @@
             pointer-events: none;
             z-index: 9999;
             transition: opacity 0.5s ease;
-        }
-
-        .page-overlay.active {
-            opacity: 1;
-            pointer-events: all;
+            display: none;
         }
     </style>
 </head>
@@ -585,7 +575,7 @@
         
         /**
          * SMOOTH REDIRECT - Prevents screen flickering and blinking
-         * This is the KEY fix for your issue
+         * Aggressive approach that completely eliminates transitions
          */
         async function smoothRedirect(url) {
             // CRITICAL: Stop the matrix animation immediately
@@ -595,30 +585,25 @@
             const overlay = document.getElementById('pageOverlay');
             const container = document.getElementById('loginContainer');
             
-            // Fade out the login container
-            container.classList.add('fade-out');
+            // Immediately hide the container and show overlay
+            container.style.display = 'none';
+            overlay.style.display = 'block';
+            overlay.style.opacity = '1';
+            overlay.style.transition = 'none';
             
-            // Wait for container fade
-            await new Promise(resolve => setTimeout(resolve, 300));
+            // Force a reflow
+            void overlay.offsetWidth;
             
-            // Fade in the black overlay
-            overlay.classList.add('active');
+            // Small delay to ensure rendering
+            await new Promise(resolve => setTimeout(resolve, 50));
             
-            // Wait for overlay to be fully visible
-            await new Promise(resolve => setTimeout(resolve, 600));
-            
-            // IMPORTANT: Add a small delay to ensure everything is stable
-            await new Promise(resolve => setTimeout(resolve, 100));
-            
-            // NOW redirect (screen is completely black, no flicker)
+            // Redirect immediately
             window.location.href = url;
             
-            // Fallback redirect in case the above doesn't work
+            // Force redirect after timeout as backup
             setTimeout(() => {
-                if (window.location.href.indexOf('home.html') === -1) {
-                    window.location.replace(url);
-                }
-            }, 2000);
+                window.location.replace(url);
+            }, 500);
         }
         
         // =============================================================================
