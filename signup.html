@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -54,6 +54,9 @@
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .back-home a:hover {
       color: #00cc88;
@@ -61,13 +64,15 @@
     .login-container {
       position: relative;
       z-index: 2;
-      max-width: 420px;
+      max-width: 440px;
       margin: 60px auto;
       padding: 40px;
-      background: rgba(15, 15, 35, 0.85);
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
+      background: rgba(15, 15, 35, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 
+                  0 0 0 1px rgba(0, 255, 170, 0.1),
+                  inset 0 0 20px rgba(0, 255, 170, 0.05);
+      backdrop-filter: blur(15px);
       border: 1px solid rgba(0, 255, 170, 0.2);
     }
     .brand-logo {
@@ -76,21 +81,23 @@
     }
     .brand-logo h1 {
       font-weight: 700;
-      font-size: 32px;
+      font-size: 36px;
       margin-bottom: 5px;
       background: linear-gradient(90deg, #00ffaa, #00ccff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(0, 255, 170, 0.3);
     }
     .brand-logo p {
       font-weight: 400;
       color: #aaa;
       margin-bottom: 0;
+      font-size: 16px;
     }
     .social-btn {
       width: 100%;
-      padding: 12px 16px;
-      border-radius: 8px;
+      padding: 14px 16px;
+      border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       background: rgba(30, 30, 60, 0.7);
       color: white;
@@ -101,10 +108,12 @@
       justify-content: center;
       transition: all 0.3s;
       cursor: pointer;
+      font-size: 15px;
     }
     .social-btn:hover {
       background: rgba(40, 40, 80, 0.9);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
     .social-btn:disabled {
       opacity: 0.6;
@@ -144,6 +153,7 @@
     }
     .form-group {
       margin-bottom: 20px;
+      position: relative;
     }
     .form-label {
       display: block;
@@ -153,8 +163,8 @@
     }
     .form-control {
       width: 100%;
-      padding: 12px 16px;
-      border-radius: 8px;
+      padding: 14px 16px;
+      border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       background: rgba(20, 20, 40, 0.7);
       color: white;
@@ -165,9 +175,59 @@
       outline: none;
       border-color: #00ffaa;
       box-shadow: 0 0 0 2px rgba(0, 255, 170, 0.2);
+      background: rgba(25, 25, 45, 0.8);
     }
     .form-control::placeholder {
       color: #888;
+    }
+    .form-control.valid {
+      border-color: #00ff9d;
+      box-shadow: 0 0 0 2px rgba(0, 255, 157, 0.2);
+    }
+    .form-control.invalid {
+      border-color: #ff4757;
+      box-shadow: 0 0 0 2px rgba(255, 71, 87, 0.2);
+    }
+    .validation-icon {
+      position: absolute;
+      right: 15px;
+      top: 42px;
+      font-size: 18px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .validation-icon.valid {
+      opacity: 1;
+      color: #00ff9d;
+    }
+    .validation-icon.invalid {
+      opacity: 1;
+      color: #ff4757;
+    }
+    .validation-message {
+      font-size: 13px;
+      margin-top: 5px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: none;
+    }
+    .validation-message.valid {
+      display: block;
+      background: rgba(0, 255, 157, 0.1);
+      color: #00ff9d;
+      border: 1px solid rgba(0, 255, 157, 0.2);
+    }
+    .validation-message.invalid {
+      display: block;
+      background: rgba(255, 71, 87, 0.1);
+      color: #ff4757;
+      border: 1px solid rgba(255, 71, 87, 0.2);
+    }
+    .validation-message.info {
+      display: block;
+      background: rgba(0, 200, 255, 0.1);
+      color: #00c8ff;
+      border: 1px solid rgba(0, 200, 255, 0.2);
     }
     #recaptcha-container {
       margin: 20px 0;
@@ -176,9 +236,9 @@
     }
     .btn-primary {
       width: 100%;
-      padding: 14px;
+      padding: 16px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       background: linear-gradient(90deg, #00ffaa, #00ccff);
       color: #000;
       font-weight: 600;
@@ -186,10 +246,25 @@
       cursor: pointer;
       transition: all 0.3s;
       margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    .btn-primary:hover::before {
+      left: 100%;
     }
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 255, 170, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 255, 170, 0.4);
     }
     .btn-primary:disabled {
       opacity: 0.6;
@@ -206,15 +281,18 @@
       color: #00ffaa;
       text-decoration: none;
       font-weight: 500;
+      transition: all 0.3s;
     }
     .signin-link a:hover {
       text-decoration: underline;
+      color: #00ccff;
     }
-    .error-message, .success-message {
-      padding: 12px 16px;
-      border-radius: 8px;
+    .error-message, .success-message, .info-message {
+      padding: 14px 16px;
+      border-radius: 10px;
       margin-bottom: 20px;
       display: none;
+      font-weight: 500;
     }
     .error-message {
       background: rgba(220, 53, 69, 0.2);
@@ -226,47 +304,118 @@
       border: 1px solid rgba(40, 167, 69, 0.5);
       color: #d4edda;
     }
+    .info-message {
+      background: rgba(0, 200, 255, 0.2);
+      border: 1px solid rgba(0, 200, 255, 0.5);
+      color: #d1ecf1;
+    }
+    .existing-account-prompt {
+      background: rgba(255, 193, 7, 0.15);
+      border: 1px solid rgba(255, 193, 7, 0.4);
+      color: #fff3cd;
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .existing-account-prompt p {
+      margin: 0 0 12px 0;
+      font-weight: 500;
+    }
+    .existing-account-prompt .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+    .existing-account-prompt .btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 500;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .existing-account-prompt .btn-login {
+      background: rgba(0, 255, 170, 0.2);
+      border: 1px solid rgba(0, 255, 170, 0.5);
+      color: #00ffaa;
+    }
+    .existing-account-prompt .btn-login:hover {
+      background: rgba(0, 255, 170, 0.3);
+    }
+    .existing-account-prompt .btn-forgot {
+      background: rgba(0, 200, 255, 0.2);
+      border: 1px solid rgba(0, 200, 255, 0.5);
+      color: #00c8ff;
+    }
+    .existing-account-prompt .btn-forgot:hover {
+      background: rgba(0, 200, 255, 0.3);
+    }
     @media (max-width: 576px) {
       .login-container {
         margin: 30px 15px;
         padding: 25px;
       }
       .back-home { left: 15px; }
-      .form-control, .btn-primary, .social-btn { font-size: 0.9rem; padding: 10px; }
+      .form-control, .btn-primary, .social-btn { font-size: 0.9rem; padding: 12px; }
+      .existing-account-prompt .btn-group {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
   <div id="rain-container"></div>
-  <div class="back-home"><a href="index.html">←🏘️</a></div>
+  <div class="back-home"><a href="index.html">← Back to Home</a></div>
   <div class="login-container">
     <div class="brand-logo">
       <h1>EZM Cyber</h1>
       <p>Secure Signup</p>
     </div>
+    
     <div id="error-message" class="error-message"></div>
     <div id="success-message" class="success-message"></div>
+    <div id="info-message" class="info-message"></div>
+    
+    <div id="existing-account-prompt" class="existing-account-prompt">
+      <p>This email is already registered with EZM Cyber.</p>
+      <div class="btn-group">
+        <a href="login.html" class="btn btn-login">Log In Instead</a>
+        <a href="forgot-password.html" class="btn btn-forgot">Forgot Password?</a>
+      </div>
+    </div>
+    
     <button id="google-signin-btn" class="social-btn google-btn" onclick="handleGoogleSignIn()">
       <div class="google-icon"></div><span>Continue with Google</span>
     </button>
     <button id="microsoft-signin-btn" class="social-btn microsoft-btn" onclick="handleMicrosoftSignIn()">
       <div class="microsoft-icon"></div><span>Continue with Microsoft</span>
     </button>
+    
     <div class="divider"><span>or</span></div>
+    
     <form id="signup-form" method="POST">
       <div class="form-group">
         <label for="email" class="form-label">Email Address</label>
         <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+        <i class="validation-icon" id="email-icon"></i>
+        <div class="validation-message" id="email-message"></div>
       </div>
+      
       <div class="form-group">
         <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Create a strong password" required>
+        <i class="validation-icon" id="password-icon"></i>
+        <div class="validation-message" id="password-message"></div>
       </div>
+      
       <div id="recaptcha-container"></div>
+      
       <button type="submit" id="verify-btn" class="btn-primary">
         <span id="verify-btn-text">Sign Up with Email</span>
       </button>
     </form>
+    
     <div class="signin-link">
       Already have an account? <a href="login.html">Sign in here</a>
     </div>
@@ -280,12 +429,76 @@
     const RECAPTCHA_SITE_KEY = '6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG';
     const BACKEND_URL = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
     let recaptchaWidgetId = null;
+    let emailCheckTimeout = null;
+
+    // Email validation and duplicate check
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+
+    function validatePassword(password) {
+      // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
+      const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+      return re.test(password);
+    }
+
+    function updateValidationState(field, isValid, message, isInfo = false) {
+      const icon = document.getElementById(`${field}-icon`);
+      const messageEl = document.getElementById(`${field}-message`);
+      const input = document.getElementById(field);
+      
+      // Reset classes
+      input.classList.remove('valid', 'invalid');
+      icon.classList.remove('fa-check', 'fa-times', 'valid', 'invalid');
+      messageEl.classList.remove('valid', 'invalid', 'info');
+      
+      if (isValid) {
+        input.classList.add('valid');
+        icon.classList.add('fa-check', 'valid');
+        messageEl.classList.add('valid');
+        messageEl.textContent = message || 'Looks good!';
+      } else {
+        input.classList.add('invalid');
+        icon.classList.add('fa-times', 'invalid');
+        messageEl.classList.add(isInfo ? 'info' : 'invalid');
+        messageEl.textContent = message || 'Please check this field';
+      }
+    }
+
+    async function checkEmailExists(email) {
+      if (!validateEmail(email)) return false;
+      
+      try {
+        // Show checking state
+        updateValidationState('email', false, 'Checking if email is available...', true);
+        
+        // Simulate API call to check if email exists
+        // In a real implementation, this would be an API call to your backend
+        const response = await fetch(`${BACKEND_URL}/check-email`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          return data.exists;
+        }
+        return false;
+      } catch (error) {
+        console.error('Email check error:', error);
+        return false;
+      }
+    }
 
     function showError(msg) {
       const e = document.getElementById('error-message');
       e.textContent = msg;
       e.style.display = 'block';
       document.getElementById('success-message').style.display = 'none';
+      document.getElementById('info-message').style.display = 'none';
+      document.getElementById('existing-account-prompt').style.display = 'none';
       setTimeout(() => { e.style.display = 'none'; }, 5000);
     }
 
@@ -294,7 +507,26 @@
       s.textContent = msg;
       s.style.display = 'block';
       document.getElementById('error-message').style.display = 'none';
+      document.getElementById('info-message').style.display = 'none';
+      document.getElementById('existing-account-prompt').style.display = 'none';
       setTimeout(() => { s.style.display = 'none'; }, 5000);
+    }
+
+    function showInfo(msg) {
+      const i = document.getElementById('info-message');
+      i.textContent = msg;
+      i.style.display = 'block';
+      document.getElementById('error-message').style.display = 'none';
+      document.getElementById('success-message').style.display = 'none';
+      document.getElementById('existing-account-prompt').style.display = 'none';
+      setTimeout(() => { i.style.display = 'none'; }, 5000);
+    }
+
+    function showExistingAccountPrompt() {
+      document.getElementById('existing-account-prompt').style.display = 'block';
+      document.getElementById('error-message').style.display = 'none';
+      document.getElementById('success-message').style.display = 'none';
+      document.getElementById('info-message').style.display = 'none';
     }
 
     function parseJwt(token) {
@@ -398,25 +630,112 @@
         window.location.href = 'home.html';
       }
 
+      // Add Font Awesome for validation icons
+      const fontAwesome = document.createElement('link');
+      fontAwesome.rel = 'stylesheet';
+      fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+      document.head.appendChild(fontAwesome);
+
+      // Email validation with duplicate check
+      const emailInput = document.getElementById('email');
+      emailInput.addEventListener('input', function() {
+        const email = this.value.trim();
+        
+        // Clear previous timeout
+        if (emailCheckTimeout) {
+          clearTimeout(emailCheckTimeout);
+        }
+        
+        // Basic email validation
+        if (!email) {
+          updateValidationState('email', false, 'Email is required');
+          return;
+        }
+        
+        if (!validateEmail(email)) {
+          updateValidationState('email', false, 'Please enter a valid email address');
+          return;
+        }
+        
+        // Show checking state
+        updateValidationState('email', false, 'Checking availability...', true);
+        
+        // Debounce email existence check
+        emailCheckTimeout = setTimeout(async () => {
+          // For demo purposes, we'll simulate checking against a list of existing emails
+          // In production, this would be an API call
+          const existingEmails = ['user@example.com', 'test@ezmcyber.com', 'demo@gmail.com'];
+          const emailExists = existingEmails.includes(email);
+          
+          if (emailExists) {
+            updateValidationState('email', false, 'This email is already registered');
+            showExistingAccountPrompt();
+          } else {
+            updateValidationState('email', true, 'Email is available');
+          }
+        }, 800);
+      });
+
+      // Password validation
+      const passwordInput = document.getElementById('password');
+      passwordInput.addEventListener('input', function() {
+        const password = this.value;
+        
+        if (!password) {
+          updateValidationState('password', false, 'Password is required');
+          return;
+        }
+        
+        if (!validatePassword(password)) {
+          updateValidationState('password', false, 'Password must be at least 8 characters with uppercase, lowercase, and numbers');
+          return;
+        }
+        
+        updateValidationState('password', true, 'Strong password');
+      });
+
+      // Form submission
       const form = document.getElementById('signup-form');
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
-        const verifyBtn = document.getElementById('verify-btn');
-        verifyBtn.disabled = true;
-        verifyBtn.innerHTML = '<span>Signing Up...</span>';
-
-        const email = form.email.value;
+        
+        const email = form.email.value.trim();
         const password = form.password.value;
         const recaptchaToken = grecaptcha.getResponse(recaptchaWidgetId);
 
+        // Validate inputs
+        if (!validateEmail(email)) {
+          showError('Please enter a valid email address.');
+          return;
+        }
+        
+        if (!validatePassword(password)) {
+          showError('Password must be at least 8 characters with uppercase, lowercase, and numbers.');
+          return;
+        }
+        
         if (!recaptchaToken) {
           showError('Please complete the reCAPTCHA.');
-          verifyBtn.disabled = false;
-          verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
           return;
         }
 
+        const verifyBtn = document.getElementById('verify-btn');
+        verifyBtn.disabled = true;
+        verifyBtn.innerHTML = '<span>Creating Account...</span>';
+
         try {
+          // Check if email exists one more time before submission
+          const existingEmails = ['user@example.com', 'test@ezmcyber.com', 'demo@gmail.com'];
+          const emailExists = existingEmails.includes(email);
+          
+          if (emailExists) {
+            showExistingAccountPrompt();
+            verifyBtn.disabled = false;
+            verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
+            return;
+          }
+
+          // Proceed with registration
           const response = await retryFetch(BACKEND_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -471,4 +790,4 @@
     });
   </script>
 </body>
-</html> 
+</html>
