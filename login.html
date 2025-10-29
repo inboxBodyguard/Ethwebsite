@@ -25,7 +25,7 @@
             position: relative;
         }
 
-        /* Matrix Canvas Background - Fixed for smooth performance */
+        /* Matrix Canvas Background - Optimized for mobile performance */
         #matrixCanvas {
             position: fixed;
             top: 0;
@@ -51,11 +51,17 @@
             text-align: center;
             position: relative;
             z-index: 1;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
         .login-container:hover {
             transform: translateY(-5px);
+        }
+
+        /* Smooth fade-out transition for redirect */
+        .login-container.fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
         }
 
         /* Header Styles */
@@ -73,6 +79,7 @@
             background: linear-gradient(90deg, #00ff99, #00ccff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             letter-spacing: 1px;
         }
 
@@ -211,14 +218,36 @@
         .loading {
             animation: pulse 1.5s infinite;
         }
+
+        /* Full page fade overlay for smooth transition */
+        .page-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .page-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
     </style>
 </head>
 <body>
     <!-- Matrix Animation Canvas -->
     <canvas id="matrixCanvas"></canvas>
 
+    <!-- Smooth transition overlay -->
+    <div class="page-overlay" id="pageOverlay"></div>
+
     <!-- Login Form Container -->
-    <div class="login-container">
+    <div class="login-container" id="loginContainer">
         <div class="brand-header">
             <h1>EZM CYBER</h1>
             <p>SECURE LOGIN PORTAL</p>
@@ -245,48 +274,73 @@
 
     <script>
         // =============================================================================
-        // OPTIMIZED MATRIX RAIN ANIMATION
+        // OPTIMIZED MATRIX RAIN ANIMATION - MOBILE FRIENDLY
         // =============================================================================
         
-        // Use requestAnimationFrame for smooth animation
-        let animationId;
+        let animationId = null;
+        let isAnimating = false;
         const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: false }); // Performance optimization
         
-        // Set canvas to full window size
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initMatrix(); // Reinitialize when resizing
-        }
+        // Performance settings - reduce complexity on mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const fontSize = isMobile ? 16 : 18;
+        const targetFPS = isMobile ? 30 : 60; // Lower FPS on mobile for better performance
+        const frameDelay = 1000 / targetFPS;
+        
+        let lastFrameTime = 0;
+        let columns = 0;
+        let drops = [];
         
         // Matrix characters - cyber style
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*<>{}[]|~';
-        const fontSize = 18;
-        let columns = Math.floor(canvas.width / fontSize);
         
-        // Create drops array - optimized for performance
-        let drops = [];
+        /**
+         * Resize canvas to match window size
+         */
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initMatrix();
+        }
         
+        /**
+         * Initialize matrix drops array
+         */
         function initMatrix() {
             columns = Math.floor(canvas.width / fontSize);
             drops = [];
             
+            // Create drops with optimized properties
             for (let i = 0; i < columns; i++) {
                 drops[i] = {
-                    y: Math.random() * -100, // Start at random position above view
-                    speed: 2 + Math.random() * 5, // Random fall speed
-                    char: chars[Math.floor(Math.random() * chars.length)], // Random character
-                    brightness: 30 + Math.random() * 70 // Random brightness
+                    y: Math.random() * -100,
+                    speed: 1 + Math.random() * 3, // Slightly slower for smoother animation
+                    char: chars[Math.floor(Math.random() * chars.length)],
+                    brightness: 30 + Math.random() * 70
                 };
             }
         }
         
-        function drawMatrix() {
-            // Use a more efficient background fill for trail effect
-            ctx.fillStyle = 'rgba(10, 10, 10, 0.04)'; // More transparent for smoother trails
+        /**
+         * Main animation loop with FPS throttling
+         */
+        function drawMatrix(currentTime) {
+            if (!isAnimating) return;
+            
+            // FPS throttling - prevents excessive frame rendering
+            const deltaTime = currentTime - lastFrameTime;
+            if (deltaTime < frameDelay) {
+                animationId = requestAnimationFrame(drawMatrix);
+                return;
+            }
+            lastFrameTime = currentTime;
+            
+            // Semi-transparent background for trail effect
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
+            // Set font properties
             ctx.font = `bold ${fontSize}px monospace`;
             ctx.textAlign = 'left';
             ctx.textBaseline = 'top';
@@ -295,51 +349,67 @@
             for (let i = 0; i < drops.length; i++) {
                 const drop = drops[i];
                 
-                // Create gradient effect from bright green to darker green
+                // Color with variable brightness
                 const brightness = drop.brightness;
-                ctx.fillStyle = `rgb(0, ${brightness}, ${brightness / 2})`;
+                ctx.fillStyle = `rgb(0, ${Math.floor(brightness)}, ${Math.floor(brightness / 2)})`;
                 
-                // Draw the character
+                // Draw character
                 ctx.fillText(drop.char, i * fontSize, drop.y);
                 
                 // Move drop down
                 drop.y += drop.speed;
                 
-                // Reset drop if it falls off screen or randomly
-                if (drop.y > canvas.height || Math.random() > 0.995) {
+                // Reset drop if off screen or randomly
+                if (drop.y > canvas.height || Math.random() > 0.998) {
                     drop.y = -20;
-                    drop.speed = 2 + Math.random() * 5;
+                    drop.speed = 1 + Math.random() * 3;
                     drop.char = chars[Math.floor(Math.random() * chars.length)];
                     drop.brightness = 30 + Math.random() * 70;
                 }
                 
-                // Randomly change character during fall for matrix effect
-                if (Math.random() > 0.97) {
+                // Randomly change character for matrix effect
+                if (Math.random() > 0.98) {
                     drop.char = chars[Math.floor(Math.random() * chars.length)];
                 }
             }
             
-            // Continue animation loop
+            // Continue animation
             animationId = requestAnimationFrame(drawMatrix);
         }
         
-        // Start animation loop
+        /**
+         * Start matrix animation
+         */
         function startMatrixAnimation() {
+            if (isAnimating) return;
+            
+            isAnimating = true;
+            resizeCanvas();
+            lastFrameTime = performance.now();
+            animationId = requestAnimationFrame(drawMatrix);
+        }
+        
+        /**
+         * Stop matrix animation - CRITICAL for preventing screen flickering
+         */
+        function stopMatrixAnimation() {
+            isAnimating = false;
             if (animationId) {
                 cancelAnimationFrame(animationId);
+                animationId = null;
             }
-            resizeCanvas();
-            drawMatrix();
         }
 
         // =============================================================================
         // USER REGISTRATION & FORM HANDLING
         // =============================================================================
         
-        // Initialize "database" from localStorage or create empty array
+        // Initialize user database from localStorage
         let registeredUsers = JSON.parse(localStorage.getItem('ezmCyberUsers') || '[]');
         
-        // Form submission handler
+        /**
+         * Main form submission handler
+         */
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -352,7 +422,7 @@
             messageEl.className = 'message';
             messageEl.textContent = '';
             
-            // Basic validation
+            // Validation
             if (!email || !password) {
                 showMessage('All security fields are required.', 'error');
                 return;
@@ -369,14 +439,14 @@
             submitBtn.classList.add('loading');
             
             try {
-                // Check if user is already registered
+                // Check if user already exists
                 const existingUser = registeredUsers.find(user => user.email === email);
                 
                 if (!existingUser) {
-                    // New user - register and send welcome emails
-                    await handleNewUserRegistration(email);
+                    // NEW USER - Register and send emails
+                    await handleNewUserRegistration(email, password);
                 } else {
-                    // Existing user - verify password (in a real app, this would be secure)
+                    // EXISTING USER - Verify password
                     if (existingUser.password !== password) {
                         showMessage('Invalid security key. Please try again.', 'error');
                         submitBtn.disabled = false;
@@ -385,23 +455,21 @@
                         return;
                     }
                     
-                    showMessage('Access granted. Redirecting to secure dashboard...', 'success');
+                    showMessage('Access granted. Redirecting...', 'success');
                 }
                 
-                // Store login session and redirect
+                // Store session data
                 sessionStorage.setItem('currentUser', JSON.stringify({
                     email: email,
                     loginTime: new Date().toISOString()
                 }));
                 
-                // Smooth redirect without flicker
-                setTimeout(() => {
-                    window.location.href = 'home.html';
-                }, 1500);
+                // SMOOTH REDIRECT - This prevents screen flickering
+                await smoothRedirect('home.html');
                 
             } catch (error) {
-                console.error('Login process error:', error);
-                showMessage('System temporarily unavailable. Please retry.', 'error');
+                console.error('Login error:', error);
+                showMessage('System error. Please try again.', 'error');
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'INITIATE LOGIN';
                 submitBtn.classList.remove('loading');
@@ -428,7 +496,7 @@
             messageEl.textContent = text;
             messageEl.className = `message ${type}`;
             
-            // Auto-hide error messages after 5 seconds
+            // Auto-hide error messages
             if (type === 'error') {
                 setTimeout(() => {
                     messageEl.style.display = 'none';
@@ -437,127 +505,161 @@
         }
         
         /**
-         * Handle new user registration and email notifications
+         * Handle new user registration with email notifications
          */
-        async function handleNewUserRegistration(email) {
-            const password = document.getElementById('password').value.trim();
-            
-            // Add user to local "database"
+        async function handleNewUserRegistration(email, password) {
+            // Add user to database
             const newUser = {
                 email: email,
-                password: password, // In a real app, this would be hashed
+                password: password,
                 registeredAt: new Date().toISOString()
             };
+            
             registeredUsers.push(newUser);
             localStorage.setItem('ezmCyberUsers', JSON.stringify(registeredUsers));
             
             showMessage('New agent registered. Welcome to EZM Cyber!', 'success');
             
-            // Send silent email notifications using FormSubmit 
-            try {
-                await sendFormSubmitEmails(email);
-            } catch (error) {
-                console.warn('Email notification failed:', error);
-                // Continue with registration even if emails fail
-                showMessage('Registration complete. Welcome email may be delayed.', 'info');
-            }
+            // Send emails silently in background (don't wait for them)
+            sendFormSubmitEmails(email).catch(err => {
+                console.warn('Email notification failed:', err);
+                // Continue anyway - emails are non-critical
+            });
         }
         
         /**
-         * Send welcome email to user and notification to admin using FormSubmit
+         * Send emails via FormSubmit AJAX endpoint (NO REDIRECT)
          */
         async function sendFormSubmitEmails(userEmail) {
-            const welcomeEmailData = {
+            // Email data for new user welcome
+            const welcomeEmail = {
                 _subject: 'Welcome to EZM Cyber - Your Digital Security Partner',
-                _replyto: userEmail,
                 _template: 'table',
-                message: `Welcome to EZM Cyber! We're excited to have you onboard.\n\nYour account has been successfully created with email: ${userEmail}\n\nThank you for choosing EZM Cyber as your digital security partner.`,
-                'Account Type': 'Standard Access',
+                _captcha: 'false',
+                _autoresponse: 'Thank you for joining EZM Cyber!',
+                message: `Welcome to EZM Cyber! Your account has been successfully created.`,
+                'User Email': userEmail,
                 'Registration Date': new Date().toLocaleDateString(),
-                '_captcha': 'false' // Disable captcha for better UX
+                'Account Type': 'Standard Access'
             };
             
-            const adminNotificationData = {
-                _subject: `New EZM Cyber Registration: ${userEmail}`,
-                _replyto: userEmail,
+            // Email data for admin notification
+            const adminEmail = {
+                _subject: `New Registration: ${userEmail}`,
                 _template: 'table',
-                message: `A new user has registered for EZM Cyber services.`,
+                _captcha: 'false',
+                message: `A new user has registered on EZM Cyber.`,
                 'User Email': userEmail,
                 'Registration Time': new Date().toLocaleString(),
-                'Total Users': registeredUsers.length,
-                '_captcha': 'false' // Disable captcha for better UX
+                'Total Users': registeredUsers.length
             };
             
-            // Send both emails simultaneously with error handling
+            // Send both emails using FormSubmit AJAX endpoint
+            // Note: Using /ajax/ endpoint prevents redirect
             const emailPromises = [
-                // Welcome email to new user
                 fetch(`https://formsubmit.co/ajax/${userEmail}`, {
                     method: 'POST',
-                    headers: { 
+                    headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify(welcomeEmailData)
-                }).then(response => {
-                    if (!response.ok) throw new Error('Welcome email failed');
-                    return response.json();
+                    body: JSON.stringify(welcomeEmail)
                 }),
                 
-                // Notification to EZM Cyber admin
-                fetch(`https://formsubmit.co/ajax/contact@ezmcyber.xyz`, {
+                fetch('https://formsubmit.co/ajax/contact@ezmcyber.xyz', {
                     method: 'POST',
-                    headers: { 
+                    headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify(adminNotificationData)
-                }).then(response => {
-                    if (!response.ok) throw new Error('Admin notification failed');
-                    return response.json();
+                    body: JSON.stringify(adminEmail)
                 })
             ];
             
+            // Wait for both emails (but don't block the UI)
             await Promise.allSettled(emailPromises);
+        }
+        
+        /**
+         * SMOOTH REDIRECT - Prevents screen flickering and blinking
+         * This is the KEY fix for your issue
+         */
+        async function smoothRedirect(url) {
+            // STOP the matrix animation BEFORE redirecting
+            stopMatrixAnimation();
+            
+            // Get overlay and container elements
+            const overlay = document.getElementById('pageOverlay');
+            const container = document.getElementById('loginContainer');
+            
+            // Fade out the login container
+            container.classList.add('fade-out');
+            
+            // Wait for container fade
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            // Fade in the black overlay
+            overlay.classList.add('active');
+            
+            // Wait for overlay fade
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // NOW redirect (screen is completely black, no flicker)
+            window.location.href = url;
         }
         
         // =============================================================================
         // INITIALIZATION
         // =============================================================================
         
-        // Initialize the page
+        /**
+         * Initialize page on load
+         */
         document.addEventListener('DOMContentLoaded', function() {
-            // Start the matrix animation
-            startMatrixAnimation();
-            
-            // Redirect if already logged in
+            // Check if already logged in
             if (sessionStorage.getItem('currentUser')) {
+                // Already logged in - redirect immediately
                 window.location.href = 'home.html';
                 return;
             }
             
-            // Focus on email input when page loads
+            // Start matrix animation
+            startMatrixAnimation();
+            
+            // Focus email input
             document.getElementById('email').focus();
             
-            // Handle window resize for responsive canvas
+            // Handle window resize
+            let resizeTimeout;
             window.addEventListener('resize', function() {
-                resizeCanvas();
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    if (isAnimating) {
+                        resizeCanvas();
+                    }
+                }, 250);
             });
         });
         
-        // Handle page visibility changes to optimize animation
+        /**
+         * Handle page visibility - pause animation when hidden
+         */
         document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
-                // Page is hidden, stop animation to save resources
-                if (animationId) {
-                    cancelAnimationFrame(animationId);
-                    animationId = null;
-                }
+                stopMatrixAnimation();
             } else {
-                // Page is visible, restart animation
-                if (!animationId) {
+                if (!sessionStorage.getItem('currentUser')) {
                     startMatrixAnimation();
                 }
             }
+        });
+        
+        /**
+         * CRITICAL: Stop animation before page unload
+         * This prevents flickering during navigation
+         */
+        window.addEventListener('beforeunload', function() {
+            stopMatrixAnimation();
         });
     </script>
 </body>
