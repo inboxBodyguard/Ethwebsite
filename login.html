@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EZM Cyber Login | Secure Access</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: #0a0a0a;
+            color: #00ff99;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Matrix Canvas Background */
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        /* Main Login Container */
+        .login-container {
+            background: rgba(10, 20, 15, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            border: 1px solid #00ff99;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 153, 0.3),
+                inset 0 0 30px rgba(0, 255, 153, 0.1);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .login-container:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Header Styles */
+        .brand-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 255, 153, 0.3);
+        }
+
+        .brand-header h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
+            font-weight: 900;
+            text-shadow: 0 0 15px #00ff99;
+            background: linear-gradient(90deg, #00ff99, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .brand-header p {
+            color: #88ffcc;
+            font-size: 0.9rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #88ffcc;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid rgba(0, 255, 153, 0.4);
+            border-radius: 8px;
+            outline: none;
+            background: rgba(0, 20, 10, 0.6);
+            color: #00ff99;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: #00ff99;
+            box-shadow: 0 0 15px rgba(0, 255, 153, 0.3);
+            background: rgba(0, 30, 15, 0.8);
+        }
+
+        .form-input::placeholder {
+            color: rgba(0, 255, 153, 0.5);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #00ff99, #00cc77);
+            color: #001a0d;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #00cc77, #00ff99);
+            box-shadow: 0 0 20px rgba(0, 255, 153, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Message Styles */
+        .message {
+            margin-top: 1rem;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+        }
+
+        .error {
+            background: rgba(255, 50, 50, 0.1);
+            border: 1px solid rgba(255, 50, 50, 0.5);
+            color: #ff6666;
+            display: block;
+        }
+
+        .success {
+            background: rgba(0, 255, 153, 0.1);
+            border: 1px solid rgba(0, 255, 153, 0.5);
+            color: #00ff99;
+            display: block;
+        }
+
+        .info {
+            background: rgba(0, 200, 255, 0.1);
+            border: 1px solid rgba(0, 200, 255, 0.5);
+            color: #00ccff;
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 1rem;
+                padding: 2rem 1.5rem;
+            }
+            
+            .brand-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-input, .submit-btn {
+                padding: 12px 14px;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Animation Canvas -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- Login Form Container -->
+    <div class="login-container">
+        <div class="brand-header">
+            <h1>EZM CYBER</h1>
+            <p>SECURE LOGIN PORTAL</p>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">ACCESS ID (EMAIL)</label>
+                <input type="email" id="email" class="form-input" placeholder="agent@ezmcyber.xyz" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">SECURITY KEY</label>
+                <input type="password" id="password" class="form-input" placeholder="••••••••••••" required>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">
+                INITIATE LOGIN
+            </button>
+            
+            <div id="message" class="message"></div>
+        </form>
+    </div>
+
+    <script>
+        // =============================================================================
+        // ENHANCED MATRIX RAIN ANIMATION
+        // =============================================================================
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas to full window size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Matrix characters - cyber style
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*<>{}[]|~';
+        const fontSize = 18;
+        const columns = Math.floor(canvas.width / fontSize);
+        
+        // Create drops array - each drop is a single character in a column
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = {
+                y: Math.random() * -100, // Start at random position above view
+                speed: 2 + Math.random() * 5, // Random fall speed
+                char: chars[Math.floor(Math.random() * chars.length)], // Random character
+                brightness: 30 + Math.random() * 70 // Random brightness
+            };
+        }
+        
+        function drawMatrix() {
+            // Semi-transparent black background for trail effect
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.font = `bold ${fontSize}px monospace`;
+            
+            // Draw each drop
+            for (let i = 0; i < drops.length; i++) {
+                const drop = drops[i];
+                
+                // Create gradient effect from bright green to darker green
+                const brightness = drop.brightness;
+                ctx.fillStyle = `rgb(0, ${brightness}, ${brightness / 2})`;
+                
+                // Draw the character
+                ctx.fillText(drop.char, i * fontSize, drop.y);
+                
+                // Move drop down
+                drop.y += drop.speed;
+                
+                // Reset drop if it falls off screen or randomly
+                if (drop.y > canvas.height || Math.random() > 0.995) {
+                    drop.y = -20;
+                    drop.speed = 2 + Math.random() * 5;
+                    drop.char = chars[Math.floor(Math.random() * chars.length)];
+                    drop.brightness = 30 + Math.random() * 70;
+                }
+                
+                // Randomly change character during fall for matrix effect
+                if (Math.random() > 0.97) {
+                    drop.char = chars[Math.floor(Math.random() * chars.length)];
+                }
+            }
+        }
+        
+        // Start animation loop
+        function animate() {
+            drawMatrix();
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // =============================================================================
+        // USER REGISTRATION & FORM HANDLING
+        // =============================================================================
+        
+        // Initialize "database" from localStorage or create empty array
+        let registeredUsers = JSON.parse(localStorage.getItem('ezmCyberUsers') || '[]');
+        
+        // Form submission handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const password = document.getElementById('password').value.trim();
+            const messageEl = document.getElementById('message');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Clear previous messages
+            messageEl.className = 'message';
+            messageEl.textContent = '';
+            
+            // Basic validation
+            if (!email || !password) {
+                showMessage('All security fields are required.', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showMessage('Please enter a valid access ID (email).', 'error');
+                return;
+            }
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'PROCESSING...';
+            submitBtn.classList.add('loading');
+            
+            try {
+                // Check if user is already registered
+                const existingUser = registeredUsers.find(user => user.email === email);
+                
+                if (!existingUser) {
+                    // New user - register and send welcome emails
+                    await handleNewUserRegistration(email);
+                } else {
+                    // Existing user - proceed with login
+                    showMessage('Access granted. Redirecting to secure dashboard...', 'success');
+                }
+                
+                // Store login session and redirect
+                sessionStorage.setItem('currentUser', email);
+                
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Login process error:', error);
+                showMessage('System temporarily unavailable. Please retry.', 'error');
+            } finally {
+                // Restore button state
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'INITIATE LOGIN';
+                submitBtn.classList.remove('loading');
+            }
+        });
+        
+        // =============================================================================
+        // HELPER FUNCTIONS
+        // =============================================================================
+        
+        /**
+         * Validate email format
+         */
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        /**
+         * Display message to user
+         */
+        function showMessage(text, type) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.className = `message ${type}`;
+        }
+        
+        /**
+         * Handle new user registration and email notifications
+         */
+        async function handleNewUserRegistration(email) {
+            // Add user to local "database"
+            const newUser = {
+                email: email,
+                registeredAt: new Date().toISOString()
+            };
+            registeredUsers.push(newUser);
+            localStorage.setItem('ezmCyberUsers', JSON.stringify(registeredUsers));
+            
+            showMessage('New agent registered. Welcome to EZM Cyber!', 'success');
+            
+            // Send silent email notifications using FormSubmit [citation:2][citation:5]
+            try {
+                await sendFormSubmitEmails(email);
+            } catch (error) {
+                console.warn('Email notification failed:', error);
+                // Continue with registration even if emails fail
+            }
+        }
+        
+        /**
+         * Send welcome email to user and notification to admin using FormSubmit
+         */
+        async function sendFormSubmitEmails(userEmail) {
+            const welcomeEmailData = {
+                _subject: 'Welcome to EZM Cyber - Your Digital Security Partner',
+                _replyto: userEmail,
+                _template: 'table',
+                message: `Welcome to EZM Cyber! We're excited to have you onboard.\n\nYour account has been successfully created with email: ${userEmail}\n\nThank you for choosing EZM Cyber as your digital security partner.`,
+                'Account Type': 'Standard Access',
+                'Registration Date': new Date().toLocaleDateString()
+            };
+            
+            const adminNotificationData = {
+                _subject: `New EZM Cyber Registration: ${userEmail}`,
+                _replyto: userEmail,
+                _template: 'table',
+                message: `A new user has registered for EZM Cyber services.`,
+                'User Email': userEmail,
+                'Registration Time': new Date().toLocaleString(),
+                'Total Users': registeredUsers.length
+            };
+            
+            // Send both emails simultaneously [citation:5]
+            await Promise.all([
+                // Welcome email to new user (sent to FormSubmit which forwards to user)
+                fetch(`https://formsubmit.co/ajax/${userEmail}`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(welcomeEmailData)
+                }),
+                
+                // Notification to EZM Cyber admin
+                fetch(`https://formsubmit.co/ajax/contact@ezmcyber.xyz`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(adminNotificationData)
+                })
+            ]);
+        }
+        
+        // =============================================================================
+        // INITIALIZATION
+        // =============================================================================
+        
+        // Redirect if already logged in
+        if (sessionStorage.getItem('currentUser')) {
+            window.location.href = 'home.html';
+        }
+        
+        // Focus on email input when page loads
+        document.getElementById('email').focus();
+    </script>
+</body>
+</html>
