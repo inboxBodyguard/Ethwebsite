@@ -1434,7 +1434,7 @@ form.addEventListener('submit', async (e) => {
 
 <script>
   // Redirect to login if no user is in session
-  const user = sessionStorage.getItem('user');
+  const user = sessionStorage.getItem('currentUser');
   if (!user) {
     window.location.href = 'login.html';
   }
@@ -1442,7 +1442,7 @@ form.addEventListener('submit', async (e) => {
   // Logout button functionality
   const logoutBtn = document.getElementById('logoutBtn');
   logoutBtn.addEventListener('click', () => {
-    sessionStorage.removeItem('user');  // Clear session
+    sessionStorage.removeItem('currentUser');  // Clear session
     window.location.href = 'login.html'; // Redirect to login page
   });
 </script>
