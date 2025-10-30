@@ -25,43 +25,37 @@
             position: relative;
         }
 
-        /* Cyber background effect - simple and clean */
-        .cyber-bg {
+        /* Matrix Canvas Background - Fixed for smooth performance */
+        #matrixCanvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 255, 153, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 204, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(0, 100, 255, 0.05) 0%, transparent 50%);
             z-index: -1;
+            opacity: 0.7;
         }
 
         /* Main Login Container */
         .login-container {
-            background: rgba(10, 20, 15, 0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(10, 20, 15, 0.85);
+            backdrop-filter: blur(10px);
             padding: 3rem 2.5rem;
             border-radius: 20px;
             border: 1px solid #00ff99;
             box-shadow: 
-                0 0 50px rgba(0, 255, 153, 0.4),
-                inset 0 0 50px rgba(0, 255, 153, 0.1);
+                0 0 30px rgba(0, 255, 153, 0.3),
+                inset 0 0 30px rgba(0, 255, 153, 0.1);
             width: 100%;
             max-width: 420px;
             text-align: center;
             position: relative;
             z-index: 1;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .login-container:hover {
             transform: translateY(-5px);
-            box-shadow: 
-                0 0 60px rgba(0, 255, 153, 0.6),
-                inset 0 0 50px rgba(0, 255, 153, 0.15);
         }
 
         /* Header Styles */
@@ -79,7 +73,6 @@
             background: linear-gradient(90deg, #00ff99, #00ccff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             letter-spacing: 1px;
         }
 
@@ -110,7 +103,7 @@
             border: 1px solid rgba(0, 255, 153, 0.4);
             border-radius: 8px;
             outline: none;
-            background: rgba(0, 20, 10, 0.8);
+            background: rgba(0, 20, 10, 0.6);
             color: #00ff99;
             font-size: 1rem;
             transition: all 0.3s ease;
@@ -118,8 +111,8 @@
 
         .form-input:focus {
             border-color: #00ff99;
-            box-shadow: 0 0 20px rgba(0, 255, 153, 0.4);
-            background: rgba(0, 30, 15, 0.9);
+            box-shadow: 0 0 15px rgba(0, 255, 153, 0.3);
+            background: rgba(0, 30, 15, 0.8);
         }
 
         .form-input::placeholder {
@@ -145,7 +138,7 @@
 
         .submit-btn:hover {
             background: linear-gradient(135deg, #00cc77, #00ff99);
-            box-shadow: 0 0 25px rgba(0, 255, 153, 0.6);
+            box-shadow: 0 0 20px rgba(0, 255, 153, 0.5);
             transform: translateY(-2px);
         }
 
@@ -192,14 +185,6 @@
             display: block;
         }
 
-        /* Security Indicators */
-        .security-indicator {
-            margin-top: 1rem;
-            font-size: 0.8rem;
-            color: #88ffcc;
-            opacity: 0.7;
-        }
-
         /* Responsive Design */
         @media (max-width: 480px) {
             .login-container {
@@ -226,60 +211,14 @@
         .loading {
             animation: pulse 1.5s infinite;
         }
-
-        /* Full page overlay for redirect */
-        .redirect-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a0a0a;
-            z-index: 9999;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .redirect-overlay.active {
-            display: flex;
-        }
-
-        .redirect-text {
-            color: #00ff99;
-            font-size: 1.2rem;
-            margin-top: 1rem;
-            text-align: center;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(0, 255, 153, 0.3);
-            border-top: 4px solid #00ff99;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
-    <!-- Simple Cyber Background -->
-    <div class="cyber-bg"></div>
-
-    <!-- Redirect Overlay -->
-    <div class="redirect-overlay" id="redirectOverlay">
-        <div class="spinner"></div>
-        <div class="redirect-text">SECURE REDIRECT IN PROGRESS...</div>
-    </div>
+    <!-- Matrix Animation Canvas -->
+    <canvas id="matrixCanvas"></canvas>
 
     <!-- Login Form Container -->
-    <div class="login-container" id="loginContainer">
+    <div class="login-container">
         <div class="brand-header">
             <h1>EZM CYBER</h1>
             <p>SECURE LOGIN PORTAL</p>
@@ -288,21 +227,17 @@
         <form id="loginForm">
             <div class="form-group">
                 <label for="email">ACCESS ID (EMAIL)</label>
-                <input type="email" id="email" class="form-input" placeholder="agent@ezmcyber.xyz" required autocomplete="username">
+                <input type="email" id="email" class="form-input" placeholder="agent@ezmcyber.xyz" required>
             </div>
             
             <div class="form-group">
                 <label for="password">SECURITY KEY</label>
-                <input type="password" id="password" class="form-input" placeholder="••••••••••••" required autocomplete="current-password">
+                <input type="password" id="password" class="form-input" placeholder="••••••••••••" required>
             </div>
             
             <button type="submit" class="submit-btn" id="submitBtn">
                 INITIATE LOGIN
             </button>
-            
-            <div class="security-indicator">
-                ENCRYPTED CONNECTION • SECURE SESSION
-            </div>
             
             <div id="message" class="message"></div>
         </form>
@@ -310,15 +245,101 @@
 
     <script>
         // =============================================================================
-        // ENHANCED USER REGISTRATION & FORM HANDLING
+        // OPTIMIZED MATRIX RAIN ANIMATION
         // =============================================================================
         
-        // Initialize user database from localStorage with enhanced security
+        // Use requestAnimationFrame for smooth animation
+        let animationId;
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas to full window size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initMatrix(); // Reinitialize when resizing
+        }
+        
+        // Matrix characters - cyber style
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*<>{}[]|~';
+        const fontSize = 18;
+        let columns = Math.floor(canvas.width / fontSize);
+        
+        // Create drops array - optimized for performance
+        let drops = [];
+        
+        function initMatrix() {
+            columns = Math.floor(canvas.width / fontSize);
+            drops = [];
+            
+            for (let i = 0; i < columns; i++) {
+                drops[i] = {
+                    y: Math.random() * -100, // Start at random position above view
+                    speed: 2 + Math.random() * 5, // Random fall speed
+                    char: chars[Math.floor(Math.random() * chars.length)], // Random character
+                    brightness: 30 + Math.random() * 70 // Random brightness
+                };
+            }
+        }
+        
+        function drawMatrix() {
+            // Use a more efficient background fill for trail effect
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.04)'; // More transparent for smoother trails
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.font = `bold ${fontSize}px monospace`;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            
+            // Draw each drop
+            for (let i = 0; i < drops.length; i++) {
+                const drop = drops[i];
+                
+                // Create gradient effect from bright green to darker green
+                const brightness = drop.brightness;
+                ctx.fillStyle = `rgb(0, ${brightness}, ${brightness / 2})`;
+                
+                // Draw the character
+                ctx.fillText(drop.char, i * fontSize, drop.y);
+                
+                // Move drop down
+                drop.y += drop.speed;
+                
+                // Reset drop if it falls off screen or randomly
+                if (drop.y > canvas.height || Math.random() > 0.995) {
+                    drop.y = -20;
+                    drop.speed = 2 + Math.random() * 5;
+                    drop.char = chars[Math.floor(Math.random() * chars.length)];
+                    drop.brightness = 30 + Math.random() * 70;
+                }
+                
+                // Randomly change character during fall for matrix effect
+                if (Math.random() > 0.97) {
+                    drop.char = chars[Math.floor(Math.random() * chars.length)];
+                }
+            }
+            
+            // Continue animation loop
+            animationId = requestAnimationFrame(drawMatrix);
+        }
+        
+        // Start animation loop
+        function startMatrixAnimation() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            resizeCanvas();
+            drawMatrix();
+        }
+
+        // =============================================================================
+        // USER REGISTRATION & FORM HANDLING
+        // =============================================================================
+        
+        // Initialize "database" from localStorage or create empty array
         let registeredUsers = JSON.parse(localStorage.getItem('ezmCyberUsers') || '[]');
         
-        /**
-         * Enhanced form submission handler with better validation
-         */
+        // Form submission handler
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -331,294 +352,212 @@
             messageEl.className = 'message';
             messageEl.textContent = '';
             
-            // Enhanced validation
+            // Basic validation
             if (!email || !password) {
                 showMessage('All security fields are required.', 'error');
                 return;
             }
             
             if (!isValidEmail(email)) {
-                showMessage('Please enter a valid access ID (email format: user@domain.xyz).', 'error');
-                return;
-            }
-            
-            if (password.length < 6) {
-                showMessage('Security key must be at least 6 characters.', 'error');
+                showMessage('Please enter a valid access ID (email).', 'error');
                 return;
             }
             
             // Show loading state
             submitBtn.disabled = true;
-            submitBtn.textContent = 'VERIFYING CREDENTIALS...';
+            submitBtn.textContent = 'PROCESSING...';
             submitBtn.classList.add('loading');
             
             try {
-                // Simulate network delay for security
-                await new Promise(resolve => setTimeout(resolve, 800));
-                
-                // Check if user already exists
+                // Check if user is already registered
                 const existingUser = registeredUsers.find(user => user.email === email);
                 
                 if (!existingUser) {
-                    // NEW USER - Enhanced registration
-                    await handleNewUserRegistration(email, password);
+                    // New user - register and send welcome emails
+                    await handleNewUserRegistration(email);
                 } else {
-                    // EXISTING USER - Enhanced verification
+                    // Existing user - verify password (in a real app, this would be secure)
                     if (existingUser.password !== password) {
-                        // Log failed attempt
-                        console.warn(`Failed login attempt for: ${email}`);
-                        showMessage('Invalid security key. Access denied.', 'error');
+                        showMessage('Invalid security key. Please try again.', 'error');
                         submitBtn.disabled = false;
                         submitBtn.textContent = 'INITIATE LOGIN';
                         submitBtn.classList.remove('loading');
                         return;
                     }
                     
-                    // Update last login time
-                    existingUser.lastLogin = new Date().toISOString();
-                    localStorage.setItem('ezmCyberUsers', JSON.stringify(registeredUsers));
-                    
-                    showMessage('✓ Access granted. Securing session...', 'success');
+                    showMessage('Access granted. Redirecting to secure dashboard...', 'success');
                 }
                 
-                // Enhanced session data with security tokens
-                const sessionData = {
+                // Store login session and redirect
+                sessionStorage.setItem('currentUser', JSON.stringify({
                     email: email,
-                    loginTime: new Date().toISOString(),
-                    sessionId: generateSessionId(),
-                    userAgent: navigator.userAgent
-                };
+                    loginTime: new Date().toISOString()
+                }));
                 
-                sessionStorage.setItem('currentUser', JSON.stringify(sessionData));
-                localStorage.setItem('lastLogin', new Date().toISOString());
-                
-                // Enhanced redirect with better user feedback
-                await enhancedRedirect('home.html');
+                // Smooth redirect without flicker
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 1500);
                 
             } catch (error) {
-                console.error('Login system error:', error);
-                showMessage('Security system error. Please try again.', 'error');
-                resetSubmitButton();
+                console.error('Login process error:', error);
+                showMessage('System temporarily unavailable. Please retry.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'INITIATE LOGIN';
+                submitBtn.classList.remove('loading');
             }
         });
         
         // =============================================================================
-        // ENHANCED HELPER FUNCTIONS
+        // HELPER FUNCTIONS
         // =============================================================================
         
         /**
-         * Generate secure session ID
-         */
-        function generateSessionId() {
-            return 'session_' + Math.random().toString(36).substr(2, 16) + Date.now().toString(36);
-        }
-        
-        /**
-         * Enhanced email validation
+         * Validate email format
          */
         function isValidEmail(email) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email) && email.length <= 254;
+            return emailRegex.test(email);
         }
         
         /**
-         * Display enhanced message to user
+         * Display message to user
          */
         function showMessage(text, type) {
             const messageEl = document.getElementById('message');
             messageEl.textContent = text;
             messageEl.className = `message ${type}`;
-            messageEl.style.display = 'block';
             
-            // Auto-hide messages based on type
-            const hideTime = type === 'error' ? 5000 : 3000;
-            setTimeout(() => {
-                messageEl.style.display = 'none';
-            }, hideTime);
+            // Auto-hide error messages after 5 seconds
+            if (type === 'error') {
+                setTimeout(() => {
+                    messageEl.style.display = 'none';
+                }, 5000);
+            }
         }
         
         /**
-         * Reset submit button to original state
+         * Handle new user registration and email notifications
          */
-        function resetSubmitButton() {
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'INITIATE LOGIN';
-            submitBtn.classList.remove('loading');
-        }
-        
-        /**
-         * Enhanced new user registration
-         */
-        async function handleNewUserRegistration(email, password) {
-            // Enhanced user object with more metadata
+        async function handleNewUserRegistration(email) {
+            const password = document.getElementById('password').value.trim();
+            
+            // Add user to local "database"
             const newUser = {
                 email: email,
-                password: password, // In real app, this should be hashed
-                registeredAt: new Date().toISOString(),
-                lastLogin: new Date().toISOString(),
-                accountType: 'standard',
-                isActive: true
+                password: password, // In a real app, this would be hashed
+                registeredAt: new Date().toISOString()
             };
-            
             registeredUsers.push(newUser);
             localStorage.setItem('ezmCyberUsers', JSON.stringify(registeredUsers));
-            localStorage.setItem('totalRegistrations', registeredUsers.length);
             
-            showMessage('✓ New agent registered. Welcome to EZM Cyber!', 'success');
+            showMessage('New agent registered. Welcome to EZM Cyber!', 'success');
             
-            // Enhanced email notifications with better error handling
-            sendEnhancedEmailNotifications(email).catch(err => {
-                console.warn('Email notification failed (non-critical):', err);
-            });
+            // Send silent email notifications using FormSubmit 
+            try {
+                await sendFormSubmitEmails(email);
+            } catch (error) {
+                console.warn('Email notification failed:', error);
+                // Continue with registration even if emails fail
+                showMessage('Registration complete. Welcome email may be delayed.', 'info');
+            }
         }
         
         /**
-         * Enhanced email notifications with retry logic
+         * Send welcome email to user and notification to admin using FormSubmit
          */
-        async function sendEnhancedEmailNotifications(userEmail) {
-            const welcomeEmail = {
+        async function sendFormSubmitEmails(userEmail) {
+            const welcomeEmailData = {
                 _subject: 'Welcome to EZM Cyber - Your Digital Security Partner',
+                _replyto: userEmail,
                 _template: 'table',
-                _captcha: 'false',
-                _autoresponse: 'Your EZM Cyber account has been created successfully!',
-                message: `Welcome to EZM Cyber! Your secure access portal account has been activated.`,
-                'User Email': userEmail,
-                'Registration Date': new Date().toLocaleDateString(),
+                message: `Welcome to EZM Cyber! We're excited to have you onboard.\n\nYour account has been successfully created with email: ${userEmail}\n\nThank you for choosing EZM Cyber as your digital security partner.`,
                 'Account Type': 'Standard Access',
-                'Security Level': 'Encrypted'
+                'Registration Date': new Date().toLocaleDateString(),
+                '_captcha': 'false' // Disable captcha for better UX
             };
             
-            const adminEmail = {
-                _subject: `New Agent Registration: ${userEmail}`,
+            const adminNotificationData = {
+                _subject: `New EZM Cyber Registration: ${userEmail}`,
+                _replyto: userEmail,
                 _template: 'table',
-                _captcha: 'false',
-                message: `A new agent has registered on EZM Cyber secure portal.`,
-                'Agent Email': userEmail,
+                message: `A new user has registered for EZM Cyber services.`,
+                'User Email': userEmail,
                 'Registration Time': new Date().toLocaleString(),
-                'Total Agents': registeredUsers.length,
-                'System Status': 'Operational'
+                'Total Users': registeredUsers.length,
+                '_captcha': 'false' // Disable captcha for better UX
             };
             
-            // Enhanced email sending with retry
-            const sendWithRetry = async (url, data, retries = 2) => {
-                for (let i = 0; i < retries; i++) {
-                    try {
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        });
-                        
-                        if (response.ok) return true;
-                    } catch (err) {
-                        if (i === retries - 1) throw err;
-                        await new Promise(resolve => setTimeout(resolve, 1000));
-                    }
-                }
-                return false;
-            };
+            // Send both emails simultaneously with error handling
+            const emailPromises = [
+                // Welcome email to new user
+                fetch(`https://formsubmit.co/ajax/${userEmail}`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(welcomeEmailData)
+                }).then(response => {
+                    if (!response.ok) throw new Error('Welcome email failed');
+                    return response.json();
+                }),
+                
+                // Notification to EZM Cyber admin
+                fetch(`https://formsubmit.co/ajax/contact@ezmcyber.xyz`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(adminNotificationData)
+                }).then(response => {
+                    if (!response.ok) throw new Error('Admin notification failed');
+                    return response.json();
+                })
+            ];
             
-            // Send both emails with retry logic
-            await Promise.allSettled([
-                sendWithRetry(`https://formsubmit.co/ajax/${userEmail}`, welcomeEmail),
-                sendWithRetry('https://formsubmit.co/ajax/contact@ezmcyber.xyz', adminEmail)
-            ]);
-        }
-        
-        /**
-         * ENHANCED REDIRECT - Completely eliminates flickering
-         */
-        async function enhancedRedirect(url) {
-            const overlay = document.getElementById('redirectOverlay');
-            const container = document.getElementById('loginContainer');
-            
-            // Immediately hide login container
-            container.style.display = 'none';
-            
-            // Show redirect overlay immediately
-            overlay.classList.add('active');
-            
-            // Force browser to render the changes
-            await new Promise(resolve => {
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        resolve();
-                    });
-                });
-            });
-            
-            // Short delay for user to see the redirect message
-            await new Promise(resolve => setTimeout(resolve, 800));
-            
-            // Use replace instead of href to prevent back navigation to login
-            window.location.replace(url);
-            
-            // Backup redirect in case the first one fails
-            setTimeout(() => {
-                if (!window.location.href.includes('home.html')) {
-                    window.location.replace(url);
-                }
-            }, 2000);
+            await Promise.allSettled(emailPromises);
         }
         
         // =============================================================================
-        // ENHANCED INITIALIZATION
+        // INITIALIZATION
         // =============================================================================
         
-        /**
-         * Enhanced page initialization
-         */
+        // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if already logged in
-            const currentUser = sessionStorage.getItem('currentUser');
-            if (currentUser) {
-                // Already logged in - redirect immediately without any animation
-                window.location.replace('home.html');
+            // Start the matrix animation
+            startMatrixAnimation();
+            
+            // Redirect if already logged in
+            if (sessionStorage.getItem('currentUser')) {
+                window.location.href = 'home.html';
                 return;
             }
             
-            // Focus email input with slight delay for better UX
-            setTimeout(() => {
-                document.getElementById('email').focus();
-            }, 300);
+            // Focus on email input when page loads
+            document.getElementById('email').focus();
             
-            // Show system status
-            console.log('EZM Cyber Login System: ✅ Operational');
-            
-            // Add input enhancements
-            const inputs = document.querySelectorAll('.form-input');
-            inputs.forEach(input => {
-                input.addEventListener('input', function() {
-                    if (this.value.trim()) {
-                        this.style.borderColor = '#00ff99';
-                    } else {
-                        this.style.borderColor = 'rgba(0, 255, 153, 0.4)';
-                    }
-                });
+            // Handle window resize for responsive canvas
+            window.addEventListener('resize', function() {
+                resizeCanvas();
             });
         });
         
-        /**
-         * Handle page visibility for security
-         */
+        // Handle page visibility changes to optimize animation
         document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
-                // Page is hidden - clear sensitive data if needed
-                console.log('Session paused for security');
+                // Page is hidden, stop animation to save resources
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+            } else {
+                // Page is visible, restart animation
+                if (!animationId) {
+                    startMatrixAnimation();
+                }
             }
-        });
-        
-        /**
-         * Enhanced security: Clear form on page reload
-         */
-        window.addEventListener('beforeunload', function() {
-            // This ensures fresh state on reload
-            const inputs = document.querySelectorAll('.form-input');
-            inputs.forEach(input => input.value = '');
         });
     </script>
 </body>
