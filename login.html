@@ -394,9 +394,9 @@
                     loginTime: new Date().toISOString()
                 }));
                 
-                // Smooth redirect without flicker
+                // Smooth redirect without flicker - use replace to avoid history entry
                 setTimeout(() => {
-                    window.location.href = 'home.html';
+                    window.location.replace('home.html');
                 }, 1500);
                 
             } catch (error) {
@@ -521,7 +521,7 @@
         }
         
         // =============================================================================
-        // INITIALIZATION
+        // INITIALIZATION - WITH FIXED REDIRECT LOGIC
         // =============================================================================
         
         // Initialize the page
@@ -529,11 +529,20 @@
             // Start the matrix animation
             startMatrixAnimation();
             
-            // Redirect if already logged in
-            if (sessionStorage.getItem('currentUser')) {
-                window.location.href = 'home.html';
+            // FIXED: Improved redirect logic to prevent loops
+            const currentUser = sessionStorage.getItem('currentUser');
+            const redirectFlag = sessionStorage.getItem('redirecting');
+            
+            // Only redirect if user is logged in AND we're not already redirecting
+            if (currentUser && !redirectFlag) {
+                sessionStorage.setItem('redirecting', 'true');
+                // Use replace to avoid adding to browser history
+                window.location.replace('home.html');
                 return;
             }
+            
+            // Clear redirect flag if it exists (we're not redirecting now)
+            sessionStorage.removeItem('redirecting');
             
             // Focus on email input when page loads
             document.getElementById('email').focus();
