@@ -30,12 +30,17 @@
     :root {
       --neon-cyan: hsl(174, 100%, 50%);
       --neon-blue: hsl(199, 100%, 50%);
+      --neon-green: hsl(142, 100%, 50%);
+      --neon-purple: hsl(270, 100%, 60%);
       --dark-bg: hsl(222, 47%, 4%);
       --darker-bg: hsl(222, 47%, 2%);
-      --card-bg: hsla(222, 47%, 7%, 0.6);
+      --card-bg: hsla(222, 47%, 7%, 0.8);
       --text-primary: hsl(180, 5%, 90%);
       --text-secondary: hsl(215, 20%, 75%);
       --border-color: hsla(174, 100%, 50%, 0.2);
+      --glow-cyan: 0 0 10px rgba(0, 255, 204, 0.7), 0 0 20px rgba(0, 255, 204, 0.5), 0 0 30px rgba(0, 255, 204, 0.3);
+      --glow-blue: 0 0 10px rgba(0, 212, 255, 0.7), 0 0 20px rgba(0, 212, 255, 0.5), 0 0 30px rgba(0, 212, 255, 0.3);
+      --glow-green: 0 0 10px rgba(0, 255, 128, 0.7), 0 0 20px rgba(0, 255, 128, 0.5), 0 0 30px rgba(0, 255, 128, 0.3);
     }
 
     * {
@@ -45,7 +50,7 @@
     }
 
     body {
-      background: linear-gradient(135deg, hsl(222, 47%, 4%) 0%, hsl(222, 47%, 8%) 50%, hsl(222, 47%, 6%) 100%);
+      background-color: var(--dark-bg);
       color: var(--text-primary);
       font-family: 'Inter', 'Segoe UI', sans-serif;
       line-height: 1.6;
@@ -54,7 +59,48 @@
       min-height: 100vh;
     }
 
-    /* Cyber Rain Background */
+    /* Enhanced Background Visual Flow */
+    #background-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .gradient-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(0, 255, 204, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(128, 0, 255, 0.1) 0%, transparent 50%);
+      z-index: -1;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .pulse-ring {
+      position: fixed;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 255, 204, 0.3);
+      z-index: -1;
+      pointer-events: none;
+      animation: pulse-ring 8s infinite ease-in-out;
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.8); opacity: 0.3; }
+      50% { transform: scale(1.2); opacity: 0.1; }
+      100% { transform: scale(0.8); opacity: 0.3; }
+    }
+
+    /* Enhanced Cyber Rain Animation */
     #rain-container {
       position: fixed;
       top: 0;
@@ -70,11 +116,43 @@
       position: absolute;
       top: -100%;
       font-family: 'Courier New', monospace;
-      color: var(--neon-cyan);
-      text-shadow: 0 0 8px var(--neon-cyan);
       white-space: nowrap;
       animation: fall linear infinite;
       pointer-events: none;
+      font-weight: bold;
+      text-shadow: 0 0 5px currentColor;
+    }
+
+    .rain-column.secure {
+      color: var(--neon-cyan);
+      text-shadow: var(--glow-cyan);
+    }
+
+    .rain-column.protect {
+      color: var(--neon-blue);
+      text-shadow: var(--glow-blue);
+    }
+
+    .rain-column.respond {
+      color: var(--neon-green);
+      text-shadow: var(--glow-green);
+    }
+
+    .rain-column.default {
+      color: rgba(255, 255, 255, 0.7);
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+
+    .rain-column::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: linear-gradient(to bottom, currentColor, transparent);
+      opacity: 0.5;
+      filter: blur(3px);
     }
 
     @keyframes fall {
@@ -292,6 +370,7 @@
       box-shadow: 0 4px 20px rgba(0, 255, 204, 0.4);
       text-transform: uppercase;
       letter-spacing: 1px;
+      min-height: 44px;
     }
 
     .btn-custom::before {
@@ -646,7 +725,35 @@
       animation: fadeInUp 0.8s ease forwards;
     }
 
-    /* Responsive */
+    /* Enhanced Responsive Design */
+    @media (max-width: 1200px) {
+      .hero {
+        padding: 7rem 2rem 3rem;
+      }
+      
+      .feature-card {
+        padding: 2rem;
+      }
+      
+      .testimonial {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .section {
+        padding: 5rem 0;
+      }
+      
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+    }
+
     @media (max-width: 768px) {
       .hero {
         padding: 6rem 1rem 3rem;
@@ -668,6 +775,39 @@
         flex-direction: column;
         gap: 1rem;
       }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn-custom {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero {
+        padding: 5rem 1rem 2rem;
+      }
+      
+      .brand-tagline {
+        font-size: 1.8rem;
+      }
+      
+      .greeting {
+        font-size: 1.2rem;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+      
+      .feature-card, .testimonial, .feed-card {
+        padding: 1.5rem;
+      }
     }
 
     /* Navbar toggler */
@@ -676,7 +816,7 @@
     }
 
     .navbar-toggler-icon {
-      background-image: url("image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 255, 204, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 255, 204, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     }
 
     .btn-close {
@@ -690,10 +830,57 @@
       display: inline-block;
       vertical-align: middle;
     }
+
+    /* Accessibility Improvements */
+    .btn-custom:focus,
+    .btn-outline:focus,
+    .btn-outline-secondary:focus {
+      outline: 2px solid var(--neon-cyan);
+      outline-offset: 2px;
+    }
+
+    a:focus {
+      outline: 2px solid var(--neon-cyan);
+      outline-offset: 2px;
+    }
+
+    /* Parallax Scrolling Effect */
+    .parallax {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    /* Enhanced Loading States */
+    .loading {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: loading 1.5s infinite;
+    }
+
+    @keyframes loading {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
   </style>
 </head>
 <body>
-  <!-- Cyber Rain Effect Container -->
+  <!-- Enhanced Background Elements -->
+  <div class="gradient-mesh"></div>
+  <canvas id="background-canvas"></canvas>
+
+  <!-- Enhanced Cyber Rain Effect Container -->
   <div id="rain-container"></div>
 
   <!-- Sidebar -->
@@ -796,13 +983,14 @@
         <a href="verify_link.html" class="btn-custom btn-outline">
           <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
           Check a Link
-       <a href="services.html" class="btn-custom btn-outline-secondary">
-  <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-  </svg>
-  Explore Tools
-</a>
+        </a>
+        <a href="services.html" class="btn-custom btn-outline-secondary">
+          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+          Explore Tools
+        </a>
         <button type="button" class="btn-custom btn-outline" data-bs-toggle="modal" data-bs-target="#demoModal">Request Demo</button>
       </div>
     </div>
@@ -1081,30 +1269,48 @@
   });
 </script>
 
-
-
   <!-- Bootstrap 5 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
   <script>
-    // Cyber Rain Effect
+    // Enhanced Cyber Rain Effect
     (function() {
       const container = document.getElementById('rain-container');
+      const coreWords = ['Secure', 'Protect', 'Respond'];
       const chars = '01EZMCyberSecureProtectRespond!@#$%^&*()_+-=[]{}|;:,./<>?';
-      let columnCount = Math.floor(window.innerWidth / 10);
+      let columnCount = Math.floor(window.innerWidth / 15); // Increased density
+      
+      function getRandomChar() {
+        // Higher probability for core words
+        if (Math.random() < 0.4) {
+          return coreWords[Math.floor(Math.random() * coreWords.length)];
+        }
+        return chars[Math.floor(Math.random() * chars.length)];
+      }
+      
+      function getRainClass(char) {
+        if (char === 'Secure') return 'secure';
+        if (char === 'Protect') return 'protect';
+        if (char === 'Respond') return 'respond';
+        return 'default';
+      }
       
       function createRainColumn() {
         const column = document.createElement('div');
-        column.className = 'rain-column';
+        const rainClass = getRainClass(getRandomChar());
+        column.className = `rain-column ${rainClass}`;
         column.style.left = Math.random() * 100 + '%';
-        column.style.animationDuration = (Math.random() * 5 + 3) + 's';
-        column.style.animationDelay = Math.random() * 2 + 's';
-        column.style.opacity = Math.random() * 0.5 + 0.3;
-        column.style.fontSize = (Math.random() * 5 + 12) + 'px';
+        column.style.animationDuration = (Math.random() * 3 + 2) + 's'; // Faster animation
+        column.style.animationDelay = Math.random() * 1 + 's';
+        column.style.opacity = Math.random() * 0.7 + 0.3; // More visible
+        column.style.fontSize = (Math.random() * 8 + 14) + 'px'; // Larger size variation
+        column.style.fontWeight = Math.random() > 0.7 ? '900' : '700';
         
         let text = '';
-        for (let i = 0; i < Math.floor(Math.random() * 30 + 15); i++) {
-          text += chars[Math.floor(Math.random() * chars.length)] + '<br>';
+        const length = Math.floor(Math.random() * 20 + 10);
+        for (let i = 0; i < length; i++) {
+          const char = getRandomChar();
+          text += char + '<br>';
         }
         column.innerHTML = text;
         
@@ -1118,14 +1324,110 @@
       
       function initRain() {
         container.innerHTML = '';
-        columnCount = Math.floor(window.innerWidth / 10);
+        columnCount = Math.floor(window.innerWidth / 15);
         for (let i = 0; i < columnCount; i++) {
-          setTimeout(createRainColumn, i * 100);
+          setTimeout(createRainColumn, i * 50);
         }
       }
       
       initRain();
       window.addEventListener('resize', initRain);
+    })();
+
+    // Enhanced Background Animation
+    (function() {
+      const canvas = document.getElementById('background-canvas');
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      let pulseRings = [];
+      
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      
+      function createParticles() {
+        particles = [];
+        const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
+        
+        for (let i = 0; i < particleCount; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2 + 0.5,
+            speedX: (Math.random() - 0.5) * 0.5,
+            speedY: (Math.random() - 0.5) * 0.5,
+            color: Math.random() > 0.7 ? 'rgba(0, 255, 204, 0.7)' : 
+                   Math.random() > 0.5 ? 'rgba(0, 212, 255, 0.5)' : 'rgba(128, 0, 255, 0.3)'
+          });
+        }
+      }
+      
+      function createPulseRing() {
+        if (Math.random() < 0.02) {
+          pulseRings.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: 0,
+            maxRadius: Math.random() * 100 + 50,
+            color: Math.random() > 0.5 ? 'rgba(0, 255, 204, 0.1)' : 'rgba(0, 212, 255, 0.1)',
+            speed: Math.random() * 2 + 1
+          });
+        }
+      }
+      
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw particles
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          
+          // Move particles
+          p.x += p.speedX;
+          p.y += p.speedY;
+          
+          // Wrap around edges
+          if (p.x < 0) p.x = canvas.width;
+          if (p.x > canvas.width) p.x = 0;
+          if (p.y < 0) p.y = canvas.height;
+          if (p.y > canvas.height) p.y = 0;
+        });
+        
+        // Draw and update pulse rings
+        for (let i = pulseRings.length - 1; i >= 0; i--) {
+          const ring = pulseRings[i];
+          ctx.beginPath();
+          ctx.arc(ring.x, ring.y, ring.radius, 0, Math.PI * 2);
+          ctx.strokeStyle = ring.color;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          
+          ring.radius += ring.speed;
+          if (ring.radius > ring.maxRadius) {
+            pulseRings.splice(i, 1);
+          }
+        }
+        
+        createPulseRing();
+        requestAnimationFrame(animate);
+      }
+      
+      function initBackground() {
+        resizeCanvas();
+        createParticles();
+        animate();
+      }
+      
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+        createParticles();
+      });
+      
+      initBackground();
     })();
 
     // Smooth scroll
@@ -1184,421 +1486,6 @@
     document.addEventListener('DOMContentLoaded', () => {
       observeElements();
     });
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Link Safety Checker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg-1: #06060a; --bg-2: #0b0710;
-      --accent: #00ffcc; --muted: #9fb6b0;
-      --clean: #16a34a; --suspicious: #f59e0b; --phish: #ef4444; --unrated: #6b7280;
-      --bubble-user: #00ffcc25; --bubble-bot: #071218;
-    }
-    body {
-      background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
-      color: #e6fff8; font-family: "Orbitron", system-ui, sans-serif;
-      min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden;
-    }
-    #chat-container {
-      flex: 1; overflow-y: auto; padding: 20px 20px 80px; display: flex; flex-direction: column; gap: 16px;
-      scroll-behavior: smooth; max-width: 800px; margin: 0 auto;
-    }
-    .msg {
-      max-width: 80%; padding: 12px 16px; border-radius: 16px; line-height: 1.5; word-wrap: break-word;
-      font-size: 0.95rem; position: relative; animation: pop 0.25s ease-out;
-    }
-    @keyframes pop { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-    .user { align-self: flex-end; background: var(--bubble-user); border: 1px solid rgba(0,255,204,0.3); color: #e6fff8; }
-    .bot { align-self: flex-start; background: var(--bubble-bot); border: 1px solid rgba(0,255,204,0.1); }
-    .bot strong { color: var(--accent); }
-    #input-bar {
-      position: sticky; bottom: 0; display: flex; padding: 12px; border-top: 1px solid rgba(0,255,204,0.1);
-      background: rgba(255,255,255,0.03); max-width: 800px; margin: 0 auto;
-    }
-    #url-input {
-      flex: 1; padding: 12px 16px; border: none; background: rgba(0,0,0,0.3); color: #e6fff8;
-      border-radius: 8px; font-size: 1rem; outline: none;
-    }
-    #url-input:focus { box-shadow: 0 0 5px rgba(0,255,204,0.5); }
-    #send-btn {
-      margin-left: 8px; padding: 12px 20px; background: var(--accent); color: #001517; font-weight: 700;
-      border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; min-width: 80px; font-size: 1rem;
-    }
-    #send-btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
-    #send-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .status-safe { color: var(--clean); }
-    .status-susp { color: var(--suspicious); }
-    .status-bad { color: var(--phish); }
-    .vendor-grid {
-      margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;
-    }
-    .vendor-card {
-      padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(0,255,204,0.06);
-      font-size: 0.85rem; text-align: center; transition: transform 0.2s;
-    }
-    .vendor-card:hover { transform: scale(1.05); }
-    .typing { display: inline-block; font-style: italic; opacity: 0.8; }
-    .dot { animation: blink 1.2s infinite; }
-    @keyframes blink { 0%, 20% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
-    footer { text-align: center; padding: 10px; color: var(--muted); font-size: 0.8rem; }
-    #main-result {
-      padding: 20px; margin: 20px 0; border-radius: 12px; background: rgba(0,255,204,0.08);
-      border: 1px solid rgba(0,255,204,0.2); font-size: 1rem; text-align: left;
-      box-shadow: 0 0 25px rgba(0,255,204,0.1); animation: pop 0.4s ease-out;
-      transition: all 0.3s ease;
-    }
-    #main-result:hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(0,255,204,0.25); }
-    #clear-history {
-      margin-top: 10px; padding: 8px 16px; background: rgba(255,255,255,0.1); color: var(--accent);
-      border: 1px solid rgba(0,255,204,0.3); border-radius: 8px; cursor: pointer; font-size: 0.9rem;
-    }
-    #clear-history:hover { background: rgba(255,255,255,0.2); }
-    #ai-toggle-btn {
-      margin-left: 8px; padding: 12px 16px; background: rgba(0, 255, 204, 0.2); color: var(--accent);
-      border: 1px solid rgba(0, 255, 204, 0.3); border-radius: 8px; cursor: pointer; transition: 0.2s;
-      font-size: 0.9rem; font-family: "Orbitron", system-ui, sans-serif;
-    }
-    #ai-toggle-btn:hover { background: rgba(0, 255, 204, 0.3); }
-    @media (max-width: 600px) {
-      #chat-container { padding: 12px 12px 70px; gap: 12px; }
-      #url-input { font-size: 0.9rem; padding: 10px 12px; }
-      #send-btn { padding: 10px 16px; font-size: 0.9rem; min-width: 70px; }
-      .vendor-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; }
-      .vendor-card { font-size: 0.75rem; padding: 8px; }
-      .msg { max-width: 85%; font-size: 0.9rem; }
-      #main-result { padding: 15px; font-size: 0.95rem; }
-      #ai-toggle-btn { padding: 10px 12px; font-size: 0.8rem; }
-    }
-    @media (max-width: 400px) {
-      #input-bar { padding: 10px; }
-      #url-input { font-size: 0.85rem; }
-      #send-btn { padding: 8px 12px; font-size: 0.85rem; }
-      #ai-toggle-btn { padding: 8px 10px; font-size: 0.75rem; }
-    }
-  </style>
-</head>
-<body>
-  <div id="chat-container">
-    <div class="msg bot"><strong>⚡️ Yo!</strong> Toss me any link, and I'll hit it with a full security scan to keep you safe! 🔍</div>
-  </div>
-  <div id="input-bar">
-    <input id="url-input" type="text" placeholder="Paste a link to check..." autocomplete="off">
-    <button id="send-btn">Send</button>
-  </div>
-  <footer>Secure • Protect • Respond</footer>
-
-  <script>
-    // API endpoints - FIXED variable names
-    const VT_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
-    const URLSCAN_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/urlscan';
-    const HUGGINGFACE_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/huggingface';
-    
-    const chat = document.getElementById('chat-container');
-    const input = document.getElementById('url-input');
-    const sendBtn = document.getElementById('send-btn');
-
-    // AI Chat System
-    let aiChatActive = false;
-    
-    // Knowledge base about your website
-    const WEBSITE_KNOWLEDGE = `
-      This is a comprehensive security scanning website that analyzes URLs for potential threats, breaches, and malicious content.
-      
-      Core Features:
-      - VirusTotal integration for multi-engine malware detection
-      - URLScan.io for detailed website analysis and screenshots
-      - Real-time security threat assessment
-      - Vendor reputation analysis from 90+ security vendors
-      - Phishing and malicious link detection
-      - Clean, suspicious, and malicious classification system
-      
-      Security Capabilities:
-      - Detects malware, viruses, trojans, and ransomware
-      - Identifies phishing attempts and scam websites
-      - Analyzes suspicious behavior and patterns
-      - Provides comprehensive security reports
-      - Scans for data breaches and leaks
-      - Monitors blacklisted domains and IPs
-      
-      How it works:
-      1. Users submit any URL for analysis
-      2. System queries multiple security databases
-      3. Aggregates results from VirusTotal's 90+ security vendors
-      4. Provides detailed threat assessment with vendor breakdown
-      5. Offers URLScan.io integration for deeper analysis
-      
-      The website is built with modern web technologies and focuses on user security and privacy.
-      It helps protect users from online threats by providing instant security assessments.
-    `;
-
-    function addMessage(text, sender = 'bot') {
-      const div = document.createElement('div');
-      div.className = `msg ${sender}`;
-      div.innerHTML = text;
-      chat.appendChild(div);
-      chat.scrollTop = chat.scrollHeight;
-      return div;
-    }
-
-    function verdictClass(v) {
-      if (v === 'phish' || v === 'malicious') return 'status-bad';
-      if (v === 'suspicious') return 'status-susp';
-      return 'status-safe';
-    }
-
-    function addTyping() {
-      if (aiChatActive) {
-        return addMessage(`<span class="typing">Analyzing security question<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, 'bot');
-      }
-      return addMessage(`<span class="typing">Scanning that link for you<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>`, 'bot');
-    }
-
-    // AI Question Handler
-    async function askAISecurityQuestion(question) {
-      const typingDiv = addTyping();
-      sendBtn.disabled = true;
-      sendBtn.textContent = 'Thinking...';
-
-      try {
-        const context = `
-          You are a security expert AI assistant for a comprehensive security scanning website.
-          
-          WEBSITE KNOWLEDGE BASE:
-          ${WEBSITE_KNOWLEDGE}
-          
-          USER QUESTION: ${question}
-          
-          Please provide a helpful, accurate response about security scanning, threat detection, breaches, 
-          or how this website works. Be specific about our capabilities and features.
-        `;
-
-        const response = await fetch(HUGGINGFACE_BACKEND, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            prompt: context,
-            max_tokens: 500,
-            temperature: 0.7
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`AI service error: ${response.status}`);
-        }
-
-        const aiData = await response.json();
-        
-        typingDiv.remove();
-        
-        if (aiData.response) {
-          addMessage(aiData.response, 'bot');
-        } else {
-          addMessage("I understand you're asking about security scanning. Our system analyzes URLs using multiple security engines to detect malware, phishing, and other threats. We integrate with VirusTotal and URLScan.io to provide comprehensive protection. 🔒", 'bot');
-        }
-
-      } catch (error) {
-        console.error('AI query error:', error);
-        typingDiv.remove();
-        addMessage(`I'm currently learning about security threats and breaches. Right now, I can tell you that our system scans URLs using VirusTotal's 90+ security vendors and URLScan.io for detailed analysis. We detect malware, phishing, suspicious behavior, and help prevent data breaches. 🛡️`, 'bot');
-      } finally {
-        sendBtn.disabled = false;
-        sendBtn.textContent = aiChatActive ? 'Ask AI' : 'Send';
-      }
-    }
-
-    async function analyzeLink(url) {
-      const typingDiv = addTyping();
-      sendBtn.disabled = true;
-      sendBtn.textContent = 'Scanning...';
-      let resultBox = document.getElementById('main-result');
-      if (!resultBox) {
-        resultBox = document.createElement('div');
-        resultBox.id = 'main-result';
-        chat.prepend(resultBox);
-      }
-
-      try {
-        // Step 1: VirusTotal scan
-        const vtResp = await fetch(VT_BACKEND, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url })
-        });
-        if (!vtResp.ok) {
-          throw new Error(`VirusTotal error ${vtResp.status}: ${await vtResp.text()}`);
-        }
-        const vtData = await vtResp.json();
-
-        const vendors = vtData.last_analysis_results
-          ? Object.entries(vtData.last_analysis_results).map(([name, info]) => {
-              const cat = info?.category?.toLowerCase() || 'unrated';
-              let v = 'unrated';
-              if (cat === 'malicious' || cat === 'phishing') v = 'phish';
-              else if (cat === 'suspicious') v = 'suspicious';
-              else if (cat === 'harmless' || cat === 'clean') v = 'clean';
-              return { name, verdict: v };
-            })
-          : [];
-
-        const stats = { mal: 0, susp: 0, clean: 0 };
-        vendors.forEach(v => {
-          if (v.verdict === 'phish') stats.mal++;
-          else if (v.verdict === 'suspicious') stats.susp++;
-          else if (v.verdict === 'clean') stats.clean++;
-        });
-
-        const total = vendors.length;
-        const threatCount = stats.mal + stats.susp;
-        let status = 'safe', label = 'CLEAN', message = 'Looks good! This link is safe to visit. 😎';
-        if (stats.mal > 0) {
-          status = 'bad';
-          label = 'MALICIOUS';
-          message = 'Yikes! This link is dangerous. Steer clear! 🚨';
-        } else if (stats.susp > 0) {
-          status = 'susp';
-          label = `SUSPICIOUS (${stats.susp} flagged)`;
-          message = 'Hmm, this link looks a bit sketchy. Proceed with caution! ⚠️';
-        }
-
-        let html = `<strong>🔍 Status:</strong> <span class="${'status-' + status}">${label}</span><br>
-          <small>Detections: ${threatCount}/${total}</small><br>
-          <small>${message}</small>`;
-        html += `<div class="vendor-grid">` +
-          vendors.slice(0, 90).map(v => `
-            <div class="vendor-card">${v.name}<br><span class="${verdictClass(v.verdict)}">${v.verdict.toUpperCase()}</span></div>
-          `).join('') + `</div>`;
-
-        // Step 2: URLScan.io scan
-        const scanResp = await fetch(URLSCAN_BACKEND, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url })
-        });
-        if (scanResp.ok) {
-          const scanData = await scanResp.json();
-          if (scanData.result_url) {
-            html += `<br><small>Full URLScan Report: <a href="${scanData.result_url}" target="_blank">${scanData.scan_id}</a></small>`;
-          }
-        } else {
-          const errorData = await scanResp.json();
-          html += `<br><small>URLScan failed: ${errorData.error || 'Unknown error'}</small>`;
-        }
-
-        typingDiv.remove();
-        resultBox.innerHTML = `<strong>🔍 Latest Scan Result</strong><br><br>${html}`;
-        addMessage(message, 'bot');
-
-        // Save history
-        const saved = JSON.parse(sessionStorage.getItem('ezm_history') || '[]');
-        saved.unshift({ url, status, detections: threatCount, total, timestamp: new Date().toISOString() });
-        if (saved.length > 50) saved.pop();
-        sessionStorage.setItem('ezm_history', JSON.stringify(saved));
-
-        // Add Clear History button if history exists
-        if (saved.length > 0 && !document.getElementById('clear-history')) {
-          const clearBtn = document.createElement('button');
-          clearBtn.id = 'clear-history';
-          clearBtn.textContent = 'Clear Scan History';
-          clearBtn.onclick = () => {
-            sessionStorage.removeItem('ezm_history');
-            clearBtn.remove();
-            addMessage('Scan history cleared! Ready for a fresh start. 🚀', 'bot');
-          };
-          resultBox.appendChild(clearBtn);
-        }
-
-        input.value = ''; // Clear input
-      } catch (e) {
-        console.error('Scan error:', e);
-        typingDiv.remove();
-        addMessage(`Whoops, something broke! ${e.message.includes('401') ? 'API key issue.' : e.message.includes('429') ? 'Hit a rate limit.' : 'Try again later.'} 😅`, 'bot');
-      } finally {
-        sendBtn.disabled = false;
-        sendBtn.textContent = aiChatActive ? 'Ask AI' : 'Send';
-      }
-    }
-
-    function toggleAIChat() {
-      aiChatActive = !aiChatActive;
-      const chatContainer = document.getElementById('chat-container');
-      const urlInput = document.getElementById('url-input');
-      const sendBtn = document.getElementById('send-btn');
-      
-      if (aiChatActive) {
-        // Switch to AI Chat mode
-        urlInput.placeholder = "Ask me anything about security scanning, breaches, or this website...";
-        sendBtn.textContent = 'Ask AI';
-        
-        // Clear previous messages and show AI welcome
-        chatContainer.innerHTML = '';
-        addMessage(`<strong>🛡️ Security AI Assistant</strong><br>Hello! I'm your security AI assistant. I can help you understand:<br>
-          • How our security scanning works<br>
-          • Types of threats we detect<br>
-          • Breach and leak detection<br>
-          • Website security features<br>
-          • API integrations and capabilities<br><br>
-          Ask me anything about security! 🔍`, 'bot');
-          
-      } else {
-        // Switch back to URL scanning mode
-        urlInput.placeholder = "Paste a link to check...";
-        sendBtn.textContent = 'Send';
-        
-        // Clear and show scanning welcome
-        chatContainer.innerHTML = '';
-        addMessage(`<strong>⚡️ Yo!</strong> Toss me any link, and I'll hit it with a full security scan to keep you safe! 🔍`, 'bot');
-      }
-    }
-
-    // Unified send button handler
-    sendBtn.onclick = () => {
-      const val = input.value.trim();
-      if (!val) return;
-      
-      addMessage(val, 'user');
-      
-      if (aiChatActive) {
-        // Handle AI questions
-        askAISecurityQuestion(val);
-      } else {
-        // Handle URL scanning
-        let normalized = val;
-        if (!/^https?:\/\//i.test(val)) normalized = 'http://' + val;
-        try {
-          new URL(normalized);
-          analyzeLink(normalized);
-        } catch {
-          addMessage('Oops, that\'s not a valid URL. Try something like https://example.com! 😬', 'bot');
-          sendBtn.disabled = false;
-          sendBtn.textContent = aiChatActive ? 'Ask AI' : 'Send';
-        }
-      }
-    };
-
-    // Add AI toggle button
-    const aiToggleBtn = document.createElement('button');
-    aiToggleBtn.id = 'ai-toggle-btn';
-    aiToggleBtn.textContent = '🤖 AI Mode';
-    aiToggleBtn.onclick = toggleAIChat;
-    
-    // Insert AI toggle button before send button
-    const inputBar = document.getElementById('input-bar');
-    inputBar.insertBefore(aiToggleBtn, sendBtn);
-
-    // Update input placeholder
-    input.placeholder = "Paste a link to check or click 🤖 for AI questions...";
-
-    // Enhanced keypress handler
-    input.addEventListener('keypress', e => {
-      if (e.key === 'Enter') sendBtn.click();
-    });
   </script>
-
-  
 </body>
 </html>
