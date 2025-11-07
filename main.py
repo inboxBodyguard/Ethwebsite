@@ -39,6 +39,8 @@ HF_API_KEY = os.getenv("HF_API_KEY")
 WHOIS_API_KEY = os.getenv("WHOISXML_API_KEY")
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 SLACK_WEBHOOK_URL = os.getenv("SLACK_WEBHOOK_URL")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 MAX_CONTENT_LEN = 1800
 RETRIES = 3
@@ -232,34 +234,111 @@ def chat_with_model():
         user_input = data.get("prompt") or data.get("message")
         if not user_input:
             return jsonify({"error": "Prompt or message is required"}), 400
-        if not HF_API_KEY:
-            return jsonify({"response": "🤖 AI is currently offline."}), 200
+        
+        # Try OpenAI first, then Groq as fallback, then offline message
+        if OPENAI_API_KEY:
+            response = chat_with_openai(user_input)
+            if response:  # If OpenAI worked, return response
+                return response
+        
+        if GROQ_API_KEY:
+            response = chat_with_groq(user_input)
+            if response:  # If Groq worked, return response
+                return response
+        
+        # If both APIs are unavailable or no keys
+        return jsonify({"response": "🤖 AI is currently offline. Please try again later or use our URL scanning features."}), 200
 
-        context = """You are a cybersecurity expert assistant for EZM Cyber security platform.
-Key features: URL scanning with VirusTotal (90+ security vendors), URLScan.io integration,
-malware/phishing detection, breach monitoring. Answer security questions clearly and concisely."""
-
-        payload = {
-            "inputs": f"{context}\n\nUser: {user_input}\nAssistant:",
-            "parameters": {"max_new_tokens": 250, "temperature": 0.7, "return_full_text": False, "do_sample": True}
-        }
-        headers = {"Authorization": f"Bearer {HF_API_KEY}", "Content-Type": "application/json"}
-        response = requests.post(
-            "https://api-inference.huggingface.co/models/fdtn-ai/Foundation-Sec-8B",
-            headers=headers, json=payload, timeout=30
-        )
-
-        if response.status_code != 200:
-            return jsonify({"response": "⚡ AI model temporarily unavailable."}), 200
-
-        result = response.json()
-        text = result[0].get("generated_text", "") if isinstance(result, list) else result.get("generated_text", "")
-        text = text.replace(context, "").replace(f"User: {user_input}", "").replace("Assistant:", "").strip()
-        return jsonify({"response": text}), 200
     except Exception as e:
         logger.error(f"Chat endpoint error: {str(e)}", exc_info=True)
-        return jsonify({"response": "Error handling request."}), 200
+        return jsonify({"response": "AI service temporarily unavailable. Please try again shortly."}), 200
 
+def chat_with_openai(user_input):
+    """Chat using OpenAI API"""
+    try:
+        headers = {
+            "Authorization": f"Bearer {OPENAI_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        
+        payload = {
+            "model": "gpt-3.5-turbo",
+            "messages": [
+                {
+                    "role": "system", 
+                    "content": "You are a cybersecurity expert assistant for EZM Cyber security platform. Key features: URL scanning with VirusTotal (90+ security vendors), URLScan.io integration, malware/phishing detection, breach monitoring. Answer security questions clearly and concisely."
+                },
+                {
+                    "role": "user",
+                    "content": user_input
+                }
+            ],
+            "max_tokens": 250,
+            "temperature": 0.7
+        }
+        
+        response = requests.post(
+            "https://api.openai.com/v1/chat/completions",
+            headers=headers, 
+            json=payload, 
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            result = response.json()
+            text = result["choices"][0]["message"]["content"].strip()
+            return jsonify({"response": text}), 200
+        else:
+            logger.error(f"OpenAI API error: {response.status_code}")
+            return None  # Return None to trigger fallback
+            
+    except Exception as e:
+        logger.error(f"OpenAI connection error: {str(e)}")
+        return None  # Return None to trigger fallback
+
+def chat_with_groq(user_input):
+    """Chat using Groq API"""
+    try:
+        headers = {
+            "Authorization": f"Bearer {GROQ_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        
+        payload = {
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a cybersecurity expert assistant for EZM Cyber security platform. Key features: URL scanning with VirusTotal, URLScan.io integration, malware/phishing detection. Answer security questions clearly and concisely."
+                },
+                {
+                    "role": "user", 
+                    "content": user_input
+                }
+            ],
+            "model": "mixtral-8x7b-32768",
+            "temperature": 0.7,
+            "max_tokens": 250
+        }
+        
+        response = requests.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            headers=headers,
+            json=payload,
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            result = response.json()
+            text = result["choices"][0]["message"]["content"].strip()
+            return jsonify({"response": text}), 200
+        else:
+            logger.error(f"Groq API error: {response.status_code}")
+            return None  # Return None to show offline message
+            
+    except Exception as e:
+        logger.error(f"Groq connection error: {str(e)}")
+        return None  # Return None to show offline message
+        
 @app.route('/api/demo-request', methods=['POST'])
 def demo_request_route():
     data = request.get_json(force=True) or {}
