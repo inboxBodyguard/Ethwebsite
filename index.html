@@ -18,12 +18,10 @@
   <meta name="twitter:description" content="Your digital shield in a connected world" />
   <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
   <style>
@@ -520,52 +518,61 @@
       line-height: 1.8;
     }
 
-    /* Testimonials */
-    .testimonial {
-      background: rgba(22, 33, 62, 0.4);
-      padding: 2.5rem;
-      border-radius: 16px;
-      border-left: 4px solid var(--neon-cyan);
+    /* Custom Project Showcase Card Style */
+    .project-card {
+      background: rgba(10, 20, 40, 0.8); /* Darker blue background */
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--neon-blue); /* Neon blue border */
       transition: all 0.4s ease;
       height: 100%;
       backdrop-filter: blur(10px);
       position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+    }
+    
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 10px 30px rgba(0, 255, 204, 0.4);
     }
 
-    .testimonial::before {
-      content: '"';
-      position: absolute;
-      top: 10px;
-      left: 20px;
-      font-size: 4rem;
+    .project-card h4 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
       color: var(--neon-cyan);
-      opacity: 0.2;
-      font-family: Georgia, serif;
+      margin-bottom: 0.5rem;
     }
 
-    .testimonial:hover {
-      transform: translateX(10px);
-      background: rgba(22, 33, 62, 0.6);
-      box-shadow: -5px 0 20px rgba(0, 255, 204, 0.2);
-    }
-
-    .testimonial-text {
-      font-style: italic;
-      color: var(--text-primary);
-      margin-bottom: 1.5rem;
-      font-size: 1.1rem;
-      line-height: 1.8;
-    }
-
-    .testimonial-author {
-      color: var(--neon-cyan);
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    .testimonial-role {
+    .project-card p {
       color: var(--text-secondary);
-      font-size: 0.9rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-card .tech-stack span {
+      display: inline-block;
+      background: rgba(0, 255, 204, 0.1);
+      color: var(--neon-cyan);
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .project-card .cta-links a {
+      color: var(--neon-blue);
+      text-decoration: none;
+      font-weight: 600;
+      margin-right: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .project-card .cta-links a:hover {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
     }
 
     /* Live Feed */
@@ -735,7 +742,7 @@
         padding: 2rem;
       }
       
-      .testimonial {
+      .project-card {
         padding: 2rem;
       }
     }
@@ -805,7 +812,7 @@
         font-size: 1.8rem;
       }
       
-      .feature-card, .testimonial, .feed-card {
+      .feature-card, .project-card, .feed-card {
         padding: 1.5rem;
       }
     }
@@ -876,14 +883,11 @@
   </style>
 </head>
 <body>
-  <!-- Enhanced Background Elements -->
   <div class="gradient-mesh"></div>
   <canvas id="background-canvas"></canvas>
 
-  <!-- Enhanced Cyber Rain Effect Container -->
   <div id="rain-container"></div>
 
-  <!-- Sidebar -->
   <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="sidebarLabel">
@@ -931,13 +935,13 @@
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#testimonialsMenu" aria-expanded="false" aria-controls="testimonialsMenu">
-              Testimonials
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#projectsMenu" aria-expanded="false" aria-controls="projectsMenu">
+              Projects
             </button>
           </h2>
-          <div id="testimonialsMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+          <div id="projectsMenu" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
             <div class="accordion-body">
-              <a href="#testimonials" data-bs-dismiss="offcanvas">Client Reviews</a>
+              <a href="#projects" data-bs-dismiss="offcanvas">Built Capabilities</a>
             </div>
           </div>
         </div>
@@ -957,7 +961,6 @@
     </div>
   </div>
 
-  <!-- Top Bar for Sidebar Toggle -->
   <nav class="navbar fixed-top">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle sidebar">
@@ -967,7 +970,6 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <section class="hero" id="home">
     <div class="hero-content">
       <h2 class="brand-tagline">⚡️<br>Secure. Protect. Respond.</h2>
@@ -996,7 +998,6 @@
     </div>
   </section>
 
-  <!-- About Section -->
   <section class="section" id="about">
     <div class="container">
       <h2 class="section-title">About EZMCyber</h2>
@@ -1006,7 +1007,6 @@
     </div>
   </section>
 
-  <!-- Key Features Section -->
   <section class="section section-dark" id="services">
     <div class="container">
       <h2 class="section-title">Key Features & Services</h2>
@@ -1057,37 +1057,83 @@
     </div>
   </section>
 
-  <!-- Testimonials Section -->
-  <section class="section testimonials" id="testimonials">
+  <section class="section" id="projects">
     <div class="container">
-      <h2 class="section-title">What Our Clients Say</h2>
-      <div class="row g-4 testimonials-grid">
-        <div class="col-md-4">
-          <div class="testimonial">
-            <p class="testimonial-text">EZMCyber transformed our security posture completely. Their proactive approach saved us from multiple potential breaches.</p>
-            <p class="testimonial-author">Sarah Johnson</p>
-            <p class="testimonial-role">CTO at TechStart</p>
+      <h2 class="section-title">Built Projects & Capabilities</h2>
+      <p style="max-width: 900px; margin: 0 auto 3rem; text-align: center; color: var(--neon-blue); font-size: 1.1rem; line-height: 1.9;">
+        We believe in **building in public** and demonstrating capability through real, working code and tools. These projects represent the core technical expertise that powers our solutions.
+      </p>
+      <div class="row g-4 projects-grid">
+        <div class="col-lg-6">
+          <div class="project-card fade-in-up">
+            <h4>AI-Powered Breach Detection System</h4>
+            <p>A machine learning model deployed to monitor network traffic and system logs, capable of identifying anomalous behavior indicative of zero-day attacks and insider threats in real-time.</p>
+            <div class="mb-3 tech-stack">
+              <span>Python</span>
+              <span>TensorFlow/PyTorch</span>
+              <span>SIEM Integration</span>
+              <span>Machine Learning</span>
+            </div>
+            <div class="cta-links">
+              <a href="#" target="_blank" rel="noopener noreferrer">View Research Paper</a>
+              <a href="https://github.com/YourGitHub/breach-detection" target="_blank" rel="noopener noreferrer">GitHub Project</a>
+            </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="testimonial">
-            <p class="testimonial-text">The peace of mind that comes with EZMCyber's protection is invaluable. Their team is responsive and incredibly knowledgeable.</p>
-            <p class="testimonial-author">Michael Chen</p>
-            <p class="testimonial-role">IT Director</p>
+        
+        <div class="col-lg-6">
+          <div class="project-card fade-in-up" style="animation-delay: 0.1s;">
+            <h4>Live Security Utilities Suite</h4>
+            <p>A collection of public-facing web tools hosted at **ezmcyber.xyz** including a malicious link checker, file hash verifier, and a simple network port scanner, providing immediate value to users.</p>
+            <div class="mb-3 tech-stack">
+              <span>Next.js/React</span>
+              <span>API Gateway</span>
+              <span>VirusTotal API</span>
+              <span>Docker</span>
+            </div>
+            <div class="cta-links">
+              <a href="https://ezmcyber.xyz" target="_blank" rel="noopener noreferrer">Live Demo</a>
+              <a href="services.html">Explore All Tools</a>
+            </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="testimonial">
-            <p class="testimonial-text">Finally, a cybersecurity partner that explains everything in plain English. Professional, reliable, and always available.</p>
-            <p class="testimonial-author">Lisa Rodriguez</p>
-            <p class="testimonial-role">Small Business Owner</p>
+        
+        <div class="col-lg-6">
+          <div class="project-card fade-in-up" style="animation-delay: 0.2s;">
+            <h4>Real-Time Threat Monitoring Application</h4>
+            <p>A full-stack application for visualizing security events as they happen, featuring a customizable dashboard, alert notifications, and historical log analysis using a performant data pipeline.</p>
+            <div class="mb-3 tech-stack">
+              <span>ELK Stack</span>
+              <span>Node.js/Express</span>
+              <span>WebSocket</span>
+              <span>Kubernetes</span>
+            </div>
+            <div class="cta-links">
+              <a href="#">Request Internal Access</a>
+              <a href="#">Architecture Overview</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="project-card fade-in-up" style="animation-delay: 0.3s;">
+            <h4>Open-Source Security CLI Utilities</h4>
+            <p>Lightweight, portable command-line utilities built for quick security assessment and forensic tasks, emphasizing performance and minimal dependencies for on-the-fly analysis.</p>
+            <div class="mb-3 tech-stack">
+              <span>GoLang (Go)</span>
+              <span>Bash/Shell</span>
+              <span>Cross-Platform</span>
+              <span>Documentation</span>
+            </div>
+            <div class="cta-links">
+              <a href="https://github.com/YourGitHub/cli-tools" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
+              <a href="#">Download Binary</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- Live Feed Section -->
   <section class="section section-dark" id="live-feed-section">
     <div class="container">
       <h2 class="section-title">Live Cyber Feed</h2>
@@ -1129,7 +1175,6 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
   <section class="section contact" id="contact">
     <div class="container text-center">
       <h2 class="section-title">Get in Touch</h2>
@@ -1143,20 +1188,18 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
     <div class="container footer-content">
       <ul class="footer-links">
         <li><a href="#services">Services</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#projects">Projects</a></li> <li><a href="#contact">Contact</a></li>
       </ul>
       <p>&copy; 2025 EZMCyber. All rights reserved. Your security is our priority.</p>
     </div>
   </footer>
 
-  <!-- Demo Request Modal -->
-<div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
+  <div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -1269,7 +1312,6 @@
   });
 </script>
 
-  <!-- Bootstrap 5 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
   <script>
@@ -1477,7 +1519,7 @@
         rootMargin: '0px 0px -50px 0px'
       });
 
-      document.querySelectorAll('.feature-card, .testimonial, .feed-card').forEach(el => {
+      document.querySelectorAll('.feature-card, .project-card, .feed-card').forEach(el => {
         observer.observe(el);
       });
     };
