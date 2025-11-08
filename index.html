@@ -1174,8 +1174,8 @@
               </span>
             </div>
             <div class="cta-links">
-              <a href="#">Request Internal Access</a>
-              <a href="#">Architecture Overview</a>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#accessModal">Request Internal Access</a>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#architectureModal">Architecture Overview</a>
             </div>
           </div>
         </div>
@@ -1207,7 +1207,7 @@
                 <img class="tech-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg" alt="GitHub">
                 GitHub Repo
               </a>
-              <a href="#">Download Binary</a>
+              <a href="https://github.com/inboxBodyguard/ezm-cli-tools/releases/latest" target="_blank">Download Binary</a>
             </div>
           </div>
         </div>
@@ -1615,5 +1615,41 @@
     Creative Commons Attribution 4.0 International (CC BY 4.0)
   </a>
 </footer>
+
+<div class="modal fade" id="accessModal" tabindex="-1" aria-labelledby="accessModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="accessModalLabel">Request Internal Access</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>To request access to our Real-Time Threat Monitoring system, please contact us with your use case and organization details.</p>
+        <a href="contact.html?subject=Threat%20Monitor%20Access" class="btn-custom">Contact for Access</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="architectureModal" tabindex="-1" aria-labelledby="architectureModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="architectureModalLabel">System Architecture</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Real-Time Threat Monitoring Architecture:</strong></p>
+        <ul>
+          <li>ELK Stack for log aggregation and analysis</li>
+          <li>WebSocket connections for real-time updates</li>
+          <li>Node.js backend with microservices architecture</li>
+          <li>Kubernetes for container orchestration</li>
+          <li>React frontend with real-time dashboards</li>
+        </ul>
+        <a href="docs/architecture-diagram.pdf" class="btn-custom btn-outline" target="_blank">View Detailed Diagram</a>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
