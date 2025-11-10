@@ -13,6 +13,7 @@ from email.mime.multipart import MIMEMultipart
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt  # <-- NEW: Import Bcrypt
 
 # ——— LOGGING SETUP ———
 logging.basicConfig(level=logging.INFO)
@@ -21,6 +22,7 @@ logger = logging.getLogger(__name__)
 # ——— APP SETUP ———
 app = Flask(__name__, static_folder='.', template_folder='.')
 CORS(app)
+bcrypt = Bcrypt(app)  # <-- NEW: Initialize Bcrypt
 
 # ——— DATABASE SETUP ———
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL", "sqlite:///demo_requests.db")
@@ -41,6 +43,8 @@ DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 SLACK_WEBHOOK_URL = os.getenv("SLACK_WEBHOOK_URL")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+SENDER_EMAIL = os.getenv("SENDER_EMAIL")
+SENDER_PASSWORD = os.getenv("SENDER_PASSWORD")
 
 MAX_CONTENT_LEN = 1800
 RETRIES = 3
@@ -55,7 +59,23 @@ class DemoRequest(db.Model):
     message = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=db.func.now())
 
+class User(db.Model): # <-- NEW: User Model for Authentication
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(254), unique=True, nullable=False, index=True)
+    password_hash = db.Column(db.String(128), nullable=False)
+    created_at = db.Column(db.DateTime, default=db.func.now())
+    # Note: Use 'db.session.execute(db.select(User).filter_by(email=email)).scalar_one_or_none()' for querying
+
 # ——— HELPERS ———
+def hash_password(password: str) -> str: # <-- NEW: Password helper
+    """Securely hash a password using bcrypt."""
+    # bcrypt.generate_password_hash returns bytes, decode for SQL storage
+    return bcrypt.generate_password_hash(password).decode('utf-8')
+
+def check_password_verified(hashed_password: str, password: str) -> bool: # <-- NEW: Password helper
+    """Check a plaintext password against a stored hash."""
+    return bcrypt.check_password_hash(hashed_password, password)
+
 def normalize_url(url):
     url = url.strip()
     if not url.startswith(("http://", "https://")):
@@ -96,19 +116,30 @@ def do_vt_check(url):
         raise Exception(f"VirusTotal API error: {response.status_code}")
 
 def send_welcome_email(to_email):
-    SENDER_EMAIL = os.getenv("SENDER_EMAIL")
-    SENDER_PASSWORD = os.getenv("SENDER_PASSWORD")
     if not SENDER_EMAIL or not SENDER_PASSWORD:
-        logger.warning("Email credentials missing!")
+        logger.warning("Email credentials missing (SENDER_EMAIL/SENDER_PASSWORD). Cannot send welcome email.")
         return False
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = "Welcome to EZM Cyber!"
     msg["From"] = SENDER_EMAIL
     msg["To"] = to_email
-    msg.attach(MIMEText("<strong>Thanks for signing up! You are now protected by EZM Cyber.</strong>", "html"))
+    # Personalized content based on signup action
+    html_content = f"""
+    <html>
+      <body>
+        <p>Hello,</p>
+        <p><strong>Thanks for signing up to EZM Cyber!</strong> Your account is now active under the email: <strong>{to_email}</strong>. You are now protected by EZM Cyber.</p>
+        <p>Start scanning links and securing your online presence today.</p>
+        <br>
+        <p>Best regards,<br>The EZM Cyber Team</p>
+      </body>
+    </html>
+    """
+    msg.attach(MIMEText(html_content, "html"))
 
     try:
+        # Using placeholder SMTP details; replace with actual configuration if available
         with smtplib.SMTP("smtp.hostinger.com", 587, timeout=10) as server:
             server.starttls()
             server.login(SENDER_EMAIL, SENDER_PASSWORD)
@@ -205,8 +236,9 @@ def check_url():
         if not url:
             return jsonify({"error": "Missing URL parameter"}), 400
         result = do_vt_check(url)
+        # Original logic: send email if email provided in VT check
         if email:
-            send_welcome_email(email)
+            Thread(target=send_welcome_email, args=(email,), daemon=True).start()
         return jsonify(result)
     except Exception as e:
         error_msg = str(e)
@@ -234,18 +266,18 @@ def chat_with_model():
         user_input = data.get("prompt") or data.get("message")
         if not user_input:
             return jsonify({"error": "Prompt or message is required"}), 400
-        
+
         # Try OpenAI first, then Groq as fallback, then offline message
         if OPENAI_API_KEY:
             response = chat_with_openai(user_input)
             if response:  # If OpenAI worked, return response
                 return response
-        
+
         if GROQ_API_KEY:
             response = chat_with_groq(user_input)
             if response:  # If Groq worked, return response
                 return response
-        
+
         # If both APIs are unavailable or no keys
         return jsonify({"response": "🤖 AI is currently offline. Please try again later or use our URL scanning features."}), 200
 
@@ -260,12 +292,12 @@ def chat_with_openai(user_input):
             "Authorization": f"Bearer {OPENAI_API_KEY}",
             "Content-Type": "application/json"
         }
-        
+
         payload = {
             "model": "gpt-3.5-turbo",
             "messages": [
                 {
-                    "role": "system", 
+                    "role": "system",
                     "content": "You are a cybersecurity expert assistant for EZM Cyber security platform. Key features: URL scanning with VirusTotal (90+ security vendors), URLScan.io integration, malware/phishing detection, breach monitoring. Answer security questions clearly and concisely."
                 },
                 {
@@ -276,14 +308,14 @@ def chat_with_openai(user_input):
             "max_tokens": 250,
             "temperature": 0.7
         }
-        
+
         response = requests.post(
             "https://api.openai.com/v1/chat/completions",
-            headers=headers, 
-            json=payload, 
+            headers=headers,
+            json=payload,
             timeout=30
         )
-        
+
         if response.status_code == 200:
             result = response.json()
             text = result["choices"][0]["message"]["content"].strip()
@@ -291,7 +323,7 @@ def chat_with_openai(user_input):
         else:
             logger.error(f"OpenAI API error: {response.status_code}")
             return None  # Return None to trigger fallback
-            
+
     except Exception as e:
         logger.error(f"OpenAI connection error: {str(e)}")
         return None  # Return None to trigger fallback
@@ -303,7 +335,7 @@ def chat_with_groq(user_input):
             "Authorization": f"Bearer {GROQ_API_KEY}",
             "Content-Type": "application/json"
         }
-        
+
         payload = {
             "messages": [
                 {
@@ -311,7 +343,7 @@ def chat_with_groq(user_input):
                     "content": "You are a cybersecurity expert assistant for EZM Cyber security platform. Key features: URL scanning with VirusTotal, URLScan.io integration, malware/phishing detection. Answer security questions clearly and concisely."
                 },
                 {
-                    "role": "user", 
+                    "role": "user",
                     "content": user_input
                 }
             ],
@@ -319,14 +351,14 @@ def chat_with_groq(user_input):
             "temperature": 0.7,
             "max_tokens": 250
         }
-        
+
         response = requests.post(
             "https://api.groq.com/openai/v1/chat/completions",
             headers=headers,
             json=payload,
             timeout=30
         )
-        
+
         if response.status_code == 200:
             result = response.json()
             text = result["choices"][0]["message"]["content"].strip()
@@ -334,11 +366,11 @@ def chat_with_groq(user_input):
         else:
             logger.error(f"Groq API error: {response.status_code}")
             return None  # Return None to show offline message
-            
+
     except Exception as e:
         logger.error(f"Groq connection error: {str(e)}")
         return None  # Return None to show offline message
-        
+
 @app.route('/api/demo-request', methods=['POST'])
 def demo_request_route():
     data = request.get_json(force=True) or {}
@@ -367,21 +399,57 @@ def demo_request_route():
 
     return jsonify({"ok": True, "id": req.id, "redirect": "/demo_thank_you.html"}), 200
 
-# ——— FIXED SIGNUP ROUTE ———
+# ——— ENHANCED SIGNUP ROUTE ———
 @app.route('/api/signup', methods=['POST'])
 def signup():
     data = request.get_json(force=True) or {}
     email = (data.get("email") or "").strip().lower()
+    password = data.get("password") # <-- NEW: Get password from request
+
+    # 1. Email validation
     if not email or not validators.email(email):
-        return jsonify({"ok": False, "error": "Invalid email"}), 400
+        return jsonify({"ok": False, "error": "Invalid email format"}), 400
 
-    success = send_welcome_email(email)
-    if not success:
-        return jsonify({"ok": False, "error": "Email failed"}), 500
+    # 2. Password validation (minimum length check)
+    if not password or len(password) < 8:
+        return jsonify({"ok": False, "error": "Password must be at least 8 characters"}), 400
 
-    return jsonify({"ok": True, "message": "Signup successful, email sent"}), 200
+    # 3. Check for existing email
+    if db.session.execute(db.select(User).filter_by(email=email)).scalar_one_or_none():
+        return jsonify({"ok": False, "error": "Email already registered"}), 409 # 409 Conflict
 
+    try:
+        # 4. Hash password before storage
+        hashed_password = hash_password(password)
 
+        # 5. Create new user record
+        new_user = User(email=email, password_hash=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        # 6. Send welcome email asynchronously
+        Thread(target=send_welcome_email, args=(email,), daemon=True).start()
+
+        return jsonify({"ok": True, "message": "Account created successfully. Welcome email is being sent."}), 201 # 201 Created
+
+    except Exception as e:
+        db.session.rollback()
+        logger.error(f"Signup failed for {email}: {e}")
+        return jsonify({"ok": False, "error": "An internal error occurred during registration."}), 500
+
+# ——— NEW LOGIN ROUTE (for demonstration of password verification) ———
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.get_json(force=True) or {}
+    email = (data.get("email") or "").strip().lower()
+    password = data.get("password")
+
+    user = db.session.execute(db.select(User).filter_by(email=email)).scalar_one_or_none()
+
+    if user and check_password_verified(user.password_hash, password):
+        return jsonify({"ok": True, "message": f"Login successful for user: {email}"}), 200
+    else:
+        return jsonify({"ok": False, "error": "Invalid email or password"}), 401 # 401 Unauthorized
 
 # ——— RUN APP ———
 if __name__ == '__main__':
@@ -389,6 +457,8 @@ if __name__ == '__main__':
     logger.info(f"Starting Flask app on port {port}")
 
     with app.app_context():
+        # This will create the new 'user' table as well as the 'demo_request' table
         db.create_all()
 
     app.run(host='0.0.0.0', port=port, debug=False)
+
