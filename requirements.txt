@@ -1,4 +1,4 @@
-flask==2.3.6 
+flask==2.3.3
 requests==2.31.0
 flask-cors==4.0.0
 sendgrid==6.12.0
