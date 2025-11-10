@@ -13,7 +13,7 @@ from email.mime.multipart import MIMEMultipart
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt  # <-- NEW: Import Bcrypt
+from flask_bcrypt import Bcrypt
 
 # ——— LOGGING SETUP ———
 logging.basicConfig(level=logging.INFO)
