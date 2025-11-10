@@ -381,6 +381,10 @@ def signup():
 
     return jsonify({"ok": True, "message": "Signup successful, email sent"}), 200
 
+@app.route('/which-script')
+def which_script():
+    return "main.py"
+
 # ——— RUN APP ———
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
