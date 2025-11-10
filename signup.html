@@ -3,15 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Signup | EZM Cyber - Join Our Community</title>
+  <title>Signup | EZM Cyber - Your Digital Security Partner</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* --- EZM Original Base Styles (Preserved) --- */
     body {
       font-family: 'Inter', sans-serif;
-      /* Adjusted background for a flatter dark look closer to the image */
-      background-color: #1A1E28; 
+      background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
       color: #fff;
       min-height: 100vh;
       margin: 0;
@@ -50,12 +48,9 @@
       top: 20px;
       left: 20px;
       z-index: 10;
-      /* Repurposed to be the "Go back" arrow from the screenshot */
-      top: 15px;
-      left: 15px;
     }
     .back-home a {
-      color: #fff; /* White color for the arrow */
+      color: #00ffaa;
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s;
@@ -64,153 +59,186 @@
       gap: 8px;
     }
     .back-home a:hover {
-      color: #aaa;
+      color: #00cc88;
     }
     .login-container {
-      /* Simplified container to look like the mobile screen */
       position: relative;
       z-index: 2;
       max-width: 440px;
-      margin: 0 auto; /* Removed top/bottom margin for mobile feel */
-      padding: 20px 20px 50px;
-      background: transparent; /* Make background transparent to use body background */
-      box-shadow: none;
-      border: none;
-      backdrop-filter: none;
+      margin: 60px auto;
+      padding: 40px;
+      background: rgba(15, 15, 35, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 
+                  0 0 0 1px rgba(0, 255, 170, 0.1),
+                  inset 0 0 20px rgba(0, 255, 170, 0.05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(0, 255, 170, 0.2);
     }
-
-    /* --- New Styles to Match Screenshot --- */
-    
-    .signup-header {
-        font-size: 24px;
-        font-weight: 600;
-        margin-top: 50px; /* Space below Go back */
-        margin-bottom: 30px;
-        color: #ffffff;
+    .brand-logo {
+      text-align: center;
+      margin-bottom: 30px;
     }
-
-    .form-group {
-      margin-bottom: 25px; /* Increased spacing between fields */
-      position: relative;
-    }
-    
-    .form-label {
-      /* Style to look like the labels *above* the input in the screenshot */
-      display: block;
+    .brand-logo h1 {
+      font-weight: 700;
+      font-size: 36px;
       margin-bottom: 5px;
-      font-weight: 400; /* Regular weight */
-      color: #E8E8E8; /* Light gray label color */
+      background: linear-gradient(90deg, #00ffaa, #00ccff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(0, 255, 170, 0.3);
+    }
+    .brand-logo p {
+      font-weight: 400;
+      color: #aaa;
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+    .social-btn {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(30, 30, 60, 0.7);
+      color: white;
+      font-weight: 500;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      cursor: pointer;
       font-size: 15px;
     }
-    
-    .form-control {
-      /* Key style change to match the screenshot input field */
-      width: 100%;
-      padding: 18px 15px; /* Taller padding for a bolder look */
-      border-radius: 8px; /* Slightly rounded corners */
-      border: 1px solid #4A5160; /* Darker, subtle border */
-      background-color: #2B303B; /* Slightly lighter shade than the body */
-      color: #ffffff;
-      font-size: 16px;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      box-shadow: none;
+    .social-btn:hover {
+      background: rgba(40, 40, 80, 0.9);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
-    
+    .social-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .google-btn { border-color: rgba(220, 78, 65, 0.5); }
+    .microsoft-btn { border-color: rgba(0, 120, 215, 0.5); }
+    .google-icon, .microsoft-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .google-icon {
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=');
+    }
+    .microsoft-icon {
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGgxMHYxMEgweiIgZmlsbD0iI2YyNTAyMiIvPjxwYXRoIGQ9Ik0xMSAwaDEwdjEwSDExeiIgZmlsbD0iIzgwYzQ0ZiIvPjxwYXRoIGQ9Ik0wIDExaDEwdjEwSDB6IiBmaWxsPSIjMDBhOWY0Ii8+PHBhdGggZD0iTTExIDExaDEwdjEwSDExeiIgZmlsbD0iI2ZmYjkwMCIvPjwvc3ZnPg==');
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 25px 0;
+      color: #666;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .divider span {
+      padding: 0 15px;
+      font-size: 14px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #ddd;
+    }
+    .form-control {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(20, 20, 40, 0.7);
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
     .form-control:focus {
       outline: none;
-      border-color: #6C757D; /* Subtle focus border */
-      box-shadow: 0 0 0 1px #6C757D;
-      background-color: #2B303B;
+      border-color: #00ffaa;
+      box-shadow: 0 0 0 2px rgba(0, 255, 170, 0.2);
+      background: rgba(25, 25, 45, 0.8);
     }
-    
     .form-control::placeholder {
-      color: #8892A3; /* Muted placeholder text */
-      font-size: 16px;
+      color: #888;
     }
-
-    /* Info text below first field, matching the screenshot */
-    .username-info {
-        font-size: 13px;
-        color: #8892A3;
-        margin-top: 5px;
-        line-height: 1.4;
+    .form-control.valid {
+      border-color: #00ff9d;
+      box-shadow: 0 0 0 2px rgba(0, 255, 157, 0.2);
     }
-    
-    /* Checkbox and Terms of Service Link */
-    .terms-container {
-        display: flex;
-        align-items: center;
-        margin-top: 10px;
-        margin-bottom: 30px;
+    .form-control.invalid {
+      border-color: #ff4757;
+      box-shadow: 0 0 0 2px rgba(255, 71, 87, 0.2);
     }
-
-    .terms-container input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        margin-right: 10px;
-        /* Custom checkbox style to match common mobile dark themes */
-        appearance: none;
-        background-color: transparent;
-        border: 2px solid #6C757D;
-        border-radius: 4px;
-        cursor: pointer;
-        position: relative;
-        flex-shrink: 0;
+    .validation-icon {
+      position: absolute;
+      right: 15px;
+      top: 42px;
+      font-size: 18px;
+      opacity: 0;
+      transition: opacity 0.3s;
     }
-
-    .terms-container input[type="checkbox"]:checked {
-        background-color: #4A90E2; /* Blue checkmark background */
-        border-color: #4A90E2;
+    .validation-icon.valid {
+      opacity: 1;
+      color: #00ff9d;
     }
-
-    .terms-container input[type="checkbox"]:checked::after {
-        content: '✓';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 12px;
-        color: #FFFFFF;
-        font-weight: bold;
+    .validation-icon.invalid {
+      opacity: 1;
+      color: #ff4757;
     }
-
-    .terms-container label {
-        font-size: 14px;
-        font-weight: 400;
-        color: #E8E8E8;
-        margin: 0;
+    .validation-message {
+      font-size: 13px;
+      margin-top: 5px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: none;
     }
-
-    .terms-container a {
-        color: #4A90E2; /* Blue link color */
-        text-decoration: none;
-        font-weight: 500;
-        margin-left: 4px;
+    .validation-message.valid {
+      display: block;
+      background: rgba(0, 255, 157, 0.1);
+      color: #00ff9d;
+      border: 1px solid rgba(0, 255, 157, 0.2);
     }
-    
-    /* Disclaimer text at the bottom */
-    .disclaimer-text {
-        font-size: 13px;
-        color: #8892A3;
-        text-align: center;
-        margin-top: 30px;
+    .validation-message.invalid {
+      display: block;
+      background: rgba(255, 71, 87, 0.1);
+      color: #ff4757;
+      border: 1px solid rgba(255, 71, 87, 0.2);
     }
-
-    .disclaimer-text a {
-        color: #8892A3;
-        text-decoration: underline;
+    .validation-message.info {
+      display: block;
+      background: rgba(0, 200, 255, 0.1);
+      color: #00c8ff;
+      border: 1px solid rgba(0, 200, 255, 0.2);
     }
-
-    /* Existing EZM styles for the primary button are not used as the screenshot doesn't show one. 
-       If you want to keep your neon button, keep the original styles.
-       I've removed the social login section to match the screenshot's simplicity.
-    */
+    #recaptcha-container {
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+    }
     .btn-primary {
       width: 100%;
       padding: 16px;
       border: none;
       border-radius: 10px;
-      /* Keeping your neon style for the submit button */
       background: linear-gradient(90deg, #00ffaa, #00ccff);
       color: #000;
       font-weight: 600;
@@ -221,96 +249,176 @@
       position: relative;
       overflow: hidden;
     }
-    
-    /* ... (Your original .btn-primary:before, :hover, :disabled styles remain) ... */
-
-
-    /* --- Validation Overrides (Keep minimal) --- */
-    .form-control.valid, .form-control.invalid { border-color: #4A5160; box-shadow: none; }
-    .validation-icon { display: none; } /* Hide your custom icons */
-    .validation-message { display: none; } /* Hide your custom messages */
-
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 255, 170, 0.4);
+    }
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .signin-link {
+      text-align: center;
+      margin-top: 25px;
+      color: #aaa;
+    }
+    .signin-link a {
+      color: #00ffaa;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    .signin-link a:hover {
+      text-decoration: underline;
+      color: #00ccff;
+    }
+    .error-message, .success-message, .info-message {
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: none;
+      font-weight: 500;
+    }
+    .error-message {
+      background: rgba(220, 53, 69, 0.2);
+      border: 1px solid rgba(220, 53, 69, 0.5);
+      color: #f8d7da;
+    }
+    .success-message {
+      background: rgba(40, 167, 69, 0.2);
+      border: 1px solid rgba(40, 167, 69, 0.5);
+      color: #d4edda;
+    }
+    .info-message {
+      background: rgba(0, 200, 255, 0.2);
+      border: 1px solid rgba(0, 200, 255, 0.5);
+      color: #d1ecf1;
+    }
+    .existing-account-prompt {
+      background: rgba(255, 193, 7, 0.15);
+      border: 1px solid rgba(255, 193, 7, 0.4);
+      color: #fff3cd;
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .existing-account-prompt p {
+      margin: 0 0 12px 0;
+      font-weight: 500;
+    }
+    .existing-account-prompt .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+    .existing-account-prompt .btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 500;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .existing-account-prompt .btn-login {
+      background: rgba(0, 255, 170, 0.2);
+      border: 1px solid rgba(0, 255, 170, 0.5);
+      color: #00ffaa;
+    }
+    .existing-account-prompt .btn-login:hover {
+      background: rgba(0, 255, 170, 0.3);
+    }
+    .existing-account-prompt .btn-forgot {
+      background: rgba(0, 200, 255, 0.2);
+      border: 1px solid rgba(0, 200, 255, 0.5);
+      color: #00c8ff;
+    }
+    .existing-account-prompt .btn-forgot:hover {
+      background: rgba(0, 200, 255, 0.3);
+    }
     @media (max-width: 576px) {
       .login-container {
-        margin: 0;
-        padding: 15px 15px 40px;
+        margin: 30px 15px;
+        padding: 25px;
       }
       .back-home { left: 15px; }
-      .form-control, .btn-primary { font-size: 1rem; padding: 16px 15px; }
+      .form-control, .btn-primary, .social-btn { font-size: 0.9rem; padding: 12px; }
+      .existing-account-prompt .btn-group {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
   <div id="rain-container"></div>
-  <div class="back-home"><a href="index.html">← Go back</a></div>
-  
+  <div class="back-home"><a href="index.html">← 🏘️</a></div>
   <div class="login-container">
-    <h2 class="signup-header">Join our community</h2>
+    <div class="brand-logo">
+      <p>EZM CYBER</p>
+      <p>Secure Signup</p>
+    </div>
     
     <div id="error-message" class="error-message"></div>
     <div id="success-message" class="success-message"></div>
     <div id="info-message" class="info-message"></div>
+    
     <div id="existing-account-prompt" class="existing-account-prompt">
-      
+      <p>This email is already registered with EZM Cyber.</p>
       <div class="btn-group">
         <a href="login.html" class="btn btn-login">Log In Instead</a>
         <a href="forgot-password.html" class="btn btn-forgot">Forgot Password?</a>
       </div>
     </div>
     
+    <button id="google-signin-btn" class="social-btn google-btn" onclick="handleGoogleSignIn()">
+      <div class="google-icon"></div><span>Continue with Google</span>
+    </button>
+    <button id="microsoft-signin-btn" class="social-btn microsoft-btn" onclick="handleMicrosoftSignIn()">
+      <div class="microsoft-icon"></div><span>Continue with Microsoft</span>
+    </button>
+    
+    <div class="divider"><span>or</span></div>
+    
     <form id="signup-form" method="POST">
-      
       <div class="form-group">
-        <label for="firstName" class="form-label">First name</label>
-        <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter your first name" required>
-        <p class="username-info">Your selected username may be displayed if you contribute to comments, public collections, and other public resources.</p>
-      </div>
-
-      <div class="form-group">
-        <label for="lastName" class="form-label">Last name</label>
-        <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter your last name" required>
-      </div>
-      
-      <div class="form-group">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
-        <i class="validation-icon" id="email-icon"></i> 
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+        <i class="validation-icon" id="email-icon"></i>
         <div class="validation-message" id="email-message"></div>
       </div>
       
       <div class="form-group">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="Enter a username" required>
-      </div>
-      
-      <div class="form-group">
         <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Min. 8 characters" required>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Create a strong password" required>
         <i class="validation-icon" id="password-icon"></i>
         <div class="validation-message" id="password-message"></div>
-      </div>
-      
-      <div class="form-group">
-        <label for="repeatPassword" class="form-label">Repeat password</label>
-        <input type="password" id="repeatPassword" name="repeatPassword" class="form-control" placeholder="Min. 8 characters" required>
-      </div>
-
-      <div class="terms-container">
-        <input type="checkbox" id="terms" required>
-        <label for="terms">Yes, I have read and agree to the <a href="#" class="terms-link">Terms of Service</a>.</label>
       </div>
       
       <div id="recaptcha-container"></div>
       
       <button type="submit" id="verify-btn" class="btn-primary">
-        <span id="verify-btn-text">Sign Up</span>
+        <span id="verify-btn-text">Sign Up with Email</span>
       </button>
     </form>
     
-    <div class="disclaimer-text">
-        By signing up, I acknowledge that I have read the <a href="#">Privacy</a>
+    <div class="signin-link">
+      Already have an account? <a href="login.html">Sign in here</a>
     </div>
-    
   </div>
 
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -337,27 +445,25 @@
     }
 
     function updateValidationState(field, isValid, message, isInfo = false) {
-      // NOTE: Custom validation icons and messages are hidden by the new CSS
-      // This function's visual effect will be minimal, but the logic is preserved.
       const icon = document.getElementById(`${field}-icon`);
       const messageEl = document.getElementById(`${field}-message`);
       const input = document.getElementById(field);
       
       // Reset classes
       input.classList.remove('valid', 'invalid');
-      if (icon) icon.classList.remove('fa-check', 'fa-times', 'valid', 'invalid');
-      if (messageEl) messageEl.classList.remove('valid', 'invalid', 'info');
+      icon.classList.remove('fa-check', 'fa-times', 'valid', 'invalid');
+      messageEl.classList.remove('valid', 'invalid', 'info');
       
       if (isValid) {
         input.classList.add('valid');
-        if (icon) icon.classList.add('fa-check', 'valid');
-        if (messageEl) messageEl.classList.add('valid');
-        if (messageEl) messageEl.textContent = message || 'Looks good!';
+        icon.classList.add('fa-check', 'valid');
+        messageEl.classList.add('valid');
+        messageEl.textContent = message || 'Looks good!';
       } else {
         input.classList.add('invalid');
-        if (icon) icon.classList.add('fa-times', 'invalid');
-        if (messageEl) messageEl.classList.add(isInfo ? 'info' : 'invalid');
-        if (messageEl) messageEl.textContent = message || 'Please check this field';
+        icon.classList.add('fa-times', 'invalid');
+        messageEl.classList.add(isInfo ? 'info' : 'invalid');
+        messageEl.textContent = message || 'Please check this field';
       }
     }
 
@@ -502,13 +608,70 @@
       }
     }
 
-    // Google Sign-in logic is preserved (although the button is removed from HTML)
     function handleGoogleSignIn() {
-      showInfo('Please complete the email sign-up form.');
+      const btn = document.getElementById('google-signin-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="google-icon"></div><span>Connecting to Google...</span>';
+      
+      try {
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: async (response) => {
+            try {
+              const user = parseJwt(response.credential);
+              
+              // Store user session immediately
+              sessionStorage.setItem('user', JSON.stringify({
+                name: user.name,
+                email: user.email,
+                picture: user.picture,
+                loginMethod: 'google'
+              }));
+              
+              showSuccess(`Welcome ${user.name}! Setting up your account...`);
+              
+              // Send welcome email (backend first, Formsubmit fallback)
+              const emailSent = await sendWelcomeEmail(user.email, user.name, 'google');
+              
+              if (emailSent) {
+                showSuccess('Account created successfully! Redirecting to your dashboard...');
+              } else {
+                showInfo('Account created! Welcome email will be sent shortly.');
+              }
+              
+              // Redirect to home page after 1 second
+              setTimeout(() => {
+                window.location.href = 'home.html';
+              }, 1000);
+              
+            } catch (error) {
+              console.error('Google sign-in processing error:', error);
+              showError('Something went wrong during sign-in. Please try again.');
+              btn.disabled = false;
+              btn.innerHTML = '<div class="google-icon"></div><span>Continue with Google</span>';
+            }
+          }
+        });
+        
+        // Trigger Google sign-in prompt
+        google.accounts.id.prompt((notification) => {
+          if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+            showError('Google Sign-In popup was blocked or skipped. Please allow popups and try again.');
+            btn.disabled = false;
+            btn.innerHTML = '<div class="google-icon"></div><span>Continue with Google</span>';
+          }
+        });
+        
+      } catch (e) {
+        console.error('Google Sign-In initialization error:', e);
+        showError('Google Sign-In is currently unavailable. Please try email signup instead.');
+        btn.disabled = false;
+        btn.innerHTML = '<div class="google-icon"></div><span>Continue with Google</span>';
+      }
     }
 
     function handleMicrosoftSignIn() {
-      showInfo('Microsoft Sign-In is coming soon! For now, please use the email signup form.');
+      showInfo('Microsoft Sign-In is coming soon! For now, please use Google Sign-In or create an account with your email.');
     }
 
     function onRecaptchaLoad() {
@@ -527,13 +690,13 @@
         return;
       }
 
-      // Add Font Awesome for validation icons (kept for logic, though icons are hidden)
+      // Add Font Awesome for validation icons
       const fontAwesome = document.createElement('link');
       fontAwesome.rel = 'stylesheet';
       fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
       document.head.appendChild(fontAwesome);
 
-      // Email validation with real-time duplicate checking (Preserved)
+      // Email validation with real-time duplicate checking
       const emailInput = document.getElementById('email');
       emailInput.addEventListener('input', function() {
         const email = this.value.trim();
@@ -563,6 +726,7 @@
         // Debounce email existence check (800ms delay)
         emailCheckTimeout = setTimeout(async () => {
           // For demo purposes, simulate checking against existing emails
+          // In production, replace with actual API call
           const existingEmails = ['user@example.com', 'test@ezmcyber.com', 'demo@gmail.com', 'existing@user.com'];
           const emailExists = existingEmails.includes(email);
           
@@ -575,7 +739,7 @@
         }, 800);
       });
 
-      // Password validation with helpful guidance (Preserved)
+      // Password validation with helpful guidance
       const passwordInput = document.getElementById('password');
       passwordInput.addEventListener('input', function() {
         const password = this.value;
@@ -598,47 +762,24 @@
         updateValidationState('password', true, 'Great! Your password is strong and secure');
       });
 
-      // Form submission logic (Preserved, but you should update your backend 
-      // to handle the new fields: firstName, lastName, username, repeatPassword)
+      // Form submission with enhanced email checking
       const form = document.getElementById('signup-form');
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
         
-        // Retrieve all new form fields
-        const firstName = form.firstName.value.trim();
-        const lastName = form.lastName.value.trim();
         const email = form.email.value.trim();
-        const username = form.username.value.trim();
         const password = form.password.value;
-        const repeatPassword = form.repeatPassword.value;
-        const termsChecked = form.terms.checked;
-
         const recaptchaToken = grecaptcha.getResponse(recaptchaWidgetId);
 
         // Comprehensive input validation
-        if (!firstName || !lastName || !username) {
-             showError('Please fill in all name and username fields.');
-             return;
-        }
-
         if (!validateEmail(email)) {
           showError('Please enter a valid email address to continue.');
           return;
         }
         
         if (!validatePassword(password)) {
-          showError('Your password must be at least 8 characters with uppercase, lowercase letters, and numbers.');
+          showError('Please make sure your password meets the security requirements: at least 8 characters with uppercase, lowercase letters, and numbers.');
           return;
-        }
-        
-        if (password !== repeatPassword) {
-            showError('The passwords you entered do not match.');
-            return;
-        }
-
-        if (!termsChecked) {
-             showError('You must agree to the Terms of Service to sign up.');
-             return;
         }
         
         if (!recaptchaToken) {
@@ -658,24 +799,20 @@
           if (emailExists) {
             showExistingAccountPrompt();
             verifyBtn.disabled = false;
-            verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up</span>';
+            verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
             return;
           }
 
           // Proceed with registration
           showInfo('Setting up your secure account...');
           
-          // NOTE: You MUST update your BACKEND to accept these new fields!
           const response = await retryFetch(BACKEND_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
               url: 'https://ezmcyber.xyz', 
               email,
-              firstName, // NEW FIELD
-              lastName, // NEW FIELD
-              username, // NEW FIELD
-              password, // You'd typically hash and send this
+              name: email.split('@')[0],
               loginMethod: 'email'
             })
           });
@@ -685,13 +822,12 @@
           // Store user session
           sessionStorage.setItem('user', JSON.stringify({
             email,
-            name: `${firstName} ${lastName}`, // Use the new full name
+            name: email.split('@')[0],
             loginMethod: 'email'
           }));
           
-          // Send welcome email
-          const fullName = `${firstName} ${lastName}`;
-          const emailSent = await sendWelcomeEmail(email, fullName, 'email');
+          // Send welcome email (backend first, Formsubmit fallback)
+          const emailSent = await sendWelcomeEmail(email, email.split('@')[0], 'email');
           
           if (emailSent) {
             showSuccess('Welcome to EZM Cyber! Your account has been created successfully. Redirecting to your dashboard...');
@@ -715,11 +851,11 @@
           } else if (error.message.includes('network') || error.message.includes('fetch')) {
             showError('Network connection issue. Please check your internet and try again.');
           } else {
-            showError('We encountered an issue creating your account. Please try again.');
+            showError('We encountered an issue creating your account. Please try again or use Google Sign-In for faster access.');
           }
           
           verifyBtn.disabled = false;
-          verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up</span>';
+          verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
         }
       });
 
