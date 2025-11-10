@@ -416,7 +416,9 @@ def not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return jsonify({"status": "error", "message": "Internal server error"}), 500
-
+@app.route('/which-script')
+def which_script():
+    return "app.py"
 # -------------------- RUN APP --------------------
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
