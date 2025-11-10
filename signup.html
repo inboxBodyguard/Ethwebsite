@@ -1,773 +1,428 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://www.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; connect-src 'self' https://ethwebsite-ulau.onrender.com https://formsubmit.co; frame-src https://www.google.com; img-src 'self' data:;">
   <title>Signup | EZM Cyber - Your Digital Security Partner</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+      color: #fff;
+      min-height: 100vh;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      overflow-x: hidden;
+      position: relative;
     }
-
-```
-:root {
-  --primary-bg: #1A1E28;
-  --accent-cyan: #00ffaa;
-  --accent-blue: #00ccff;
-  --text-primary: #ffffff;
-  --text-secondary: #aaaaaa;
-  --input-bg: rgba(20, 20, 40, 0.7);
-  --border-color: rgba(255, 255, 255, 0.2);
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
-  color: var(--text-primary);
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* Rain Effect */
-#rain-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.3;
-  transition: opacity 0.5s;
-}
-
-#rain-container.rain-disabled {
-  opacity: 0;
-}
-
-.rain-column {
-  position: absolute;
-  top: -100px;
-  color: rgba(0, 255, 170, 0.7);
-  font-size: 14px;
-  font-family: monospace;
-  animation: rainFall linear infinite, fadeOut linear forwards;
-  line-height: 1.2;
-}
-
-@keyframes rainFall {
-  0% { transform: translateY(-100px); }
-  100% { transform: translateY(100vh); }
-}
-
-@keyframes fadeOut {
-  0% { opacity: 0.7; }
-  100% { opacity: 0; }
-}
-
-/* Rain Toggle */
-.rain-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 100;
-  background: rgba(15, 15, 35, 0.8);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 8px 12px;
-  color: var(--text-secondary);
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.3s;
-  backdrop-filter: blur(10px);
-}
-
-.rain-toggle:hover {
-  background: rgba(25, 25, 45, 0.9);
-  border-color: var(--accent-cyan);
-  color: var(--accent-cyan);
-}
-
-/* Back Home Link */
-.back-home {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 100;
-}
-
-.back-home a {
-  color: var(--accent-cyan);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 16px;
-}
-
-.back-home a:hover {
-  color: var(--accent-blue);
-}
-
-/* Full-Width Container */
-.signup-wrapper {
-  position: relative;
-  z-index: 2;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: row;
-}
-
-/* Left Side - Branding */
-.brand-section {
-  flex: 1;
-  background: rgba(10, 10, 25, 0.6);
-  backdrop-filter: blur(20px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 60px 40px;
-  border-right: 1px solid rgba(0, 255, 170, 0.1);
-  position: relative;
-}
-
-.brand-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(ellipse at center, rgba(0, 255, 170, 0.05) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.brand-content {
-  max-width: 500px;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
-
-.brand-logo-large {
-  margin-bottom: 40px;
-}
-
-.brand-logo-large h1 {
-  font-weight: 700;
-  font-size: 56px;
-  margin-bottom: 15px;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 0 30px rgba(0, 255, 170, 0.3);
-  letter-spacing: 2px;
-}
-
-.brand-tagline {
-  font-size: 20px;
-  color: var(--text-secondary);
-  margin-bottom: 30px;
-  line-height: 1.6;
-}
-
-.brand-features {
-  list-style: none;
-  text-align: left;
-  margin-top: 40px;
-}
-
-.brand-features li {
-  padding: 12px 0;
-  color: var(--text-secondary);
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.brand-features li::before {
-  content: '✓';
-  color: var(--accent-cyan);
-  font-weight: bold;
-  font-size: 20px;
-}
-
-/* Right Side - Form */
-.form-section {
-  flex: 1;
-  background: rgba(15, 15, 35, 0.8);
-  backdrop-filter: blur(20px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px;
-  overflow-y: auto;
-}
-
-.form-container {
-  max-width: 500px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.form-header {
-  margin-bottom: 40px;
-}
-
-.form-header h2 {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: var(--text-primary);
-}
-
-.form-header p {
-  color: var(--text-secondary);
-  font-size: 16px;
-}
-
-/* Social Buttons */
-.social-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 30px;
-}
-
-.social-btn {
-  width: 100%;
-  padding: 14px 20px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: rgba(30, 30, 60, 0.6);
-  color: white;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-  cursor: pointer;
-  font-size: 15px;
-  gap: 12px;
-}
-
-.social-btn:hover:not(:disabled) {
-  background: rgba(40, 40, 80, 0.8);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.social-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.google-btn { border-color: rgba(220, 78, 65, 0.5); }
-.microsoft-btn { border-color: rgba(0, 120, 215, 0.5); }
-
-.google-icon, .microsoft-icon {
-  width: 20px;
-  height: 20px;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.google-icon {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=');
-}
-
-.microsoft-icon {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGgxMHYxMEgweiIgZmlsbD0iI2YyNTAyMiIvPjxwYXRoIGQ9Ik0xMSAwaDEwdjEwSDExeiIgZmlsbD0iIzgwYzQ0ZiIvPjxwYXRoIGQ9Ik0wIDExaDEwdjEwSDB6IiBmaWxsPSIjMDBhOWY0Ii8+PHBhdGggZD0iTTExIDExaDEwdjEwSDExeiIgZmlsbD0iI2ZmYjkwMCIvPjwvc3ZnPg==');
-}
-
-/* Divider */
-.divider {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 25px 0;
-  color: #666;
-}
-
-.divider::before, .divider::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.divider span {
-  padding: 0 15px;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Messages */
-.error-message, .success-message, .info-message {
-  padding: 14px 16px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  display: none;
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.error-message {
-  background: rgba(220, 53, 69, 0.2);
-  border: 1px solid rgba(220, 53, 69, 0.5);
-  color: #f8d7da;
-}
-
-.success-message {
-  background: rgba(40, 167, 69, 0.2);
-  border: 1px solid rgba(40, 167, 69, 0.5);
-  color: #d4edda;
-}
-
-.info-message {
-  background: rgba(0, 200, 255, 0.2);
-  border: 1px solid rgba(0, 200, 255, 0.5);
-  color: #d1ecf1;
-}
-
-.existing-account-prompt {
-  background: rgba(255, 193, 7, 0.15);
-  border: 1px solid rgba(255, 193, 7, 0.4);
-  color: #fff3cd;
-  padding: 16px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  display: none;
-}
-
-.existing-account-prompt p {
-  margin: 0 0 12px 0;
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.existing-account-prompt .btn-group {
-  display: flex;
-  gap: 10px;
-}
-
-.existing-account-prompt .btn {
-  flex: 1;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 500;
-  text-align: center;
-  text-decoration: none;
-  transition: all 0.3s;
-  font-size: 14px;
-}
-
-.existing-account-prompt .btn-login {
-  background: rgba(0, 255, 170, 0.2);
-  border: 1px solid rgba(0, 255, 170, 0.5);
-  color: var(--accent-cyan);
-}
-
-.existing-account-prompt .btn-login:hover {
-  background: rgba(0, 255, 170, 0.3);
-}
-
-.existing-account-prompt .btn-forgot {
-  background: rgba(0, 200, 255, 0.2);
-  border: 1px solid rgba(0, 200, 255, 0.5);
-  color: var(--accent-blue);
-}
-
-.existing-account-prompt .btn-forgot:hover {
-  background: rgba(0, 200, 255, 0.3);
-}
-
-/* Form Elements */
-.form-group {
-  margin-bottom: 24px;
-  position: relative;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: var(--text-primary);
-  font-size: 14px;
-}
-
-.form-control {
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: var(--input-bg);
-  color: white;
-  font-size: 16px;
-  transition: all 0.3s;
-  font-family: 'Inter', sans-serif;
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: var(--accent-cyan);
-  box-shadow: 0 0 0 3px rgba(0, 255, 170, 0.1);
-  background: rgba(25, 25, 45, 0.8);
-}
-
-.form-control::placeholder {
-  color: #888;
-}
-
-.form-control.valid {
-  border-color: #00ff9d;
-  box-shadow: 0 0 0 2px rgba(0, 255, 157, 0.2);
-}
-
-.form-control.invalid {
-  border-color: #ff4757;
-  box-shadow: 0 0 0 2px rgba(255, 71, 87, 0.2);
-}
-
-.validation-icon {
-  position: absolute;
-  right: 15px;
-  top: 42px;
-  font-size: 18px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.validation-icon.valid {
-  opacity: 1;
-  color: #00ff9d;
-}
-
-.validation-icon.invalid {
-  opacity: 1;
-  color: #ff4757;
-}
-
-.validation-message {
-  font-size: 13px;
-  margin-top: 6px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  display: none;
-}
-
-.validation-message.valid {
-  display: block;
-  background: rgba(0, 255, 157, 0.1);
-  color: #00ff9d;
-  border: 1px solid rgba(0, 255, 157, 0.2);
-}
-
-.validation-message.invalid {
-  display: block;
-  background: rgba(255, 71, 87, 0.1);
-  color: #ff4757;
-  border: 1px solid rgba(255, 71, 87, 0.2);
-}
-
-.validation-message.info {
-  display: block;
-  background: rgba(0, 200, 255, 0.1);
-  color: #00c8ff;
-  border: 1px solid rgba(0, 200, 255, 0.2);
-}
-
-/* reCAPTCHA Container */
-#recaptcha-container {
-  margin: 24px 0;
-  display: flex;
-  justify-content: center;
-}
-
-/* Submit Button */
-.btn-primary {
-  width: 100%;
-  padding: 16px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
-  color: #000;
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-  font-family: 'Inter', sans-serif;
-}
-
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  transition: left 0.5s;
-}
-
-.btn-primary:hover:not(:disabled)::before {
-  left: 100%;
-}
-
-.btn-primary:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 255, 170, 0.4);
-}
-
-.btn-primary:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* Sign In Link */
-.signin-link {
-  text-align: center;
-  margin-top: 30px;
-  color: var(--text-secondary);
-  font-size: 15px;
-}
-
-.signin-link a {
-  color: var(--accent-cyan);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s;
-}
-
-.signin-link a:hover {
-  text-decoration: underline;
-  color: var(--accent-blue);
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .signup-wrapper {
-    flex-direction: column;
-  }
-
-  .brand-section {
-    border-right: none;
-    border-bottom: 1px solid rgba(0, 255, 170, 0.1);
-    padding: 40px 30px;
-    min-height: auto;
-  }
-
-  .brand-logo-large h1 {
-    font-size: 42px;
-  }
-
-  .brand-tagline {
-    font-size: 18px;
-  }
-
-  .brand-features {
-    display: none;
-  }
-
-  .form-section {
-    padding: 40px 30px;
-  }
-}
-
-@media (max-width: 768px) {
-  .back-home {
-    left: 15px;
-    top: 15px;
-  }
-
-  .rain-toggle {
-    right: 15px;
-    top: 15px;
-    font-size: 11px;
-    padding: 6px 10px;
-  }
-
-  .brand-section {
-    padding: 30px 20px;
-  }
-
-  .brand-logo-large h1 {
-    font-size: 36px;
-  }
-
-  .brand-tagline {
-    font-size: 16px;
-  }
-
-  .form-section {
-    padding: 30px 20px;
-  }
-
-  .form-header h2 {
-    font-size: 26px;
-  }
-
-  .form-control, .btn-primary, .social-btn {
-    font-size: 15px;
-    padding: 12px 14px;
-  }
-
-  .existing-account-prompt .btn-group {
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 480px) {
-  .brand-logo-large h1 {
-    font-size: 28px;
-  }
-
-  .form-header h2 {
-    font-size: 22px;
-  }
-
-  .form-section {
-    padding: 20px 15px;
-  }
-}
-```
-
+    #rain-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .rain-column {
+      position: absolute;
+      top: -100px;
+      color: rgba(0, 255, 170, 0.7);
+      font-size: 14px;
+      font-family: monospace;
+      animation: rainFall linear infinite, fadeOut linear forwards;
+      line-height: 1.2;
+    }
+    @keyframes rainFall {
+      0% { transform: translateY(-100px); }
+      100% { transform: translateY(100vh); }
+    }
+    @keyframes fadeOut {
+      0% { opacity: 0.7; }
+      100% { opacity: 0; }
+    }
+    .back-home {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+    }
+    .back-home a {
+      color: #00ffaa;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .back-home a:hover {
+      color: #00cc88;
+    }
+    .login-container {
+      position: relative;
+      z-index: 2;
+      max-width: 440px;
+      margin: 60px auto;
+      padding: 40px;
+      background: rgba(15, 15, 35, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 
+                  0 0 0 1px rgba(0, 255, 170, 0.1),
+                  inset 0 0 20px rgba(0, 255, 170, 0.05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(0, 255, 170, 0.2);
+    }
+    .brand-logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .brand-logo h1 {
+      font-weight: 700;
+      font-size: 36px;
+      margin-bottom: 5px;
+      background: linear-gradient(90deg, #00ffaa, #00ccff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(0, 255, 170, 0.3);
+    }
+    .brand-logo p {
+      font-weight: 400;
+      color: #aaa;
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+    .social-btn {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(30, 30, 60, 0.7);
+      color: white;
+      font-weight: 500;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .social-btn:hover {
+      background: rgba(40, 40, 80, 0.9);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    .social-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .google-btn { border-color: rgba(220, 78, 65, 0.5); }
+    .microsoft-btn { border-color: rgba(0, 120, 215, 0.5); }
+    .google-icon, .microsoft-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .google-icon {
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=');
+    }
+    .microsoft-icon {
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiIGhlaWdodD0iMjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGgxMHYxMEgweiIgZmlsbD0iI2YyNTAyMiIvPjxwYXRoIGQ9Ik0xMSAwaDEwdjEwSDExeiIgZmlsbD0iIzgwYzQ0ZiIvPjxwYXRoIGQ9Ik0wIDExaDEwdjEwSDB6IiBmaWxsPSIjMDBhOWY0Ii8+PHBhdGggZD0iTTExIDExaDEwdjEwSDExeiIgZmlsbD0iI2ZmYjkwMCIvPjwvc3ZnPg==');
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 25px 0;
+      color: #666;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .divider span {
+      padding: 0 15px;
+      font-size: 14px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #ddd;
+    }
+    .form-control {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(20, 20, 40, 0.7);
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: #00ffaa;
+      box-shadow: 0 0 0 2px rgba(0, 255, 170, 0.2);
+      background: rgba(25, 25, 45, 0.8);
+    }
+    .form-control::placeholder {
+      color: #888;
+    }
+    .form-control.valid {
+      border-color: #00ff9d;
+      box-shadow: 0 0 0 2px rgba(0, 255, 157, 0.2);
+    }
+    .form-control.invalid {
+      border-color: #ff4757;
+      box-shadow: 0 0 0 2px rgba(255, 71, 87, 0.2);
+    }
+    .validation-icon {
+      position: absolute;
+      right: 15px;
+      top: 42px;
+      font-size: 18px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .validation-icon.valid {
+      opacity: 1;
+      color: #00ff9d;
+    }
+    .validation-icon.invalid {
+      opacity: 1;
+      color: #ff4757;
+    }
+    .validation-message {
+      font-size: 13px;
+      margin-top: 5px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: none;
+    }
+    .validation-message.valid {
+      display: block;
+      background: rgba(0, 255, 157, 0.1);
+      color: #00ff9d;
+      border: 1px solid rgba(0, 255, 157, 0.2);
+    }
+    .validation-message.invalid {
+      display: block;
+      background: rgba(255, 71, 87, 0.1);
+      color: #ff4757;
+      border: 1px solid rgba(255, 71, 87, 0.2);
+    }
+    .validation-message.info {
+      display: block;
+      background: rgba(0, 200, 255, 0.1);
+      color: #00c8ff;
+      border: 1px solid rgba(0, 200, 255, 0.2);
+    }
+    #recaptcha-container {
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #00ffaa, #00ccff);
+      color: #000;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 255, 170, 0.4);
+    }
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .signin-link {
+      text-align: center;
+      margin-top: 25px;
+      color: #aaa;
+    }
+    .signin-link a {
+      color: #00ffaa;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    .signin-link a:hover {
+      text-decoration: underline;
+      color: #00ccff;
+    }
+    .error-message, .success-message, .info-message {
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: none;
+      font-weight: 500;
+    }
+    .error-message {
+      background: rgba(220, 53, 69, 0.2);
+      border: 1px solid rgba(220, 53, 69, 0.5);
+      color: #f8d7da;
+    }
+    .success-message {
+      background: rgba(40, 167, 69, 0.2);
+      border: 1px solid rgba(40, 167, 69, 0.5);
+      color: #d4edda;
+    }
+    .info-message {
+      background: rgba(0, 200, 255, 0.2);
+      border: 1px solid rgba(0, 200, 255, 0.5);
+      color: #d1ecf1;
+    }
+    .existing-account-prompt {
+      background: rgba(255, 193, 7, 0.15);
+      border: 1px solid rgba(255, 193, 7, 0.4);
+      color: #fff3cd;
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .existing-account-prompt p {
+      margin: 0 0 12px 0;
+      font-weight: 500;
+    }
+    .existing-account-prompt .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+    .existing-account-prompt .btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 500;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .existing-account-prompt .btn-login {
+      background: rgba(0, 255, 170, 0.2);
+      border: 1px solid rgba(0, 255, 170, 0.5);
+      color: #00ffaa;
+    }
+    .existing-account-prompt .btn-login:hover {
+      background: rgba(0, 255, 170, 0.3);
+    }
+    .existing-account-prompt .btn-forgot {
+      background: rgba(0, 200, 255, 0.2);
+      border: 1px solid rgba(0, 200, 255, 0.5);
+      color: #00c8ff;
+    }
+    .existing-account-prompt .btn-forgot:hover {
+      background: rgba(0, 200, 255, 0.3);
+    }
+    @media (max-width: 576px) {
+      .login-container {
+        margin: 30px 15px;
+        padding: 25px;
+      }
+      .back-home { left: 15px; }
+      .form-control, .btn-primary, .social-btn { font-size: 0.9rem; padding: 12px; }
+      .existing-account-prompt .btn-group {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 <body>
   <div id="rain-container"></div>
-
-  <div class="back-home">
-    <a href="index.html" aria-label="Go back to home">←Go back</a>
-  </div>
-
-  <button class="rain-toggle" id="rain-toggle" aria-label="Toggle cyber rain effect">
-    <span id="rain-toggle-text">🌧️ Rain: ON</span>
-  </button>
-
-  <div class="signup-wrapper">
-    <!-- Left Side - Branding -->
-    <section class="brand-section" aria-label="EZM Cyber branding">
-      <div class="brand-content">
-        <div class="brand-logo-large">
-          <h1>EZM CYBER</h1>
-        </div>
-        <p class="brand-tagline">Your Digital Security Partner</p>
-        <ul class="brand-features">
-          <li>Enterprise-grade security solutions</li>
-          <li>24/7 threat monitoring & response</li>
-          <li>Compliance & risk management</li>
-          <li>Expert cybersecurity consulting</li>
-        </ul>
-      </div>
-    </section>
-
-```
-<!-- Right Side - Form -->
-<section class="form-section" aria-label="Signup form">
-  <div class="form-container">
-    <div class="form-header">
-      <h2>Secure Signup</h2>
-      <p>Create your account to get started</p>
+  <div class="back-home"><a href="index.html">← 🏘️</a></div>
+  <div class="login-container">
+    <div class="brand-logo">
+      <p>EZM CYBER</p>
+      <p>Secure Signup</p>
     </div>
-
-    <div id="error-message" class="error-message" role="alert"></div>
-    <div id="success-message" class="success-message" role="alert"></div>
-    <div id="info-message" class="info-message" role="alert"></div>
-
-    <div id="existing-account-prompt" class="existing-account-prompt" role="alert">
+    
+    <div id="error-message" class="error-message"></div>
+    <div id="success-message" class="success-message"></div>
+    <div id="info-message" class="info-message"></div>
+    
+    <div id="existing-account-prompt" class="existing-account-prompt">
       <p>This email is already registered with EZM Cyber.</p>
       <div class="btn-group">
         <a href="login.html" class="btn btn-login">Log In Instead</a>
         <a href="forgot-password.html" class="btn btn-forgot">Forgot Password?</a>
       </div>
     </div>
-
-    <div class="social-buttons">
-      <button id="google-signin-btn" class="social-btn google-btn" onclick="handleGoogleSignIn()" aria-label="Sign up with Google">
-        <div class="google-icon" aria-hidden="true"></div>
-        <span>Continue with Google</span>
-      </button>
-      <button id="microsoft-signin-btn" class="social-btn microsoft-btn" onclick="handleMicrosoftSignIn()" aria-label="Sign up with Microsoft">
-        <div class="microsoft-icon" aria-hidden="true"></div>
-        <span>Continue with Microsoft</span>
-      </button>
-    </div>
-
-    <div class="divider" aria-hidden="true"><span>or</span></div>
-
-    <form id="signup-form" method="POST" novalidate>
+    
+    <button id="google-signin-btn" class="social-btn google-btn" onclick="handleGoogleSignIn()">
+      <div class="google-icon"></div><span>Continue with Google</span>
+    </button>
+    <button id="microsoft-signin-btn" class="social-btn microsoft-btn" onclick="handleMicrosoftSignIn()">
+      <div class="microsoft-icon"></div><span>Continue with Microsoft</span>
+    </button>
+    
+    <div class="divider"><span>or</span></div>
+    
+    <form id="signup-form" method="POST">
       <div class="form-group">
         <label for="email" class="form-label">Email Address</label>
-        <input 
-          type="email" 
-          id="email" 
-          name="email" 
-          class="form-control" 
-          placeholder="Enter your email" 
-          required 
-          aria-required="true"
-          aria-describedby="email-message"
-          autocomplete="email"
-        >
-        <i class="validation-icon" id="email-icon" aria-hidden="true"></i>
-        <div class="validation-message" id="email-message" role="status"></div>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+        <i class="validation-icon" id="email-icon"></i>
+        <div class="validation-message" id="email-message"></div>
       </div>
-
+      
       <div class="form-group">
         <label for="password" class="form-label">Password</label>
-        <input 
-          type="password" 
-          id="password" 
-          name="password" 
-          class="form-control" 
-          placeholder="Create a strong password" 
-          required 
-          aria-required="true"
-          aria-describedby="password-message"
-          autocomplete="new-password"
-        >
-        <i class="validation-icon" id="password-icon" aria-hidden="true"></i>
-        <div class="validation-message" id="password-message" role="status"></div>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Create a strong password" required>
+        <i class="validation-icon" id="password-icon"></i>
+        <div class="validation-message" id="password-message"></div>
       </div>
-
-      <div id="recaptcha-container" aria-label="reCAPTCHA verification"></div>
-
+      
+      <div id="recaptcha-container"></div>
+      
       <button type="submit" id="verify-btn" class="btn-primary">
         <span id="verify-btn-text">Sign Up with Email</span>
       </button>
     </form>
-
+    
     <div class="signin-link">
       Already have an account? <a href="login.html">Sign in here</a>
     </div>
   </div>
-</section>
-```
-
-  </div>
 
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-
   <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" async></script>
 
   <script>
     const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com';
@@ -777,48 +432,24 @@ body {
     let recaptchaWidgetId = null;
     let emailCheckTimeout = null;
 
-    // Rain Toggle Functionality
-    function initRainToggle() {
-      const rainContainer = document.getElementById('rain-container');
-      const rainToggle = document.getElementById('rain-toggle');
-      const rainToggleText = document.getElementById('rain-toggle-text');
-      
-      const rainEnabled = localStorage.getItem('rainEnabled') !== 'false';
-      
-      if (!rainEnabled) {
-        rainContainer.classList.add('rain-disabled');
-        rainToggleText.textContent = '🌧️ Rain: OFF';
-      }
-
-      rainToggle.addEventListener('click', () => {
-        const isEnabled = !rainContainer.classList.contains('rain-disabled');
-        
-        if (isEnabled) {
-          rainContainer.classList.add('rain-disabled');
-          rainToggleText.textContent = '🌧️ Rain: ON';
-          localStorage.setItem('rainEnabled', 'true');
-        }
-      });
-    }
-
-    // Email validation
+    // Email validation and duplicate check
     function validateEmail(email) {
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return re.test(email);
     }
 
-    // Password validation
     function validatePassword(password) {
+      // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
       const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
       return re.test(password);
     }
 
-    // Update validation state
     function updateValidationState(field, isValid, message, isInfo = false) {
       const icon = document.getElementById(`${field}-icon`);
       const messageEl = document.getElementById(`${field}-message`);
       const input = document.getElementById(field);
       
+      // Reset classes
       input.classList.remove('valid', 'invalid');
       icon.classList.remove('fa-check', 'fa-times', 'valid', 'invalid');
       messageEl.classList.remove('valid', 'invalid', 'info');
@@ -836,13 +467,15 @@ body {
       }
     }
 
-    // Check email existence
     async function checkEmailExists(email) {
       if (!validateEmail(email)) return false;
       
       try {
+        // Show checking state
         updateValidationState('email', false, 'Checking if email is available...', true);
         
+        // Simulate API call to check if email exists
+        // In a real implementation, this would be an API call to your backend
         const response = await fetch(`${BACKEND_URL}/check-email`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -860,7 +493,6 @@ body {
       }
     }
 
-    // Message display functions
     function showError(msg) {
       const e = document.getElementById('error-message');
       e.textContent = msg;
@@ -898,7 +530,6 @@ body {
       document.getElementById('info-message').style.display = 'none';
     }
 
-    // Parse JWT token
     function parseJwt(token) {
       const base64Url = token.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -906,9 +537,9 @@ body {
       return JSON.parse(jsonPayload);
     }
 
-    // Send welcome email
     async function sendWelcomeEmail(email, name = '', loginMethod = 'email') {
       try {
+        // First try the main backend
         const response = await fetch(BACKEND_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -930,6 +561,7 @@ body {
       } catch (err) {
         console.warn('Backend email failed, falling back to Formsubmit:', err);
         
+        // Fallback to Formsubmit
         try {
           const formsubmitResponse = await fetch(`https://formsubmit.co/ajax/${FORM_SUBMIT_EMAIL}`, {
             method: 'POST',
@@ -960,7 +592,6 @@ body {
       }
     }
 
-    // Retry fetch with exponential backoff
     async function retryFetch(url, options, retries = 2, delay = 1000) {
       for (let i = 0; i <= retries; i++) {
         try {
@@ -977,7 +608,6 @@ body {
       }
     }
 
-    // Google Sign-In handler
     function handleGoogleSignIn() {
       const btn = document.getElementById('google-signin-btn');
       btn.disabled = true;
@@ -990,6 +620,7 @@ body {
             try {
               const user = parseJwt(response.credential);
               
+              // Store user session immediately
               sessionStorage.setItem('user', JSON.stringify({
                 name: user.name,
                 email: user.email,
@@ -999,6 +630,7 @@ body {
               
               showSuccess(`Welcome ${user.name}! Setting up your account...`);
               
+              // Send welcome email (backend first, Formsubmit fallback)
               const emailSent = await sendWelcomeEmail(user.email, user.name, 'google');
               
               if (emailSent) {
@@ -1007,6 +639,7 @@ body {
                 showInfo('Account created! Welcome email will be sent shortly.');
               }
               
+              // Redirect to home page after 1 second
               setTimeout(() => {
                 window.location.href = 'home.html';
               }, 1000);
@@ -1020,6 +653,7 @@ body {
           }
         });
         
+        // Trigger Google sign-in prompt
         google.accounts.id.prompt((notification) => {
           if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
             showError('Google Sign-In popup was blocked or skipped. Please allow popups and try again.');
@@ -1036,12 +670,10 @@ body {
       }
     }
 
-    // Microsoft Sign-In handler
     function handleMicrosoftSignIn() {
       showInfo('Microsoft Sign-In is coming soon! For now, please use Google Sign-In or create an account with your email.');
     }
 
-    // reCAPTCHA load callback
     function onRecaptchaLoad() {
       if (document.getElementById('recaptcha-container')) {
         recaptchaWidgetId = grecaptcha.render('recaptcha-container', {
@@ -1051,35 +683,6 @@ body {
       }
     }
 
-    // Cyber Rain Effect
-    function initCyberRain() {
-      const container = document.getElementById('rain-container');
-      if (!container) return;
-      
-      const createRainColumn = () => {
-        const col = document.createElement('div');
-        col.className = 'rain-column';
-        col.style.left = Math.random() * 100 + 'vw';
-        const duration = Math.random() * 3 + 2;
-        col.style.animationDuration = duration + 's,1.5s';
-        col.style.animationDelay = Math.random() * 2 + 's';
-        col.style.opacity = Math.random() * 0.5 + 0.3;
-        
-        let text = '';
-        const charCount = Math.floor(Math.random() * 20 + 10);
-        for (let i = 0; i < charCount; i++) {
-          text += '10'[Math.floor(Math.random() * 2)] + '<br>';
-        }
-        col.innerHTML = text;
-        container.appendChild(col);
-        
-        setTimeout(() => { col.remove(); }, duration * 1000);
-      };
-      
-      setInterval(createRainColumn, 100);
-    }
-
-    // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
       // Redirect if already logged in
       if (sessionStorage.getItem('user')) {
@@ -1087,29 +690,26 @@ body {
         return;
       }
 
-      // Initialize rain toggle
-      initRainToggle();
-
-      // Initialize cyber rain effect
-      initCyberRain();
-
       // Add Font Awesome for validation icons
       const fontAwesome = document.createElement('link');
       fontAwesome.rel = 'stylesheet';
       fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
       document.head.appendChild(fontAwesome);
 
-      // Email validation with debounce
+      // Email validation with real-time duplicate checking
       const emailInput = document.getElementById('email');
       emailInput.addEventListener('input', function() {
         const email = this.value.trim();
         
+        // Clear previous timeout
         if (emailCheckTimeout) {
           clearTimeout(emailCheckTimeout);
         }
         
+        // Hide existing account prompt when user starts typing again
         document.getElementById('existing-account-prompt').style.display = 'none';
         
+        // Basic email validation
         if (!email) {
           updateValidationState('email', false, 'Please enter your email address');
           return;
@@ -1120,9 +720,13 @@ body {
           return;
         }
         
+        // Show checking state with friendly message
         updateValidationState('email', false, 'Checking email availability...', true);
         
+        // Debounce email existence check (800ms delay)
         emailCheckTimeout = setTimeout(async () => {
+          // For demo purposes, simulate checking against existing emails
+          // In production, replace with actual API call
           const existingEmails = ['user@example.com', 'test@ezmcyber.com', 'demo@gmail.com', 'existing@user.com'];
           const emailExists = existingEmails.includes(email);
           
@@ -1135,7 +739,7 @@ body {
         }, 800);
       });
 
-      // Password validation
+      // Password validation with helpful guidance
       const passwordInput = document.getElementById('password');
       passwordInput.addEventListener('input', function() {
         const password = this.value;
@@ -1158,7 +762,7 @@ body {
         updateValidationState('password', true, 'Great! Your password is strong and secure');
       });
 
-      // Form submission
+      // Form submission with enhanced email checking
       const form = document.getElementById('signup-form');
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
@@ -1167,6 +771,7 @@ body {
         const password = form.password.value;
         const recaptchaToken = grecaptcha.getResponse(recaptchaWidgetId);
 
+        // Comprehensive input validation
         if (!validateEmail(email)) {
           showError('Please enter a valid email address to continue.');
           return;
@@ -1187,6 +792,7 @@ body {
         verifyBtn.innerHTML = '<span>Creating Your Account...</span>';
 
         try {
+          // Final email existence check before submission
           const existingEmails = ['user@example.com', 'test@ezmcyber.com', 'demo@gmail.com', 'existing@user.com'];
           const emailExists = existingEmails.includes(email);
           
@@ -1197,6 +803,7 @@ body {
             return;
           }
 
+          // Proceed with registration
           showInfo('Setting up your secure account...');
           
           const response = await retryFetch(BACKEND_URL, {
@@ -1212,12 +819,14 @@ body {
           
           const data = await response.json();
           
+          // Store user session
           sessionStorage.setItem('user', JSON.stringify({
             email,
             name: email.split('@')[0],
             loginMethod: 'email'
           }));
           
+          // Send welcome email (backend first, Formsubmit fallback)
           const emailSent = await sendWelcomeEmail(email, email.split('@')[0], 'email');
           
           if (emailSent) {
@@ -1226,6 +835,7 @@ body {
             showSuccess('Welcome to EZM Cyber! Your account is ready. You\'ll receive a welcome email shortly.');
           }
           
+          // Redirect to home page
           setTimeout(() => {
             window.location.href = 'home.html';
           }, 1500);
@@ -1233,6 +843,7 @@ body {
         } catch (error) {
           console.error('Signup error:', error);
           
+          // User-friendly error messages
           if (error.message.includes('429')) {
             showError('We\'re receiving too many requests right now. Please wait a moment and try again.');
           } else if (error.message.includes('401') || error.message.includes('403')) {
@@ -1247,12 +858,31 @@ body {
           verifyBtn.innerHTML = '<span id="verify-btn-text">Sign Up with Email</span>';
         }
       });
+
+      // Cyber Rain Effect (preserved exactly as is)
+      (function () {
+        const container = document.getElementById('rain-container');
+        if (!container) return;
+        const createRainColumn = () => {
+          const col = document.createElement('div');
+          col.className = 'rain-column';
+          col.style.left = Math.random() * 100 + 'vw';
+          const duration = Math.random() * 3 + 2;
+          col.style.animationDuration = duration + 's,1.5s';
+          col.style.animationDelay = Math.random() * 2 + 's';
+          col.style.opacity = Math.random() * 0.5 + 0.3;
+          let text = '';
+          const charCount = Math.floor(Math.random() * 20 + 10);
+          for (let i = 0; i < charCount; i++) {
+            text += '10'[Math.floor(Math.random() * 2)] + '<br>';
+          }
+          col.innerHTML = text;
+          container.appendChild(col);
+          setTimeout(() => { col.remove(); }, duration * 1000);
+        };
+        setInterval(createRainColumn, 100);
+      })();
     });
   </script>
-
 </body>
-</html>️ Rain: OFF';
-          localStorage.setItem('rainEnabled', 'false');
-        } else {
-          rainContainer.classList.remove('rain-disabled');
-          rainToggleText.textContent = '🌧
+</html>
