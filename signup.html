@@ -639,10 +639,10 @@
                 showInfo('Account created! Welcome email will be sent shortly.');
               }
               
-              // Redirect to home page after 1 second
+              // Redirect to login page after signup
               setTimeout(() => {
-                window.location.href = 'home.html';
-              }, 1000);
+              window.location.href = 'login.html';
+              }, 1500);
               
             } catch (error) {
               console.error('Google sign-in processing error:', error);
