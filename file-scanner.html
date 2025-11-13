@@ -1,22 +1,378 @@
-<script>
-async function fileToSha256Hex(file) {
-  const arrayBuffer = await file.arrayBuffer();
-  const hashBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2,"0")).join("");
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Security Scanner</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .description {
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-label {
+            display: inline-block;
+            background: #4a90e2;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+        }
+        
+        .file-label:hover {
+            background: #3a7bc8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.6);
+        }
+        
+        .selected-file {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .scan-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+            margin-top: 1rem;
+        }
+        
+        .scan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 65, 108, 0.6);
+        }
+        
+        .scan-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .result-area {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            display: none;
+        }
+        
+        .result-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .result-content {
+            line-height: 1.6;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .spinner {
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 5px solid #fff;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status-safe {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .status-malicious {
+            color: #f44336;
+            font-weight: bold;
+        }
+        
+        .hash-display {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-family: monospace;
+            word-break: break-all;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <h1>File Security Scanner</h1>
+    <p class="description">Upload a file to check its security status using our advanced threat detection API</p>
+    
+    <div class="container">
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📁</div>
+            <h3>Drag & Drop or Select File</h3>
+            <p>Maximum file size: 100MB</p>
+            <input type="file" id="fileInput" class="file-input">
+            <label for="fileInput" class="file-label">Choose File</label>
+            <div class="selected-file" id="selectedFile">
+                <span id="fileName"></span> (<span id="fileSize"></span>)
+            </div>
+        </div>
+        
+        <button class="scan-btn" id="scanBtn" disabled>Scan File for Threats</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Analyzing file... This may take a few seconds.</p>
+        </div>
+        
+        <div class="result-area" id="resultArea">
+            <h3 class="result-title">Scan Results</h3>
+            <div class="result-content" id="resultContent"></div>
+            <div class="hash-display" id="hashDisplay"></div>
+        </div>
+    </div>
+    
+    <footer>
+        Powered by EZM Security API • Protecting your digital assets
+    </footer>
 
-document.getElementById("fileForm").addEventListener("submit", async function(e){
-  e.preventDefault();
-  const file = document.getElementById("fileInput").files[0];
-  if (!file) return;
-  try {
-    const sha256 = await fileToSha256Hex(file);
-    // Open the VirusTotal GUI page for this file hash
-    // Detection view:
-    window.open(`https://www.virustotal.com/gui/file/${sha256}/detection`, "_blank");
-  } catch (err) {
-    console.error("Hashing error:", err);
-  }
-});
-</script>
+    <script>
+        // DOM elements
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const selectedFile = document.getElementById('selectedFile');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const scanBtn = document.getElementById('scanBtn');
+        const loading = document.getElementById('loading');
+        const resultArea = document.getElementById('resultArea');
+        const resultContent = document.getElementById('resultContent');
+        const hashDisplay = document.getElementById('hashDisplay');
+        
+        // API endpoint
+        const API_ENDPOINT = 'https://ezm-security-api-production.up.railway.app';
+        
+        // Event listeners
+        fileInput.addEventListener('change', handleFileSelect);
+        uploadArea.addEventListener('dragover', handleDragOver);
+        uploadArea.addEventListener('drop', handleFileDrop);
+        scanBtn.addEventListener('click', handleScan);
+        
+        // File selection handler
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                displayFileInfo(file);
+            }
+        }
+        
+        // Drag and drop handlers
+        function handleDragOver(e) {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.8)';
+            uploadArea.style.background = 'rgba(255, 255, 255, 0.1)';
+        }
+        
+        function handleFileDrop(e) {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+            uploadArea.style.background = 'rgba(255, 255, 255, 0.05)';
+            
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                fileInput.files = e.dataTransfer.files;
+                displayFileInfo(file);
+            }
+        }
+        
+        // Display file information
+        function displayFileInfo(file) {
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            selectedFile.style.display = 'block';
+            scanBtn.disabled = false;
+        }
+        
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Convert file to SHA-256 hash
+        async function fileToSha256Hex(file) {
+            const arrayBuffer = await file.arrayBuffer();
+            const hashBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2,"0")).join("");
+        }
+        
+        // Handle scan button click
+        async function handleScan() {
+            const file = fileInput.files[0];
+            if (!file) return;
+            
+            // Show loading state
+            loading.style.display = 'block';
+            resultArea.style.display = 'none';
+            scanBtn.disabled = true;
+            
+            try {
+                // Calculate file hash
+                const sha256 = await fileToSha256Hex(file);
+                hashDisplay.textContent = `File Hash (SHA-256): ${sha256}`;
+                
+                // Send request to custom API
+                const response = await fetch(`${API_ENDPOINT}/scan`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        hash: sha256,
+                        filename: file.name,
+                        filesize: file.size
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                // Display results
+                displayResults(result);
+                
+            } catch (err) {
+                console.error("Scan error:", err);
+                resultContent.innerHTML = `
+                    <p class="status-malicious">Error scanning file</p>
+                    <p>There was a problem connecting to the security API. Please try again later.</p>
+                    <p>Error details: ${err.message}</p>
+                `;
+                resultArea.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+                scanBtn.disabled = false;
+            }
+        }
+        
+        // Display scan results
+        function displayResults(result) {
+            // Customize this based on your API response structure
+            let statusClass = 'status-safe';
+            let statusText = 'No threats detected';
+            let details = 'This file appears to be safe.';
+            
+            if (result.isMalicious) {
+                statusClass = 'status-malicious';
+                statusText = 'Threat detected!';
+                details = 'This file has been identified as malicious. Do not open or execute this file.';
+            }
+            
+            resultContent.innerHTML = `
+                <p class="${statusClass}">${statusText}</p>
+                <p>${details}</p>
+                <p>Scan date: ${new Date().toLocaleString()}</p>
+            `;
+            
+            resultArea.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
