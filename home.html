@@ -6,15 +6,13 @@
     <title>EZM Cyber - Secure, Protect, and Respond</title>
     <meta name="description" content="EZM Cyber helps individuals and businesses stay secure with link verification, cyber threat analysis, and professional cybersecurity services.">
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-B7Z9JFWB5G"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-B7Z9JFWB5G');
-</script>
-    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B7Z9JFWB5G"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-B7Z9JFWB5G');
+    </script>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
@@ -63,14 +61,14 @@
             --success-color: #00ff00;
             --warning-color: #ffcc00;
             --danger-color: #ff3333;
-            --dark-bg: #0a0a0a;
-            --dark-card: #1a1a1a;
-            --light-bg: #111111;
-            --light-card: #1e1e1e;
+            --dark-bg: #1a1a1a;
+            --dark-card: #2a2a2a;
+            --light-bg: #222222;
+            --light-card: #2e2e2e;
             --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --text-light: #999999;
-            --border-color: #333333;
+            --text-secondary: #e0e0e0;
+            --text-light: #b0b0b0;
+            --border-color: #444444;
             --neon-glow: 0 0 10px rgba(0, 255, 204, 0.7),
                          0 0 20px rgba(0, 255, 204, 0.5),
                          0 0 30px rgba(0, 255, 204, 0.3);
@@ -85,7 +83,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
             color: var(--text-primary);
             line-height: 1.7;
             min-height: 100vh;
@@ -94,7 +92,7 @@
             overflow-x: hidden;
         }
 
-        /* Cyber Grid Background */
+        /* Enhanced Cyber Grid Background with Animation */
         body::before {
             content: '';
             position: fixed;
@@ -103,17 +101,46 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(0, 255, 204, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 204, 0.1) 1px, transparent 1px);
+                linear-gradient(rgba(0, 255, 204, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 204, 0.08) 1px, transparent 1px);
             background-size: 50px 50px;
             pointer-events: none;
             z-index: -1;
-            opacity: 0.3;
+            opacity: 0.4;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Floating Particles Animation */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(0, 255, 204, 0.3);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
         }
 
         /* Navigation */
         .navbar {
-            background: rgba(10, 10, 10, 0.95) !important;
+            background: rgba(26, 26, 26, 0.95) !important;
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--primary-color);
             padding: 1.25rem 0;
@@ -214,7 +241,7 @@
 
         /* Sections */
         .section-light { 
-            background: rgba(26, 26, 26, 0.8); 
+            background: rgba(42, 42, 42, 0.9); 
             padding: 4rem 0; 
             position: relative;
             border-top: 1px solid rgba(0, 255, 204, 0.3);
@@ -262,7 +289,7 @@
         .card {
             border: 1px solid rgba(0, 255, 204, 0.3);
             border-radius: 16px;
-            background: rgba(30, 30, 30, 0.9);
+            background: rgba(46, 46, 46, 0.9);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             position: relative;
@@ -362,7 +389,7 @@
             border-radius: 12px;
             padding: 0.875rem 1rem;
             font-size: 1rem;
-            background: rgba(20, 20, 20, 0.8);
+            background: rgba(40, 40, 40, 0.8);
             color: var(--text-primary);
             transition: all 0.3s ease;
         }
@@ -370,7 +397,7 @@
         .form-control:focus {
             border-color: var(--primary-color);
             box-shadow: var(--neon-glow);
-            background: rgba(30, 30, 30, 0.9);
+            background: rgba(50, 50, 50, 0.9);
             outline: none;
             color: var(--text-primary);
         }
@@ -404,7 +431,7 @@
 
         /* Footer */
         footer {
-            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1a1a 100%) !important;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #2a2a2a 100%) !important;
             border-top: 1px solid var(--primary-color);
             padding: 2rem 0 !important;
             color: #fff;
@@ -671,6 +698,11 @@
             transition: transform 0.2s ease, box-shadow 0.3s ease;
             text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
             font-family: 'Orbitron', sans-serif;
+            display: block;
+            margin: 30px auto;
+            max-width: 300px;
+            text-align: center;
+            text-decoration: none;
         }
 
         .cyber-button::before {
@@ -712,7 +744,7 @@
             height: 72px;
             display: flex; align-items: center;
             z-index: 1100;
-            background: rgba(10, 10, 10, 0.95);
+            background: rgba(26, 26, 26, 0.95);
             backdrop-filter: blur(6px);
             border-bottom: 1px solid var(--primary-color);
         }
@@ -927,33 +959,50 @@
             .ezm-sidebar { width:88%; }
         }
 
-        /* GitHub Icon */
-        .github-icon {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: rgba(30, 30, 30, 0.9);
-            border-radius: 50%;
-            padding: 10px;
-            border: 1px solid var(--primary-color);
-            box-shadow: var(--neon-glow);
+        /* Social Links Container */
+        .social-links {
+            text-align: center;
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            color: #00ffcc;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 204, 0.3);
             transition: all 0.3s ease;
+            background: rgba(30, 30, 30, 0.8);
         }
 
-        .github-icon:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px var(--primary-color);
+        .social-link:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--neon-glow);
+            color: #00ffcc;
+            text-decoration: none;
         }
 
-        .github-icon svg {
-            width: 30px;
-            height: 30px;
-            fill: var(--primary-color);
+        .social-link svg {
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
         }
     </style>
 </head>
 <body>
+    <!-- Floating Particles Background -->
+    <div class="particles" id="particles"></div>
+
     <!-- Alert -->
     <div id="escalationAlert" class="escalation-alert">
         <strong>ESCALATION TRIGGERED</strong><br />
@@ -987,27 +1036,22 @@
             <li><a class="ezm-btn" href="home.html">🏠 Home</a></li>
             <li><a class="ezm-btn" href="about.html">About</a></li>
             <li><a class="ezm-btn" href="services.html">Services</a></li>
-            <li><a class="ezm-btn" href="projects.html">Projects</a></li>
-            <li><a class="ezm-btn" href="blog.html">Blog</a></li>
             <li><a class="ezm-btn" href="contact.html">Contact</a></li>
-            <li><a class="ezm-btn" href="videos.html">Videos</a></li>
 
             <!-- Extras -->
             <li><a class="ezm-btn" href="privacy.html">Privacy</a></li>
-            <li><a class="ezm-btn" href="community-forum.html">Forum</a></li>
 
-          
-    <!-- Get Involved (flattened) -->
-    <li><a class="ezm-btn" href="newsletter.html">Newsletter</a></li>
+            <!-- Get Involved (flattened) -->
+            <li><a class="ezm-btn" href="newsletter.html">Newsletter</a></li>
 
-    <!-- Tools (flattened) -->
-    <li><a class="ezm-btn" href="hash-generator.html">Hash Generator</a></li>
-    <li><a class="ezm-btn" href="password-tools.html">Password Tools</a></li>
-    <li><a class="ezm-btn" href="file-scanner.html">File Scanner</a></li>
-    <li><a class="ezm-btn" href="network-tools.html">Network Tools</a></li>
-    <li><a class="ezm-btn" href="checker.html">Checker</a></li>
-    </ul>
-    </nav>
+            <!-- Tools (flattened) -->
+            <li><a class="ezm-btn" href="hash-generator.html">Hash Generator</a></li>
+            <li><a class="ezm-btn" href="password-tools.html">Password Tools</a></li>
+            <li><a class="ezm-btn" href="file-scanner.html">File Scanner</a></li>
+            <li><a class="ezm-btn" href="network-tools.html">Network Tools</a></li>
+            <li><a class="ezm-btn" href="checker.html">Checker</a></li>
+          </ul>
+        </nav>
 
         <div class="ezm-sidebar-footer">
           <a class="ezm-cta" href="contact.html">Get In Touch</a>
@@ -1018,359 +1062,237 @@
     <!-- overlay -->
     <div id="ezmSidebarOverlay" class="ezm-sidebar-overlay" tabindex="-1" aria-hidden="true"></div>
 
-        
-        <!-- Banner -->
+    <!-- Banner -->
     <section class="banner-section d-flex align-items-center justify-content-center">
         <div class="banner-overlay"></div>
         <div class="banner-content">
         </div>
     </section>
 
-        <!-- Welcome Section -->
-<section class="py-5 scroll-fade" style="position: relative; overflow: hidden;">
-    <!-- Cyber-themed moving background -->
-    <canvas id="cyber-bg" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:0;"></canvas>
-
-    <div class="container text-center" style="position: relative; z-index:1;">
-        <h2 class="mb-4">Welcome to EZM Cyber</h2>
-        <p class="lead mb-5">Your trusted source for cybersecurity insights, tools, and guidance.</p>
-        <div class="button-group" style="margin-top:20px;">
-            <div style="margin-bottom: 15px;">
-                <a href="videos.html" class="btn btn-primary btn-lg">Watch Video</a>
-            </div>
-            <div>
-                <a href="playbook.html" class="btn btn-warning btn-lg">Get Playbook 🚨</a>
+    <!-- Welcome Section -->
+    <section class="py-5 scroll-fade" style="position: relative; overflow: hidden;">
+        <div class="container text-center" style="position: relative; z-index:1;">
+            <h2 class="mb-4">Welcome to EZM Cyber</h2>
+            <p class="lead mb-5">Your trusted source for cybersecurity insights, tools, and guidance.</p>
+            <div class="button-group" style="margin-top:20px;">
+                <div>
+                    <a href="playbook.html" class="btn btn-warning btn-lg">Get Playbook 🚨</a>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- Incident Playbook Button Only -->
-<button class="cyber-button" onclick="window.location.href='incident-playbook.html'">
-  🚨 Open Incident Playbook
-</button>
-<script>
-const canvas = document.getElementById('cyber-bg');
-const ctx = canvas.getContext('2d');
-let width = canvas.width = window.innerWidth;
-let height = canvas.height = window.innerHeight;
+    </section>
 
-const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*<>{}[]|~'.split('');
-const fontSize = 16;
-const columns = Math.floor(width / fontSize);
-const drops = Array(columns).fill(1);
+    <!-- Incident Playbook Button Only -->
+    <a href="incident-playbook.html" class="cyber-button">
+      🚨 Open Incident Playbook
+    </a>
 
-function draw() {
-    ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
-    ctx.fillRect(0, 0, width, height);
+    <!-- Trust Section -->
+    <section class="py-5 scroll-fade">
+        <div class="container text-center">
+            <h2 class="mb-4">Building Digital Trust with EZM Cyber</h2>
+            <p class="lead mb-5">
+                I help businesses stay secure with expert guidance, modern tools, 
+                and proven cybersecurity strategies—empowering you to focus on growth with confidence.
+            </p>
+            <a href="about.html" class="btn btn-primary btn-lg">Learn More</a>
+        </div>
+    </section>
 
-    ctx.fillStyle = '#00ffcc';
-    ctx.font = fontSize + "px monospace";
-    ctx.textShadow = '0 0 5px #00ffcc';
+    <!-- Services (target for #services) -->
+    <section id="services" class="section-light scroll-fade">
+        <div class="container text-center">
+            <h2 class="mb-4">My Services</h2>
+            <p class="lead mb-4">Pen testing, incident response, cloud security, training, and more.</p>
+            <a href="services.html" class="btn btn-primary btn-lg">Explore Services</a>
+        </div>
+    </section>
 
-    for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > height && Math.random() > 0.975) {
-            drops[i] = 0;
-        }
-        drops[i]++;
-    }
-}
-
-setInterval(draw, 50);
-
-window.addEventListener('resize', () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-});
-</script>
-
-        <!-- Trust Section -->
-        <section class="py-5 scroll-fade">
-            <div class="container text-center">
-                <h2 class="mb-4">Building Digital Trust with EZM Cyber</h2>
-                <p class="lead mb-5">
-                    I help businesses stay secure with expert guidance, modern tools, 
-                    and proven cybersecurity strategies—empowering you to focus on growth with confidence.
+    <!-- Suspicious Link Checker (URLScan.io) -->
+    <section class="py-5 section-light scroll-fade">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="card card-hover">
+              <div class="card-body text-center">
+                <h3 class="card-title mb-4">Suspicious Link Checker</h3>
+                <p class="card-text mb-4">
+                  Verify the safety of any URL using URLScan.io's comprehensive security analysis
                 </p>
-                <a href="about.html" class="btn btn-primary btn-lg">Learn More</a>
-            </div>
-        </section>
 
-        <!-- Services (target for #services) -->
-        <section id="services" class="section-light scroll-fade">
-            <div class="container text-center">
-                <h2 class="mb-4">My Services</h2>
-                <p class="lead mb-4">Pen testing, incident response, cloud security, training, and more.</p>
-                <a href="services.html" class="btn btn-primary btn-lg">Explore Services</a>
-            </div>
-        </section>
+                <!-- Form -->
+                <form id="linkForm" class="mb-4">
+                  <div class="input-group input-group-lg">
+                    <input
+                      type="url"
+                      id="linkInput"
+                      class="form-control"
+                      placeholder="Paste or type a link to verify (e.g., https://example.com)"
+                      required
+                    />
+                    <button type="submit" class="btn btn-danger">
+                      <strong>Check Link</strong>
+                    </button>
+                  </div>
+                </form>
 
-      <!-- Suspicious Link Checker (URLScan.io) -->
-<section class="py-5 section-light scroll-fade">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="card card-hover">
-          <div class="card-body text-center">
-            <h3 class="card-title mb-4">Suspicious Link Checker</h3>
-            <p class="card-text mb-4">
-              Verify the safety of any URL using URLScan.io's comprehensive security analysis
-            </p>
+                <!-- Result container -->
+                <div id="result" class="mt-2"></div>
 
-            <!-- Form -->
-            <form id="linkForm" class="mb-4">
-              <div class="input-group input-group-lg">
-                <input
-                  type="url"
-                  id="linkInput"
-                  class="form-control"
-                  placeholder="Paste or type a link to verify (e.g., https://example.com)"
-                  required
-                />
-                <button type="submit" class="btn btn-danger">
-                  <strong>Check Link</strong>
-                </button>
+                <p class="text-muted mb-0">
+                  <small>Secure.protect.respond</small>
+                </p>
               </div>
-            </form>
-
-            <!-- Result container -->
-            <div id="result" class="mt-2"></div>
-
-            <p class="text-muted mb-0">
-              <small>Secure.protect.respond</small>
-            </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<script>
-const URLSCAN_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/urlscan';
-const form = document.getElementById('linkForm');
-const input = document.getElementById('linkInput');
-const resultDiv = document.getElementById('result');
-
-function showResult(html) {
-  resultDiv.innerHTML = html;
-}
-
-function addTyping() {
-  showResult('<em>Scanning... please wait ⏳</em>');
-}
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const url = input.value.trim();
-  if (!url) return;
-
-  addTyping();
-
-  try {
-    const resp = await fetch(URLSCAN_BACKEND, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url })
-    });
-    const data = await resp.json();
-
-    if (resp.ok && data.scan_id && data.result_url) {
-      showResult(`
-        <strong>Scan submitted!</strong><br>
-        <small>Scan ID: <a href="${data.result_url}" target="_blank">${data.scan_id}</a></small><br>
-        <small>Full report: <a href="${data.result_url}" target="_blank">View on URLScan.io</a></small>
-      `);
-    } else {
-      const errorMsg = data.error || 'Scan could not be completed';
-      const details = data.details ? `<br><small>Details: ${data.details}</small>` : '';
-      showResult(`<span style="color:#f59e0b;">⚠️ ${errorMsg}${details}</span>`);
-    }
-  } catch (err) {
-    console.error('URLScan error:', err);
-    showResult('<span style="color:#ef4444;">⚠️ Network error: Unable to connect to server. Try again later.</span>');
-  }
-});
-</script>
+    </section>
 
     <!-- Additional Tools -->
-        <section class="py-5 section-light scroll-fade">
-            <div class="container">
-                <div class="text-center mb-5">
-                    <h3 class="mb-4">Additional Cybersecurity Tools</h3>
-                    <p class="lead">Comprehensive security analysis tools for IP addresses and domains</p>
-                </div>
-                <div class="row g-4 justify-content-center">
-                    
-
-                    <!-- Domain Lookup (DomainTools) -->
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card h-100 card-hover text-center">
-                            <div class="card-body">
-                                <h5 class="card-title">Domain WHOIS Lookup</h5>
-                                <p class="card-text">Get comprehensive domain registration information and DNS records.</p>
-                                <form id="domainForm" class="mb-3">
-                                    <input type="text" id="domainInput" class="form-control mb-3" placeholder="Enter domain" required />
-                                    <button type="submit" class="btn btn-info w-100">Lookup Domain</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                  <!-- IP Reputation Checker -->
-<div class="col-md-6 col-lg-4">
-    <div class="card h-100 card-hover text-center">
-        <div class="card-body">
-            <h5 class="card-title">IP Reputation Checker</h5>
-            <p class="card-text">Analyze IP addresses for reputation, threats, and blacklisting status using VirusTotal.</p>
-            <form id="ipForm" class="mb-3">
-                <input type="text" id="ipInput" class="form-control mb-3" placeholder="Enter IP address (e.g., 8.8.8.8)" required />
-                <button type="submit" class="btn btn-warning w-100">Check IP Reputation</button>
-            </form>
-            <small class="text-muted d-block">Powered by VirusTotal (opens in new tab)</small>
-        </div>
-    </div>
-</div>
-
-                    <!-- WHOISXML API Lookup (opens our own results page) -->
-                    <div class="col-md-6 col-lg-8">
-                        <div class="card h-100 card-hover text-center">
-                            <div class="card-body">
-                                <h5 class="card-title">WHOISXML API Lookup</h5>
-                                <p class="card-text">Use WHOISXML to query detailed WHOIS records. Results will open on a dedicated page.</p>
-                                <form id="wxForm" class="mb-3">
-                                    <input type="text" id="wxDomain" class="form-control mb-3" placeholder="Enter domain (e.g., example.com)" required />
-                                    <button type="submit" class="btn btn-primary w-100">Check with WHOISXML</button>
-                                </form>
-                                <small class="text-muted d-block">Powered by WHOISXML API</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Newsletter -->
-<section class="py-5 newsletter-section scroll-fade">
-    <div class="container text-center">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <h3 class="mb-4 text-white">Stay Updated with EZM Cyber</h3>
-                <p class="mb-5" style="color: rgba(255,255,255,0.8);">
-                    Join our newsletter to receive exclusive cybersecurity tips, threat alerts, and industry insights.
-                </p>
-                <div class="mb-4">
-                    <a href="newsletter.html" class="btn btn-accent btn-lg me-3 mb-3">Quick Sign Up</a>
-                </div>
-                <small style="color: rgba(255,255,255,0.6);" class="d-block mt-3">
-                    I respect your privacy. No spam, ever.
-                </small>
-            </div>
-        </div>
-    </div>
-</section>
-
     <section class="py-5 section-light scroll-fade">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="mb-4 enhanced-title">Developer Tools & Resources</h2>
-                <p class="lead">Essential development resources and tools for cybersecurity professionals</p>
+                <h3 class="mb-4">Additional Cybersecurity Tools</h3>
+                <p class="lead">Comprehensive security analysis tools for IP addresses and domains</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <!-- Domain Lookup (DomainTools) -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 card-hover text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Domain WHOIS Lookup</h5>
+                            <p class="card-text">Get comprehensive domain registration information and DNS records.</p>
+                            <form id="domainForm" class="mb-3">
+                                <input type="text" id="domainInput" class="form-control mb-3" placeholder="Enter domain" required />
+                                <button type="submit" class="btn btn-info w-100">Lookup Domain</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- IP Reputation Checker -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 card-hover text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">IP Reputation Checker</h5>
+                            <p class="card-text">Analyze IP addresses for reputation, threats, and blacklisting status using VirusTotal.</p>
+                            <form id="ipForm" class="mb-3">
+                                <input type="text" id="ipInput" class="form-control mb-3" placeholder="Enter IP address (e.g., 8.8.8.8)" required />
+                                <button type="submit" class="btn btn-warning w-100">Check IP Reputation</button>
+                            </form>
+                            <small class="text-muted d-block">Powered by VirusTotal (opens in new tab)</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WHOISXML API Lookup (opens our own results page) -->
+                <div class="col-md-6 col-lg-8">
+                    <div class="card h-100 card-hover text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">WHOISXML API Lookup</h5>
+                            <p class="card-text">Use WHOISXML to query detailed WHOIS records. Results will open on a dedicated page.</p>
+                            <form id="wxForm" class="mb-3">
+                                <input type="text" id="wxDomain" class="form-control mb-3" placeholder="Enter domain (e.g., example.com)" required />
+                                <button type="submit" class="btn btn-primary w-100">Check with WHOISXML</button>
+                            </form>
+                            <small class="text-muted d-block">Powered by WHOISXML API</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-5 newsletter-section scroll-fade">
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h3 class="mb-4 text-white">Stay Updated with EZM Cyber</h3>
+                    <p class="mb-5" style="color: rgba(255,255,255,0.8);">
+                        Join our newsletter to receive exclusive cybersecurity tips, threat alerts, and industry insights.
+                    </p>
+                    <div class="mb-4">
+                        <a href="newsletter.html" class="btn btn-accent btn-lg me-3 mb-3">Quick Sign Up</a>
+                    </div>
+                    <small style="color: rgba(255,255,255,0.6);" class="d-block mt-3">
+                        I respect your privacy. No spam, ever.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Internal Tools Section -->
+    <section class="py-5 section-light scroll-fade">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="mb-4 enhanced-title">Internal Security Tools</h2>
+                <p class="lead">Essential cybersecurity tools developed by EZM Cyber</p>
             </div>
 
             <div class="row g-4 stagger-animation">
-
+                <!-- Hash Generator Card -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <i class="fas fa-shield-alt tool-icon"></i>
-                            <h5 class="card-title">OWASP ZAP</h5>
-                            <p class="card-text">Open-source web application security scanner for finding vulnerabilities in web applications during development and testing.</p>
-                            <a href="https://www.zaproxy.org/" class="btn btn-enhanced btn-danger-custom w-100" target="_blank" rel="noopener">Explore ZAP</a>
+                            <i class="fas fa-hashtag tool-icon"></i>
+                            <h5 class="card-title">Hash Generator</h5>
+                            <p class="card-text">Generate cryptographic hashes for files and text using multiple algorithms.</p>
+                            <a href="hash-generator.html" class="btn btn-enhanced btn-primary-custom w-100">Generate Hash</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Password Tools Card -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <i class="fas fa-code tool-icon"></i>
-                            <h5 class="card-title">Visual Studio Code</h5>
-                            <p class="card-text">Powerful code editor with built-in security extensions, debugging tools, and integrated terminal for secure development.</p>
-                            <a href="https://code.visualstudio.com/" class="btn btn-enhanced btn-primary-custom w-100" target="_blank" rel="noopener">Get VS Code</a>
+                            <i class="fas fa-key tool-icon"></i>
+                            <h5 class="card-title">Password Tools</h5>
+                            <p class="card-text">Generate strong passwords and check password strength.</p>
+                            <a href="password-tools.html" class="btn btn-enhanced btn-success-custom w-100">Password Tools</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- File Scanner Card -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <i class="fab fa-docker tool-icon"></i>
-                            <h5 class="card-title">Docker</h5>
-                            <p class="card-text">Containerization platform for creating secure, isolated development environments and deploying applications safely.</p>
-                            <a href="https://www.docker.com/" class="btn btn-enhanced btn-info-custom w-100" target="_blank" rel="noopener">Try Docker</a>
+                            <i class="fas fa-file-shield tool-icon"></i>
+                            <h5 class="card-title">File Scanner</h5>
+                            <p class="card-text">Upload and scan files for potential threats and malware.</p>
+                            <a href="file-scanner.html" class="btn btn-enhanced btn-warning-custom w-100">Scan Files</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Network Tools Card -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <i class="fas fa-bug tool-icon"></i>
-                            <h5 class="card-title">Burp Suite</h5>
-                            <p class="card-text">Industry-standard web application security testing toolkit for manual and automated security assessments.</p>
-                            <a href="https://portswigger.net/burp" class="btn btn-enhanced btn-warning-custom w-100" target="_blank" rel="noopener">Get Burp Suite</a>
+                            <i class="fas fa-network-wired tool-icon"></i>
+                            <h5 class="card-title">Network Tools</h5>
+                            <p class="card-text">Network analysis and diagnostic tools for security assessments.</p>
+                            <a href="network-tools.html" class="btn btn-enhanced btn-info-custom w-100">Network Tools</a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Checker Tool Card -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <i class="fab fa-github tool-icon"></i>
-                            <h5 class="card-title">GitHub Security</h5>
-                            <p class="card-text">Integrated security features including dependency scanning, secret detection, and code analysis for secure collaboration.</p>
-                            <a href="https://github.com/features/security" class="btn btn-enhanced btn-success-custom w-100" target="_blank" rel="noopener">Explore Security</a>
+                            <i class="fas fa-check-double tool-icon"></i>
+                            <h5 class="card-title">Security Checker</h5>
+                            <p class="card-text">Comprehensive security assessment and vulnerability checker.</p>
+                            <a href="checker.html" class="btn btn-enhanced btn-danger-custom w-100">Run Checker</a>
                         </div>
                     </div>
                 </div>
-
-            
-    <!-- Developer Tools -->
-    <section class="py-5 section-light scroll-fade">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="mb-4 enhanced-title">Developer Tools & Resources</h2>
-                <p class="lead">Essential development resources and tools for cybersecurity professionals</p>
             </div>
-
-            <div class="row g-4 stagger-animation"> <!-- Row wrapper for cards -->
-
-                <!-- Code Playground Card -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 card-hover text-center">
-                        <div class="card-body">
-                            <i class="fas fa-code tool-icon"></i>
-                            <h5 class="card-title">Code Playground</h5>
-                            <p class="card-text">Experiment with HTML, CSS, and JavaScript in real-time.</p>
-                            <a href="https://codepen.io/" class="btn btn-enhanced btn-info-custom w-100" target="_blank" rel="noopener">Try on CodePen</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- API Documentation Card -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 card-hover text-center">
-                        <div class="card-body">
-                            <i class="fas fa-book tool-icon"></i>
-                            <h5 class="card-title">API Documentation</h5>
-                            <p class="card-text">Comprehensive API references for building secure applications.</p>
-                            <a href="https://developer.mozilla.org/en-US/" class="btn btn-enhanced btn-warning-custom w-100" target="_blank" rel="noopener">Visit MDN Docs</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div> <!-- End of row -->
 
             <div class="text-center mt-5">
                 <div class="last-updated">
@@ -1382,126 +1304,89 @@ form.addEventListener('submit', async (e) => {
         </div>
     </section>
 
-        <!-- Footer -->
-        <footer class="text-light text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <p class="mb-3 fw-bold">&copy; 2025 EZM Cyber. All rights reserved.</p>
-                        <div class="d-flex justify-content-center gap-4 flex-wrap">
-                            <a href="privacy.html">Privacy Policy</a>
-                            <a href="community-forum.html">Community</a>
-                        </div>
+    <!-- Footer -->
+    <footer class="text-light text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p class="mb-3 fw-bold">&copy; 2025 EZM Cyber. All rights reserved.</p>
+                    <div class="d-flex justify-content-center gap-4 flex-wrap">
+                        <a href="privacy.html">Privacy Policy</a>
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
 
-        <!-- Social Link: X -->
-        <div style="text-align:center; margin-top:30px;">
-          <a href="https://x.com/niffy_hunt?s=21" target="_blank" rel="noopener noreferrer" 
-             style="display:inline-flex; align-items:center; text-decoration:none; font-weight:bold; font-size:16px; color:#00ffcc;">
-            <!-- X (Twitter) SVG Logo -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="24" height="24" fill="currentColor" style="margin-right:8px;">
-              <path d="M714.163 519.284L1160.89 0H1052.38L667.137 450.887L356.757 0H0L468.492 681.821L0 1226.37H108.511L515.518 745.913L843.243 1226.37H1200L714.137 519.284H714.163ZM565.693 682.299L521.591 619.615L148.114 79.6946H306.66L600.993 497.191L645.095 559.875L1029.7 1150.3H871.159L565.693 682.324V682.299Z"/>
+    <!-- Social Links -->
+    <div class="social-links">
+        <a href="https://x.com/niffy_hunt?s=21" target="_blank" rel="noopener noreferrer" class="social-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="24" height="24" fill="currentColor">
+                <path d="M714.163 519.284L1160.89 0H1052.38L667.137 450.887L356.757 0H0L468.492 681.821L0 1226.37H108.511L515.518 745.913L843.243 1226.37H1200L714.137 519.284H714.163ZM565.693 682.299L521.591 619.615L148.114 79.6946H306.66L600.993 497.191L645.095 559.875L1029.7 1150.3H871.159L565.693 682.324V682.299Z"/>
             </svg>
             Follow me on X
-          </a>
-        </div>
-        <p id="status"></p>
+        </a>
+        
+        <a href="https://github.com/inboxBodyguard/Ethwebsite" target="_blank" rel="noopener noreferrer" class="social-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 .297a12 12 0 00-3.797 23.412c.6.11.82-.26.82-.577 
+                0-.285-.01-1.04-.016-2.04-3.338.726-4.042-1.61-4.042-1.61
+                -.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 
+                1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 
+                3.492.998.108-.776.42-1.305.763-1.605-2.665-.303-5.466-1.333
+                -5.466-5.931 0-1.31.467-2.381 1.235-3.222-.124-.303-.535
+                -1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 016.006 
+                0c2.29-1.552 3.296-1.23 3.296-1.23.654 1.653.243 2.873.12 
+                3.176.77.841 1.232 1.912 1.232 3.222 0 4.61-2.804 5.624-5.476 
+                5.92.431.372.815 1.102.815 2.222 0 1.605-.015 2.898-.015 
+                3.293 0 .32.216.694.825.576A12.003 12.003 0 0012 .297z"/>
+            </svg>
+            GitHub Repository
+        </a>
+    </div>
 
-    <!-- GitHub Icon -->
-    <a href="https://github.com/inboxBodyguard/Ethwebsite" target="_blank" rel="noopener noreferrer" class="github-icon" aria-label="GitHub Repository">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 .297a12 12 0 00-3.797 23.412c.6.11.82-.26.82-.577 
-        0-.285-.01-1.04-.016-2.04-3.338.726-4.042-1.61-4.042-1.61
-        -.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 
-        1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 
-        3.492.998.108-.776.42-1.305.763-1.605-2.665-.303-5.466-1.333
-        -5.466-5.931 0-1.31.467-2.381 1.235-3.222-.124-.303-.535
-        -1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 016.006 
-        0c2.29-1.552 3.296-1.23 3.296-1.23.654 1.653.243 2.873.12 
-        3.176.77.841 1.232 1.912 1.232 3.222 0 4.61-2.804 5.624-5.476 
-        5.92.431.372.815 1.102.815 2.222 0 1.605-.015 2.898-.015 
-        3.293 0 .32.216.694.825.576A12.003 12.003 0 0012 .297z"/>
-      </svg>
-    </a>
+    <p id="status"></p>
 
     <!-- Place this anywhere inside <body> where you want the button -->
-<button id="logoutBtn" style="padding:10px 20px; border:none; border-radius:8px; background:#00ffcc; color:#000; font-weight:600; cursor:pointer; margin: 20px;">
-  Logout
-</button>
-
-<script>
-  // Redirect to login if no user is in session
-  const user = sessionStorage.getItem('currentUser');
-  if (!user) {
-    window.location.href = 'login.html';
-  }
-
-  // Logout button functionality
-  const logoutBtn = document.getElementById('logoutBtn');
-  logoutBtn.addEventListener('click', () => {
-    sessionStorage.removeItem('currentUser');  // Clear session
-    window.location.href = 'login.html'; // Redirect to login page
-  });
-</script>
+    <button id="logoutBtn" style="padding:10px 20px; border:none; border-radius:8px; background:#00ffcc; color:#000; font-weight:600; cursor:pointer; margin: 20px;">
+      Logout
+    </button>
 
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
- 
-
-    <!-- Developer Tools Scripts -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const lastUpdatedElement = document.getElementById('last-updated');
-        if (lastUpdatedElement) {
-            const currentDate = new Date();
-            const options = { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            };
-            lastUpdatedElement.textContent = currentDate.toLocaleDateString('en-US', options);
-        }
-    });
-
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.card-hover').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-        observer.observe(card);
-    });
-
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const section = document.querySelector('.section-light');
-        if (section) {
-            const rate = scrolled * -0.5;
-            section.style.transform = `translateY(${rate}px)`;
-        }
-    });
-    </script>
-
     <!-- Main Scripts -->
     <script>
+        // Floating Particles Animation
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random properties
+                const size = Math.random() * 6 + 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 3 + 3;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles
+        createParticles();
+
         // BULLETPROOF: Wait for DOM load, then force hide sidebar
         document.addEventListener('DOMContentLoaded', function() {
             const sidebar = document.getElementById('ezmSidebar');
@@ -1538,7 +1423,53 @@ form.addEventListener('submit', async (e) => {
         window.addEventListener('scroll', handleScrollAnimation);
         window.addEventListener('load', handleScrollAnimation);
 
-        
+        // URLScan Link Checker
+        const URLSCAN_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/urlscan';
+        const form = document.getElementById('linkForm');
+        const input = document.getElementById('linkInput');
+        const resultDiv = document.getElementById('result');
+
+        function showResult(html) {
+          resultDiv.innerHTML = html;
+        }
+
+        function addTyping() {
+          showResult('<em>Scanning... please wait ⏳</em>');
+        }
+
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+              e.preventDefault();
+              const url = input.value.trim();
+              if (!url) return;
+
+              addTyping();
+
+              try {
+                const resp = await fetch(URLSCAN_BACKEND, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ url })
+                });
+                const data = await resp.json();
+
+                if (resp.ok && data.scan_id && data.result_url) {
+                  showResult(`
+                    <strong>Scan submitted!</strong><br>
+                    <small>Scan ID: <a href="${data.result_url}" target="_blank">${data.scan_id}</a></small><br>
+                    <small>Full report: <a href="${data.result_url}" target="_blank">View on URLScan.io</a></small>
+                  `);
+                } else {
+                  const errorMsg = data.error || 'Scan could not be completed';
+                  const details = data.details ? `<br><small>Details: ${data.details}</small>` : '';
+                  showResult(`<span style="color:#f59e0b;">⚠️ ${errorMsg}${details}</span>`);
+                }
+              } catch (err) {
+                console.error('URLScan error:', err);
+                showResult('<span style="color:#ef4444;">⚠️ Network error: Unable to connect to server. Try again later.</span>');
+              }
+            });
+        }
 
         // Domain Lookup -> DomainTools (kept)
         document.getElementById("domainForm").addEventListener("submit", function(e) {
@@ -1547,18 +1478,18 @@ form.addEventListener('submit', async (e) => {
             if (domain) window.open(`https://whois.domaintools.com/${domain}`, "_blank", "noopener");
         });
 
-// IP Reputation Checker
-document.getElementById("ipForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const ip = document.getElementById("ipInput").value.trim();
-    // Basic IPv4 validation (add IPv6 if needed: const ipv6Regex = /([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}/)
-    const ipv4Regex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-    if (ip && ipv4Regex.test(ip)) {
-        window.open(`https://www.virustotal.com/gui/ip-address/${ip}/detection`, "_blank");
-    } else {
-        alert("Please enter a valid IP address (e.g., 8.8.8.8).");
-    }
-});
+        // IP Reputation Checker
+        document.getElementById("ipForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const ip = document.getElementById("ipInput").value.trim();
+            // Basic IPv4 validation (add IPv6 if needed: const ipv6Regex = /([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}/)
+            const ipv4Regex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+            if (ip && ipv4Regex.test(ip)) {
+                window.open(`https://www.virustotal.com/gui/ip-address/${ip}/detection`, "_blank");
+            } else {
+                alert("Please enter a valid IP address (e.g., 8.8.8.8).");
+            }
+        });
 
         // WHOISXML API: send to our results page
         document.getElementById("wxForm").addEventListener("submit", function(e) {
@@ -1576,6 +1507,46 @@ document.getElementById("ipForm").addEventListener("submit", function(e) {
             setTimeout(() => alert.classList.remove('show'), 3000);
         }
         window.testEscalation = testEscalation;
+
+        // Logout button functionality
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                sessionStorage.removeItem('currentUser');  // Clear session
+                window.location.href = 'login.html'; // Redirect to login page
+            });
+        }
+
+        // Developer Tools Scripts
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(card);
+        });
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const section = document.querySelector('.section-light');
+            if (section) {
+                const rate = scrolled * -0.5;
+                section.style.transform = `translateY(${rate}px)`;
+            }
+        });
     </script>
 
     <!-- Start of Tawk.to Script -->
@@ -1695,40 +1666,6 @@ document.getElementById("ipForm").addEventListener("submit", function(e) {
       // Close on resize when switching to desktop width
       window.addEventListener('resize', function () {
         if (window.innerWidth > 768 && sidebar.classList.contains('open')) closeSidebar();
-      });
-    });
-    </script>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const signupForm = document.getElementById("signupForm");
-      if (!signupForm) return;
-
-      signupForm.addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const statusEl = document.getElementById("status");
-
-        statusEl.textContent = "Signing you up...";
-
-        try {
-          const response = await fetch("https://e4ea3339-b0bb-474d-b03c-758fd0ece917-00-d5p6pubo8oyi.janeway.replit.dev/signup", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email })
-          });
-
-          if (!response.ok) {
-            throw new Error("Server error: " + response.status);
-          }
-
-          const result = await response.json();
-          statusEl.textContent = result.message || "Signup successful!";
-        } catch (error) {
-          statusEl.textContent = "❌ Error: " + error.message;
-        }
       });
     });
     </script>
