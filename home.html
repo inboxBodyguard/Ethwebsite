@@ -92,6 +92,17 @@
             overflow-x: hidden;
         }
 
+        /* Cyber Rain Canvas */
+        #cyberRainCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
         /* Enhanced Cyber Grid Background with Animation */
         body::before {
             content: '';
@@ -1000,6 +1011,9 @@
     </style>
 </head>
 <body>
+    <!-- Cyber Rain Canvas -->
+    <canvas id="cyberRainCanvas"></canvas>
+
     <!-- Floating Particles Background -->
     <div class="particles" id="particles"></div>
 
@@ -1357,6 +1371,105 @@
 
     <!-- Main Scripts -->
     <script>
+        // Cyber Rain Animation
+        function initCyberRain() {
+            const canvas = document.getElementById('cyberRainCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas to full screen
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            
+            // Rain drop class
+            class RainDrop {
+                constructor() {
+                    this.reset();
+                }
+                
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * -canvas.height;
+                    this.speed = 2 + Math.random() * 3;
+                    this.length = 10 + Math.random() * 20;
+                    this.opacity = 0.2 + Math.random() * 0.5;
+                    this.char = String.fromCharCode(0x30A0 + Math.random() * 96);
+                    this.size = 12 + Math.random() * 8;
+                    this.trailLength = Math.floor(3 + Math.random() * 7);
+                    this.trail = [];
+                }
+                
+                update() {
+                    this.y += this.speed;
+                    
+                    // Add current position to trail
+                    this.trail.push({x: this.x, y: this.y, opacity: this.opacity});
+                    
+                    // Limit trail length
+                    if (this.trail.length > this.trailLength) {
+                        this.trail.shift();
+                    }
+                    
+                    // Reset if off screen
+                    if (this.y > canvas.height + this.length) {
+                        this.reset();
+                    }
+                }
+                
+                draw() {
+                    // Draw trail
+                    for (let i = 0; i < this.trail.length; i++) {
+                        const segment = this.trail[i];
+                        const alpha = segment.opacity * (i / this.trail.length);
+                        
+                        ctx.fillStyle = `rgba(0, 255, 204, ${alpha})`;
+                        ctx.font = `${this.size}px 'Orbitron', monospace`;
+                        ctx.fillText(this.char, segment.x, segment.y);
+                        
+                        // Add glow effect for last segment
+                        if (i === this.trail.length - 1) {
+                            ctx.shadowBlur = 10;
+                            ctx.shadowColor = 'rgba(0, 255, 204, 0.7)';
+                        } else {
+                            ctx.shadowBlur = 0;
+                        }
+                    }
+                    
+                    // Reset shadow
+                    ctx.shadowBlur = 0;
+                }
+            }
+            
+            // Create rain drops
+            const drops = [];
+            const dropCount = Math.floor(canvas.width * canvas.height / 15000);
+            
+            for (let i = 0; i < dropCount; i++) {
+                drops.push(new RainDrop());
+            }
+            
+            // Animation loop
+            function animate() {
+                // Clear with a subtle fade effect
+                ctx.fillStyle = 'rgba(10, 15, 25, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Update and draw drops
+                drops.forEach(drop => {
+                    drop.update();
+                    drop.draw();
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+
         // Floating Particles Animation
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
@@ -1384,11 +1497,11 @@
             }
         }
 
-        // Initialize particles
-        createParticles();
-
-        // BULLETPROOF: Wait for DOM load, then force hide sidebar
+        // Initialize cyber rain and particles
         document.addEventListener('DOMContentLoaded', function() {
+            initCyberRain();
+            createParticles();
+            
             const sidebar = document.getElementById('ezmSidebar');
             // FORCE HIDE ON LOAD
             sidebar.classList.remove('open');
