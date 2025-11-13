@@ -4,24 +4,193 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hash Generator - EZM Cyber</title>
-    <meta name="description" content="Generate secure hashes for any text using popular algorithms.">
+    <meta name="description" content="Generate secure hashes for any text using our advanced security API.">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Paste your full existing CSS from index.html here to keep everything consistent --- */
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #34a853;
+            --accent-color: #fbbc05;
+            --dark-color: #202124;
+            --light-color: #f8f9fa;
+            --danger-color: #ea4335;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: #fff !important;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: #fff !important;
+        }
+        
+        .container {
+            max-width: 800px;
+        }
+        
+        .section-light {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            margin-top: 2rem;
+        }
+        
+        h2 {
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .lead {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+        
+        .form-control, .form-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 12px 15px;
+            font-size: 1rem;
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: #fff;
+            box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 65, 108, 0.6);
+        }
+        
+        .btn-primary:disabled {
+            background: #6c757d;
+            transform: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        
+        #hashResult {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #fff;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        footer {
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .hash-copy {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+            font-size: 0.8rem;
+            transition: background 0.3s ease;
+        }
+        
+        .hash-copy:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .success-message {
+            color: #4CAF50;
+            font-weight: bold;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
-<!-- Navigation Bar (same as index.html) -->
+<!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
         <a class="navbar-brand" href="index.html">EZM Cyber</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span style="display:inline-block;width:1.5em;height:1.5em;vertical-align:middle;background-image:url('data:image/svg+xml;charset=utf8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 30 30%27%3E%3Cpath stroke=%27rgba(33, 37, 41, 0.75)%27 stroke-linecap=%27round%27 stroke-miterlimit=%2710%27 stroke-width=%272%27 d=%27M4 7h22M4 15h22M4 23h22%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-size:1.5em 1.5em;"></span>
+            <span style="display:inline-block;width:1.5em;height:1.5em;vertical-align:middle;background-image:url('data:image/svg+xml;charset=utf8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 30 30%27%3E%3Cpath stroke=%27rgba(255, 255, 255, 0.8)%27 stroke-linecap=%27round%27 stroke-miterlimit=%2710%27 stroke-width=%272%27 d=%27M4 7h22M4 15h22M4 23h22%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-size:1.5em 1.5em;"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
@@ -51,44 +220,120 @@
 <!-- Hash Generator Content -->
 <section class="py-5 section-light">
     <div class="container text-center">
-        <h2 class="mb-4">Hash Generator</h2>
-        <p class="lead mb-4">Generate secure hashes for any text using popular algorithms like MD5, SHA-1, SHA-256.</p>
+        <h2 class="mb-4">Secure Hash Generator</h2>
+        <p class="lead mb-4">Generate secure hashes using our advanced security API with multiple algorithms.</p>
 
         <form id="hashForm" class="mb-4">
             <div class="mb-3">
-                <input type="text" id="hashInput" class="form-control form-control-lg" placeholder="Enter text to hash" required>
+                <input type="text" id="hashInput" class="form-control form-control-lg" placeholder="Enter text to generate hash" required>
             </div>
             <select id="algorithm" class="form-select mb-3">
                 <option value="SHA-256">SHA-256</option>
                 <option value="SHA-1">SHA-1</option>
                 <option value="MD5">MD5</option>
+                <option value="SHA-384">SHA-384</option>
+                <option value="SHA-512">SHA-512</option>
             </select>
-            <button type="submit" class="btn btn-primary btn-lg">Generate Hash</button>
+            <button type="submit" class="btn btn-primary btn-lg" id="generateBtn">Generate Hash</button>
         </form>
 
-        <div id="hashResult" class="mt-3 fs-5"></div>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Generating secure hash...</p>
+        </div>
+
+        <div id="hashResult"></div>
+        <div id="copyMessage" class="success-message"></div>
     </div>
 </section>
 
-<!-- Footer (same as index.html) -->
+<!-- Footer -->
 <footer class="text-light text-center py-4">
     <p class="mb-0">&copy; 2025 EZM Cyber. All rights reserved.</p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
-document.getElementById("hashForm").addEventListener("submit", async function(e){
-    e.preventDefault();
-    const input = document.getElementById("hashInput").value;
-    const algorithm = document.getElementById("algorithm").value;
-
-    const encoder = new TextEncoder();
-    const data = encoder.encode(input);
-    const hashBuffer = await crypto.subtle.digest(algorithm, data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    document.getElementById("hashResult").textContent = `Hash (${algorithm}): ${hashHex}`;
-});
+    // API endpoint
+    const API_BASE_URL = 'https://ezm-security-api-production.up.railway.app';
+    
+    document.getElementById("hashForm").addEventListener("submit", async function(e){
+        e.preventDefault();
+        
+        const input = document.getElementById("hashInput").value;
+        const algorithm = document.getElementById("algorithm").value;
+        const resultDiv = document.getElementById("hashResult");
+        const loadingDiv = document.getElementById("loading");
+        const generateBtn = document.getElementById("generateBtn");
+        const copyMessage = document.getElementById("copyMessage");
+        
+        // Clear previous results
+        resultDiv.innerHTML = "";
+        copyMessage.textContent = "";
+        
+        // Show loading state
+        loadingDiv.style.display = "block";
+        generateBtn.disabled = true;
+        
+        try {
+            // Send request to backend API
+            const response = await fetch(`${API_BASE_URL}/api/generate-hash`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    text: input,
+                    algorithm: algorithm
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`API error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            // Display the hash result
+            resultDiv.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-start">
+                        <strong>${algorithm} Hash:</strong><br>
+                        <span id="hashValue">${data.hash || data.result || 'No hash returned'}</span>
+                    </div>
+                    <button class="hash-copy" onclick="copyHash()">Copy</button>
+                </div>
+            `;
+            
+        } catch (err) {
+            console.error("Hash generation error:", err);
+            resultDiv.innerHTML = `
+                <div class="alert alert-danger">
+                    <strong>Error:</strong> Unable to generate hash. Please try again later.<br>
+                    <small>Error details: ${err.message}</small>
+                </div>
+            `;
+        } finally {
+            loadingDiv.style.display = "none";
+            generateBtn.disabled = false;
+        }
+    });
+    
+    // Function to copy hash to clipboard
+    function copyHash() {
+        const hashValue = document.getElementById("hashValue").textContent;
+        const copyMessage = document.getElementById("copyMessage");
+        
+        navigator.clipboard.writeText(hashValue).then(() => {
+            copyMessage.textContent = "Hash copied to clipboard!";
+            setTimeout(() => {
+                copyMessage.textContent = "";
+            }, 3000);
+        }).catch(err => {
+            console.error("Copy failed:", err);
+            copyMessage.textContent = "Failed to copy hash";
+        });
+    }
 </script>
 
 </body>
