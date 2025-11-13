@@ -19,10 +19,10 @@ h2 { font-size: 1.5rem; }
 </style>
 </head>
 <body>
-<h2>Thank you for signing up! Redirecting to home in 5 seconds...</h2>
+<h2>Thank you for signing up! Redirecting u in 5 seconds...</h2>
 <script>
 setTimeout(() => {
-    window.location.href = 'https://ezmcyber.xyz/home.html';
+    window.location.href = 'https://ezmcyber.xyz/login.html';
 }, 5000);
 </script>
 </body>
