@@ -181,6 +181,19 @@
             font-weight: bold;
             margin-top: 10px;
         }
+        
+        .alert {
+            background: rgba(220, 53, 69, 0.2);
+            border: 1px solid rgba(220, 53, 69, 0.5);
+            color: #fff;
+        }
+        
+        .api-key-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -223,6 +236,20 @@
         <h2 class="mb-4">Secure Hash Generator</h2>
         <p class="lead mb-4">Generate secure hashes using our advanced security API with multiple algorithms.</p>
 
+        <!-- API Key Configuration -->
+        <div class="api-key-section mb-4">
+            <h5>API Configuration</h5>
+            <div class="row">
+                <div class="col-md-8">
+                    <input type="text" id="apiKeyInput" class="form-control" placeholder="Enter your API key here" value="">
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-outline-light w-100" onclick="saveApiKey()">Save API Key</button>
+                </div>
+            </div>
+            <small class="text-muted">Your API key is stored locally in your browser and never sent to our servers.</small>
+        </div>
+
         <form id="hashForm" class="mb-4">
             <div class="mb-3">
                 <input type="text" id="hashInput" class="form-control form-control-lg" placeholder="Enter text to generate hash" required>
@@ -254,13 +281,81 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
-    // API endpoint
+    // API Configuration
     const API_BASE_URL = 'https://ezm-security-api-production.up.railway.app';
+    
+    // Load saved API key
+    function loadApiKey() {
+        const savedKey = localStorage.getItem('ezm_api_key');
+        if (savedKey) {
+            document.getElementById('apiKeyInput').value = savedKey;
+        }
+        return savedKey;
+    }
+    
+    // Save API key
+    function saveApiKey() {
+        const apiKey = document.getElementById('apiKeyInput').value.trim();
+        if (apiKey) {
+            localStorage.setItem('ezm_api_key', apiKey);
+            showMessage('API key saved successfully!', 'success');
+        } else {
+            showMessage('Please enter a valid API key', 'error');
+        }
+    }
+    
+    // Show message
+    function showMessage(message, type) {
+        const copyMessage = document.getElementById('copyMessage');
+        copyMessage.textContent = message;
+        copyMessage.style.color = type === 'success' ? '#4CAF50' : '#f44336';
+        setTimeout(() => {
+            copyMessage.textContent = '';
+        }, 3000);
+    }
+    
+    // Enhanced fetch with CORS handling
+    async function apiFetch(url, options = {}) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+        
+        try {
+            const response = await fetch(url, {
+                ...options,
+                signal: controller.signal,
+                mode: 'cors',
+                credentials: 'omit'
+            });
+            
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                let errorData;
+                try {
+                    errorData = JSON.parse(errorText);
+                } catch {
+                    errorData = { message: errorText || `HTTP error: ${response.status}` };
+                }
+                throw new Error(errorData.message || `API error: ${response.status}`);
+            }
+            
+            return await response.json();
+        } catch (error) {
+            clearTimeout(timeoutId);
+            if (error.name === 'AbortError') {
+                throw new Error('Request timeout - please try again');
+            } else if (error.name === 'TypeError') {
+                throw new Error('Network error - please check your connection and CORS settings');
+            }
+            throw error;
+        }
+    }
     
     document.getElementById("hashForm").addEventListener("submit", async function(e){
         e.preventDefault();
         
-        const input = document.getElementById("hashInput").value;
+        const input = document.getElementById("hashInput").value.trim();
         const algorithm = document.getElementById("algorithm").value;
         const resultDiv = document.getElementById("hashResult");
         const loadingDiv = document.getElementById("loading");
@@ -271,16 +366,43 @@
         resultDiv.innerHTML = "";
         copyMessage.textContent = "";
         
+        // Validate input
+        if (!input) {
+            resultDiv.innerHTML = `
+                <div class="alert alert-danger">
+                    <strong>Error:</strong> Please enter text to hash
+                </div>
+            `;
+            return;
+        }
+        
+        // Check for API key
+        const apiKey = loadApiKey();
+        if (!apiKey) {
+            resultDiv.innerHTML = `
+                <div class="alert alert-danger">
+                    <strong>Configuration Required:</strong> Please enter your API key above to use the hash generator.
+                    <br><small>You can get your API key from the EZM Security Platform dashboard.</small>
+                </div>
+            `;
+            return;
+        }
+        
         // Show loading state
         loadingDiv.style.display = "block";
         generateBtn.disabled = true;
         
         try {
-            // Send request to backend API
-            const response = await fetch(`${API_BASE_URL}/api/generate-hash`, {
+            // Send request to backend API with API key
+            const data = await apiFetch(`${API_BASE_URL}/api/generate-hash`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-API-Key': apiKey,
+                    // Alternative header names - try these if X-API-Key doesn't work
+                    // 'Authorization': `Bearer ${apiKey}`,
+                    // 'api-key': apiKey,
+                    // 'x-api-key': apiKey,
                 },
                 body: JSON.stringify({
                     text: input,
@@ -288,18 +410,25 @@
                 })
             });
             
-            if (!response.ok) {
-                throw new Error(`API error: ${response.status}`);
-            }
+            // Handle different response formats
+            let hashValue = 'No hash returned';
             
-            const data = await response.json();
+            if (data.success && data.data) {
+                hashValue = data.data;
+            } else if (data.hash) {
+                hashValue = data.hash;
+            } else if (data.result) {
+                hashValue = data.result;
+            } else if (typeof data === 'string') {
+                hashValue = data;
+            }
             
             // Display the hash result
             resultDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="text-start">
                         <strong>${algorithm} Hash:</strong><br>
-                        <span id="hashValue">${data.hash || data.result || 'No hash returned'}</span>
+                        <span id="hashValue">${hashValue}</span>
                     </div>
                     <button class="hash-copy" onclick="copyHash()">Copy</button>
                 </div>
@@ -307,10 +436,26 @@
             
         } catch (err) {
             console.error("Hash generation error:", err);
+            
+            let errorMessage = err.message;
+            let detailedHelp = '';
+            
+            // Provide helpful error messages
+            if (err.message.includes('API key') || err.message.includes('401')) {
+                errorMessage = 'Invalid or missing API key';
+                detailedHelp = 'Please check your API key and try again.';
+            } else if (err.message.includes('CORS') || err.message.includes('Network error')) {
+                errorMessage = 'Cross-Origin Request Blocked';
+                detailedHelp = 'This may be a CORS issue. Please ensure the API allows requests from this domain.';
+            } else if (err.message.includes('timeout')) {
+                errorMessage = 'Request timeout';
+                detailedHelp = 'The server took too long to respond. Please try again.';
+            }
+            
             resultDiv.innerHTML = `
                 <div class="alert alert-danger">
-                    <strong>Error:</strong> Unable to generate hash. Please try again later.<br>
-                    <small>Error details: ${err.message}</small>
+                    <strong>Error:</strong> ${errorMessage}<br>
+                    <small>${detailedHelp || 'Please try again later.'}</small>
                 </div>
             `;
         } finally {
@@ -321,19 +466,27 @@
     
     // Function to copy hash to clipboard
     function copyHash() {
-        const hashValue = document.getElementById("hashValue").textContent;
+        const hashValueElement = document.getElementById("hashValue");
+        if (!hashValueElement) return;
+        
+        const hashValue = hashValueElement.textContent;
         const copyMessage = document.getElementById("copyMessage");
         
         navigator.clipboard.writeText(hashValue).then(() => {
-            copyMessage.textContent = "Hash copied to clipboard!";
-            setTimeout(() => {
-                copyMessage.textContent = "";
-            }, 3000);
+            showMessage('Hash copied to clipboard!', 'success');
         }).catch(err => {
             console.error("Copy failed:", err);
-            copyMessage.textContent = "Failed to copy hash";
+            showMessage('Failed to copy hash', 'error');
         });
     }
+    
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadApiKey();
+        
+        // Add some sample text for testing
+        document.getElementById('hashInput').placeholder = 'Enter text to generate hash (e.g., "password123")';
+    });
 </script>
 
 </body>
