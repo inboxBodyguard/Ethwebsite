@@ -8,6 +8,7 @@ import logging
 import requests
 import base64
 import time
+from flask import Flask, send_from_directory
 
 # -------------------- SETUP --------------------
 logging.basicConfig(level=logging.INFO)
@@ -419,6 +420,15 @@ def server_error(e):
 @app.route('/which-script')
 def which_script():
     return "app.py"
+    
+    # Maintenance mode toggle
+MAINTENANCE_MODE = True  # True = maintenance ON, False = maintenance OFF
+
+@app.before_request
+def maintenance_redirect():
+    if MAINTENANCE_MODE:
+        return send_from_directory('.', 'index.html')  # your maintenance page
+    
 # -------------------- RUN APP --------------------
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
