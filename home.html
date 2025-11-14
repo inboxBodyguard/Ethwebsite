@@ -1145,19 +1145,6 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <h5 class="card-title">Domain  Lookup</h5>
-                            <p class="card-text">Get comprehensive domain registration information and DNS records.</p>
-                            <form id="domainForm" class="mb-3">
-                                <input type="text" id="domainInput" class="form-control mb-3" placeholder="Enter domain" required />
-                                <button type="submit" class="btn btn-info w-100">Lookup Domain</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 card-hover text-center">
-                        <div class="card-body">
                             <h5 class="card-title">IP Reputation Checker</h5>
                             <p class="card-text">Analyze IP addresses for reputation, threats, and blacklisting status.</p>
                             <form id="ipForm" class="mb-3">
@@ -1326,7 +1313,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    <script>
+<script>
         // Cyber Rain Animation
         function initCyberRain() {
             const canvas = document.getElementById('cyberRainCanvas');
@@ -1492,12 +1479,15 @@
         window.addEventListener('scroll', handleScrollAnimation);
         window.addEventListener('load', handleScrollAnimation);
 
-        // --- UPDATED BACKEND ENDPOINT ---
+        // --- UPDATED BACKEND ENDPOINTS ---
         const EZM_BACKEND_API = 'https://ezm-security-api-production.up.railway.app';
-        // --------------------------------
-
-        // URLScan Link Checker (Now calling EZM_BACKEND_API/api/urlscan)
+        
+        // Correct endpoints from your API response
         const URLSCAN_ENDPOINT = `${EZM_BACKEND_API}/api/urlscan`;
+        const WHOIS_ENDPOINT = `${EZM_BACKEND_API}/api/whois`;
+        const IP_REPUTATION_ENDPOINT = `${EZM_BACKEND_API}/api/ip-reputation`;
+
+        // 1. SUSPICIOUS LINK CHECKER - Fixed
         const form = document.getElementById('linkForm');
         const input = document.getElementById('linkInput');
         const resultDiv = document.getElementById('result');
@@ -1524,26 +1514,18 @@
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ url })
                 });
+                
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                
                 const data = await resp.json();
-
-                if (resp.ok && data.scan_id) {
-                  // Assuming your backend returns a result_url or similar if it's async
-                  const result_url = data.result_url || `${EZM_BACKEND_API}/scan-report?id=${data.scan_id}`; 
-                  showResult(`
-                    <strong>Scan submitted!</strong><br>
-                    <small>Scan ID: ${data.scan_id}</small><br>
-                    <small>Full report: <a href="${result_url}" target="_blank">View Report on EZM Cyber</a></small>
-                  `);
-                } else if (resp.ok && data.status === 'success' && data.report_data) {
-                    // Assuming your backend returns direct results for synchronous checks
+                
+                if (data.status === 'success') {
                     showResult(`
                         <strong>Scan Complete!</strong><br>
-                        <pre style="text-align: left; background: #333; padding: 10px; border-radius: 8px; color: #00ffcc; overflow-x: auto;">${JSON.stringify(data.report_data, null, 2)}</pre>
+                        <pre style="text-align: left; background: #333; padding: 10px; border-radius: 8px; color: #00ffcc; overflow-x: auto;">${JSON.stringify(data, null, 2)}</pre>
                     `);
                 } else {
-                  const errorMsg = data.error || 'Scan could not be completed';
-                  const details = data.details ? `<br><small>Details: ${data.details}</small>` : '';
-                  showResult(`<span style="color:#f59e0b;">⚠️ ${errorMsg}${details}</span>`);
+                  showResult(`<span style="color:#f59e0b;">⚠️ ${data.error || 'Scan could not be completed'}</span>`);
                 }
               } catch (err) {
                 console.error('URLScan error:', err);
@@ -1552,30 +1534,43 @@
             });
         }
 
-        // Domain Lookup -> DomainTools (kept)
-        document.getElementById("domainForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            const domain = document.getElementById("domainInput").value.trim();
-            if (domain) window.open(`https://whois.domaintools.com/${domain}`, "_blank", "noopener");
-        });
-
-        // IP Reputation Checker (KEPT AS IS)
-        document.getElementById("ipForm").addEventListener("submit", function(e) {
+        // 2. IP REPUTATION CHECKER - Fixed (no redirect, uses your backend)
+        document.getElementById("ipForm").addEventListener("submit", async function(e) {
             e.preventDefault();
             const ip = document.getElementById("ipInput").value.trim();
-            // Basic IPv4 validation (add IPv6 if needed: const ipv6Regex = /([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}/)
-            const ipv4Regex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-            if (ip && ipv4Regex.test(ip)) {
-                // Redirect to an external site to check IP reputation (VirusTotal was original)
-                window.open(`https://www.virustotal.com/gui/ip-address/${ip}/detection`, "_blank");
-            } else {
-                alert("Please enter a valid IP address (e.g., 8.8.8.8).");
+            
+            const cardBody = e.target.closest('.card-body');
+            let resultContainer = cardBody.querySelector('#ipResult');
+
+            if (!resultContainer) {
+                resultContainer = document.createElement('div');
+                resultContainer.id = 'ipResult';
+                resultContainer.className = 'mt-3';
+                cardBody.appendChild(resultContainer);
+            }
+
+            resultContainer.innerHTML = '<em>Checking IP reputation... ⏳</em>';
+
+            try {
+                const resp = await fetch(IP_REPUTATION_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ip: ip })
+                });
+                
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                
+                const data = await resp.json();
+                resultContainer.innerHTML = `
+                    <strong>IP Reputation Check Complete!</strong><br>
+                    <pre style="text-align: left; background: #333; padding: 10px; border-radius: 8px; color: #00ffcc; overflow-x: auto; max-height: 250px;">${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (err) {
+                resultContainer.innerHTML = `<span style="color:#ef4444;">⚠️ Error: ${err.message}. Check if IP is valid.</span>`;
             }
         });
 
-        // WHOISXML API (Now calling EZM_BACKEND_API/api/whois/details and showing inline)
-        const WX_ENDPOINT = `${EZM_BACKEND_API}/api/whois/details`;
-        
+        // 3. DOMAIN/IP DETAILS LOOKUP - Fixed (uses /api/whois)
         document.getElementById("wxForm").addEventListener("submit", async function(e) {
             e.preventDefault();
             const d = document.getElementById("wxDomain").value.trim();
@@ -1591,31 +1586,29 @@
                 cardBody.appendChild(resultContainer);
             }
 
-            resultContainer.innerHTML = '<em>Fetching details... please wait ⏳</em>';
+            resultContainer.innerHTML = '<em>Fetching domain details... ⏳</em>';
 
             try {
-                const resp = await fetch(WX_ENDPOINT, {
+                const resp = await fetch(WHOIS_ENDPOINT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ target: d })
                 });
+                
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                
                 const data = await resp.json();
-
-                if (resp.ok && data.details) {
-                    const formattedData = JSON.stringify(data.details, null, 2);
-                    resultContainer.innerHTML = `
-                        <strong>Details Retrieved!</strong><br>
-                        <pre style="text-align: left; background: #333; padding: 10px; border-radius: 8px; color: #00ffcc; overflow-x: auto; max-height: 250px;">${formattedData}</pre>
-                    `;
-                } else {
-                    const errorMsg = data.error || 'Could not retrieve details.';
-                    resultContainer.innerHTML = `<span style="color:#f59e0b;">⚠️ ${errorMsg}</span>`;
-                }
+                resultContainer.innerHTML = `
+                    <strong>Domain Analysis Complete!</strong><br>
+                    <pre style="text-align: left; background: #333; padding: 10px; border-radius: 8px; color: #00ffcc; overflow-x: auto; max-height: 250px;">${JSON.stringify(data, null, 2)}</pre>
+                `;
             } catch (err) {
-                console.error('WHOIS/IP error:', err);
-                resultContainer.innerHTML = '<span style="color:#ef4444;">⚠️ Network error: Unable to connect to backend server. Try again later.</span>';
+                resultContainer.innerHTML = `<span style="color:#ef4444;">⚠️ Error: ${err.message}. Check if domain is valid.</span>`;
             }
         });
+
+        // Update the IP reputation card text (remove external services note)
+        document.querySelector('#ipForm + .text-muted').textContent = 'Powered by EZM Cyber Backend';
 
         // Test escalation function (kept)
         function testEscalation() {
@@ -1629,8 +1622,8 @@
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => {
-                sessionStorage.removeItem('currentUser');  // Clear session
-                window.location.href = 'login.html'; // Redirect to login page
+                sessionStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
             });
         }
 
@@ -1665,7 +1658,6 @@
             }
         });
     </script>
-
     <script type="text/javascript">
         var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
         (function(){
