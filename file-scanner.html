@@ -240,7 +240,7 @@
         const resultContent = document.getElementById('resultContent');
         const hashDisplay = document.getElementById('hashDisplay');
         
-        // API endpoint
+        // API endpoint - CORRECTED
         const API_ENDPOINT = 'https://ezm-security-api-production.up.railway.app';
         
         // Event listeners
@@ -316,17 +316,13 @@
                 const sha256 = await fileToSha256Hex(file);
                 hashDisplay.textContent = `File Hash (SHA-256): ${sha256}`;
                 
-                // Send request to custom API
-                const response = await fetch(`${API_ENDPOINT}/scan`, {
+                // Send request to CORRECT API endpoint using FormData
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                const response = await fetch(`${API_ENDPOINT}/api/scan-file`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        hash: sha256,
-                        filename: file.name,
-                        filesize: file.size
-                    })
+                    body: formData
                 });
                 
                 if (!response.ok) {
@@ -354,20 +350,25 @@
         
         // Display scan results
         function displayResults(result) {
-            // Customize this based on your API response structure
             let statusClass = 'status-safe';
             let statusText = 'No threats detected';
             let details = 'This file appears to be safe.';
             
-            if (result.isMalicious) {
+            // Handle different API response formats
+            if (result.isMalicious || result.threat_detected || result.risk_level === 'high') {
                 statusClass = 'status-malicious';
                 statusText = 'Threat detected!';
-                details = 'This file has been identified as malicious. Do not open or execute this file.';
+                details = result.details || 'This file has been identified as malicious. Do not open or execute this file.';
+            } else if (result.risk_level === 'medium' || result.suspicious) {
+                statusClass = 'status-malicious';
+                statusText = 'Suspicious file detected';
+                details = result.details || 'This file shows suspicious characteristics. Proceed with caution.';
             }
             
             resultContent.innerHTML = `
                 <p class="${statusClass}">${statusText}</p>
                 <p>${details}</p>
+                ${result.scan_details ? `<p>Scan details: ${result.scan_details}</p>` : ''}
                 <p>Scan date: ${new Date().toLocaleString()}</p>
             `;
             
