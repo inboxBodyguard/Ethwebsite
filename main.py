@@ -533,20 +533,12 @@ def maintenance_redirect():
         return send_from_directory('.', 'index.html')
 # —index.html')
 
-# ——— RUN—— RUN APP ———
+# ——— RUN APP ———
 if __name__ == '__main__':
-    port = __name__ == '__main__':
-    port = int(os int(os.environ.get("PORT", 5000))
-.environ.get("PORT", 5000))
-    logger    logger.info(f"Starting Flask app.info(f"Starting Flask app on on port {port}")
-
- port {port}")
+    port = int(os.environ.get("PORT", 5000))
+    logger.info(f"Starting Flask app on port {port}")
 
     with app.app_context():
-        db.create_all    with app.app_context():
         db.create_all()
 
-    app()
-
-    app.run(host.run(host='0.0.0.0', port=='0.0.0.0', port=port, debug=False)
-port, debug=False)
+    app.run(host='0.0.0.0', port=port, debug=False)
