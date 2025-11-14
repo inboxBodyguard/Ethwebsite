@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>EZM Cyber - Secure, Protect, and Respond</title>
     <meta name="description" content="EZM Cyber helps individuals and businesses stay secure with link verification, cyber threat analysis, and professional cybersecurity services.">
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-B7Z9JFWB5G"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -14,19 +13,14 @@
       gtag('config', 'G-B7Z9JFWB5G');
     </script>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- Favicon -->
     <link rel="icon" href="/path/to/banner.jpg" type="image/jpg">
 
-    <!-- Theme color -->
     <meta name="theme-color" content="#00ffcc">
 
-    <!-- Structured data (JSON-LD) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -41,17 +35,14 @@
     }
     </script>
 
-    <!-- Open Graph / Social Sharing -->
     <meta property="og:title" content="EZM Cyber - Your Digital Security Partner">
     <meta property="og:description" content="Secure login and digital security solutions">
     <meta property="og:image" content="https://raw.githubusercontent.com/inboxBodyguard/Ethwebsite/main/banner.jpg">
     <meta property="og:url" content="https://www.ezmcyber.xyz">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Consolidated Styles -->
     <style>
         :root {
             --primary-color: #00ffcc;
@@ -1011,31 +1002,25 @@
     </style>
 </head>
 <body>
-    <!-- Cyber Rain Canvas -->
     <canvas id="cyberRainCanvas"></canvas>
 
-    <!-- Floating Particles Background -->
     <div class="particles" id="particles"></div>
 
-    <!-- Alert -->
     <div id="escalationAlert" class="escalation-alert">
         <strong>ESCALATION TRIGGERED</strong><br />
         <small>User requested human support.</small>
     </div>
 
-    <!-- Top bar (brand + hamburger) -->
     <nav class="ezm-topbar" role="navigation" aria-label="Main navigation">
       <div class="container ezm-topbar-inner">
         <a class="navbar-brand" href="home.html">EZM Cyber</a>
 
-        <!-- hamburger triggers sidebar -->
         <button id="ezmSidebarToggle" class="ezm-hamburger" aria-controls="ezmSidebar" aria-expanded="false" aria-label="Open main menu">
           <span class="ezm-hamburger-box"><span class="ezm-hamburger-inner"></span></span>
         </button>
       </div>
     </nav>
 
-    <!-- Sidebar (hidden by default) -->
     <aside id="ezmSidebar" class="ezm-sidebar" role="complementary" aria-hidden="true" aria-labelledby="ezmSidebarToggle">
       <div class="ezm-sidebar-inner">
         <button id="ezmSidebarClose" class="ezm-sidebar-close" aria-label="Close menu">&times;</button>
@@ -1046,19 +1031,15 @@
 
         <nav class="ezm-sidebar-nav" role="navigation" aria-label="Sidebar navigation">
           <ul>
-            <!-- Main pages -->
             <li><a class="ezm-btn" href="home.html">🏠 Home</a></li>
             <li><a class="ezm-btn" href="about.html">About</a></li>
             <li><a class="ezm-btn" href="services.html">Services</a></li>
             <li><a class="ezm-btn" href="contact.html">Contact</a></li>
 
-            <!-- Extras -->
             <li><a class="ezm-btn" href="privacy.html">Privacy</a></li>
 
-            <!-- Get Involved (flattened) -->
             <li><a class="ezm-btn" href="newsletter.html">Newsletter</a></li>
 
-            <!-- Tools (flattened) -->
             <li><a class="ezm-btn" href="hash-generator.html">Hash Generator</a></li>
             <li><a class="ezm-btn" href="password-tools.html">Password Tools</a></li>
             <li><a class="ezm-btn" href="file-scanner.html">File Scanner</a></li>
@@ -1073,17 +1054,14 @@
       </div>
     </aside>
 
-    <!-- overlay -->
     <div id="ezmSidebarOverlay" class="ezm-sidebar-overlay" tabindex="-1" aria-hidden="true"></div>
 
-    <!-- Banner -->
     <section class="banner-section d-flex align-items-center justify-content-center">
         <div class="banner-overlay"></div>
         <div class="banner-content">
         </div>
     </section>
 
-    <!-- Welcome Section -->
     <section class="py-5 scroll-fade" style="position: relative; overflow: hidden;">
         <div class="container text-center" style="position: relative; z-index:1;">
             <h2 class="mb-4">Welcome to EZM Cyber</h2>
@@ -1096,12 +1074,10 @@
         </div>
     </section>
 
-    <!-- Incident Playbook Button Only -->
     <a href="incident-playbook.html" class="cyber-button">
       🚨 Open Incident Playbook
     </a>
 
-    <!-- Trust Section -->
     <section class="py-5 scroll-fade">
         <div class="container text-center">
             <h2 class="mb-4">Building Digital Trust with EZM Cyber</h2>
@@ -1113,7 +1089,6 @@
         </div>
     </section>
 
-    <!-- Services (target for #services) -->
     <section id="services" class="section-light scroll-fade">
         <div class="container text-center">
             <h2 class="mb-4">My Services</h2>
@@ -1122,7 +1097,6 @@
         </div>
     </section>
 
-    <!-- Suspicious Link Checker (URLScan.io) -->
     <section class="py-5 section-light scroll-fade">
       <div class="container">
         <div class="row justify-content-center">
@@ -1131,10 +1105,9 @@
               <div class="card-body text-center">
                 <h3 class="card-title mb-4">Suspicious Link Checker</h3>
                 <p class="card-text mb-4">
-                  Verify the safety of any URL using URLScan.io's comprehensive security analysis
+                  Verify the safety of any URL using EZM Cyber's proprietary security analysis.
                 </p>
 
-                <!-- Form -->
                 <form id="linkForm" class="mb-4">
                   <div class="input-group input-group-lg">
                     <input
@@ -1150,7 +1123,6 @@
                   </div>
                 </form>
 
-                <!-- Result container -->
                 <div id="result" class="mt-2"></div>
 
                 <p class="text-muted mb-0">
@@ -1163,7 +1135,6 @@
       </div>
     </section>
 
-    <!-- Additional Tools -->
     <section class="py-5 section-light scroll-fade">
         <div class="container">
             <div class="text-center mb-5">
@@ -1171,7 +1142,6 @@
                 <p class="lead">Comprehensive security analysis tools for IP addresses and domains</p>
             </div>
             <div class="row g-4 justify-content-center">
-                <!-- Domain Lookup (DomainTools) -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
@@ -1185,32 +1155,30 @@
                     </div>
                 </div>
                 
-                <!-- IP Reputation Checker -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
                             <h5 class="card-title">IP Reputation Checker</h5>
-                            <p class="card-text">Analyze IP addresses for reputation, threats, and blacklisting status using VirusTotal.</p>
+                            <p class="card-text">Analyze IP addresses for reputation, threats, and blacklisting status.</p>
                             <form id="ipForm" class="mb-3">
                                 <input type="text" id="ipInput" class="form-control mb-3" placeholder="Enter IP address (e.g., 8.8.8.8)" required />
                                 <button type="submit" class="btn btn-warning w-100">Check IP Reputation</button>
                             </form>
-                            <small class="text-muted d-block">Powered by VirusTotal (opens in new tab)</small>
+                            <small class="text-muted d-block">Check status on external services (opens in new tab)</small>
                         </div>
                     </div>
                 </div>
 
-                <!-- WHOISXML API Lookup (opens our own results page) -->
                 <div class="col-md-6 col-lg-8">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
-                            <h5 class="card-title">WHOISXML API Lookup</h5>
-                            <p class="card-text">Use WHOISXML to query detailed WHOIS records. Results will open on a dedicated page.</p>
+                            <h5 class="card-title">Domain/IP Details Lookup</h5>
+                            <p class="card-text">Query detailed WHOIS records and IP reputation via EZM Cyber's integrated service.</p>
                             <form id="wxForm" class="mb-3">
-                                <input type="text" id="wxDomain" class="form-control mb-3" placeholder="Enter domain (e.g., example.com)" required />
-                                <button type="submit" class="btn btn-primary w-100">Check with WHOISXML</button>
+                                <input type="text" id="wxDomain" class="form-control mb-3" placeholder="Enter domain or IP (e.g., example.com)" required />
+                                <button type="submit" class="btn btn-primary w-100">Get Details</button>
                             </form>
-                            <small class="text-muted d-block">Powered by WHOISXML API</small>
+                            <small class="text-muted d-block">Powered by EZM Cyber Backend</small>
                         </div>
                     </div>
                 </div>
@@ -1218,7 +1186,6 @@
         </div>
     </section>
 
-    <!-- Newsletter -->
     <section class="py-5 newsletter-section scroll-fade">
         <div class="container text-center">
             <div class="row justify-content-center">
@@ -1238,7 +1205,6 @@
         </div>
     </section>
 
-    <!-- Internal Tools Section -->
     <section class="py-5 section-light scroll-fade">
         <div class="container">
             <div class="text-center mb-5">
@@ -1247,7 +1213,6 @@
             </div>
 
             <div class="row g-4 stagger-animation">
-                <!-- Hash Generator Card -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
@@ -1259,7 +1224,6 @@
                     </div>
                 </div>
 
-                <!-- Password Tools Card -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
@@ -1271,7 +1235,6 @@
                     </div>
                 </div>
 
-                <!-- File Scanner Card -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
@@ -1283,7 +1246,6 @@
                     </div>
                 </div>
 
-                <!-- Network Tools Card -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
@@ -1295,7 +1257,6 @@
                     </div>
                 </div>
 
-                <!-- Checker Tool Card -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 card-hover text-center">
                         <div class="card-body">
@@ -1318,7 +1279,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="text-light text-center">
         <div class="container">
             <div class="row">
@@ -1332,7 +1292,6 @@
         </div>
     </footer>
 
-    <!-- Social Links -->
     <div class="social-links">
         <a href="https://x.com/niffy_hunt?s=21" target="_blank" rel="noopener noreferrer" class="social-link">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="24" height="24" fill="currentColor">
@@ -1361,15 +1320,12 @@
 
     <p id="status"></p>
 
-    <!-- Place this anywhere inside <body> where you want the button -->
     <button id="logoutBtn" style="padding:10px 20px; border:none; border-radius:8px; background:#00ffcc; color:#000; font-weight:600; cursor:pointer; margin: 20px;">
       Logout
     </button>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Main Scripts -->
     <script>
         // Cyber Rain Animation
         function initCyberRain() {
@@ -1536,8 +1492,12 @@
         window.addEventListener('scroll', handleScrollAnimation);
         window.addEventListener('load', handleScrollAnimation);
 
-        // URLScan Link Checker
-        const URLSCAN_BACKEND = 'https://ethwebsite-ulau.onrender.com/api/urlscan';
+        // --- UPDATED BACKEND ENDPOINT ---
+        const EZM_BACKEND_API = 'https://ezm-security-api-production.up.railway.app';
+        // --------------------------------
+
+        // URLScan Link Checker (Now calling EZM_BACKEND_API/api/urlscan)
+        const URLSCAN_ENDPOINT = `${EZM_BACKEND_API}/api/urlscan`;
         const form = document.getElementById('linkForm');
         const input = document.getElementById('linkInput');
         const resultDiv = document.getElementById('result');
@@ -1559,19 +1519,27 @@
               addTyping();
 
               try {
-                const resp = await fetch(URLSCAN_BACKEND, {
+                const resp = await fetch(URLSCAN_ENDPOINT, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ url })
                 });
                 const data = await resp.json();
 
-                if (resp.ok && data.scan_id && data.result_url) {
+                if (resp.ok && data.scan_id) {
+                  // Assuming your backend returns a result_url or similar if it's async
+                  const result_url = data.result_url || `${EZM_BACKEND_API}/scan-report?id=${data.scan_id}`; 
                   showResult(`
                     <strong>Scan submitted!</strong><br>
-                    <small>Scan ID: <a href="${data.result_url}" target="_blank">${data.scan_id}</a></small><br>
-                    <small>Full report: <a href="${data.result_url}" target="_blank">View on URLScan.io</a></small>
+                    <small>Scan ID: ${data.scan_id}</small><br>
+                    <small>Full report: <a href="${result_url}" target="_blank">View Report on EZM Cyber</a></small>
                   `);
+                } else if (resp.ok && data.status === 'success' && data.report_data) {
+                    // Assuming your backend returns direct results for synchronous checks
+                    showResult(`
+                        <strong>Scan Complete!</strong><br>
+                        <pre style="text-align: left; background: #333; padding: 10px; border-radius: 8px; color: #00ffcc; overflow-x: auto;">${JSON.stringify(data.report_data, null, 2)}</pre>
+                    `);
                 } else {
                   const errorMsg = data.error || 'Scan could not be completed';
                   const details = data.details ? `<br><small>Details: ${data.details}</small>` : '';
@@ -1579,7 +1547,7 @@
                 }
               } catch (err) {
                 console.error('URLScan error:', err);
-                showResult('<span style="color:#ef4444;">⚠️ Network error: Unable to connect to server. Try again later.</span>');
+                showResult('<span style="color:#ef4444;">⚠️ Network error: Unable to connect to backend server. Try again later.</span>');
               }
             });
         }
@@ -1591,26 +1559,62 @@
             if (domain) window.open(`https://whois.domaintools.com/${domain}`, "_blank", "noopener");
         });
 
-        // IP Reputation Checker
+        // IP Reputation Checker (KEPT AS IS)
         document.getElementById("ipForm").addEventListener("submit", function(e) {
             e.preventDefault();
             const ip = document.getElementById("ipInput").value.trim();
             // Basic IPv4 validation (add IPv6 if needed: const ipv6Regex = /([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}/)
             const ipv4Regex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
             if (ip && ipv4Regex.test(ip)) {
+                // Redirect to an external site to check IP reputation (VirusTotal was original)
                 window.open(`https://www.virustotal.com/gui/ip-address/${ip}/detection`, "_blank");
             } else {
                 alert("Please enter a valid IP address (e.g., 8.8.8.8).");
             }
         });
 
-        // WHOISXML API: send to our results page
-        document.getElementById("wxForm").addEventListener("submit", function(e) {
+        // WHOISXML API (Now calling EZM_BACKEND_API/api/whois/details and showing inline)
+        const WX_ENDPOINT = `${EZM_BACKEND_API}/api/whois/details`;
+        
+        document.getElementById("wxForm").addEventListener("submit", async function(e) {
             e.preventDefault();
             const d = document.getElementById("wxDomain").value.trim();
             if (!d) return;
-            const qs = new URLSearchParams({ domain: d }).toString();
-            window.open(`whoisxmlapi.html?${qs}`, "_blank");
+
+            const cardBody = e.target.closest('.card-body');
+            let resultContainer = cardBody.querySelector('#wxResult');
+
+            if (!resultContainer) {
+                resultContainer = document.createElement('div');
+                resultContainer.id = 'wxResult';
+                resultContainer.className = 'mt-3';
+                cardBody.appendChild(resultContainer);
+            }
+
+            resultContainer.innerHTML = '<em>Fetching details... please wait ⏳</em>';
+
+            try {
+                const resp = await fetch(WX_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target: d })
+                });
+                const data = await resp.json();
+
+                if (resp.ok && data.details) {
+                    const formattedData = JSON.stringify(data.details, null, 2);
+                    resultContainer.innerHTML = `
+                        <strong>Details Retrieved!</strong><br>
+                        <pre style="text-align: left; background: #333; padding: 10px; border-radius: 8px; color: #00ffcc; overflow-x: auto; max-height: 250px;">${formattedData}</pre>
+                    `;
+                } else {
+                    const errorMsg = data.error || 'Could not retrieve details.';
+                    resultContainer.innerHTML = `<span style="color:#f59e0b;">⚠️ ${errorMsg}</span>`;
+                }
+            } catch (err) {
+                console.error('WHOIS/IP error:', err);
+                resultContainer.innerHTML = '<span style="color:#ef4444;">⚠️ Network error: Unable to connect to backend server. Try again later.</span>';
+            }
         });
 
         // Test escalation function (kept)
@@ -1662,7 +1666,6 @@
         });
     </script>
 
-    <!-- Start of Tawk.to Script -->
     <script type="text/javascript">
         var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
         (function(){
@@ -1674,8 +1677,6 @@
             s0.parentNode.insertBefore(s1,s0);
         })();
     </script>
-    <!-- End of Tawk.to Script -->
-    
     <script>
     document.addEventListener('DOMContentLoaded', function () {
       const toggle = document.getElementById('ezmSidebarToggle');
