@@ -21,7 +21,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # ——— APP SETUP ———
-app = Flask(__name__, static_folder='.', template_folder='templates')  # UPDATED: template_folder='templates'
+app = Flask(__name__, static_folder='.', template_folder='templates')
 CORS(app)
 bcrypt = Bcrypt(app)
 
@@ -190,7 +190,7 @@ def send_webhook_alert(req: DemoRequest) -> bool:
 def home():
     return send_from_directory('.', 'index.html')
 
-# ADDED: Routes for all HTML files in templates folder
+# Routes for all HTML files in templates folder
 @app.route('/about')
 def about():
     return send_from_directory('templates', 'about.html')
@@ -525,13 +525,10 @@ def login():
 # Maintenance mode toggle
 MAINTENANCE_MODE = False  # Set to False to allow access to all pages
 
-@app.before_request pages
-
 @app.before_request
 def maintenance_redirect():
     if MAINTENANCE_MODE:
         return send_from_directory('.', 'index.html')
-# —index.html')
 
 # ——— RUN APP ———
 if __name__ == '__main__':
