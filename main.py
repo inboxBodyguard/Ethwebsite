@@ -528,13 +528,9 @@ MAINTENANCE_MODE = False  # Set to False to allow access to all pages
 @app.before_request pages
 
 @app.before_request
-def
 def maintenance_redirect():
-    maintenance_redirect():
-    if if MAINTENANCE_MODE MAINTENANCE_MODE:
-       :
-        return send_from_directory return send_from_directory('.', '('.', 'index.html')
-
+    if MAINTENANCE_MODE:
+        return send_from_directory('.', 'index.html')
 # —index.html')
 
 # ——— RUN—— RUN APP ———
