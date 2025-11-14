@@ -14,6 +14,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from flask import Flask, send_from_directory
 
 # ——— LOGGING SETUP ———
 logging.basicConfig(level=logging.INFO)
@@ -450,6 +451,14 @@ def login():
         return jsonify({"ok": True, "message": f"Login successful for user: {email}"}), 200
     else:
         return jsonify({"ok": False, "error": "Invalid email or password"}), 401 # 401 Unauthorized
+
+# Maintenance mode toggle
+MAINTENANCE_MODE = True  # True = maintenance ON, False = maintenance OFF
+
+@app.before_request
+def maintenance_redirect():
+    if MAINTENANCE_MODE:
+        return send_from_directory('.', 'index.html')  # your maintenance page
 
 # ——— RUN APP ———
 if __name__ == '__main__':
