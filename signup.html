@@ -830,14 +830,14 @@
           const emailSent = await sendWelcomeEmail(email, email.split('@')[0], 'email');
           
           if (emailSent) {
-            showSuccess('Welcome to EZM Cyber! Your account has been created successfully. Redirecting to your dashboard...');
+            showSuccess('Welcome to EZM Cyber! Your account has been created successfully. Redirecting you...');
           } else {
             showSuccess('Welcome to EZM Cyber! Your account is ready. You\'ll receive a welcome email shortly.');
           }
           
-          // Redirect to home page
+          // Redirect to login page
           setTimeout(() => {
-            window.location.href = 'home.html';
+            window.location.href = 'login.html';
           }, 1500);
           
         } catch (error) {
