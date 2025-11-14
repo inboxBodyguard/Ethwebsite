@@ -534,7 +534,6 @@ def maintenance_redirect():
 # —index.html')
 
 # ——— RUN—— RUN APP ———
-if APP ———
 if __name__ == '__main__':
     port = __name__ == '__main__':
     port = int(os int(os.environ.get("PORT", 5000))
