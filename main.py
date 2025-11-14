@@ -21,9 +21,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # ——— APP SETUP ———
-app = Flask(__name__, static_folder='.', template_folder='.')
+app = Flask(__name__, static_folder='.', template_folder='templates')  # UPDATED: template_folder='templates'
 CORS(app)
-bcrypt = Bcrypt(app)  # <-- NEW: Initialize Bcrypt
+bcrypt = Bcrypt(app)
 
 # ——— DATABASE SETUP ———
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL", "sqlite:///demo_requests.db")
@@ -60,21 +60,17 @@ class DemoRequest(db.Model):
     message = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=db.func.now())
 
-class User(db.Model): # <-- NEW: User Model for Authentication
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(254), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(128), nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.now())
-    # Note: Use 'db.session.execute(db.select(User).filter_by(email=email)).scalar_one_or_none()' for querying
 
 # ——— HELPERS ———
-def hash_password(password: str) -> str: # <-- NEW: Password helper
-    """Securely hash a password using bcrypt."""
-    # bcrypt.generate_password_hash returns bytes, decode for SQL storage
+def hash_password(password: str) -> str:
     return bcrypt.generate_password_hash(password).decode('utf-8')
 
-def check_password_verified(hashed_password: str, password: str) -> bool: # <-- NEW: Password helper
-    """Check a plaintext password against a stored hash."""
+def check_password_verified(hashed_password: str, password: str) -> bool:
     return bcrypt.check_password_hash(hashed_password, password)
 
 def normalize_url(url):
@@ -125,7 +121,6 @@ def send_welcome_email(to_email):
     msg["Subject"] = "Welcome to EZM Cyber!"
     msg["From"] = SENDER_EMAIL
     msg["To"] = to_email
-    # Personalized content based on signup action
     html_content = f"""
     <html>
       <body>
@@ -140,7 +135,6 @@ def send_welcome_email(to_email):
     msg.attach(MIMEText(html_content, "html"))
 
     try:
-        # Using placeholder SMTP details; replace with actual configuration if available
         with smtplib.SMTP("smtp.hostinger.com", 587, timeout=10) as server:
             server.starttls()
             server.login(SENDER_EMAIL, SENDER_PASSWORD)
@@ -196,10 +190,100 @@ def send_webhook_alert(req: DemoRequest) -> bool:
 def home():
     return send_from_directory('.', 'index.html')
 
-@app.route('/verify-link')
-def verify_link():
-    return send_from_directory('.', 'verify_link.html')
+# ADDED: Routes for all HTML files in templates folder
+@app.route('/about')
+def about():
+    return send_from_directory('templates', 'about.html')
 
+@app.route('/services')
+def services():
+    return send_from_directory('templates', 'services.html')
+
+@app.route('/contact')
+def contact():
+    return send_from_directory('templates', 'contact.html')
+
+@app.route('/signup')
+def signup_page():
+    return send_from_directory('templates', 'signup.html')
+
+@app.route('/hash-generator')
+def hash_generator():
+    return send_from_directory('templates', 'hash-generator.html')
+
+@app.route('/password-tools')
+def password_tools():
+    return send_from_directory('templates', 'password-tools.html')
+
+@app.route('/file-scanner')
+def file_scanner():
+    return send_from_directory('templates', 'file-scanner.html')
+
+@app.route('/network-tools')
+def network_tools():
+    return send_from_directory('templates', 'network-tools.html')
+
+@app.route('/checker')
+def checker():
+    return send_from_directory('templates', 'checker.html')
+
+@app.route('/checker-thankyou')
+def checker_thankyou():
+    return send_from_directory('templates', 'checker-thankyou.html')
+
+@app.route('/demo_thank_you')
+def demo_thank_you():
+    return send_from_directory('templates', 'demo_thank_you.html')
+
+@app.route('/home')
+def home_page():
+    return send_from_directory('templates', 'home.html')
+
+@app.route('/incident-playbook')
+def incident_playbook():
+    return send_from_directory('templates', 'incident-playbook.html')
+
+@app.route('/login')
+def login_page():
+    return send_from_directory('templates', 'login.html')
+
+@app.route('/newsletter')
+def newsletter():
+    return send_from_directory('templates', 'newsletter.html')
+
+@app.route('/next_steps')
+def next_steps():
+    return send_from_directory('templates', 'next_steps.html')
+
+@app.route('/playbook')
+def playbook():
+    return send_from_directory('templates', 'playbook.html')
+
+@app.route('/privacy')
+def privacy():
+    return send_from_directory('templates', 'privacy.html')
+
+@app.route('/subscribe-thankyou')
+def subscribe_thankyou():
+    return send_from_directory('templates', 'subscribe-thankyou.html')
+
+@app.route('/thank-you')
+def thank_you():
+    return send_from_directory('templates', 'thank-you.html')
+
+@app.route('/verify_link')
+def verify_link():
+    return send_from_directory('templates', 'verify_link.html')
+
+@app.route('/whoisxmlapi')
+def whoisxmlapi():
+    return send_from_directory('templates', 'whoisxmlapi.html')
+
+@app.route('/404')
+def not_found_page():
+    return send_from_directory('templates', '404.html')
+
+# API Routes
 @app.route('/api/urlscan', methods=['POST'])
 def urlscan_check():
     try:
@@ -237,7 +321,6 @@ def check_url():
         if not url:
             return jsonify({"error": "Missing URL parameter"}), 400
         result = do_vt_check(url)
-        # Original logic: send email if email provided in VT check
         if email:
             Thread(target=send_welcome_email, args=(email,), daemon=True).start()
         return jsonify(result)
@@ -268,18 +351,16 @@ def chat_with_model():
         if not user_input:
             return jsonify({"error": "Prompt or message is required"}), 400
 
-        # Try OpenAI first, then Groq as fallback, then offline message
         if OPENAI_API_KEY:
             response = chat_with_openai(user_input)
-            if response:  # If OpenAI worked, return response
+            if response:
                 return response
 
         if GROQ_API_KEY:
             response = chat_with_groq(user_input)
-            if response:  # If Groq worked, return response
+            if response:
                 return response
 
-        # If both APIs are unavailable or no keys
         return jsonify({"response": "🤖 AI is currently offline. Please try again later or use our URL scanning features."}), 200
 
     except Exception as e:
@@ -287,7 +368,6 @@ def chat_with_model():
         return jsonify({"response": "AI service temporarily unavailable. Please try again shortly."}), 200
 
 def chat_with_openai(user_input):
-    """Chat using OpenAI API"""
     try:
         headers = {
             "Authorization": f"Bearer {OPENAI_API_KEY}",
@@ -323,14 +403,13 @@ def chat_with_openai(user_input):
             return jsonify({"response": text}), 200
         else:
             logger.error(f"OpenAI API error: {response.status_code}")
-            return None  # Return None to trigger fallback
+            return None
 
     except Exception as e:
         logger.error(f"OpenAI connection error: {str(e)}")
-        return None  # Return None to trigger fallback
+        return None
 
 def chat_with_groq(user_input):
-    """Chat using Groq API"""
     try:
         headers = {
             "Authorization": f"Bearer {GROQ_API_KEY}",
@@ -366,11 +445,11 @@ def chat_with_groq(user_input):
             return jsonify({"response": text}), 200
         else:
             logger.error(f"Groq API error: {response.status_code}")
-            return None  # Return None to show offline message
+            return None
 
     except Exception as e:
         logger.error(f"Groq connection error: {str(e)}")
-        return None  # Return None to show offline message
+        return None
 
 @app.route('/api/demo-request', methods=['POST'])
 def demo_request_route():
@@ -398,47 +477,38 @@ def demo_request_route():
 
     Thread(target=_bg_send, args=(req.id,), daemon=True).start()
 
-    return jsonify({"ok": True, "id": req.id, "redirect": "/demo_thank_you.html"}), 200
+    return jsonify({"ok": True, "id": req.id, "redirect": "/demo_thank_you"}), 200
 
-# ——— ENHANCED SIGNUP ROUTE ———
 @app.route('/api/signup', methods=['POST'])
 def signup():
     data = request.get_json(force=True) or {}
     email = (data.get("email") or "").strip().lower()
-    password = data.get("password") # <-- NEW: Get password from request
+    password = data.get("password")
 
-    # 1. Email validation
     if not email or not validators.email(email):
         return jsonify({"ok": False, "error": "Invalid email format"}), 400
 
-    # 2. Password validation (minimum length check)
     if not password or len(password) < 8:
         return jsonify({"ok": False, "error": "Password must be at least 8 characters"}), 400
 
-    # 3. Check for existing email
     if db.session.execute(db.select(User).filter_by(email=email)).scalar_one_or_none():
-        return jsonify({"ok": False, "error": "Email already registered"}), 409 # 409 Conflict
+        return jsonify({"ok": False, "error": "Email already registered"}), 409
 
     try:
-        # 4. Hash password before storage
         hashed_password = hash_password(password)
-
-        # 5. Create new user record
         new_user = User(email=email, password_hash=hashed_password)
         db.session.add(new_user)
         db.session.commit()
 
-        # 6. Send welcome email asynchronously
         Thread(target=send_welcome_email, args=(email,), daemon=True).start()
 
-        return jsonify({"ok": True, "message": "Account created successfully. Welcome email is being sent."}), 201 # 201 Created
+        return jsonify({"ok": True, "message": "Account created successfully. Welcome email is being sent."}), 201
 
     except Exception as e:
         db.session.rollback()
         logger.error(f"Signup failed for {email}: {e}")
         return jsonify({"ok": False, "error": "An internal error occurred during registration."}), 500
 
-# ——— NEW LOGIN ROUTE (for demonstration of password verification) ———
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json(force=True) or {}
@@ -450,24 +520,38 @@ def login():
     if user and check_password_verified(user.password_hash, password):
         return jsonify({"ok": True, "message": f"Login successful for user: {email}"}), 200
     else:
-        return jsonify({"ok": False, "error": "Invalid email or password"}), 401 # 401 Unauthorized
+        return jsonify({"ok": False, "error": "Invalid email or password"}), 401
 
 # Maintenance mode toggle
-MAINTENANCE_MODE = True  # True = maintenance ON, False = maintenance OFF
+MAINTENANCE_MODE = False  # Set to False to allow access to all pages
+
+@app.before_request pages
 
 @app.before_request
+def
 def maintenance_redirect():
-    if MAINTENANCE_MODE:
-        return send_from_directory('.', 'index.html')  # your maintenance page
+    maintenance_redirect():
+    if if MAINTENANCE_MODE MAINTENANCE_MODE:
+       :
+        return send_from_directory return send_from_directory('.', '('.', 'index.html')
 
-# ——— RUN APP ———
+# —index.html')
+
+# ——— RUN—— RUN APP ———
+if APP ———
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    logger.info(f"Starting Flask app on port {port}")
+    port = __name__ == '__main__':
+    port = int(os int(os.environ.get("PORT", 5000))
+.environ.get("PORT", 5000))
+    logger    logger.info(f"Starting Flask app.info(f"Starting Flask app on on port {port}")
+
+ port {port}")
 
     with app.app_context():
-        # This will create the new 'user' table as well as the 'demo_request' table
+        db.create_all    with app.app_context():
         db.create_all()
 
-    app.run(host='0.0.0.0', port=port, debug=False)
+    app()
 
+    app.run(host.run(host='0.0.0.0', port=='0.0.0.0', port=port, debug=False)
+port, debug=False)
