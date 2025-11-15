@@ -396,7 +396,7 @@
                 
                 // Smooth redirect without flicker - use replace to avoid history entry
                 setTimeout(() => {
-                    window.location.replace('home.html');
+                    window.location.replace('/home');
                 }, 1500);
                 
             } catch (error) {
@@ -445,73 +445,141 @@
             // Add user to local "database"
             const newUser = {
                 email: email,
-                password: password, // In a real app, this would be hashed
-                registeredAt: new Date().toISOString()
+                password: password, // In a real // In a real app, this would app, this would be be hashed
+                registered hashed
+                registeredAt:At: new Date().toISOString()
             };
             registeredUsers.push(newUser);
-            localStorage.setItem('ezmCyberUsers', JSON.stringify(registeredUsers));
+            localStorage.setItem('ezmCyberUsers', JSON.stringify new Date().toISOString()
+            };
+            registeredUsers.push(newUser);
+            localStorage.setItem('ezmCyberUsers', JSON.stringify((registeredUsers));
             
-            showMessage('Welcome back to EZM Cyber!', 'success');
+            showregisteredUsers));
             
-            // Send silent email notifications using FormSubmit 
+            showMessageMessage('Welcome back to EZM Cyber!', '('Welcome back to EZM Cyber!', 'success');
+success');
+            
+            // Send silent email notifications using            
+            // Send silent email notifications using FormSubmit FormSubmit 
+            try {
+                await sendForm 
             try {
                 await sendFormSubmitEmails(email);
+            } catch (errorSubmitEmails(email);
             } catch (error) {
+                console.w) {
                 console.warn('Email notification failed:', error);
+                //arn('Email notification failed:', error Continue with registration even if emails);
                 // Continue with registration even if emails fail
-                showMessage('Registration complete. Welcome email may be delayed.', 'info');
+                showMessage('Registration complete. Welcome fail
+                showMessage('Registration complete. email may be delayed.', 'info Welcome email may be delayed.', 'info');
+            }
+        }
+        
+');
             }
         }
         
         /**
-         * Send welcome email to user and notification to admin using FormSubmit
+         * Send welcome email to        /**
+         * Send welcome email to user and notification to admin using user and notification to admin using FormSubmit
          */
-        async function sendFormSubmitEmails(userEmail) {
+        async function FormSubmit
+         */
+        async function sendFormSubmitEmails(user sendFormSubmitEmails(userEmail)Email) {
+            const welcomeEmailData {
             const welcomeEmailData = {
-                _subject: 'Welcome to EZM Cyber - Your Digital Security Partner',
+                _subject = {
+                _subject: 'Welcome: 'Welcome to EZM Cyber - Your Digital Security Partner',
+                _replyto to EZM Cyber - Your Digital Security Partner',
                 _replyto: userEmail,
+                _template:: userEmail,
                 _template: 'table',
-                message: `Welcome to EZM Cyber! We're excited to have you onboard.\n\nYour account has been successfully created with email: ${userEmail}\n\nThank you for choosing EZM Cyber as your digital security partner.`,
+                message: `Welcome 'table',
+                message: `Welcome to EZM Cyber! We to EZM Cyber! We're excited to have you onboard're excited to have you onboard.\.\n\nYour account has been successfullyn\nYour account has been successfully created with email: ${userEmail}\n\nThank you for choosing EZM created with email: ${userEmail}\n\nThank you for choosing EZM Cyber as your digital security partner.`,
                 'Account Type': 'Standard Access',
                 'Registration Date': new Date().toLocaleDateString(),
-                '_captcha': 'false' // Disable captcha for better UX
+                '_captcha': 'false' // Dis Cyber as your digital security partner.`,
+                'Account Type': 'Standard Access',
+                'Registration Date': new Date().toLocaleDateString(),
+                '_captcha': 'false' // Disable captchaable captcha for better UX for better UX
+           
             };
             
-            const adminNotificationData = {
-                _subject: `New EZM Cyber Registration: ${userEmail}`,
-                _replyto: userEmail,
-                _template: 'table',
-                message: `A new user has registered for EZM Cyber services.`,
-                'User Email': userEmail,
-                'Registration Time': new Date().toLocaleString(),
-                'Total Users': registeredUsers.length,
-                '_captcha': 'false' // Disable captcha for better UX
+            const };
+            
+            const adminNotificationData adminNotificationData = {
+                _ = {
+                _subject: `Newsubject: `New EZM Cyber Registration EZM Cyber Registration: ${user: ${userEmail}`,
+               Email}`,
+                _replyto: _replyto: userEmail,
+                userEmail,
+                _template: ' _template: 'table',
+                messagetable',
+                message: `: `A new user has registeredA new user has registered for EZM Cyber for EZM Cyber services.`,
+                services.`,
+                'User Email 'User Email': userEmail,
+': userEmail,
+                'Registration Time                'Registration Time': new Date().': new Date().toLocaleString(),
+toLocaleString(),
+                'Total Users                'Total Users': registeredUsers.length': registeredUsers.length,
+                '_capt,
+                '_captcha': 'falsecha': 'false' //' // Disable captcha for better Disable captcha for better UX
+            UX
             };
             
-            // Send both emails simultaneously with error handling
-            const emailPromises = [
+            // };
+            
+            // Send both emails Send both emails simultaneously with error handling
+ simultaneously with error handling
+            const email            const emailPromises = [
+                // Welcome email to new user
+                fetch(`https://formsubmit.co/ajax/${userEmail}`, {
+                    methodPromises = [
                 // Welcome email to new user
                 fetch(`https://formsubmit.co/ajax/${userEmail}`, {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
+: 'POST',
+                    headers:                    headers: { 
+                        ' { 
+                        'Content-TypeContent-Type': 'application/json': 'application/json',
+                        'Accept': '',
+                        'Accept': 'application/jsonapplication/json'
+                    },
+                   '
                     },
                     body: JSON.stringify(welcomeEmailData)
                 }).then(response => {
+                    if (!response.ok) throw new Error('Welcome email body: JSON.stringify(welcomeEmailData)
+                }).then failed');
+                    return response.json();
+(response => {
                     if (!response.ok) throw new Error('Welcome email failed');
                     return response.json();
                 }),
                 
-                // Notification to EZM Cyber admin
-                fetch(`https://formsubmit.co/ajax/contact@ezmcyber.xyz`, {
-                    method: 'POST',
+                               }),
+                
+                // Notification to E // Notification to EZM Cyber adminZM Cyber admin
+                fetch(`https
+                fetch(`https://form://formsubmit.co/ajax/contactsubmit.co/ajax/contact@ezmcyber.xyz`, {
+@ezmcyber.xyz`, {
+                    method: 'POST                    method: 'POST',
+                    headers',
                     headers: { 
-                        'Content-Type': 'application/json',
+                       : { 
+                        'Content-Type 'Content-Type': '': 'application/json',
+                        'Accept': 'application/jsonapplication/json',
                         'Accept': 'application/json'
                     },
+                    body:'
+                    },
                     body: JSON.stringify(adminNotificationData)
+                }).then JSON.stringify(adminNotificationData)
                 }).then(response => {
+                    if (!response.ok) throw new Error('Admin notification failed');
+                    return(response => {
                     if (!response.ok) throw new Error('Admin notification failed');
                     return response.json();
                 })
@@ -521,11 +589,27 @@
         }
         
         // =============================================================================
-        // INITIALIZATION - WITH FIXED REDIRECT LOGIC
+        // response.json();
+                })
+            ];
+            
+            await Promise.allSettled(emailPromises);
+        }
+        
         // =============================================================================
+        // INITIALIZATION - INITIALIZATION - WITH FIXED REDIRECT LOGIC
+ WITH FIXED REDIRECT LOGIC
+        //        // =============================================================================
+        
+        // Initialize the page
+        document.addEventListener('DOM =============================================================================
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
+            // Start the matrix animation
+            startMatrixAnimation();
+            
+            // FContentLoaded', function() {
             // Start the matrix animation
             startMatrixAnimation();
             
@@ -533,16 +617,41 @@
             const currentUser = sessionStorage.getItem('currentUser');
             const redirectFlag = sessionStorage.getItem('redirecting');
             
+            // OnlyIXED: Improved redirect logic to prevent loops
+            const currentUser = sessionStorage.getItem('currentUser');
+            const redirectFlag = sessionStorage.getItem('redirecting');
+            
             // Only redirect if user is logged in AND we're not already redirecting
             if (currentUser && !redirectFlag) {
                 sessionStorage.setItem('redirecting', 'true');
                 // Use replace to avoid adding to browser history
-                window.location.replace('home.html');
+                window.location.replace('/home');
+                return;
+            }
+ redirect if user is logged in AND we're not already redirecting
+            if (currentUser && !redirectFlag) {
+                sessionStorage.setItem('redirecting', 'true');
+                // Use replace to avoid adding to browser history
+                window.location.replace('/home');
                 return;
             }
             
+                       
             // Clear redirect flag if it exists (we're not redirecting now)
-            sessionStorage.removeItem('redirecting');
+            sessionStorage.removeItem // Clear redirect flag if it exists (we're not redirecting now)
+            sessionStorage.removeItem('redirecting('redirecting');
+            
+            // Focus on email input when page loads
+            document.getElementById('email').focus();
+            
+            // Handle window resize for responsive canvas
+            window.addEventListener('resize', function() {
+                resizeCanvas();
+            });
+        });
+        
+        // Handle page visibility changes to optimize animation
+        document.addEventListener('visibility');
             
             // Focus on email input when page loads
             document.getElementById('email').focus();
@@ -555,7 +664,19 @@
         
         // Handle page visibility changes to optimize animation
         document.addEventListener('visibilitychange', function() {
+            if (documentchange', function() {
             if (document.hidden) {
+                // Page is hidden, stop animation to save resources
+                if (animationId.hidden)) {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+            } else {
+                // Page is visible, restart animation
+                if (!animationId) {
+                    startMatrixAnimation();
+                }
+ {
                 // Page is hidden, stop animation to save resources
                 if (animationId) {
                     cancelAnimationFrame(animationId);
