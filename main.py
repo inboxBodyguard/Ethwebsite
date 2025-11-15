@@ -523,13 +523,6 @@ def login():
     else:
         return jsonify({"ok": False, "error": "Invalid email or password"}), 401
 
-# Maintenance mode toggle
-MAINTENANCE_MODE = False  # Set to False to allow access to all pages
-
-@app.before_request
-def maintenance_redirect():
-    if MAINTENANCE_MODE:
-        return send_from_directory('.', 'index.html')
 
 # ——— RUN APP ———
 if __name__ == '__main__':
