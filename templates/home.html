@@ -17,7 +17,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-    <link rel="icon" href="/path/to/banner.jpg" type="image/jpg">
+    <link rel="icon" href="/static/images/banner.jpg" type="image/jpg">
 
     <meta name="theme-color" content="#00ffcc">
 
@@ -27,7 +27,7 @@
       "@type": "Organization",
       "name": "EZM Cyber",
       "url": "https://www.ezmcyber.xyz",
-      "logo": "https://www.ezmcyber.xyz/banner.jpg",
+      "logo": "https://www.ezmcyber.xyz/static/images/banner.jpg",
       "sameAs": [
         "https://www.facebook.com/ezmcyber",
         "https://twitter.com/ezmcyber"
@@ -37,7 +37,7 @@
 
     <meta property="og:title" content="EZM Cyber - Your Digital Security Partner">
     <meta property="og:description" content="Secure login and digital security solutions">
-    <meta property="og:image" content="https://raw.githubusercontent.com/inboxBodyguard/Ethwebsite/main/banner.jpg">
+    <meta property="og:image" content="https://raw.githubusercontent.com/inboxBodyguard/Ethwebsite/main/static/images/banner.jpg">
     <meta property="og:url" content="https://www.ezmcyber.xyz">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -215,7 +215,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background-image: url("banner.jpg");
+            background-image: url("/static/images/banner.jpg");
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;
@@ -1013,7 +1013,7 @@
 
     <nav class="ezm-topbar" role="navigation" aria-label="Main navigation">
       <div class="container ezm-topbar-inner">
-        <a class="navbar-brand" href="home.html">EZM Cyber</a>
+        <a class="navbar-brand" href="/home">EZM Cyber</a>
 
         <button id="ezmSidebarToggle" class="ezm-hamburger" aria-controls="ezmSidebar" aria-expanded="false" aria-label="Open main menu">
           <span class="ezm-hamburger-box"><span class="ezm-hamburger-inner"></span></span>
@@ -1026,30 +1026,30 @@
         <button id="ezmSidebarClose" class="ezm-sidebar-close" aria-label="Close menu">&times;</button>
 
         <div class="ezm-sidebar-brand">
-          <a href="home.html">EZM Cyber</a>
+          <a href="/home">EZM Cyber</a>
         </div>
 
         <nav class="ezm-sidebar-nav" role="navigation" aria-label="Sidebar navigation">
           <ul>
-            <li><a class="ezm-btn" href="home.html">🏠 Home</a></li>
-            <li><a class="ezm-btn" href="about.html">About</a></li>
-            <li><a class="ezm-btn" href="services.html">Services</a></li>
-            <li><a class="ezm-btn" href="contact.html">Contact</a></li>
+            <li><a class="ezm-btn" href="/home">🏠 Home</a></li>
+            <li><a class="ezm-btn" href="/about">About</a></li>
+            <li><a class="ezm-btn" href="/services">Services</a></li>
+            <li><a class="ezm-btn" href="/contact">Contact</a></li>
 
-            <li><a class="ezm-btn" href="privacy.html">Privacy</a></li>
+            <li><a class="ezm-btn" href="/privacy">Privacy</a></li>
 
-            <li><a class="ezm-btn" href="newsletter.html">Newsletter</a></li>
+            <li><a class="ezm-btn" href="/newsletter">Newsletter</a></li>
 
-            <li><a class="ezm-btn" href="hash-generator.html">Hash Generator</a></li>
-            <li><a class="ezm-btn" href="password-tools.html">Password Tools</a></li>
-            <li><a class="ezm-btn" href="file-scanner.html">File Scanner</a></li>
-            <li><a class="ezm-btn" href="network-tools.html">Network Tools</a></li>
-            <li><a class="ezm-btn" href="checker.html">Checker</a></li>
+            <li><a class="ezm-btn" href="/hash-generator">Hash Generator</a></li>
+            <li><a class="ezm-btn" href="/password-tools">Password Tools</a></li>
+            <li><a class="ezm-btn" href="/file-scanner">File Scanner</a></li>
+            <li><a class="ezm-btn" href="/network-tools">Network Tools</a></li>
+            <li><a class="ezm-btn" href="/checker">Checker</a></li>
           </ul>
         </nav>
 
         <div class="ezm-sidebar-footer">
-          <a class="ezm-cta" href="contact.html">Get In Touch</a>
+          <a class="ezm-cta" href="/contact">Get In Touch</a>
         </div>
       </div>
     </aside>
@@ -1068,13 +1068,13 @@
             <p class="lead mb-5">Your trusted source for cybersecurity insights, tools, and guidance.</p>
             <div class="button-group" style="margin-top:20px;">
                 <div>
-                    <a href="playbook.html" class="btn btn-warning btn-lg">Get Playbook 🚨</a>
+                    <a href="/playbook" class="btn btn-warning btn-lg">Get Playbook 🚨</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <a href="incident-playbook.html" class="cyber-button">
+    <a href="/incident-playbook" class="cyber-button">
       🚨 Open Incident Playbook
     </a>
 
@@ -1085,7 +1085,7 @@
                 I help businesses stay secure with expert guidance, modern tools, 
                 and proven cybersecurity strategies—empowering you to focus on growth with confidence.
             </p>
-            <a href="about.html" class="btn btn-primary btn-lg">Learn More</a>
+            <a href="/about" class="btn btn-primary btn-lg">Learn More</a>
         </div>
     </section>
 
@@ -1093,7 +1093,7 @@
         <div class="container text-center">
             <h2 class="mb-4">My Services</h2>
             <p class="lead mb-4">Pen testing, incident response, cloud security, training, and more.</p>
-            <a href="services.html" class="btn btn-primary btn-lg">Explore Services</a>
+            <a href="/services" class="btn btn-primary btn-lg">Explore Services</a>
         </div>
     </section>
 
@@ -1182,7 +1182,7 @@
                         Join our newsletter to receive exclusive cybersecurity tips, threat alerts, and industry insights.
                     </p>
                     <div class="mb-4">
-                        <a href="newsletter.html" class="btn btn-accent btn-lg me-3 mb-3">Quick Sign Up</a>
+                        <a href="/newsletter" class="btn btn-accent btn-lg me-3 mb-3">Quick Sign Up</a>
                     </div>
                     <small style="color: rgba(255,255,255,0.6);" class="d-block mt-3">
                         I respect your privacy. No spam, ever.
@@ -1206,7 +1206,7 @@
                             <i class="fas fa-hashtag tool-icon"></i>
                             <h5 class="card-title">Hash Generator</h5>
                             <p class="card-text">Generate cryptographic hashes for files and text using multiple algorithms.</p>
-                            <a href="hash-generator.html" class="btn btn-enhanced btn-primary-custom w-100">Generate Hash</a>
+                            <a href="/hash-generator" class="btn btn-enhanced btn-primary-custom w-100">Generate Hash</a>
                         </div>
                     </div>
                 </div>
@@ -1217,7 +1217,7 @@
                             <i class="fas fa-key tool-icon"></i>
                             <h5 class="card-title">Password Tools</h5>
                             <p class="card-text">Generate strong passwords and check password strength.</p>
-                            <a href="password-tools.html" class="btn btn-enhanced btn-success-custom w-100">Password Tools</a>
+                            <a href="/password-tools" class="btn btn-enhanced btn-success-custom w-100">Password Tools</a>
                         </div>
                     </div>
                 </div>
@@ -1228,7 +1228,7 @@
                             <i class="fas fa-file-shield tool-icon"></i>
                             <h5 class="card-title">File Scanner</h5>
                             <p class="card-text">Upload and scan files for potential threats and malware.</p>
-                            <a href="file-scanner.html" class="btn btn-enhanced btn-warning-custom w-100">Scan Files</a>
+                            <a href="/file-scanner" class="btn btn-enhanced btn-warning-custom w-100">Scan Files</a>
                         </div>
                     </div>
                 </div>
@@ -1239,7 +1239,7 @@
                             <i class="fas fa-network-wired tool-icon"></i>
                             <h5 class="card-title">Network Tools</h5>
                             <p class="card-text">Network analysis and diagnostic tools for security assessments.</p>
-                            <a href="network-tools.html" class="btn btn-enhanced btn-info-custom w-100">Network Tools</a>
+                            <a href="/network-tools" class="btn btn-enhanced btn-info-custom w-100">Network Tools</a>
                         </div>
                     </div>
                 </div>
@@ -1250,7 +1250,7 @@
                             <i class="fas fa-check-double tool-icon"></i>
                             <h5 class="card-title">Security Checker</h5>
                             <p class="card-text">Comprehensive security assessment and vulnerability checker.</p>
-                            <a href="checker.html" class="btn btn-enhanced btn-danger-custom w-100">Run Checker</a>
+                            <a href="/checker" class="btn btn-enhanced btn-danger-custom w-100">Run Checker</a>
                         </div>
                     </div>
                 </div>
@@ -1272,7 +1272,7 @@
                 <div class="col-12">
                     <p class="mb-3 fw-bold">&copy; 2025 EZM Cyber. All rights reserved.</p>
                     <div class="d-flex justify-content-center gap-4 flex-wrap">
-                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="/privacy">Privacy Policy</a>
                     </div>
                 </div>
             </div>
@@ -1623,7 +1623,7 @@
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => {
                 sessionStorage.removeItem('currentUser');
-                window.location.href = 'login.html';
+                window.location.href = '/login';
             });
         }
 
@@ -1779,7 +1779,7 @@
     <script>
     document.getElementById('logoutBtn').addEventListener('click', function() {
         localStorage.removeItem('signedUp'); // Clear signup status
-        window.location.href = 'signup.html'; // Redirect to signup
+        window.location.href = '/signup'; // Redirect to signup
     });
    </script>
 </body>
