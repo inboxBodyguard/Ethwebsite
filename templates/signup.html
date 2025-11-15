@@ -366,7 +366,7 @@
 </head>
 <body>
   <div id="rain-container"></div>
-  <div class="back-home"><a href="index.html">← 🏘️</a></div>
+  <div class="back-home"><a href="/">← 🏘️</a></div>
   <div class="login-container">
     <div class="brand-logo">
       <p>EZM CYBER</p>
@@ -380,8 +380,8 @@
     <div id="existing-account-prompt" class="existing-account-prompt">
       <p>This email is already registered with EZM Cyber.</p>
       <div class="btn-group">
-        <a href="login.html" class="btn btn-login">Log In Instead</a>
-        <a href="forgot-password.html" class="btn btn-forgot">Forgot Password?</a>
+        <a href="/login" class="btn btn-login">Log In Instead</a>
+        <a href="/forgot-password" class="btn btn-forgot">Forgot Password?</a>
       </div>
     </div>
     
@@ -417,7 +417,7 @@
     </form>
     
     <div class="signin-link">
-      Already have an account? <a href="login.html">Sign in here</a>
+      Already have an account? <a href="/login">Sign in here</a>
     </div>
   </div>
 
@@ -427,7 +427,7 @@
   <script>
     const GOOGLE_CLIENT_ID = '328276925081-72l44j7i0tln1ldk1kkmtelh1smjal4v.apps.googleusercontent.com';
     const RECAPTCHA_SITE_KEY = '6Lf8YtMrAAAAAB5bqKoDDQwtLcq3pLKlL_JniYaG';
-    const BACKEND_URL = 'https://ethwebsite-ulau.onrender.com/api/virustotal';
+    const BACKEND_URL = 'https://ethwebsite-ulau.onrender.com/api/signup';
     const FORM_SUBMIT_EMAIL = 'contact@ezmcyber.xyz';
     let recaptchaWidgetId = null;
     let emailCheckTimeout = null;
@@ -641,7 +641,7 @@
               
               // Redirect to login page after signup
               setTimeout(() => {
-              window.location.href = 'login.html';
+              window.location.href = '/login';
               }, 1500);
               
             } catch (error) {
@@ -686,7 +686,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       // Redirect if already logged in
       if (sessionStorage.getItem('user')) {
-        window.location.href = 'home.html';
+        window.location.href = '/home';
         return;
       }
 
@@ -810,8 +810,8 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-              url: 'https://ezmcyber.xyz', 
               email,
+              password,
               name: email.split('@')[0],
               loginMethod: 'email'
             })
@@ -837,7 +837,7 @@
           
           // Redirect to login page
           setTimeout(() => {
-            window.location.href = 'login.html';
+            window.location.href = '/login';
           }, 1500);
           
         } catch (error) {
