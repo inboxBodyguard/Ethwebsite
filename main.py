@@ -15,6 +15,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask import Flask, send_from_directory
+from flask import render_template
 
 # ——— LOGGING SETUP ———
 logging.basicConfig(level=logging.INFO)
@@ -188,8 +189,8 @@ def send_webhook_alert(req: DemoRequest) -> bool:
 # ——— ROUTES ———
 @app.route('/')
 def home():
-    return send_from_directory('.', 'index.html')
-
+    return render_template('index.html')
+    
 # Routes for all HTML files in templates folder
 @app.route('/about')
 def about():
